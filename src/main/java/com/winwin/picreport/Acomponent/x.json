@@ -1,0 +1,70 @@
+[
+  com.winwin.picreport.Edto.ShouDingDanFromExcel
+  {
+    osDd=
+    '1521043200000',
+    estDd=
+    '',
+    taxId=
+    '2',
+    osNo=
+    '180259KRyzyp87485',
+    cusOsNo=
+    '',
+    saphh=
+    '0',
+    remhead=
+    '基于 采购报
+    价单
+    88834.
+    ', sapph='
+    25-0110528
+    ', prdNo='
+    10900520
+    ', sapwlm='
+    塑料搭扣WW-NEPE-0220
+    ', cfdm='
+    ', prdName='
+    WW-NEPE-0220
+    ', curId='
+    RMB
+    ', excRto='
+    1
+    ', qty='
+    5
+    ', unit='
+    只
+    ',
+    up=
+    '0.15',
+    amtn=
+    '0.64',
+    tax=
+    '0.11',
+    amt=
+    '0.75',
+    taxRto=
+    '17',
+    remBody=
+    '',
+    cusNo=
+    'C003',
+    caiGouNo=
+    '87485',
+    maiTouNo=
+    '87485-25-0110528',
+    ebNo=
+    'NE20180259KR',
+    luoH
+    ao=
+    '',
+    gangHao=
+    '',
+    realWidth=
+    '0',
+    realLength=
+    '0',
+    salNo=
+    ''
+  }
+]

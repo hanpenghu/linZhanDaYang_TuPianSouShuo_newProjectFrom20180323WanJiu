@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper">
+    <!--<resultMap id="BaseResultMap" type=""></resultMap>-->
+    <!-- 可以继承另一个名称空间的东西-->
+    <resultMap id="PrdtSampBaseResultMap"
+               extends="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.BaseResultMap"
+               type="com.winwin.picreport.Edto.PrdtSamp0">
+    </resultMap>
+
+
+
+
+    <!--添加查询模块给所有返回信息
+    //    //销售价格列表
+//    List<UpDefMy>upDefMyListSale=new ArrayList<>();
+//    //采购价格列表
+//    List<UpDefMy>upDefMyListByer=new ArrayList<>();
+    -->
+    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
+        <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
+        <id column="QTY" jdbcType="NUMERIC" property="qty" />
+        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
+        <result column="UP" jdbcType="NUMERIC" property="up" />
+        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+        <result column="name" jdbcType="VARCHAR" property="curName" />
+        <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
+        <result column="price_id" jdbcType="VARCHAR" property="priceId" />
+        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
+        <result column="ut" jdbcType="VARCHAR" property="unit" />
+    </resultMap>
+   <!-- <sql id="PrdtSampBase_Column_List">
+        id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
+        cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
+        insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem,
+        unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
+    </sql>-->
+    <!-- 产品打样列表多条件查询的条件-->
+
+
+
+    <sql id="productProofWithManyCondition">
+
+
+
+        (
+                insertDate
+                BETWEEN
+                <choose>
+                    <when test="insertdateStr != null and insertdateStr != ''">
+                        #{insertdateStr}
+                    </when>
+                    <otherwise>
+                        '1970-01-01'
+                    </otherwise>
+                </choose>
+                AND
+                <choose>
+                    <when test="insertdateStrEnd != null and insertdateStrEnd != ''">
+                        #{insertdateStrEnd}
+                    </when>
+                    <otherwise>
+                        '9999-01-01'
+                    </otherwise>
+                </choose>
+        )
+        AND
+        (
+
+
+         confirmTimeStr is NULL   OR confirmTimeStr='' OR
+
+                    confirmTimeStr
+                    BETWEEN
+                    <choose>
+                        <when test="confirmtimestr != null and confirmtimestr != ''">
+                            #{confirmtimestr}
+                        </when>
+                        <otherwise>
+                            '1970-01-01'
+                        </otherwise>
+                    </choose>
+                    AND
+                    <choose>
+                        <when test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+                            #{confirmtimestrEnd}
+                        </when>
+                        <otherwise>
+                            '9999-01-01'
+                        </otherwise>
+                    </choose>
+        )
+        AND
+                        --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
+                        isnull(idx_Name,'') LIKE
+                        <choose>
+                            <when test="idxName != null and idxName != ''">
+                                ('%' + (#{idxName}) + '%')
+                            </when>
+                            <otherwise>
+                                isnull(idx_Name,'')
+                            </otherwise>
+                        </choose>
+        AND
+            ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
+                  isnull(fen_lei_name,'') LIKE
+                        <choose>
+                            <when test=" fenLeiName != null and fenLeiName != '' ">
+                                ('%'+( #{fenLeiName})+ '%')
+                            </when>
+                            <otherwise>
+                                isnull(fen_lei_name,'')
+                            </otherwise>
+                        </choose>
+        AND
+        --产品编码
+                    isnull(prd_Code,'') LIKE
+                    <choose>
+                        <when test=" prdCode != null and prdCode != '' ">
+                            ('%'+( #{prdCode}) +'%')
+                        </when>
+                        <otherwise>
+                            isnull(prd_Code,'')
+                        </otherwise>
+                    </choose>
+
+        AND
+                    --产品负责人
+                    isnull(sal_No,'') LIKE
+                    <choose>
+                        <when test="salNo != null and salNo != '' ">
+                            ('%' +( #{salNo}) + '%')
+                        </when>
+                        <otherwise>
+                            isnull(sal_No,'')
+                        </otherwise>
+                    </choose>
+        AND
+        --是否已经打样确认，1是确认   0是未确认   ""确认+未确认
+        isnull(isConfirm,9)=
+        <choose>
+            <when test=" isconfirm != null">
+                #{isconfirm}
+            </when>
+            <otherwise>
+                isnull(isConfirm,9)
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--登录验证用的  得到修改跟人信息接口 -->
+    <select id="selectUserEditInfo" resultType="com.winwin.picreport.Edto.LoginInfo">
+          Select
+            u.tenantid AS 'tenantId'
+            ,u.userEmail AS 'userEmail'
+            ,u.userPswd AS 'userPswd'
+            ,u.phone_no AS 'phoneNo'
+            ,u.user_name AS 'userName'
+            ,t.tenantName AS 'tenantName'
+            from   users u,tenant t where t.tenantid=u.tenantid
+            ---下一句话的意思是: 至少有一个不是space或者null
+            and (isnull(u.userEmail,'')!='' or   isnull(u.phone_no,'')!='' or  isnull(u.user_name,'')!='')
+            and isnull(u.tenantid,'')=#{info.tenantId}
+            and isnull(t.tenantid,'')=#{info.tenantId}
+            and
+            (
+                isnull(u.userEmail,'')=#{info.userEmail}
+                or isnull(u.phone_no,'')=#{info.phoneNo}
+                or isnull(u.user_name,'')=#{info.userName}
+            )
+
+    </select>
+
+
+    <!-- 修改个人信息用的sql -->
+    <update id="updateUserInfo" parameterType="com.winwin.picreport.Edto.LoginInfo">
+        UPDATE USERS
+            SET
+                <if test="newUserEamil != null and newUserEamil !='' and newUserEamil != 'undefined' " >
+                   userEmail=#{newUserEamil},
+                </if>
+                <if test="newUserPswd != null and newUserPswd !='' and newUserPswd != 'undefined' " >
+                  userPswd=#{newUserPswd},
+                </if>
+                <if test="newPhoneNo != null and newPhoneNo !='' and newPhoneNo != 'undefined' " >
+                    phone_no=#{newPhoneNo},
+                </if>
+                <if test="newUserName != 'undefined' and newUserName != null and newUserName !='' ">
+                    user_name=#{newUserName},  ---注意,这里有undifined的时候,会正题插不进去,因为这一行不要了,上面一行多了个逗号跟where搞在一起了
+                </if>
+                timetoken=timetoken   ---这个主要是解决最后一个if是null的时候报错的问题
+            where
+            ---下一句话的意思是: 至少有一个不是space或者null
+            (isnull(userEmail,'')!='' or   isnull(phone_no,'')!='' or  isnull(user_name,'')!='')
+            and isnull(tenantid,'')=#{tenantId}
+            and
+            (
+                isnull(userEmail,'')=#{userEmail}
+                or isnull(phone_no,'')=#{phoneNo}
+                or isnull(user_name,'')=#{userName}
+            )
+    </update>
+
+
+
+
+
+
+
+    <!-- 产品打样列表多条件查询-->
+    <select id="chanPinBianMaJianDangTiaoJianChaXun" resultMap="PrdtSampBaseResultMap">
+        SELECT
+        TOP
+        (#{meiYeXianShiShu})
+        <include refid="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List" />
+        FROM
+        PRDT_SAMP
+        WHERE
+        id NOT IN
+        (
+            select top
+            (
+                (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+            )id from PRDT_SAMP
+            WHERE
+             <!-- 产品打样列表多条件查询的条件-->
+              <include refid="productProofWithManyCondition"/>
+              ORDER BY insertdate DESC
+        )
+        AND
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        ORDER BY insertdate DESC
+    </select>
+
+
+    <!--林展多条件查询接口 -->
+
+    <select id="getCountOfDuoTiaoJianChaXunZongJiLuShu" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM  PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+    </select>
+
+
+
+    <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
+       Select
+       top 20
+       a.s_dd --as sDd,---价格创建日期
+       ,a.up --as up ,--价格
+       ,a.qty --as qty ,--数量
+       ,isnull(a.HJ_NO,'') as unit---单位
+       ,a.cur_id ---as curId,----币别代号
+       ,a.bil_type----01代表不含运费的单价
+       ,a.rem---备注,打样系统的会存为"打样系统"
+       ,a.price_id----1代表销售价格, 2代表采购价格
+       ,b.name ----as curName ----币别名字
+       --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
+       from up_def a
+       LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
+       where
+       a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.OLEFIELD like '%SamplesSys%'
+       AND
+        a.price_id=
+        <choose>
+            <when test="priceId != null and priceId != ''">
+                #{priceId}
+            </when>
+            <otherwise>
+                a.price_id
+            </otherwise>
+        </choose>
+        ORDER BY
+        a.s_dd DESC
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,28 @@
+{"logistics": {
+    "salesorder": {
+      "page": "F"
+    },
+    "salesorderForSAP": {
+      "page": "F"
+    },
+    "salesDetail": {
+      "page": "F"
+    },
+    "productCode": {
+      "page": "F"
+    },
+    "purchasePricing": {
+      "page": "F"
+    },
+    "salesPricing": {
+      "page": "F",
+      "part": {
+        "purchasePrice": "F",
+        "salesPrice": "F"
+      }
+    },
+    "sampleConfirm": {
+      "page": "F"
+    }
+  }
+}

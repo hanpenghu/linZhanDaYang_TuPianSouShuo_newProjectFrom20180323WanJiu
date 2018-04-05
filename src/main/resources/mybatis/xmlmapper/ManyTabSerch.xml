@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch">
+
+
+
+
+<!-- 林展分页打样-->
+    <select id="selectDangQianYeSuoYouId" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+        id
+         from
+   		PRDT_SAMP where id not in
+   		(
+   			select top
+   			(
+   				(#{meiYeXianShiShu})*((#{dangQianYe})-1)
+   			)
+   			id from PRDT_SAMP ORDER BY insertDate DESC
+   		)ORDER BY insertDate DESC
+
+    </select>
+
+    <!-- 林展分页打样未确认-->
+    <select id="selectDangQianYeSuoYouIdNotConfirm" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+          id
+        from
+        PRDT_SAMP where id not in
+        (
+            select top
+                (
+                    (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+                )
+            id from PRDT_SAMP WHERE isnull(isConfirm,0)=0 ORDER BY insertDate DESC
+        )and isnull(isConfirm,0)=0 ORDER BY insertDate DESC
+    </select>
+
+
+    <!-- 林展分页打样已经确认-->
+    <select id="selectDangQianYeSuoYouIdAlReadyConfirm" resultType="java.lang.String">
+        select top(#{meiYeXianShiShu})
+        id
+        from
+        PRDT_SAMP where id not in
+        (
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )
+        id from PRDT_SAMP WHERE isConfirm=1 ORDER BY insertDate DESC
+        )and isConfirm=1 ORDER BY insertDate DESC
+    </select>
+
+
+     <select id="salePrdDetailTab1" resultType="com.winwin.picreport.Edto.SalePrdDetailTab1">
+              SELECT
+          ISNULL(mf.rem,'') AS 'remHead',	  ---表头备注---对应备注
+          ISNULL(mf.ps_no,'') AS 'psNo',---销货单号(供应商销货单号)
+          RTRIM(LTRIM(ISNULL(mf.cus_os_no,''))) AS 'cusOsNo',----客户订单号,
+          ISNULL(tf.prd_name,'')AS 'prdName', ----货品名称
+          RTRIM(LTRIM(ISNULL(tf.prd_no,'')))AS 'prdNo',---供应商物料参考编号
+         --- ISNULL(sapso.sapph,'')AS 'sapph',-------------//物料编码  =原始数据表SAPSO.SAP 品号
+           ISNULL(pd.ut,'1') AS 'unit',---------单位
+           '1' AS 'unit',
+           CONVERT(VARCHAR(40),ISNULL(tf.qty,0)) AS 'qty',---数量
+           CONVERT(VARCHAR(40),ISNULL(tf.up,0))AS 'up',----单价
+           CONVERT(VARCHAR(40),ISNULL(tf.amtn_net,0)) AS 'amtnNet',---未税本位币
+           CONVERT(VARCHAR(40),ISNULL(tf.amt,0)) AS 'amt',---本位币
+           ISNULL(tf.os_no,'') AS 'os_no' ,----原来说的cusosno和osno一样,现在这个是ebno
+           ISNULL(tf.bat_no,'')AS 'bat_no',-----批号
+           ISNULL(tf.rem,'') AS 'remBody',	----表身摘要,对应摘要
+            ISNULL(dx.name,'')AS 'indxName'----种类名称
+          , isnull(convert(varchar(50),tfz.bc),'')AS 'bc'---------备次
+           ,isnull(convert(varchar(50),tfz.mz),'') AS 'mz'-------毛重
+           ,isnull(convert(varchar(50),tfz.pz),'')AS 'pz'----皮重
+          ---- ,ISNULL(sapso.caiGouNo,'')AS 'caiGouNo'----采购单号
+           ,ISNULL(tf.itm,'')AS 'itm'    -------供应商送货单行号---供应商送货单行号  =该销货单号导出行的TF_PSS.ITM
+          --- ,ISNULL(sapso.saphh,'') AS 'saphh'------------采购订单行号
+		   ---,isnull(sapso.luohao,'')AS 'luoHao'----落号
+		   ---,isnull(sapso.ganghao,'')AS 'gangHao'---缸号
+			--,isnull(sapso.realWidth,'')AS 'realWidth'---缸号
+			---,isnull(sapso.realLength,'')AS 'realLength'---缸号
+			,RTRIM(LTRIM(ISNULL(tfz.CFDM,''))) AS 'chengFenDaiMa'---成分代码
+          FROM MF_PSS mf
+          LEFT JOIN TF_PSS tf ON mf.ps_no=tf.ps_no
+          LEFT JOIN PRDT pd ON tf.prd_no= pd.prd_no
+          LEFT JOIN INDX dx ON pd.idx1=dx.idx_no
+          left JOIN TF_PSS_Z tfz on tfz.ps_no=tf.ps_no and tf.itm=tfz.itm
+         ---- LEFT JOIN sapso  sapso ON ( sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no)
+          WHERE
+           mf.ps_id='SA'
+          AND
+          tf.ps_id='SA'
+          AND
+              mf.cus_no=
+                  CASE
+                  WHEN #{cus_no}='' THEN mf.cus_no
+                  ELSE #{cus_no}
+                  END
+		  AND
+              mf.ps_dd
+                  BETWEEN
+                          CASE
+                          WHEN #{chaXunTiaoJian.startTime}='' THEN '1970-01-01'---传空的过来我们就把时间最小化
+                          ELSE #{chaXunTiaoJian.startTime}
+                          END  ----小的(远的)时间必须在前面
+                      AND
+                          CASE
+                          WHEN #{chaXunTiaoJian.endTime}='' THEN '8888-12-31'---传空的过来我们就把时间尽量最大化,其实最大的是9999-12-31
+                          ELSE #{chaXunTiaoJian.endTime}
+                          END  ----大的(近的)时间必须在前面
+     </select>
+
+
+
+    <select id="selectSapso" resultType="com.winwin.picreport.Edto.Sapso">
+        SELECT
+
+       ISNULL(sapso.sapph,'') as sapph-------------//物料编码  =原始数据表SAPSO.SAP 品号
+
+        ,ISNULL(sapso.qty,0) as qty---数量
+
+        ,ISNULL(sapso.osno,'') as osno----原来说的cusosno和osno一样,现在这个是ebno
+        ,isnull(sapso.prdno,'') as prdno---货号
+        ,ISNULL(sapso.saphh,'') as saphh------------采购订单行号
+        ,RTRIM(LTRIM(ISNULL(sapso.chengfendaima,''))) as ChengFenDaiMa---成分代码---注意,都是小写那个是为了输入的,这个是为了输出到excel的
+        ,RTRIM(LTRIM(ISNULL(sapso.chengfendaima,''))) as chengfendaima
+        ,ISNULL(sapso.caiGouNo,'') as caigouno----采购单号
+        ,isnull(sapso.luohao,'') as luohao----落号
+        ,isnull(sapso.ganghao,'') as ganghao---缸号
+        ,isnull(sapso.realWidth,'') as realwidth---实际幅宽
+        ,isnull(sapso.realLength,'') as reallength---实际长度
+        ,isnull(sapso.ebno,'') as ebno
+        ,isnull(sapso.sapwlm,'')as sapwlm
+        ,isnull(sapso.maitouno,'') as maitouno
+
+
+        FROM MF_PSS mf
+        LEFT JOIN TF_PSS tf ON mf.ps_no=tf.ps_no
+        left JOIN TF_PSS_Z tfz on tfz.ps_no=tf.ps_no and tf.itm=tfz.itm
+       LEFT JOIN sapso  sapso ON ( sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no and sapso.chengfendaima=tfz.cfdm)
+        WHERE
+        mf.ps_id='SA'
+        AND
+        tf.ps_id='SA'
+        AND
+        mf.cus_no=
+        CASE
+        WHEN #{cus_no}='' THEN mf.cus_no
+        ELSE #{cus_no}
+        END
+        AND
+        mf.ps_dd
+        BETWEEN
+        CASE
+        WHEN #{chaXunTiaoJian.startTime}='' THEN '1970-01-01'---传空的过来我们就把时间最小化
+        ELSE #{chaXunTiaoJian.startTime}
+        END  ----小的(远的)时间必须在前面
+          AND
+        CASE
+        WHEN #{chaXunTiaoJian.endTime}='' THEN '8888-12-31'---传空的过来我们就把时间尽量最大化,其实最大的是9999-12-31
+        ELSE #{chaXunTiaoJian.endTime}
+        END  ----大的(近的)时间必须在前面
+    </select>
+
+
+    <update id="updateMfPosNullToNothing001">
+          UPDATE MF_POS SET CLS_ID='F',PAY_MTH=1,PAY_DAYS=1,CHK_DAYS=30 WHERE OS_NO=#{mfPosWithBLOBs.osNo}
+    </update>
+
+    <update id="updateTfPosNullToNothing001">
+          UPDATE TF_POS SET PRE_ITM=ITM,WH='00000000' WHERE OS_NO=#{mfPosWithBLOBs.osNo}
+    </update>
+
+
+
+
+    <update id="update001OfOnlineBug">
+        UPDATE A SET A.REM=B.REM FROM TF_POS A,TF_POS B,TF_SQ C
+        WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.REM IS NULL or A.rem='') AND
+        B.os_id='SO' AND (B.REM IS NOT NULL AND B.rem != '') AND A.SQ_NO=C.SQ_NO AND
+        A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update002OfOnlineBug">
+        UPDATE  A SET A.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS A,TF_POS B,TF_SQ C
+        WHERE A.os_id='PO' AND A.qt_no like 'SQ%' AND (A.SUP_PRD_NO IS NULL or A.SUP_PRD_NO='') AND
+        B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO!='') AND A.SQ_NO=C.SQ_NO AND
+        A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update003OfOnlineBug">
+        UPDATE  C SET C.SUP_PRD_NO=B.SUP_PRD_NO FROM TF_POS B,TF_SQ C
+        WHERE B.os_id='SO' AND (B.SUP_PRD_NO IS NOT NULL AND B.SUP_PRD_NO!='') AND
+        C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM
+    </update>
+
+    <update id="update004OfOnlineBug">
+        update  tf_pos set wh='1000' where os_id='PO' AND wh='00000000'
+    </update>
+
+    <update id="update005OfOnlineBug">
+        update  tf_pos set wh='2000' where os_id='PO' and os_no in
+        (select os_no from mf_pos where cus_no='F031') and  wh != '2000'
+    </update>
+
+
+    <update id="update006OfOnlineBug">
+        UPDATE D SET D.SDDH=B.OS_NO FROM TF_POS A,TF_POS B,TF_SQ C,TF_POS_Z D
+        WHERE A.os_id='PO' AND A.qt_no like 'SQ%'  AND
+        B.os_id='SO'  AND A.SQ_NO=C.SQ_NO AND
+        A.OTH_ITM=C.ITM AND C.SO_NO=B.OS_NO AND C.EST_ITM=B.ITM AND
+        D.OS_NO=A.OS_NO AND (D.SDDH IS NULL OR D.SDDH='')
+    </update>
+
+    <update id="update007_1_OfOnlineBug">
+        UPDATE A SET A.CK_DD=B.FHRQ FROM MF_CK A,MF_CK_Z B
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_2_OfOnlineBug">
+        UPDATE A SET A.CK_DD=B.FHRQ FROM TF_CK A,MF_CK_Z B,MF_CK C
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NOT NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_3_OfOnlineBug">
+        UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())
+FROM MF_CK A,MF_CK_Z B
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL  AND A.SA_CLS_ID='F'
+    </update>
+
+    <update id="update007_4_OfOnlineBug">
+        UPDATE A SET A.CK_DD=Datename(year,GetDate())+'-'+Datename(month,GetDate())+'-'+Datename(day,GetDate())
+FROM TF_CK A,MF_CK_Z B,MF_CK C
+WHERE A.CK_NO=B.CK_NO AND  B.FHRQ is NULL AND A.CK_NO=C.CK_NO AND C.SA_CLS_ID='F'
+    </update>
+
+
+
+</mapper>
