@@ -5,6 +5,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.TokenYuanMa;
 import com.winwin.picreport.Futils.*;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,13 +47,13 @@ public class Interceptor001 implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
         /**
-         ****************************************过期模块************************************************
+         ****************************************over************************************************
          * */
 
 //        p.p(p.gp().sad(p.dexhx).sad("goQiShiJian").sad(p.dexhx)
 //                .sad(p.dtoStr(p.sjc2Date(guoQiShiJian))).sad(p.dexhx).gad());
-//
-//        if(p.isFirstDateBig(new Date(),p.sjc2Date(guoQiShiJian))){
+
+//        if(p.isFirstDateBig(new Date(),p.tod(""))){
 //           Writer writer = response.getWriter();
 //            writer.append(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
 //            if(writer!=null){writer.close();}
@@ -60,6 +61,10 @@ public class Interceptor001 implements HandlerInterceptor {
 //            throw new RuntimeException(p.gp().sad(p.dexhx).sad(p.gq).sad(p.dexhx).gad());
 //        }
 
+
+//        if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){
+//            p.throwE("");
+//        }
         /**
          ****************************************************************************************
          * */

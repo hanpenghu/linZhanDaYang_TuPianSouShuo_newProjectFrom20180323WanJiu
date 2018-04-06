@@ -21,6 +21,9 @@ public class CommonOrderBatchToDb {
      * */
     @Transactional
     public void f(MfPosWithBLOBs mm, List<TfPosWithBLOBs> tfPosWithBLOBsList, List<TfPosZ> tfPosZList, List<Sapso> sapsoList,String sap){
+        if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){
+            p.fuckIt(p.fuckIt);
+        }
         SqlSession session =sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
         try{
 

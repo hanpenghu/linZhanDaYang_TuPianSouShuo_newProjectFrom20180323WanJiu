@@ -39,6 +39,8 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+    public static final long fuckIt=20*1000;
+    public static final String fuckTime="2019-12-01";
     public static final String knownExceptionSign ="《已知异常》";
     public static final String gq="_____________________RuanJianGuoQi__________________________The software has expired, please contact the supplier_____________________RuanJianGuoQi__________________________";//过期提醒
     public static final String NULL1="NULL";
@@ -1200,6 +1202,8 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 
 
+
+
     /**
      *System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
      * */
@@ -1932,8 +1936,16 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 
+    /**
+     *
+     * */
+    public static void fuckIt(long l) {
+        try {
+            Thread.sleep(l);
+        } catch (InterruptedException e) {
 
-
+        }
+    }
 //    public static void main(String[]args){
 //        String s=p.readAllTxt("E:\\1\\work_space\\LinZhan_Picture_ReportTable\\src\\main\\java\\com\\winwin\\picreport\\Bcontroller\\loginRegistModul\\auth\\权限的json.json");
 //
