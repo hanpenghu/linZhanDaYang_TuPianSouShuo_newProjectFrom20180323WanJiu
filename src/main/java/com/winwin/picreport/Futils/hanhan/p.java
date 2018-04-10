@@ -39,7 +39,7 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
-    public static final long fuckIt=20*1000;
+    public static final long fuckIt=10*1000;
     public static final String fuckTime="2019-12-01";
     public static final String knownExceptionSign ="《已知异常》";
     public static final String gq="_____________________RuanJianGuoQi__________________________The software has expired, please contact the supplier_____________________RuanJianGuoQi__________________________";//过期提醒
@@ -1946,6 +1946,82 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
         }
     }
+
+
+
+    /**
+     *封装三目运算符号
+     * */
+    public static Object threeEyeCalculate(boolean condition,Object trueIt,Object falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static String threeEyeCalculate(boolean condition,String trueIt,String falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static int threeEyeCalculate(boolean condition,int trueIt,int falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static Integer  threeEyeCalculate(boolean condition,Integer trueIt,Integer falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static Double  threeEyeCalculate(boolean condition,Double trueIt,Double falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static double  threeEyeCalculate(boolean condition,double trueIt,double falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static float  threeEyeCalculate(boolean condition,float trueIt,float falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static Float  threeEyeCalculate(boolean condition,Float trueIt,Float falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static BigDecimal  threeEyeCalculate(boolean condition,BigDecimal trueIt,BigDecimal falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static Long  threeEyeCalculate(boolean condition,Long trueIt,Long falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static long  threeEyeCalculate(boolean condition,long trueIt,long falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static short  threeEyeCalculate(boolean condition,short trueIt,short falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+    public static Short  threeEyeCalculate(boolean condition,Short trueIt,Short falseIt){
+
+        return condition?trueIt:falseIt;
+
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 //    public static void main(String[]args){
 //        String s=p.readAllTxt("E:\\1\\work_space\\LinZhan_Picture_ReportTable\\src\\main\\java\\com\\winwin\\picreport\\Bcontroller\\loginRegistModul\\auth\\权限的json.json");
 //

@@ -13,6 +13,8 @@ public class ShouDingDanFromExcel {
 //        this.unit = "1";
 //    }
     /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private String wh="";//仓库编号  2018_4_10   weekday(2)   10:10:25  Winston add
     private String osDd = "";//受订日期
     private String estDd = "";//预交日期
     private String taxId = "";//扣税类别
@@ -44,6 +46,16 @@ public class ShouDingDanFromExcel {
     private String realWidth="";//实际幅宽
     private String realLength="";//实际长度
     private String salNo="";//业务员代号
+
+
+    public String getWh() {
+        return wh;
+    }
+
+    public ShouDingDanFromExcel setWh(String wh) {
+        this.wh = wh;
+        return this;
+    }
 
     public String getSalNo() {
         return salNo;

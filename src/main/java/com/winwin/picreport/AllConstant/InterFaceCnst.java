@@ -110,4 +110,5 @@ public interface InterFaceCnst {
 
     String mfPssExportExcelOfSap="mfPssExportExcelOfSap";
     String mfPssDaBao="mfPssDaBao";
+    String allWh="allWh";
 }

@@ -2,10 +2,7 @@ package com.winwin.picreport.Bcontroller;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.AllConstant.StatusCnst;
-import com.winwin.picreport.Edto.CurrentType;
-import com.winwin.picreport.Edto.Data;
-import com.winwin.picreport.Edto.KeHu;
-import com.winwin.picreport.Edto.YeWuYuan;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +20,18 @@ public class A0BaseInfoController {
          List<KeHu> keHus =cnst.manyTabSerch.getAllCustOf_obj_id_1_that_KeHuNotChangShang();
          return keHus;
     }
+
+
+//所有仓库接口
+    @RequestMapping(value=InterFaceCnst.allWh,method= RequestMethod.POST
+            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody List<MyWh001> getAllWh(){
+        List<MyWh001> myWh001s =cnst.manyTabSerch.getAllWh();
+        return myWh001s;
+    }
+
+
+
 
 
     //所有厂商接口

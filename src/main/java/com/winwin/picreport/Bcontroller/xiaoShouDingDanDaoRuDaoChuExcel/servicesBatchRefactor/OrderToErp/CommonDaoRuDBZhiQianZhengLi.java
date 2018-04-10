@@ -252,6 +252,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
         mm.setCurId(s.getCurId());
         mm.setExcRto(new BigDecimal(s.getExcRto()));
 
+        mm.setSalNo(p.threeEyeCalculate(p.notEmpty(s.getSalNo()),s.getSalNo(),""));
+
         mm.setCusNo(s.getCusNo());
         mm.setTaxId(s.getTaxId());
         //老郑说了,这个客户单号也用osNo填充
@@ -340,6 +342,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
 
+
         t.setRem(s.getRemBody());
         t.setPrdMark("");
 
@@ -353,7 +356,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
         }
 //        t.setWh("0000");
         //20171113老郑让改
-        t.setWh("1000");
+//        t.setWh("1000");
+        //2018_4_10   weekday(2)   10:30:48  //老郑让改成前端传过来
+        t.setWh(p.threeEyeCalculate(p.notEmpty(s.getWh()),s.getWh(),"1000"));
         if (estDd == null) {
             t.setEstDd(null);
         } else {
