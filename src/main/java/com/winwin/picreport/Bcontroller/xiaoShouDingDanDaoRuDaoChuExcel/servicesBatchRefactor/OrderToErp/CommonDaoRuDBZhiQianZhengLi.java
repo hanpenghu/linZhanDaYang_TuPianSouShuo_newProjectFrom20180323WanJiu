@@ -254,20 +254,24 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         mm.setSalNo(p.threeEyeCalculate(p.notEmpty(s.getSalNo()),s.getSalNo(),""));
 
+
+        //下面2条是老郑在20170929让我加上的
+        //是把界面选的存的代号sal_no，同时写进 mf_pos.usr , mf_pos.chk_man两个字段
+        if (p.empty(mm.getSalNo())) {
+            mm.setUsr("ADMIN");
+            mm.setChkMan("ADMIN");
+        } else {
+            mm.setUsr(mm.getSalNo());
+            mm.setChkMan(mm.getSalNo());
+        }
+
+
         mm.setCusNo(s.getCusNo());
         mm.setTaxId(s.getTaxId());
         //老郑说了,这个客户单号也用osNo填充
         mm.setCusOsNo(s.getOsNo());
         mm.setOsId("SO");
-        //下面2条是老郑在20170929让我加上的
-        //是把界面选的存的代号sal_no，同时写进 mf_pos.usr , mf_pos.chk_man两个字段
-        if (p.empty(s.getSalNo())) {
-            mm.setUsr("ADMIN");
-            mm.setChkMan("ADMIN");
-        } else {
-            mm.setUsr(s.getSalNo());
-            mm.setChkMan(s.getSalNo());
-        }
+
         //后来加的4个,为了避免是null
         mm.setClsId("F");
         mm.setPayMth("1");
