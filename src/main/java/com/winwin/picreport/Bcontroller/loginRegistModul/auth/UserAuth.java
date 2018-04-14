@@ -137,6 +137,9 @@ public class UserAuth {
 //        p.p("-------------------------------------------------------");
 //        p.p(authJsonStr);
 //        p.p("-------------------------------------------------------");
+
+        //赋予所有权限的话开这个
+//        authJsonStr = "{\"logistics\":{\"salesorder\":{\"page\":\"T\"},\"salesorderTorSAP\":{\"page\":\"T\"},\"salesDetail\":{\"page\":\"T\"},\"productCode\":{\"page\":\"T\"},\"purchasePricing\":{\"page\":\"T\"},\"salesPricing\":{\"page\":\"T\",\"part\":{\"purchasePrice\":\"T\",\"salesPrice\":\"T\"}},\"sampleConfirm\":{\"page\":\"T\"}}}";
         Auth auth = JSON.parseObject(authJsonStr, Auth.class);
         msg.setAuth(auth);
 

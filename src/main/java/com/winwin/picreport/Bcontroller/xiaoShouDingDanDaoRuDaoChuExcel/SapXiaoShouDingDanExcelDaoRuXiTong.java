@@ -1,4 +1,5 @@
 package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
@@ -44,6 +45,12 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
         method= RequestMethod.POST,produces = {p.charsetUtf8})
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
+
+
+
+    p.p("-------------------------------------------------------");
+    p.p(JSON.toJSONString(shouDingDanFromExcels));
+    p.p("-------------------------------------------------------");
 
     Date date = p.getDate();
 

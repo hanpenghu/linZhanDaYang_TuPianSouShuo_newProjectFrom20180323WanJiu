@@ -303,6 +303,28 @@ public class CommonDaoRuDBZhiQianZhengLi {
         mm.setUseDep("2000");
         mm.setSendMth("1");
         mm.setPoDep("2000");
+        if (estDd == null) {
+            if(p.notEmpty(osDd)){
+                try {
+                    mm.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+                } catch (Exception e) {l.error(e.getMessage(),e);
+                    msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+osDd+"》");
+                    listmsg.add(msg);
+                    throw new RuntimeException(msg.getMsg());
+                }
+            }else{
+                mm.setEstDd(null);
+            }
+
+        } else {
+            try {
+                mm.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));
+            } catch (Exception e) {l.error(e.getMessage(),e);
+                msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+estDd+"》");
+                listmsg.add(msg);
+                throw new RuntimeException(msg.getMsg());
+            }
+        }
 ///////////////////////
         t.setOsNo(s.getOsNo());
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
@@ -312,7 +334,15 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         t.setPrdNo(s.getPrdNo());
         t.setPrdName(s.getPrdName());
-        t.setQty(new BigDecimal(s.getQty()));
+
+        try {
+            t.setQty(new BigDecimal(s.getQty().trim().replace(",","")));
+        } catch (Exception e) {
+            String ss="qty  数量 字段有非法数据  导致excel没有插入  根据品名《"+s.getPrdName()+"》去找";
+            listmsg.add(Msg.gmg().setMsg(ss));
+            throw new RuntimeException(ss);
+        }
+
 //        t.setUnit(s.getUnit());
         t.setUnit("1");
         try {
@@ -364,7 +394,18 @@ public class CommonDaoRuDBZhiQianZhengLi {
         //2018_4_10   weekday(2)   10:30:48  //老郑让改成前端传过来
         t.setWh(p.threeEyeCalculate(p.notEmpty(s.getWh()),s.getWh(),"1000"));
         if (estDd == null) {
-            t.setEstDd(null);
+            if(p.notEmpty(osDd)){
+                try {
+                    t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(osDd)));
+                } catch (Exception e) {l.error(e.getMessage(),e);
+                    msg.setMsg("销售订单导入的时候预交日期不是有效的时间戳estDd:《"+osDd+"》");
+                    listmsg.add(msg);
+                    throw new RuntimeException(msg.getMsg());
+                }
+            }else{
+                t.setEstDd(null);
+            }
+
         } else {
             try {
                 t.setEstDd(TimeStampToDate.timeStampToDate(Long.parseLong(estDd)));

@@ -3,6 +3,7 @@ package com.winwin.picreport.Futils;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.hanhan.p;
 
 import java.util.List;
 
@@ -60,10 +61,13 @@ public class AmtAndAmtnAndTaxChongXinSuan {
         }
 
         try {
-            qty = Double.parseDouble(qtystr);
+            qty = Double.parseDouble(qtystr.trim().replace(",",""));
         } catch (NumberFormatException e) {
             qty=0;
             listmsg.addAll(new MessageGenerate().generateMessage("qty 数量不是数字"));
+            p.p("-----出问题的数量 qty 字段--------------------------------------------------");
+            p.p(qtystr);
+            p.p("-------------------------------------------------------");
             throw new RuntimeException("qty 数量不是数字");
         }
 

@@ -1,4 +1,5 @@
 package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.MfPosExample;
@@ -40,6 +41,12 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
+
+
+    p.p("-------------------------------------------------------");
+    p.p(JSON.toJSONString(shouDingDanFromExcels));
+    p.p("-------------------------------------------------------");
+
 
 //    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
 //    if(shouDingDanFromExcels.size()<=50){
