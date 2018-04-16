@@ -393,6 +393,15 @@ public class CommonDaoRuDBZhiQianZhengLi {
 //        t.setWh("1000");
         //2018_4_10   weekday(2)   10:30:48  //老郑让改成前端传过来
         t.setWh(p.threeEyeCalculate(p.notEmpty(s.getWh()),s.getWh(),"1000"));
+
+
+
+        p.p("---------s.getWh是"+s.getWh()+"---------------导入sapSoExcel实验仓库----以下是tfpos得到的wh---------------------------");
+        p.p(t.getWh());
+        p.p("-------------------------------------------------------");
+
+
+
         if (estDd == null) {
             if(p.notEmpty(osDd)){
                 try {
