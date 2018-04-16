@@ -49,7 +49,10 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
 
     p.p("-------------------------------------------------------");
-    p.p(JSON.toJSONString(shouDingDanFromExcels));
+    if(shouDingDanFromExcels==null||shouDingDanFromExcels.size()<50){
+        p.p(JSON.toJSONString(shouDingDanFromExcels));
+    }
+
     p.p("-------------------------------------------------------");
 
     Date date = p.getDate();
