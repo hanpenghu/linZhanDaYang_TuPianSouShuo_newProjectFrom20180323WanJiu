@@ -187,6 +187,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
          * */
 
         try {
+
             cnst.commonOrderBatchToDb.f(mm,tfPosWithBLOBsList,tfPosZList,sapsoList,sap);
         } catch (Exception e) {
 
