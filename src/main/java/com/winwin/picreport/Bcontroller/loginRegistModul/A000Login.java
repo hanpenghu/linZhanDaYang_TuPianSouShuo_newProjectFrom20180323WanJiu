@@ -20,6 +20,8 @@ import java.util.List;
 @CrossOrigin//java的跨域
 @RestController
 public class A000Login {
+
+
     @Autowired
    private LoginShiEmaiDeQingkuang loginShiEmaiDeQingkuang;
 
@@ -79,16 +81,12 @@ public class A000Login {
     }
 ]*/
     @RequestMapping(value="login",method= RequestMethod.POST)
-    public
-    @ResponseBody
-    List<Msg> f(HttpServletRequest request, @RequestBody LoginInfo info){
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//        System.out.println(info);
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+    public @ResponseBody List<Msg> f(HttpServletRequest request, @RequestBody LoginInfo info){
+
         List<Msg> list;
-        if(IsEmail.isEmail1(info.getUserEmail())){//这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
+        if(IsEmail.isEmail1(info.getUserEmail())){                                                      //这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
             list = loginShiEmaiDeQingkuang.f(info);
-        }else if(IsPhoneNo.isPhoneNo(info.getUserEmail())){//这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
+        }else if(IsPhoneNo.isPhoneNo(info.getUserEmail())){                                              //这里userEmail在登录的时候前端传用户名和手机号和email都用这个字段
             list=  loginShiPhoneNoDeQingkuang.f(info);
         }else{//此时是会员名
             list= loginShiHuiYuanMingDeQingKuang.f(info);
