@@ -78,6 +78,9 @@ public class Cnst {
 
 
     @Autowired
+    public CustMapper custMapper;
+
+    @Autowired
     public IndxMapper indxMapper;
 
     @Autowired

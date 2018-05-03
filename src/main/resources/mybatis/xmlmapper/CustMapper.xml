@@ -1,0 +1,4152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.CustMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.Cust">
+    <id column="CUS_NO" jdbcType="VARCHAR" property="cusNo" />
+    <result column="IDX2" jdbcType="VARCHAR" property="idx2" />
+    <result column="CUS_ARE" jdbcType="VARCHAR" property="cusAre" />
+    <result column="MAS_CUS" jdbcType="VARCHAR" property="masCus" />
+    <result column="OBJ_ID" jdbcType="VARCHAR" property="objId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="SNM" jdbcType="VARCHAR" property="snm" />
+    <result column="PAY_DD" jdbcType="SMALLINT" property="payDd" />
+    <result column="CLS_MTH" jdbcType="VARCHAR" property="clsMth" />
+    <result column="CLS_DD" jdbcType="SMALLINT" property="clsDd" />
+    <result column="MM_END" jdbcType="SMALLINT" property="mmEnd" />
+    <result column="CHK_DD" jdbcType="SMALLINT" property="chkDd" />
+    <result column="UNI_NO" jdbcType="VARCHAR" property="uniNo" />
+    <result column="BOS_NM" jdbcType="VARCHAR" property="bosNm" />
+    <result column="CNT_JOB1" jdbcType="VARCHAR" property="cntJob1" />
+    <result column="CNT_MAN1" jdbcType="VARCHAR" property="cntMan1" />
+    <result column="CNT_JOB2" jdbcType="VARCHAR" property="cntJob2" />
+    <result column="CNT_MAN2" jdbcType="VARCHAR" property="cntMan2" />
+    <result column="ACC_MAN" jdbcType="VARCHAR" property="accMan" />
+    <result column="SAL" jdbcType="VARCHAR" property="sal" />
+    <result column="TEL1" jdbcType="VARCHAR" property="tel1" />
+    <result column="TEL2" jdbcType="VARCHAR" property="tel2" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="ZIP" jdbcType="VARCHAR" property="zip" />
+    <result column="LIM_NR" jdbcType="NUMERIC" property="limNr" />
+    <result column="LIM_NC" jdbcType="NUMERIC" property="limNc" />
+    <result column="CRD_ID" jdbcType="VARCHAR" property="crdId" />
+    <result column="INV_ID" jdbcType="VARCHAR" property="invId" />
+    <result column="ID1_TAX" jdbcType="VARCHAR" property="id1Tax" />
+    <result column="ID2_TAX" jdbcType="VARCHAR" property="id2Tax" />
+    <result column="CLS1" jdbcType="VARCHAR" property="cls1" />
+    <result column="CLS2" jdbcType="VARCHAR" property="cls2" />
+    <result column="STR_DD" jdbcType="TIMESTAMP" property="strDd" />
+    <result column="END_DD" jdbcType="TIMESTAMP" property="endDd" />
+    <result column="CUR" jdbcType="VARCHAR" property="cur" />
+    <result column="CRD_NR_NC" jdbcType="VARCHAR" property="crdNrNc" />
+    <result column="E_MAIL" jdbcType="VARCHAR" property="eMail" />
+    <result column="SEND_MTH" jdbcType="VARCHAR" property="sendMth" />
+    <result column="SEND_WH" jdbcType="VARCHAR" property="sendWh" />
+    <result column="BNK_NAME" jdbcType="VARCHAR" property="bnkName" />
+    <result column="ID_CODE" jdbcType="VARCHAR" property="idCode" />
+    <result column="CUS_LEVEL" jdbcType="VARCHAR" property="cusLevel" />
+    <result column="INC_CHECK" jdbcType="VARCHAR" property="incCheck" />
+    <result column="LS_RTO" jdbcType="NUMERIC" property="lsRto" />
+    <result column="COMPNET" jdbcType="VARCHAR" property="compnet" />
+    <result column="COMP_DD" jdbcType="TIMESTAMP" property="compDd" />
+    <result column="CAPSUM" jdbcType="NUMERIC" property="capsum" />
+    <result column="BUSISUM" jdbcType="NUMERIC" property="busisum" />
+    <result column="SALMS" jdbcType="INTEGER" property="salms" />
+    <result column="BUSINOTE" jdbcType="VARCHAR" property="businote" />
+    <result column="CHK_CRD" jdbcType="VARCHAR" property="chkCrd" />
+    <result column="S_FLAG" jdbcType="VARCHAR" property="sFlag" />
+    <result column="INITNUM" jdbcType="NUMERIC" property="initnum" />
+    <result column="NOTIFY" jdbcType="VARCHAR" property="notify" />
+    <result column="BROKER" jdbcType="VARCHAR" property="broker" />
+    <result column="VESSEL" jdbcType="VARCHAR" property="vessel" />
+    <result column="LOADING_PORT" jdbcType="VARCHAR" property="loadingPort" />
+    <result column="DIS_PORT" jdbcType="VARCHAR" property="disPort" />
+    <result column="MANU_PLACE" jdbcType="VARCHAR" property="manuPlace" />
+    <result column="EPAPER" jdbcType="VARCHAR" property="epaper" />
+    <result column="TRAN_REC" jdbcType="VARCHAR" property="tranRec" />
+    <result column="PSWD" jdbcType="VARCHAR" property="pswd" />
+    <result column="PSWD_HIT" jdbcType="VARCHAR" property="pswdHit" />
+    <result column="PSWD_ANS" jdbcType="VARCHAR" property="pswdAns" />
+    <result column="APPLY_DD" jdbcType="TIMESTAMP" property="applyDd" />
+    <result column="BIZ_DSC" jdbcType="VARCHAR" property="bizDsc" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="BANK_NO" jdbcType="VARCHAR" property="bankNo" />
+    <result column="ACC_NO_AR" jdbcType="VARCHAR" property="accNoAr" />
+    <result column="ACC_NO_AP" jdbcType="VARCHAR" property="accNoAp" />
+    <result column="ACC_NO_R0" jdbcType="VARCHAR" property="accNoR0" />
+    <result column="ACC_NO_P0" jdbcType="VARCHAR" property="accNoP0" />
+    <result column="SO_CRD" jdbcType="VARCHAR" property="soCrd" />
+    <result column="FP_NAME" jdbcType="VARCHAR" property="fpName" />
+    <result column="CHK_FAX" jdbcType="VARCHAR" property="chkFax" />
+    <result column="RTO_TAX" jdbcType="NUMERIC" property="rtoTax" />
+    <result column="CHK_CUS_IDX" jdbcType="VARCHAR" property="chkCusIdx" />
+    <result column="CY_ID" jdbcType="VARCHAR" property="cyId" />
+    <result column="REGIST_CODE" jdbcType="VARCHAR" property="registCode" />
+    <result column="CORP_ID" jdbcType="VARCHAR" property="corpId" />
+    <result column="M_CUST" jdbcType="VARCHAR" property="mCust" />
+    <result column="SAL_NO" jdbcType="VARCHAR" property="salNo" />
+    <result column="CHK_DEP" jdbcType="VARCHAR" property="chkDep" />
+    <result column="RTO_KK" jdbcType="NUMERIC" property="rtoKk" />
+    <result column="DEP" jdbcType="VARCHAR" property="dep" />
+    <result column="RTO_FL" jdbcType="NUMERIC" property="rtoFl" />
+    <result column="RTO_YL" jdbcType="NUMERIC" property="rtoYl" />
+    <result column="DEP1" jdbcType="VARCHAR" property="dep1" />
+    <result column="USR" jdbcType="VARCHAR" property="usr" />
+    <result column="CHK_INCLUDE" jdbcType="VARCHAR" property="chkInclude" />
+    <result column="CHK_IRP" jdbcType="VARCHAR" property="chkIrp" />
+    <result column="CHK_TRP" jdbcType="VARCHAR" property="chkTrp" />
+    <result column="CHK_MAN" jdbcType="VARCHAR" property="chkMan" />
+    <result column="CLS_DATE" jdbcType="TIMESTAMP" property="clsDate" />
+    <result column="CHK_PAY1" jdbcType="VARCHAR" property="chkPay1" />
+    <result column="PAY_DAYS" jdbcType="SMALLINT" property="payDays" />
+    <result column="PAY_FLAG" jdbcType="VARCHAR" property="payFlag" />
+    <result column="CHK_PAY2" jdbcType="VARCHAR" property="chkPay2" />
+    <result column="CHK_PAY3" jdbcType="VARCHAR" property="chkPay3" />
+    <result column="AMTN_MAX_PAY" jdbcType="NUMERIC" property="amtnMaxPay" />
+    <result column="CHK_QK" jdbcType="VARCHAR" property="chkQk" />
+    <result column="AMTN_QK" jdbcType="NUMERIC" property="amtnQk" />
+    <result column="USR1" jdbcType="VARCHAR" property="usr1" />
+    <result column="SYS_DATE" jdbcType="TIMESTAMP" property="sysDate" />
+    <result column="RTO_DISCNT" jdbcType="NUMERIC" property="rtoDiscnt" />
+    <result column="CHK_IRP2" jdbcType="VARCHAR" property="chkIrp2" />
+    <result column="LOGON" jdbcType="VARCHAR" property="logon" />
+    <result column="WH_NO" jdbcType="VARCHAR" property="whNo" />
+    <result column="STOP_ORDER" jdbcType="VARCHAR" property="stopOrder" />
+    <result column="RTN_CTRL" jdbcType="VARCHAR" property="rtnCtrl" />
+    <result column="DRP_ID" jdbcType="VARCHAR" property="drpId" />
+    <result column="UPR4_ID" jdbcType="VARCHAR" property="upr4Id" />
+    <result column="YH_WH1" jdbcType="VARCHAR" property="yhWh1" />
+    <result column="YH_WH2" jdbcType="VARCHAR" property="yhWh2" />
+    <result column="ACC_NO_IR" jdbcType="VARCHAR" property="accNoIr" />
+    <result column="ACC_NO_IP" jdbcType="VARCHAR" property="accNoIp" />
+    <result column="B2C_ID" jdbcType="VARCHAR" property="b2cId" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="PRTWEEKS_PO" jdbcType="SMALLINT" property="prtweeksPo" />
+    <result column="SOWEEKS_PO" jdbcType="SMALLINT" property="soweeksPo" />
+    <result column="LANG_ID" jdbcType="VARCHAR" property="langId" />
+    <result column="CHK_DRP1" jdbcType="VARCHAR" property="chkDrp1" />
+    <result column="CHK_DRP2" jdbcType="VARCHAR" property="chkDrp2" />
+    <result column="CHK_DRP3" jdbcType="VARCHAR" property="chkDrp3" />
+    <result column="SRV_NO" jdbcType="VARCHAR" property="srvNo" />
+    <result column="CUS_IDX" jdbcType="VARCHAR" property="cusIdx" />
+    <result column="XN_NO" jdbcType="VARCHAR" property="xnNo" />
+    <result column="CWORK" jdbcType="INTEGER" property="cwork" />
+    <result column="CHK_BARCODE" jdbcType="VARCHAR" property="chkBarcode" />
+    <result column="ACC_NO_ZP" jdbcType="VARCHAR" property="accNoZp" />
+    <result column="HM_ID" jdbcType="VARCHAR" property="hmId" />
+    <result column="PSWD_PAY" jdbcType="VARCHAR" property="pswdPay" />
+    <result column="AMTN_FL" jdbcType="NUMERIC" property="amtnFl" />
+    <result column="AMTN_FLED" jdbcType="NUMERIC" property="amtnFled" />
+    <result column="CHK_SBRTO" jdbcType="VARCHAR" property="chkSbrto" />
+    <result column="DEPRO_NO" jdbcType="VARCHAR" property="deproNo" />
+    <result column="RTO_FQSK" jdbcType="NUMERIC" property="rtoFqsk" />
+    <result column="DATEFLAG_FQSK" jdbcType="VARCHAR" property="dateflagFqsk" />
+    <result column="DATE_FQSK" jdbcType="TIMESTAMP" property="dateFqsk" />
+    <result column="QS_FQSK" jdbcType="INTEGER" property="qsFqsk" />
+    <result column="LOCAL_ID" jdbcType="VARCHAR" property="localId" />
+    <result column="RULE_ID" jdbcType="INTEGER" property="ruleId" />
+    <result column="TEL1_CODE" jdbcType="VARCHAR" property="tel1Code" />
+    <result column="UNI_NO2" jdbcType="VARCHAR" property="uniNo2" />
+    <result column="FP_NAME2" jdbcType="VARCHAR" property="fpName2" />
+    <result column="CODE_NAME" jdbcType="VARCHAR" property="codeName" />
+    <result column="CHK_KD" jdbcType="VARCHAR" property="chkKd" />
+    <result column="WS_CUS_NO" jdbcType="VARCHAR" property="wsCusNo" />
+    <result column="AUTO_CASN_CHK" jdbcType="VARCHAR" property="autoCasnChk" />
+    <result column="NSR_CODE" jdbcType="VARCHAR" property="nsrCode" />
+    <result column="NAME_PY" jdbcType="VARCHAR" property="namePy" />
+    <result column="BIZ_DSC1" jdbcType="VARCHAR" property="bizDsc1" />
+    <result column="CUS_SRC" jdbcType="VARCHAR" property="cusSrc" />
+    <result column="ACC_NO_AR2" jdbcType="VARCHAR" property="accNoAr2" />
+    <result column="ACC_NO_AP2" jdbcType="VARCHAR" property="accNoAp2" />
+    <result column="VISIT_LIMIT" jdbcType="INTEGER" property="visitLimit" />
+    <result column="BB_DD" jdbcType="TIMESTAMP" property="bbDd" />
+    <result column="SO_DD" jdbcType="TIMESTAMP" property="soDd" />
+    <result column="MOB_ID" jdbcType="VARCHAR" property="mobId" />
+    <result column="TT_TYPE_SET" jdbcType="VARCHAR" property="ttTypeSet" />
+    <result column="EX_TRD_ID" jdbcType="VARCHAR" property="exTrdId" />
+    <result column="IM_TRD_ID" jdbcType="VARCHAR" property="imTrdId" />
+    <result column="CUS_NO_KD" jdbcType="VARCHAR" property="cusNoKd" />
+    <result column="CHK_ZHANG_ID2" jdbcType="VARCHAR" property="chkZhangId2" />
+    <result column="PJSQ_WH" jdbcType="VARCHAR" property="pjsqWh" />
+    <result column="JD_NO" jdbcType="VARCHAR" property="jdNo" />
+    <result column="FP_TYPE" jdbcType="VARCHAR" property="fpType" />
+    <result column="CHK_CX" jdbcType="VARCHAR" property="chkCx" />
+    <result column="CHK_MIN_XF" jdbcType="VARCHAR" property="chkMinXf" />
+    <result column="BIL_MIN_XF" jdbcType="VARCHAR" property="bilMinXf" />
+    <result column="CHK_TYPE_MINXF" jdbcType="VARCHAR" property="chkTypeMinxf" />
+    <result column="AMTN_MIN_XF" jdbcType="NUMERIC" property="amtnMinXf" />
+    <result column="REM_S" jdbcType="VARCHAR" property="remS" />
+    <result column="DEP_FH" jdbcType="VARCHAR" property="depFh" />
+    <result column="WH_FH" jdbcType="VARCHAR" property="whFh" />
+    <result column="CUS_FH" jdbcType="VARCHAR" property="cusFh" />
+    <result column="CHK_O2O_FX" jdbcType="VARCHAR" property="chkO2oFx" />
+    <result column="CHK_MALL" jdbcType="VARCHAR" property="chkMall" />
+    <result column="FX_LEVEL" jdbcType="VARCHAR" property="fxLevel" />
+    <result column="DJ_LC" jdbcType="VARCHAR" property="djLc" />
+    <result column="DJ_PAY" jdbcType="VARCHAR" property="djPay" />
+    <result column="DJ_SQ" jdbcType="VARCHAR" property="djSq" />
+    <result column="AMTN_DJ" jdbcType="NUMERIC" property="amtnDj" />
+    <result column="LIM_NR_TYPE" jdbcType="VARCHAR" property="limNrType" />
+    <result column="CHK_FULL_PAY" jdbcType="VARCHAR" property="chkFullPay" />
+    <result column="CHK_CK" jdbcType="VARCHAR" property="chkCk" />
+    <result column="ISCUSTKEY" jdbcType="VARCHAR" property="iscustkey" />
+    <result column="SUP_LEVEL" jdbcType="VARCHAR" property="supLevel" />
+    <result column="BRD_NO" jdbcType="VARCHAR" property="brdNo" />
+    <result column="CA_NO" jdbcType="VARCHAR" property="caNo" />
+    <result column="CA1_NO" jdbcType="VARCHAR" property="ca1No" />
+    <result column="NBRD_NO" jdbcType="VARCHAR" property="nbrdNo" />
+    <result column="NCA_NO" jdbcType="VARCHAR" property="ncaNo" />
+    <result column="NCA1_NO" jdbcType="VARCHAR" property="nca1No" />
+    <result column="INTEREST" jdbcType="VARCHAR" property="interest" />
+    <result column="NSZG_FLAG" jdbcType="VARCHAR" property="nszgFlag" />
+    <result column="BACC_NO" jdbcType="VARCHAR" property="baccNo" />
+    <result column="CHK_INDX1" jdbcType="VARCHAR" property="chkIndx1" />
+    <result column="BANK_NAME" jdbcType="VARCHAR" property="bankName" />
+    <result column="S_CODE" jdbcType="VARCHAR" property="sCode" />
+    <result column="DJ_YE" jdbcType="VARCHAR" property="djYe" />
+    <result column="CHK_FL" jdbcType="VARCHAR" property="chkFl" />
+    <result column="ZQ_BT_CTRL" jdbcType="VARCHAR" property="zqBtCtrl" />
+    <result column="CHK_PRD_BT" jdbcType="VARCHAR" property="chkPrdBt" />
+    <result column="TZBH_DD" jdbcType="TIMESTAMP" property="tzbhDd" />
+    <result column="TZBH_BIL_ID" jdbcType="VARCHAR" property="tzbhBilId" />
+    <result column="TZFH_DD" jdbcType="TIMESTAMP" property="tzfhDd" />
+    <result column="TZFH_BIL_ID" jdbcType="VARCHAR" property="tzfhBilId" />
+    <result column="CHK_SKIP_LIM" jdbcType="VARCHAR" property="chkSkipLim" />
+    <result column="YH_TYPE" jdbcType="VARCHAR" property="yhType" />
+    <result column="TEMPFLAG" jdbcType="VARCHAR" property="tempflag" />
+    <result column="B2BTYPE" jdbcType="VARCHAR" property="b2btype" />
+    <result column="ISCOOP" jdbcType="VARCHAR" property="iscoop" />
+    <result column="CK_USEWH" jdbcType="VARCHAR" property="ckUsewh" />
+    <result column="USEWH_ID" jdbcType="VARCHAR" property="usewhId" />
+    <result column="CHK_TH" jdbcType="VARCHAR" property="chkTh" />
+    <result column="PRE_PSDAYS" jdbcType="INTEGER" property="prePsdays" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.winwin.picreport.Edto.CustWithBLOBs">
+    <result column="NM_ENG" jdbcType="LONGVARCHAR" property="nmEng" />
+    <result column="ADR1" jdbcType="LONGVARCHAR" property="adr1" />
+    <result column="ADR2" jdbcType="LONGVARCHAR" property="adr2" />
+    <result column="ADR_ENG" jdbcType="LONGVARCHAR" property="adrEng" />
+    <result column="REM" jdbcType="LONGVARCHAR" property="rem" />
+    <result column="WORKITM" jdbcType="LONGVARCHAR" property="workitm" />
+    <result column="MAIN_PRD" jdbcType="LONGVARCHAR" property="mainPrd" />
+    <result column="UP_DD" jdbcType="BINARY" property="upDd" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CUS_NO, IDX2, CUS_ARE, MAS_CUS, OBJ_ID, NAME, SNM, PAY_DD, CLS_MTH, CLS_DD, MM_END, 
+    CHK_DD, UNI_NO, BOS_NM, CNT_JOB1, CNT_MAN1, CNT_JOB2, CNT_MAN2, ACC_MAN, SAL, TEL1, 
+    TEL2, FAX, ZIP, LIM_NR, LIM_NC, CRD_ID, INV_ID, ID1_TAX, ID2_TAX, CLS1, CLS2, STR_DD, 
+    END_DD, CUR, CRD_NR_NC, E_MAIL, SEND_MTH, SEND_WH, BNK_NAME, ID_CODE, CUS_LEVEL, 
+    INC_CHECK, LS_RTO, COMPNET, COMP_DD, CAPSUM, BUSISUM, SALMS, BUSINOTE, CHK_CRD, S_FLAG, 
+    INITNUM, NOTIFY, BROKER, VESSEL, LOADING_PORT, DIS_PORT, MANU_PLACE, EPAPER, TRAN_REC, 
+    PSWD, PSWD_HIT, PSWD_ANS, APPLY_DD, BIZ_DSC, COUNTRY, BANK_NO, ACC_NO_AR, ACC_NO_AP, 
+    ACC_NO_R0, ACC_NO_P0, SO_CRD, FP_NAME, CHK_FAX, RTO_TAX, CHK_CUS_IDX, CY_ID, REGIST_CODE, 
+    CORP_ID, M_CUST, SAL_NO, CHK_DEP, RTO_KK, DEP, RTO_FL, RTO_YL, DEP1, USR, CHK_INCLUDE, 
+    CHK_IRP, CHK_TRP, CHK_MAN, CLS_DATE, CHK_PAY1, PAY_DAYS, PAY_FLAG, CHK_PAY2, CHK_PAY3, 
+    AMTN_MAX_PAY, CHK_QK, AMTN_QK, USR1, SYS_DATE, RTO_DISCNT, CHK_IRP2, LOGON, WH_NO, 
+    STOP_ORDER, RTN_CTRL, DRP_ID, UPR4_ID, YH_WH1, YH_WH2, ACC_NO_IR, ACC_NO_IP, B2C_ID, 
+    CARD_NO, PRTWEEKS_PO, SOWEEKS_PO, LANG_ID, CHK_DRP1, CHK_DRP2, CHK_DRP3, SRV_NO, 
+    CUS_IDX, XN_NO, CWORK, CHK_BARCODE, ACC_NO_ZP, HM_ID, PSWD_PAY, AMTN_FL, AMTN_FLED, 
+    CHK_SBRTO, DEPRO_NO, RTO_FQSK, DATEFLAG_FQSK, DATE_FQSK, QS_FQSK, LOCAL_ID, RULE_ID, 
+    TEL1_CODE, UNI_NO2, FP_NAME2, CODE_NAME, CHK_KD, WS_CUS_NO, AUTO_CASN_CHK, NSR_CODE, 
+    NAME_PY, BIZ_DSC1, CUS_SRC, ACC_NO_AR2, ACC_NO_AP2, VISIT_LIMIT, BB_DD, SO_DD, MOB_ID, 
+    TT_TYPE_SET, EX_TRD_ID, IM_TRD_ID, CUS_NO_KD, CHK_ZHANG_ID2, PJSQ_WH, JD_NO, FP_TYPE, 
+    CHK_CX, CHK_MIN_XF, BIL_MIN_XF, CHK_TYPE_MINXF, AMTN_MIN_XF, REM_S, DEP_FH, WH_FH, 
+    CUS_FH, CHK_O2O_FX, CHK_MALL, FX_LEVEL, DJ_LC, DJ_PAY, DJ_SQ, AMTN_DJ, LIM_NR_TYPE, 
+    CHK_FULL_PAY, CHK_CK, ISCUSTKEY, SUP_LEVEL, BRD_NO, CA_NO, CA1_NO, NBRD_NO, NCA_NO, 
+    NCA1_NO, INTEREST, NSZG_FLAG, BACC_NO, CHK_INDX1, BANK_NAME, S_CODE, DJ_YE, CHK_FL, 
+    ZQ_BT_CTRL, CHK_PRD_BT, TZBH_DD, TZBH_BIL_ID, TZFH_DD, TZFH_BIL_ID, CHK_SKIP_LIM, 
+    YH_TYPE, TEMPFLAG, B2BTYPE, ISCOOP, CK_USEWH, USEWH_ID, CHK_TH, PRE_PSDAYS
+  </sql>
+  <sql id="Blob_Column_List">
+    NM_ENG, ADR1, ADR2, ADR_ENG, REM, WORKITM, MAIN_PRD, UP_DD
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.winwin.picreport.Edto.CustExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from CUST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.CustExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CUST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from CUST
+    where CUS_NO = #{cusNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CUST
+    where CUS_NO = #{cusNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.CustExample">
+    delete from CUST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.CustWithBLOBs">
+    insert into CUST (CUS_NO, IDX2, CUS_ARE, 
+      MAS_CUS, OBJ_ID, NAME, 
+      SNM, PAY_DD, CLS_MTH, 
+      CLS_DD, MM_END, CHK_DD, 
+      UNI_NO, BOS_NM, CNT_JOB1, 
+      CNT_MAN1, CNT_JOB2, CNT_MAN2, 
+      ACC_MAN, SAL, TEL1, 
+      TEL2, FAX, ZIP, LIM_NR, 
+      LIM_NC, CRD_ID, INV_ID, 
+      ID1_TAX, ID2_TAX, CLS1, 
+      CLS2, STR_DD, END_DD, 
+      CUR, CRD_NR_NC, E_MAIL, 
+      SEND_MTH, SEND_WH, BNK_NAME, 
+      ID_CODE, CUS_LEVEL, INC_CHECK, 
+      LS_RTO, COMPNET, COMP_DD, 
+      CAPSUM, BUSISUM, SALMS, 
+      BUSINOTE, CHK_CRD, S_FLAG, 
+      INITNUM, NOTIFY, BROKER, 
+      VESSEL, LOADING_PORT, DIS_PORT, 
+      MANU_PLACE, EPAPER, TRAN_REC, 
+      PSWD, PSWD_HIT, PSWD_ANS, 
+      APPLY_DD, BIZ_DSC, COUNTRY, 
+      BANK_NO, ACC_NO_AR, ACC_NO_AP, 
+      ACC_NO_R0, ACC_NO_P0, SO_CRD, 
+      FP_NAME, CHK_FAX, RTO_TAX, 
+      CHK_CUS_IDX, CY_ID, REGIST_CODE, 
+      CORP_ID, M_CUST, SAL_NO, 
+      CHK_DEP, RTO_KK, DEP, 
+      RTO_FL, RTO_YL, DEP1, 
+      USR, CHK_INCLUDE, CHK_IRP, 
+      CHK_TRP, CHK_MAN, CLS_DATE, 
+      CHK_PAY1, PAY_DAYS, PAY_FLAG, 
+      CHK_PAY2, CHK_PAY3, AMTN_MAX_PAY, 
+      CHK_QK, AMTN_QK, USR1, 
+      SYS_DATE, RTO_DISCNT, CHK_IRP2, 
+      LOGON, WH_NO, STOP_ORDER, 
+      RTN_CTRL, DRP_ID, UPR4_ID, 
+      YH_WH1, YH_WH2, ACC_NO_IR, 
+      ACC_NO_IP, B2C_ID, CARD_NO, 
+      PRTWEEKS_PO, SOWEEKS_PO, LANG_ID, 
+      CHK_DRP1, CHK_DRP2, CHK_DRP3, 
+      SRV_NO, CUS_IDX, XN_NO, 
+      CWORK, CHK_BARCODE, ACC_NO_ZP, 
+      HM_ID, PSWD_PAY, AMTN_FL, 
+      AMTN_FLED, CHK_SBRTO, DEPRO_NO, 
+      RTO_FQSK, DATEFLAG_FQSK, DATE_FQSK, 
+      QS_FQSK, LOCAL_ID, RULE_ID, 
+      TEL1_CODE, UNI_NO2, FP_NAME2, 
+      CODE_NAME, CHK_KD, WS_CUS_NO, 
+      AUTO_CASN_CHK, NSR_CODE, NAME_PY, 
+      BIZ_DSC1, CUS_SRC, ACC_NO_AR2, 
+      ACC_NO_AP2, VISIT_LIMIT, BB_DD, 
+      SO_DD, MOB_ID, TT_TYPE_SET, 
+      EX_TRD_ID, IM_TRD_ID, CUS_NO_KD, 
+      CHK_ZHANG_ID2, PJSQ_WH, JD_NO, 
+      FP_TYPE, CHK_CX, CHK_MIN_XF, 
+      BIL_MIN_XF, CHK_TYPE_MINXF, AMTN_MIN_XF, 
+      REM_S, DEP_FH, WH_FH, 
+      CUS_FH, CHK_O2O_FX, CHK_MALL, 
+      FX_LEVEL, DJ_LC, DJ_PAY, 
+      DJ_SQ, AMTN_DJ, LIM_NR_TYPE, 
+      CHK_FULL_PAY, CHK_CK, ISCUSTKEY, 
+      SUP_LEVEL, BRD_NO, CA_NO, 
+      CA1_NO, NBRD_NO, NCA_NO, 
+      NCA1_NO, INTEREST, NSZG_FLAG, 
+      BACC_NO, CHK_INDX1, BANK_NAME, 
+      S_CODE, DJ_YE, CHK_FL, 
+      ZQ_BT_CTRL, CHK_PRD_BT, TZBH_DD, 
+      TZBH_BIL_ID, TZFH_DD, TZFH_BIL_ID, 
+      CHK_SKIP_LIM, YH_TYPE, TEMPFLAG, 
+      B2BTYPE, ISCOOP, CK_USEWH, 
+      USEWH_ID, CHK_TH, PRE_PSDAYS, 
+      NM_ENG, ADR1, ADR2, 
+      ADR_ENG, REM, WORKITM, 
+      MAIN_PRD, UP_DD)
+    values (#{cusNo,jdbcType=VARCHAR}, #{idx2,jdbcType=VARCHAR}, #{cusAre,jdbcType=VARCHAR}, 
+      #{masCus,jdbcType=VARCHAR}, #{objId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{snm,jdbcType=VARCHAR}, #{payDd,jdbcType=SMALLINT}, #{clsMth,jdbcType=VARCHAR}, 
+      #{clsDd,jdbcType=SMALLINT}, #{mmEnd,jdbcType=SMALLINT}, #{chkDd,jdbcType=SMALLINT}, 
+      #{uniNo,jdbcType=VARCHAR}, #{bosNm,jdbcType=VARCHAR}, #{cntJob1,jdbcType=VARCHAR}, 
+      #{cntMan1,jdbcType=VARCHAR}, #{cntJob2,jdbcType=VARCHAR}, #{cntMan2,jdbcType=VARCHAR}, 
+      #{accMan,jdbcType=VARCHAR}, #{sal,jdbcType=VARCHAR}, #{tel1,jdbcType=VARCHAR}, 
+      #{tel2,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, #{limNr,jdbcType=NUMERIC}, 
+      #{limNc,jdbcType=NUMERIC}, #{crdId,jdbcType=VARCHAR}, #{invId,jdbcType=VARCHAR}, 
+      #{id1Tax,jdbcType=VARCHAR}, #{id2Tax,jdbcType=VARCHAR}, #{cls1,jdbcType=VARCHAR}, 
+      #{cls2,jdbcType=VARCHAR}, #{strDd,jdbcType=TIMESTAMP}, #{endDd,jdbcType=TIMESTAMP}, 
+      #{cur,jdbcType=VARCHAR}, #{crdNrNc,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, 
+      #{sendMth,jdbcType=VARCHAR}, #{sendWh,jdbcType=VARCHAR}, #{bnkName,jdbcType=VARCHAR}, 
+      #{idCode,jdbcType=VARCHAR}, #{cusLevel,jdbcType=VARCHAR}, #{incCheck,jdbcType=VARCHAR}, 
+      #{lsRto,jdbcType=NUMERIC}, #{compnet,jdbcType=VARCHAR}, #{compDd,jdbcType=TIMESTAMP}, 
+      #{capsum,jdbcType=NUMERIC}, #{busisum,jdbcType=NUMERIC}, #{salms,jdbcType=INTEGER}, 
+      #{businote,jdbcType=VARCHAR}, #{chkCrd,jdbcType=VARCHAR}, #{sFlag,jdbcType=VARCHAR}, 
+      #{initnum,jdbcType=NUMERIC}, #{notify,jdbcType=VARCHAR}, #{broker,jdbcType=VARCHAR}, 
+      #{vessel,jdbcType=VARCHAR}, #{loadingPort,jdbcType=VARCHAR}, #{disPort,jdbcType=VARCHAR}, 
+      #{manuPlace,jdbcType=VARCHAR}, #{epaper,jdbcType=VARCHAR}, #{tranRec,jdbcType=VARCHAR}, 
+      #{pswd,jdbcType=VARCHAR}, #{pswdHit,jdbcType=VARCHAR}, #{pswdAns,jdbcType=VARCHAR}, 
+      #{applyDd,jdbcType=TIMESTAMP}, #{bizDsc,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{bankNo,jdbcType=VARCHAR}, #{accNoAr,jdbcType=VARCHAR}, #{accNoAp,jdbcType=VARCHAR}, 
+      #{accNoR0,jdbcType=VARCHAR}, #{accNoP0,jdbcType=VARCHAR}, #{soCrd,jdbcType=VARCHAR}, 
+      #{fpName,jdbcType=VARCHAR}, #{chkFax,jdbcType=VARCHAR}, #{rtoTax,jdbcType=NUMERIC}, 
+      #{chkCusIdx,jdbcType=VARCHAR}, #{cyId,jdbcType=VARCHAR}, #{registCode,jdbcType=VARCHAR}, 
+      #{corpId,jdbcType=VARCHAR}, #{mCust,jdbcType=VARCHAR}, #{salNo,jdbcType=VARCHAR}, 
+      #{chkDep,jdbcType=VARCHAR}, #{rtoKk,jdbcType=NUMERIC}, #{dep,jdbcType=VARCHAR}, 
+      #{rtoFl,jdbcType=NUMERIC}, #{rtoYl,jdbcType=NUMERIC}, #{dep1,jdbcType=VARCHAR}, 
+      #{usr,jdbcType=VARCHAR}, #{chkInclude,jdbcType=VARCHAR}, #{chkIrp,jdbcType=VARCHAR}, 
+      #{chkTrp,jdbcType=VARCHAR}, #{chkMan,jdbcType=VARCHAR}, #{clsDate,jdbcType=TIMESTAMP}, 
+      #{chkPay1,jdbcType=VARCHAR}, #{payDays,jdbcType=SMALLINT}, #{payFlag,jdbcType=VARCHAR}, 
+      #{chkPay2,jdbcType=VARCHAR}, #{chkPay3,jdbcType=VARCHAR}, #{amtnMaxPay,jdbcType=NUMERIC}, 
+      #{chkQk,jdbcType=VARCHAR}, #{amtnQk,jdbcType=NUMERIC}, #{usr1,jdbcType=VARCHAR}, 
+      #{sysDate,jdbcType=TIMESTAMP}, #{rtoDiscnt,jdbcType=NUMERIC}, #{chkIrp2,jdbcType=VARCHAR}, 
+      #{logon,jdbcType=VARCHAR}, #{whNo,jdbcType=VARCHAR}, #{stopOrder,jdbcType=VARCHAR}, 
+      #{rtnCtrl,jdbcType=VARCHAR}, #{drpId,jdbcType=VARCHAR}, #{upr4Id,jdbcType=VARCHAR}, 
+      #{yhWh1,jdbcType=VARCHAR}, #{yhWh2,jdbcType=VARCHAR}, #{accNoIr,jdbcType=VARCHAR}, 
+      #{accNoIp,jdbcType=VARCHAR}, #{b2cId,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, 
+      #{prtweeksPo,jdbcType=SMALLINT}, #{soweeksPo,jdbcType=SMALLINT}, #{langId,jdbcType=VARCHAR}, 
+      #{chkDrp1,jdbcType=VARCHAR}, #{chkDrp2,jdbcType=VARCHAR}, #{chkDrp3,jdbcType=VARCHAR}, 
+      #{srvNo,jdbcType=VARCHAR}, #{cusIdx,jdbcType=VARCHAR}, #{xnNo,jdbcType=VARCHAR}, 
+      #{cwork,jdbcType=INTEGER}, #{chkBarcode,jdbcType=VARCHAR}, #{accNoZp,jdbcType=VARCHAR}, 
+      #{hmId,jdbcType=VARCHAR}, #{pswdPay,jdbcType=VARCHAR}, #{amtnFl,jdbcType=NUMERIC}, 
+      #{amtnFled,jdbcType=NUMERIC}, #{chkSbrto,jdbcType=VARCHAR}, #{deproNo,jdbcType=VARCHAR}, 
+      #{rtoFqsk,jdbcType=NUMERIC}, #{dateflagFqsk,jdbcType=VARCHAR}, #{dateFqsk,jdbcType=TIMESTAMP}, 
+      #{qsFqsk,jdbcType=INTEGER}, #{localId,jdbcType=VARCHAR}, #{ruleId,jdbcType=INTEGER}, 
+      #{tel1Code,jdbcType=VARCHAR}, #{uniNo2,jdbcType=VARCHAR}, #{fpName2,jdbcType=VARCHAR}, 
+      #{codeName,jdbcType=VARCHAR}, #{chkKd,jdbcType=VARCHAR}, #{wsCusNo,jdbcType=VARCHAR}, 
+      #{autoCasnChk,jdbcType=VARCHAR}, #{nsrCode,jdbcType=VARCHAR}, #{namePy,jdbcType=VARCHAR}, 
+      #{bizDsc1,jdbcType=VARCHAR}, #{cusSrc,jdbcType=VARCHAR}, #{accNoAr2,jdbcType=VARCHAR}, 
+      #{accNoAp2,jdbcType=VARCHAR}, #{visitLimit,jdbcType=INTEGER}, #{bbDd,jdbcType=TIMESTAMP}, 
+      #{soDd,jdbcType=TIMESTAMP}, #{mobId,jdbcType=VARCHAR}, #{ttTypeSet,jdbcType=VARCHAR}, 
+      #{exTrdId,jdbcType=VARCHAR}, #{imTrdId,jdbcType=VARCHAR}, #{cusNoKd,jdbcType=VARCHAR}, 
+      #{chkZhangId2,jdbcType=VARCHAR}, #{pjsqWh,jdbcType=VARCHAR}, #{jdNo,jdbcType=VARCHAR}, 
+      #{fpType,jdbcType=VARCHAR}, #{chkCx,jdbcType=VARCHAR}, #{chkMinXf,jdbcType=VARCHAR}, 
+      #{bilMinXf,jdbcType=VARCHAR}, #{chkTypeMinxf,jdbcType=VARCHAR}, #{amtnMinXf,jdbcType=NUMERIC}, 
+      #{remS,jdbcType=VARCHAR}, #{depFh,jdbcType=VARCHAR}, #{whFh,jdbcType=VARCHAR}, 
+      #{cusFh,jdbcType=VARCHAR}, #{chkO2oFx,jdbcType=VARCHAR}, #{chkMall,jdbcType=VARCHAR}, 
+      #{fxLevel,jdbcType=VARCHAR}, #{djLc,jdbcType=VARCHAR}, #{djPay,jdbcType=VARCHAR}, 
+      #{djSq,jdbcType=VARCHAR}, #{amtnDj,jdbcType=NUMERIC}, #{limNrType,jdbcType=VARCHAR}, 
+      #{chkFullPay,jdbcType=VARCHAR}, #{chkCk,jdbcType=VARCHAR}, #{iscustkey,jdbcType=VARCHAR}, 
+      #{supLevel,jdbcType=VARCHAR}, #{brdNo,jdbcType=VARCHAR}, #{caNo,jdbcType=VARCHAR}, 
+      #{ca1No,jdbcType=VARCHAR}, #{nbrdNo,jdbcType=VARCHAR}, #{ncaNo,jdbcType=VARCHAR}, 
+      #{nca1No,jdbcType=VARCHAR}, #{interest,jdbcType=VARCHAR}, #{nszgFlag,jdbcType=VARCHAR}, 
+      #{baccNo,jdbcType=VARCHAR}, #{chkIndx1,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{sCode,jdbcType=VARCHAR}, #{djYe,jdbcType=VARCHAR}, #{chkFl,jdbcType=VARCHAR}, 
+      #{zqBtCtrl,jdbcType=VARCHAR}, #{chkPrdBt,jdbcType=VARCHAR}, #{tzbhDd,jdbcType=TIMESTAMP}, 
+      #{tzbhBilId,jdbcType=VARCHAR}, #{tzfhDd,jdbcType=TIMESTAMP}, #{tzfhBilId,jdbcType=VARCHAR}, 
+      #{chkSkipLim,jdbcType=VARCHAR}, #{yhType,jdbcType=VARCHAR}, #{tempflag,jdbcType=VARCHAR}, 
+      #{b2btype,jdbcType=VARCHAR}, #{iscoop,jdbcType=VARCHAR}, #{ckUsewh,jdbcType=VARCHAR}, 
+      #{usewhId,jdbcType=VARCHAR}, #{chkTh,jdbcType=VARCHAR}, #{prePsdays,jdbcType=INTEGER}, 
+      #{nmEng,jdbcType=LONGVARCHAR}, #{adr1,jdbcType=LONGVARCHAR}, #{adr2,jdbcType=LONGVARCHAR}, 
+      #{adrEng,jdbcType=LONGVARCHAR}, #{rem,jdbcType=LONGVARCHAR}, #{workitm,jdbcType=LONGVARCHAR}, 
+      #{mainPrd,jdbcType=LONGVARCHAR}, #{upDd,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.CustWithBLOBs">
+    insert into CUST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusNo != null">
+        CUS_NO,
+      </if>
+      <if test="idx2 != null">
+        IDX2,
+      </if>
+      <if test="cusAre != null">
+        CUS_ARE,
+      </if>
+      <if test="masCus != null">
+        MAS_CUS,
+      </if>
+      <if test="objId != null">
+        OBJ_ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="snm != null">
+        SNM,
+      </if>
+      <if test="payDd != null">
+        PAY_DD,
+      </if>
+      <if test="clsMth != null">
+        CLS_MTH,
+      </if>
+      <if test="clsDd != null">
+        CLS_DD,
+      </if>
+      <if test="mmEnd != null">
+        MM_END,
+      </if>
+      <if test="chkDd != null">
+        CHK_DD,
+      </if>
+      <if test="uniNo != null">
+        UNI_NO,
+      </if>
+      <if test="bosNm != null">
+        BOS_NM,
+      </if>
+      <if test="cntJob1 != null">
+        CNT_JOB1,
+      </if>
+      <if test="cntMan1 != null">
+        CNT_MAN1,
+      </if>
+      <if test="cntJob2 != null">
+        CNT_JOB2,
+      </if>
+      <if test="cntMan2 != null">
+        CNT_MAN2,
+      </if>
+      <if test="accMan != null">
+        ACC_MAN,
+      </if>
+      <if test="sal != null">
+        SAL,
+      </if>
+      <if test="tel1 != null">
+        TEL1,
+      </if>
+      <if test="tel2 != null">
+        TEL2,
+      </if>
+      <if test="fax != null">
+        FAX,
+      </if>
+      <if test="zip != null">
+        ZIP,
+      </if>
+      <if test="limNr != null">
+        LIM_NR,
+      </if>
+      <if test="limNc != null">
+        LIM_NC,
+      </if>
+      <if test="crdId != null">
+        CRD_ID,
+      </if>
+      <if test="invId != null">
+        INV_ID,
+      </if>
+      <if test="id1Tax != null">
+        ID1_TAX,
+      </if>
+      <if test="id2Tax != null">
+        ID2_TAX,
+      </if>
+      <if test="cls1 != null">
+        CLS1,
+      </if>
+      <if test="cls2 != null">
+        CLS2,
+      </if>
+      <if test="strDd != null">
+        STR_DD,
+      </if>
+      <if test="endDd != null">
+        END_DD,
+      </if>
+      <if test="cur != null">
+        CUR,
+      </if>
+      <if test="crdNrNc != null">
+        CRD_NR_NC,
+      </if>
+      <if test="eMail != null">
+        E_MAIL,
+      </if>
+      <if test="sendMth != null">
+        SEND_MTH,
+      </if>
+      <if test="sendWh != null">
+        SEND_WH,
+      </if>
+      <if test="bnkName != null">
+        BNK_NAME,
+      </if>
+      <if test="idCode != null">
+        ID_CODE,
+      </if>
+      <if test="cusLevel != null">
+        CUS_LEVEL,
+      </if>
+      <if test="incCheck != null">
+        INC_CHECK,
+      </if>
+      <if test="lsRto != null">
+        LS_RTO,
+      </if>
+      <if test="compnet != null">
+        COMPNET,
+      </if>
+      <if test="compDd != null">
+        COMP_DD,
+      </if>
+      <if test="capsum != null">
+        CAPSUM,
+      </if>
+      <if test="busisum != null">
+        BUSISUM,
+      </if>
+      <if test="salms != null">
+        SALMS,
+      </if>
+      <if test="businote != null">
+        BUSINOTE,
+      </if>
+      <if test="chkCrd != null">
+        CHK_CRD,
+      </if>
+      <if test="sFlag != null">
+        S_FLAG,
+      </if>
+      <if test="initnum != null">
+        INITNUM,
+      </if>
+      <if test="notify != null">
+        NOTIFY,
+      </if>
+      <if test="broker != null">
+        BROKER,
+      </if>
+      <if test="vessel != null">
+        VESSEL,
+      </if>
+      <if test="loadingPort != null">
+        LOADING_PORT,
+      </if>
+      <if test="disPort != null">
+        DIS_PORT,
+      </if>
+      <if test="manuPlace != null">
+        MANU_PLACE,
+      </if>
+      <if test="epaper != null">
+        EPAPER,
+      </if>
+      <if test="tranRec != null">
+        TRAN_REC,
+      </if>
+      <if test="pswd != null">
+        PSWD,
+      </if>
+      <if test="pswdHit != null">
+        PSWD_HIT,
+      </if>
+      <if test="pswdAns != null">
+        PSWD_ANS,
+      </if>
+      <if test="applyDd != null">
+        APPLY_DD,
+      </if>
+      <if test="bizDsc != null">
+        BIZ_DSC,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="bankNo != null">
+        BANK_NO,
+      </if>
+      <if test="accNoAr != null">
+        ACC_NO_AR,
+      </if>
+      <if test="accNoAp != null">
+        ACC_NO_AP,
+      </if>
+      <if test="accNoR0 != null">
+        ACC_NO_R0,
+      </if>
+      <if test="accNoP0 != null">
+        ACC_NO_P0,
+      </if>
+      <if test="soCrd != null">
+        SO_CRD,
+      </if>
+      <if test="fpName != null">
+        FP_NAME,
+      </if>
+      <if test="chkFax != null">
+        CHK_FAX,
+      </if>
+      <if test="rtoTax != null">
+        RTO_TAX,
+      </if>
+      <if test="chkCusIdx != null">
+        CHK_CUS_IDX,
+      </if>
+      <if test="cyId != null">
+        CY_ID,
+      </if>
+      <if test="registCode != null">
+        REGIST_CODE,
+      </if>
+      <if test="corpId != null">
+        CORP_ID,
+      </if>
+      <if test="mCust != null">
+        M_CUST,
+      </if>
+      <if test="salNo != null">
+        SAL_NO,
+      </if>
+      <if test="chkDep != null">
+        CHK_DEP,
+      </if>
+      <if test="rtoKk != null">
+        RTO_KK,
+      </if>
+      <if test="dep != null">
+        DEP,
+      </if>
+      <if test="rtoFl != null">
+        RTO_FL,
+      </if>
+      <if test="rtoYl != null">
+        RTO_YL,
+      </if>
+      <if test="dep1 != null">
+        DEP1,
+      </if>
+      <if test="usr != null">
+        USR,
+      </if>
+      <if test="chkInclude != null">
+        CHK_INCLUDE,
+      </if>
+      <if test="chkIrp != null">
+        CHK_IRP,
+      </if>
+      <if test="chkTrp != null">
+        CHK_TRP,
+      </if>
+      <if test="chkMan != null">
+        CHK_MAN,
+      </if>
+      <if test="clsDate != null">
+        CLS_DATE,
+      </if>
+      <if test="chkPay1 != null">
+        CHK_PAY1,
+      </if>
+      <if test="payDays != null">
+        PAY_DAYS,
+      </if>
+      <if test="payFlag != null">
+        PAY_FLAG,
+      </if>
+      <if test="chkPay2 != null">
+        CHK_PAY2,
+      </if>
+      <if test="chkPay3 != null">
+        CHK_PAY3,
+      </if>
+      <if test="amtnMaxPay != null">
+        AMTN_MAX_PAY,
+      </if>
+      <if test="chkQk != null">
+        CHK_QK,
+      </if>
+      <if test="amtnQk != null">
+        AMTN_QK,
+      </if>
+      <if test="usr1 != null">
+        USR1,
+      </if>
+      <if test="sysDate != null">
+        SYS_DATE,
+      </if>
+      <if test="rtoDiscnt != null">
+        RTO_DISCNT,
+      </if>
+      <if test="chkIrp2 != null">
+        CHK_IRP2,
+      </if>
+      <if test="logon != null">
+        LOGON,
+      </if>
+      <if test="whNo != null">
+        WH_NO,
+      </if>
+      <if test="stopOrder != null">
+        STOP_ORDER,
+      </if>
+      <if test="rtnCtrl != null">
+        RTN_CTRL,
+      </if>
+      <if test="drpId != null">
+        DRP_ID,
+      </if>
+      <if test="upr4Id != null">
+        UPR4_ID,
+      </if>
+      <if test="yhWh1 != null">
+        YH_WH1,
+      </if>
+      <if test="yhWh2 != null">
+        YH_WH2,
+      </if>
+      <if test="accNoIr != null">
+        ACC_NO_IR,
+      </if>
+      <if test="accNoIp != null">
+        ACC_NO_IP,
+      </if>
+      <if test="b2cId != null">
+        B2C_ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="prtweeksPo != null">
+        PRTWEEKS_PO,
+      </if>
+      <if test="soweeksPo != null">
+        SOWEEKS_PO,
+      </if>
+      <if test="langId != null">
+        LANG_ID,
+      </if>
+      <if test="chkDrp1 != null">
+        CHK_DRP1,
+      </if>
+      <if test="chkDrp2 != null">
+        CHK_DRP2,
+      </if>
+      <if test="chkDrp3 != null">
+        CHK_DRP3,
+      </if>
+      <if test="srvNo != null">
+        SRV_NO,
+      </if>
+      <if test="cusIdx != null">
+        CUS_IDX,
+      </if>
+      <if test="xnNo != null">
+        XN_NO,
+      </if>
+      <if test="cwork != null">
+        CWORK,
+      </if>
+      <if test="chkBarcode != null">
+        CHK_BARCODE,
+      </if>
+      <if test="accNoZp != null">
+        ACC_NO_ZP,
+      </if>
+      <if test="hmId != null">
+        HM_ID,
+      </if>
+      <if test="pswdPay != null">
+        PSWD_PAY,
+      </if>
+      <if test="amtnFl != null">
+        AMTN_FL,
+      </if>
+      <if test="amtnFled != null">
+        AMTN_FLED,
+      </if>
+      <if test="chkSbrto != null">
+        CHK_SBRTO,
+      </if>
+      <if test="deproNo != null">
+        DEPRO_NO,
+      </if>
+      <if test="rtoFqsk != null">
+        RTO_FQSK,
+      </if>
+      <if test="dateflagFqsk != null">
+        DATEFLAG_FQSK,
+      </if>
+      <if test="dateFqsk != null">
+        DATE_FQSK,
+      </if>
+      <if test="qsFqsk != null">
+        QS_FQSK,
+      </if>
+      <if test="localId != null">
+        LOCAL_ID,
+      </if>
+      <if test="ruleId != null">
+        RULE_ID,
+      </if>
+      <if test="tel1Code != null">
+        TEL1_CODE,
+      </if>
+      <if test="uniNo2 != null">
+        UNI_NO2,
+      </if>
+      <if test="fpName2 != null">
+        FP_NAME2,
+      </if>
+      <if test="codeName != null">
+        CODE_NAME,
+      </if>
+      <if test="chkKd != null">
+        CHK_KD,
+      </if>
+      <if test="wsCusNo != null">
+        WS_CUS_NO,
+      </if>
+      <if test="autoCasnChk != null">
+        AUTO_CASN_CHK,
+      </if>
+      <if test="nsrCode != null">
+        NSR_CODE,
+      </if>
+      <if test="namePy != null">
+        NAME_PY,
+      </if>
+      <if test="bizDsc1 != null">
+        BIZ_DSC1,
+      </if>
+      <if test="cusSrc != null">
+        CUS_SRC,
+      </if>
+      <if test="accNoAr2 != null">
+        ACC_NO_AR2,
+      </if>
+      <if test="accNoAp2 != null">
+        ACC_NO_AP2,
+      </if>
+      <if test="visitLimit != null">
+        VISIT_LIMIT,
+      </if>
+      <if test="bbDd != null">
+        BB_DD,
+      </if>
+      <if test="soDd != null">
+        SO_DD,
+      </if>
+      <if test="mobId != null">
+        MOB_ID,
+      </if>
+      <if test="ttTypeSet != null">
+        TT_TYPE_SET,
+      </if>
+      <if test="exTrdId != null">
+        EX_TRD_ID,
+      </if>
+      <if test="imTrdId != null">
+        IM_TRD_ID,
+      </if>
+      <if test="cusNoKd != null">
+        CUS_NO_KD,
+      </if>
+      <if test="chkZhangId2 != null">
+        CHK_ZHANG_ID2,
+      </if>
+      <if test="pjsqWh != null">
+        PJSQ_WH,
+      </if>
+      <if test="jdNo != null">
+        JD_NO,
+      </if>
+      <if test="fpType != null">
+        FP_TYPE,
+      </if>
+      <if test="chkCx != null">
+        CHK_CX,
+      </if>
+      <if test="chkMinXf != null">
+        CHK_MIN_XF,
+      </if>
+      <if test="bilMinXf != null">
+        BIL_MIN_XF,
+      </if>
+      <if test="chkTypeMinxf != null">
+        CHK_TYPE_MINXF,
+      </if>
+      <if test="amtnMinXf != null">
+        AMTN_MIN_XF,
+      </if>
+      <if test="remS != null">
+        REM_S,
+      </if>
+      <if test="depFh != null">
+        DEP_FH,
+      </if>
+      <if test="whFh != null">
+        WH_FH,
+      </if>
+      <if test="cusFh != null">
+        CUS_FH,
+      </if>
+      <if test="chkO2oFx != null">
+        CHK_O2O_FX,
+      </if>
+      <if test="chkMall != null">
+        CHK_MALL,
+      </if>
+      <if test="fxLevel != null">
+        FX_LEVEL,
+      </if>
+      <if test="djLc != null">
+        DJ_LC,
+      </if>
+      <if test="djPay != null">
+        DJ_PAY,
+      </if>
+      <if test="djSq != null">
+        DJ_SQ,
+      </if>
+      <if test="amtnDj != null">
+        AMTN_DJ,
+      </if>
+      <if test="limNrType != null">
+        LIM_NR_TYPE,
+      </if>
+      <if test="chkFullPay != null">
+        CHK_FULL_PAY,
+      </if>
+      <if test="chkCk != null">
+        CHK_CK,
+      </if>
+      <if test="iscustkey != null">
+        ISCUSTKEY,
+      </if>
+      <if test="supLevel != null">
+        SUP_LEVEL,
+      </if>
+      <if test="brdNo != null">
+        BRD_NO,
+      </if>
+      <if test="caNo != null">
+        CA_NO,
+      </if>
+      <if test="ca1No != null">
+        CA1_NO,
+      </if>
+      <if test="nbrdNo != null">
+        NBRD_NO,
+      </if>
+      <if test="ncaNo != null">
+        NCA_NO,
+      </if>
+      <if test="nca1No != null">
+        NCA1_NO,
+      </if>
+      <if test="interest != null">
+        INTEREST,
+      </if>
+      <if test="nszgFlag != null">
+        NSZG_FLAG,
+      </if>
+      <if test="baccNo != null">
+        BACC_NO,
+      </if>
+      <if test="chkIndx1 != null">
+        CHK_INDX1,
+      </if>
+      <if test="bankName != null">
+        BANK_NAME,
+      </if>
+      <if test="sCode != null">
+        S_CODE,
+      </if>
+      <if test="djYe != null">
+        DJ_YE,
+      </if>
+      <if test="chkFl != null">
+        CHK_FL,
+      </if>
+      <if test="zqBtCtrl != null">
+        ZQ_BT_CTRL,
+      </if>
+      <if test="chkPrdBt != null">
+        CHK_PRD_BT,
+      </if>
+      <if test="tzbhDd != null">
+        TZBH_DD,
+      </if>
+      <if test="tzbhBilId != null">
+        TZBH_BIL_ID,
+      </if>
+      <if test="tzfhDd != null">
+        TZFH_DD,
+      </if>
+      <if test="tzfhBilId != null">
+        TZFH_BIL_ID,
+      </if>
+      <if test="chkSkipLim != null">
+        CHK_SKIP_LIM,
+      </if>
+      <if test="yhType != null">
+        YH_TYPE,
+      </if>
+      <if test="tempflag != null">
+        TEMPFLAG,
+      </if>
+      <if test="b2btype != null">
+        B2BTYPE,
+      </if>
+      <if test="iscoop != null">
+        ISCOOP,
+      </if>
+      <if test="ckUsewh != null">
+        CK_USEWH,
+      </if>
+      <if test="usewhId != null">
+        USEWH_ID,
+      </if>
+      <if test="chkTh != null">
+        CHK_TH,
+      </if>
+      <if test="prePsdays != null">
+        PRE_PSDAYS,
+      </if>
+      <if test="nmEng != null">
+        NM_ENG,
+      </if>
+      <if test="adr1 != null">
+        ADR1,
+      </if>
+      <if test="adr2 != null">
+        ADR2,
+      </if>
+      <if test="adrEng != null">
+        ADR_ENG,
+      </if>
+      <if test="rem != null">
+        REM,
+      </if>
+      <if test="workitm != null">
+        WORKITM,
+      </if>
+      <if test="mainPrd != null">
+        MAIN_PRD,
+      </if>
+      <if test="upDd != null">
+        UP_DD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusNo != null">
+        #{cusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idx2 != null">
+        #{idx2,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAre != null">
+        #{cusAre,jdbcType=VARCHAR},
+      </if>
+      <if test="masCus != null">
+        #{masCus,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="snm != null">
+        #{snm,jdbcType=VARCHAR},
+      </if>
+      <if test="payDd != null">
+        #{payDd,jdbcType=SMALLINT},
+      </if>
+      <if test="clsMth != null">
+        #{clsMth,jdbcType=VARCHAR},
+      </if>
+      <if test="clsDd != null">
+        #{clsDd,jdbcType=SMALLINT},
+      </if>
+      <if test="mmEnd != null">
+        #{mmEnd,jdbcType=SMALLINT},
+      </if>
+      <if test="chkDd != null">
+        #{chkDd,jdbcType=SMALLINT},
+      </if>
+      <if test="uniNo != null">
+        #{uniNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bosNm != null">
+        #{bosNm,jdbcType=VARCHAR},
+      </if>
+      <if test="cntJob1 != null">
+        #{cntJob1,jdbcType=VARCHAR},
+      </if>
+      <if test="cntMan1 != null">
+        #{cntMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="cntJob2 != null">
+        #{cntJob2,jdbcType=VARCHAR},
+      </if>
+      <if test="cntMan2 != null">
+        #{cntMan2,jdbcType=VARCHAR},
+      </if>
+      <if test="accMan != null">
+        #{accMan,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null">
+        #{sal,jdbcType=VARCHAR},
+      </if>
+      <if test="tel1 != null">
+        #{tel1,jdbcType=VARCHAR},
+      </if>
+      <if test="tel2 != null">
+        #{tel2,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null">
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="limNr != null">
+        #{limNr,jdbcType=NUMERIC},
+      </if>
+      <if test="limNc != null">
+        #{limNc,jdbcType=NUMERIC},
+      </if>
+      <if test="crdId != null">
+        #{crdId,jdbcType=VARCHAR},
+      </if>
+      <if test="invId != null">
+        #{invId,jdbcType=VARCHAR},
+      </if>
+      <if test="id1Tax != null">
+        #{id1Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="id2Tax != null">
+        #{id2Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="cls1 != null">
+        #{cls1,jdbcType=VARCHAR},
+      </if>
+      <if test="cls2 != null">
+        #{cls2,jdbcType=VARCHAR},
+      </if>
+      <if test="strDd != null">
+        #{strDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDd != null">
+        #{endDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cur != null">
+        #{cur,jdbcType=VARCHAR},
+      </if>
+      <if test="crdNrNc != null">
+        #{crdNrNc,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMth != null">
+        #{sendMth,jdbcType=VARCHAR},
+      </if>
+      <if test="sendWh != null">
+        #{sendWh,jdbcType=VARCHAR},
+      </if>
+      <if test="bnkName != null">
+        #{bnkName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCode != null">
+        #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cusLevel != null">
+        #{cusLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="incCheck != null">
+        #{incCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="lsRto != null">
+        #{lsRto,jdbcType=NUMERIC},
+      </if>
+      <if test="compnet != null">
+        #{compnet,jdbcType=VARCHAR},
+      </if>
+      <if test="compDd != null">
+        #{compDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capsum != null">
+        #{capsum,jdbcType=NUMERIC},
+      </if>
+      <if test="busisum != null">
+        #{busisum,jdbcType=NUMERIC},
+      </if>
+      <if test="salms != null">
+        #{salms,jdbcType=INTEGER},
+      </if>
+      <if test="businote != null">
+        #{businote,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCrd != null">
+        #{chkCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="sFlag != null">
+        #{sFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="initnum != null">
+        #{initnum,jdbcType=NUMERIC},
+      </if>
+      <if test="notify != null">
+        #{notify,jdbcType=VARCHAR},
+      </if>
+      <if test="broker != null">
+        #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="vessel != null">
+        #{vessel,jdbcType=VARCHAR},
+      </if>
+      <if test="loadingPort != null">
+        #{loadingPort,jdbcType=VARCHAR},
+      </if>
+      <if test="disPort != null">
+        #{disPort,jdbcType=VARCHAR},
+      </if>
+      <if test="manuPlace != null">
+        #{manuPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="epaper != null">
+        #{epaper,jdbcType=VARCHAR},
+      </if>
+      <if test="tranRec != null">
+        #{tranRec,jdbcType=VARCHAR},
+      </if>
+      <if test="pswd != null">
+        #{pswd,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdHit != null">
+        #{pswdHit,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdAns != null">
+        #{pswdAns,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDd != null">
+        #{applyDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bizDsc != null">
+        #{bizDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAr != null">
+        #{accNoAr,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAp != null">
+        #{accNoAp,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoR0 != null">
+        #{accNoR0,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoP0 != null">
+        #{accNoP0,jdbcType=VARCHAR},
+      </if>
+      <if test="soCrd != null">
+        #{soCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="fpName != null">
+        #{fpName,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFax != null">
+        #{chkFax,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoTax != null">
+        #{rtoTax,jdbcType=NUMERIC},
+      </if>
+      <if test="chkCusIdx != null">
+        #{chkCusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="cyId != null">
+        #{cyId,jdbcType=VARCHAR},
+      </if>
+      <if test="registCode != null">
+        #{registCode,jdbcType=VARCHAR},
+      </if>
+      <if test="corpId != null">
+        #{corpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mCust != null">
+        #{mCust,jdbcType=VARCHAR},
+      </if>
+      <if test="salNo != null">
+        #{salNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDep != null">
+        #{chkDep,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoKk != null">
+        #{rtoKk,jdbcType=NUMERIC},
+      </if>
+      <if test="dep != null">
+        #{dep,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoFl != null">
+        #{rtoFl,jdbcType=NUMERIC},
+      </if>
+      <if test="rtoYl != null">
+        #{rtoYl,jdbcType=NUMERIC},
+      </if>
+      <if test="dep1 != null">
+        #{dep1,jdbcType=VARCHAR},
+      </if>
+      <if test="usr != null">
+        #{usr,jdbcType=VARCHAR},
+      </if>
+      <if test="chkInclude != null">
+        #{chkInclude,jdbcType=VARCHAR},
+      </if>
+      <if test="chkIrp != null">
+        #{chkIrp,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTrp != null">
+        #{chkTrp,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMan != null">
+        #{chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="clsDate != null">
+        #{clsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chkPay1 != null">
+        #{chkPay1,jdbcType=VARCHAR},
+      </if>
+      <if test="payDays != null">
+        #{payDays,jdbcType=SMALLINT},
+      </if>
+      <if test="payFlag != null">
+        #{payFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPay2 != null">
+        #{chkPay2,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPay3 != null">
+        #{chkPay3,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnMaxPay != null">
+        #{amtnMaxPay,jdbcType=NUMERIC},
+      </if>
+      <if test="chkQk != null">
+        #{chkQk,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnQk != null">
+        #{amtnQk,jdbcType=NUMERIC},
+      </if>
+      <if test="usr1 != null">
+        #{usr1,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDate != null">
+        #{sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rtoDiscnt != null">
+        #{rtoDiscnt,jdbcType=NUMERIC},
+      </if>
+      <if test="chkIrp2 != null">
+        #{chkIrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="logon != null">
+        #{logon,jdbcType=VARCHAR},
+      </if>
+      <if test="whNo != null">
+        #{whNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopOrder != null">
+        #{stopOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnCtrl != null">
+        #{rtnCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="drpId != null">
+        #{drpId,jdbcType=VARCHAR},
+      </if>
+      <if test="upr4Id != null">
+        #{upr4Id,jdbcType=VARCHAR},
+      </if>
+      <if test="yhWh1 != null">
+        #{yhWh1,jdbcType=VARCHAR},
+      </if>
+      <if test="yhWh2 != null">
+        #{yhWh2,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoIr != null">
+        #{accNoIr,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoIp != null">
+        #{accNoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="b2cId != null">
+        #{b2cId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prtweeksPo != null">
+        #{prtweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="soweeksPo != null">
+        #{soweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="langId != null">
+        #{langId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp1 != null">
+        #{chkDrp1,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp2 != null">
+        #{chkDrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp3 != null">
+        #{chkDrp3,jdbcType=VARCHAR},
+      </if>
+      <if test="srvNo != null">
+        #{srvNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdx != null">
+        #{cusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="xnNo != null">
+        #{xnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cwork != null">
+        #{cwork,jdbcType=INTEGER},
+      </if>
+      <if test="chkBarcode != null">
+        #{chkBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoZp != null">
+        #{accNoZp,jdbcType=VARCHAR},
+      </if>
+      <if test="hmId != null">
+        #{hmId,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdPay != null">
+        #{pswdPay,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnFl != null">
+        #{amtnFl,jdbcType=NUMERIC},
+      </if>
+      <if test="amtnFled != null">
+        #{amtnFled,jdbcType=NUMERIC},
+      </if>
+      <if test="chkSbrto != null">
+        #{chkSbrto,jdbcType=VARCHAR},
+      </if>
+      <if test="deproNo != null">
+        #{deproNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoFqsk != null">
+        #{rtoFqsk,jdbcType=NUMERIC},
+      </if>
+      <if test="dateflagFqsk != null">
+        #{dateflagFqsk,jdbcType=VARCHAR},
+      </if>
+      <if test="dateFqsk != null">
+        #{dateFqsk,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qsFqsk != null">
+        #{qsFqsk,jdbcType=INTEGER},
+      </if>
+      <if test="localId != null">
+        #{localId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="tel1Code != null">
+        #{tel1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="uniNo2 != null">
+        #{uniNo2,jdbcType=VARCHAR},
+      </if>
+      <if test="fpName2 != null">
+        #{fpName2,jdbcType=VARCHAR},
+      </if>
+      <if test="codeName != null">
+        #{codeName,jdbcType=VARCHAR},
+      </if>
+      <if test="chkKd != null">
+        #{chkKd,jdbcType=VARCHAR},
+      </if>
+      <if test="wsCusNo != null">
+        #{wsCusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCasnChk != null">
+        #{autoCasnChk,jdbcType=VARCHAR},
+      </if>
+      <if test="nsrCode != null">
+        #{nsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="namePy != null">
+        #{namePy,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDsc1 != null">
+        #{bizDsc1,jdbcType=VARCHAR},
+      </if>
+      <if test="cusSrc != null">
+        #{cusSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAr2 != null">
+        #{accNoAr2,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAp2 != null">
+        #{accNoAp2,jdbcType=VARCHAR},
+      </if>
+      <if test="visitLimit != null">
+        #{visitLimit,jdbcType=INTEGER},
+      </if>
+      <if test="bbDd != null">
+        #{bbDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="soDd != null">
+        #{soDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobId != null">
+        #{mobId,jdbcType=VARCHAR},
+      </if>
+      <if test="ttTypeSet != null">
+        #{ttTypeSet,jdbcType=VARCHAR},
+      </if>
+      <if test="exTrdId != null">
+        #{exTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="imTrdId != null">
+        #{imTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNoKd != null">
+        #{cusNoKd,jdbcType=VARCHAR},
+      </if>
+      <if test="chkZhangId2 != null">
+        #{chkZhangId2,jdbcType=VARCHAR},
+      </if>
+      <if test="pjsqWh != null">
+        #{pjsqWh,jdbcType=VARCHAR},
+      </if>
+      <if test="jdNo != null">
+        #{jdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fpType != null">
+        #{fpType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCx != null">
+        #{chkCx,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMinXf != null">
+        #{chkMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="bilMinXf != null">
+        #{bilMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTypeMinxf != null">
+        #{chkTypeMinxf,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnMinXf != null">
+        #{amtnMinXf,jdbcType=NUMERIC},
+      </if>
+      <if test="remS != null">
+        #{remS,jdbcType=VARCHAR},
+      </if>
+      <if test="depFh != null">
+        #{depFh,jdbcType=VARCHAR},
+      </if>
+      <if test="whFh != null">
+        #{whFh,jdbcType=VARCHAR},
+      </if>
+      <if test="cusFh != null">
+        #{cusFh,jdbcType=VARCHAR},
+      </if>
+      <if test="chkO2oFx != null">
+        #{chkO2oFx,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMall != null">
+        #{chkMall,jdbcType=VARCHAR},
+      </if>
+      <if test="fxLevel != null">
+        #{fxLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="djLc != null">
+        #{djLc,jdbcType=VARCHAR},
+      </if>
+      <if test="djPay != null">
+        #{djPay,jdbcType=VARCHAR},
+      </if>
+      <if test="djSq != null">
+        #{djSq,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnDj != null">
+        #{amtnDj,jdbcType=NUMERIC},
+      </if>
+      <if test="limNrType != null">
+        #{limNrType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFullPay != null">
+        #{chkFullPay,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCk != null">
+        #{chkCk,jdbcType=VARCHAR},
+      </if>
+      <if test="iscustkey != null">
+        #{iscustkey,jdbcType=VARCHAR},
+      </if>
+      <if test="supLevel != null">
+        #{supLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="brdNo != null">
+        #{brdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caNo != null">
+        #{caNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ca1No != null">
+        #{ca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="nbrdNo != null">
+        #{nbrdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ncaNo != null">
+        #{ncaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nca1No != null">
+        #{nca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null">
+        #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="nszgFlag != null">
+        #{nszgFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="baccNo != null">
+        #{baccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chkIndx1 != null">
+        #{chkIndx1,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="sCode != null">
+        #{sCode,jdbcType=VARCHAR},
+      </if>
+      <if test="djYe != null">
+        #{djYe,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFl != null">
+        #{chkFl,jdbcType=VARCHAR},
+      </if>
+      <if test="zqBtCtrl != null">
+        #{zqBtCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPrdBt != null">
+        #{chkPrdBt,jdbcType=VARCHAR},
+      </if>
+      <if test="tzbhDd != null">
+        #{tzbhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tzbhBilId != null">
+        #{tzbhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="tzfhDd != null">
+        #{tzfhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tzfhBilId != null">
+        #{tzfhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkSkipLim != null">
+        #{chkSkipLim,jdbcType=VARCHAR},
+      </if>
+      <if test="yhType != null">
+        #{yhType,jdbcType=VARCHAR},
+      </if>
+      <if test="tempflag != null">
+        #{tempflag,jdbcType=VARCHAR},
+      </if>
+      <if test="b2btype != null">
+        #{b2btype,jdbcType=VARCHAR},
+      </if>
+      <if test="iscoop != null">
+        #{iscoop,jdbcType=VARCHAR},
+      </if>
+      <if test="ckUsewh != null">
+        #{ckUsewh,jdbcType=VARCHAR},
+      </if>
+      <if test="usewhId != null">
+        #{usewhId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTh != null">
+        #{chkTh,jdbcType=VARCHAR},
+      </if>
+      <if test="prePsdays != null">
+        #{prePsdays,jdbcType=INTEGER},
+      </if>
+      <if test="nmEng != null">
+        #{nmEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adr1 != null">
+        #{adr1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adr2 != null">
+        #{adr2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adrEng != null">
+        #{adrEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rem != null">
+        #{rem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="workitm != null">
+        #{workitm,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mainPrd != null">
+        #{mainPrd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="upDd != null">
+        #{upDd,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.CustExample" resultType="java.lang.Long">
+    select count(*) from CUST
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CUST
+    <set>
+      <if test="record.cusNo != null">
+        CUS_NO = #{record.cusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idx2 != null">
+        IDX2 = #{record.idx2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusAre != null">
+        CUS_ARE = #{record.cusAre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusAre == null">
+        CUS_ARE = CUS_ARE,
+      </if>
+      <if test="record.masCus != null">
+        MAS_CUS = #{record.masCus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snm != null">
+        SNM = #{record.snm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payDd != null">
+        PAY_DD = #{record.payDd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.clsMth != null">
+        CLS_MTH = #{record.clsMth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clsDd != null">
+        CLS_DD = #{record.clsDd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.mmEnd != null">
+        MM_END = #{record.mmEnd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.chkDd != null">
+        CHK_DD = #{record.chkDd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.uniNo != null">
+        UNI_NO = #{record.uniNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bosNm != null">
+        BOS_NM = #{record.bosNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntJob1 != null">
+        CNT_JOB1 = #{record.cntJob1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntMan1 != null">
+        CNT_MAN1 = #{record.cntMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntJob2 != null">
+        CNT_JOB2 = #{record.cntJob2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cntMan2 != null">
+        CNT_MAN2 = #{record.cntMan2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accMan != null">
+        ACC_MAN = #{record.accMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sal != null">
+        SAL = #{record.sal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel1 != null">
+        TEL1 = #{record.tel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel2 != null">
+        TEL2 = #{record.tel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        FAX = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zip != null">
+        ZIP = #{record.zip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limNr != null">
+        LIM_NR = #{record.limNr,jdbcType=NUMERIC},
+      </if>
+      <if test="record.limNc != null">
+        LIM_NC = #{record.limNc,jdbcType=NUMERIC},
+      </if>
+      <if test="record.crdId != null">
+        CRD_ID = #{record.crdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invId != null">
+        INV_ID = #{record.invId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id1Tax != null">
+        ID1_TAX = #{record.id1Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id2Tax != null">
+        ID2_TAX = #{record.id2Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cls1 != null">
+        CLS1 = #{record.cls1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cls2 != null">
+        CLS2 = #{record.cls2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strDd != null">
+        STR_DD = #{record.strDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDd != null">
+        END_DD = #{record.endDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cur != null">
+        CUR = #{record.cur,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crdNrNc != null">
+        CRD_NR_NC = #{record.crdNrNc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eMail != null">
+        E_MAIL = #{record.eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendMth != null">
+        SEND_MTH = #{record.sendMth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendWh != null">
+        SEND_WH = #{record.sendWh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bnkName != null">
+        BNK_NAME = #{record.bnkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCode != null">
+        ID_CODE = #{record.idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusLevel != null">
+        CUS_LEVEL = #{record.cusLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incCheck != null">
+        INC_CHECK = #{record.incCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lsRto != null">
+        LS_RTO = #{record.lsRto,jdbcType=NUMERIC},
+      </if>
+      <if test="record.compnet != null">
+        COMPNET = #{record.compnet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compDd != null">
+        COMP_DD = #{record.compDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.capsum != null">
+        CAPSUM = #{record.capsum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.busisum != null">
+        BUSISUM = #{record.busisum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.salms != null">
+        SALMS = #{record.salms,jdbcType=INTEGER},
+      </if>
+      <if test="record.businote != null">
+        BUSINOTE = #{record.businote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkCrd != null">
+        CHK_CRD = #{record.chkCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sFlag != null">
+        S_FLAG = #{record.sFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initnum != null">
+        INITNUM = #{record.initnum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.notify != null">
+        NOTIFY = #{record.notify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.broker != null">
+        BROKER = #{record.broker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vessel != null">
+        VESSEL = #{record.vessel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loadingPort != null">
+        LOADING_PORT = #{record.loadingPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disPort != null">
+        DIS_PORT = #{record.disPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manuPlace != null">
+        MANU_PLACE = #{record.manuPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.epaper != null">
+        EPAPER = #{record.epaper,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tranRec != null">
+        TRAN_REC = #{record.tranRec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pswd != null">
+        PSWD = #{record.pswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pswdHit != null">
+        PSWD_HIT = #{record.pswdHit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pswdAns != null">
+        PSWD_ANS = #{record.pswdAns,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyDd != null">
+        APPLY_DD = #{record.applyDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bizDsc != null">
+        BIZ_DSC = #{record.bizDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        COUNTRY = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankNo != null">
+        BANK_NO = #{record.bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoAr != null">
+        ACC_NO_AR = #{record.accNoAr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoAp != null">
+        ACC_NO_AP = #{record.accNoAp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoR0 != null">
+        ACC_NO_R0 = #{record.accNoR0,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoP0 != null">
+        ACC_NO_P0 = #{record.accNoP0,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soCrd != null">
+        SO_CRD = #{record.soCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fpName != null">
+        FP_NAME = #{record.fpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkFax != null">
+        CHK_FAX = #{record.chkFax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtoTax != null">
+        RTO_TAX = #{record.rtoTax,jdbcType=NUMERIC},
+      </if>
+      <if test="record.chkCusIdx != null">
+        CHK_CUS_IDX = #{record.chkCusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cyId != null">
+        CY_ID = #{record.cyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registCode != null">
+        REGIST_CODE = #{record.registCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpId != null">
+        CORP_ID = #{record.corpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mCust != null">
+        M_CUST = #{record.mCust,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salNo != null">
+        SAL_NO = #{record.salNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDep != null">
+        CHK_DEP = #{record.chkDep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtoKk != null">
+        RTO_KK = #{record.rtoKk,jdbcType=NUMERIC},
+      </if>
+      <if test="record.dep != null">
+        DEP = #{record.dep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtoFl != null">
+        RTO_FL = #{record.rtoFl,jdbcType=NUMERIC},
+      </if>
+      <if test="record.rtoYl != null">
+        RTO_YL = #{record.rtoYl,jdbcType=NUMERIC},
+      </if>
+      <if test="record.dep1 != null">
+        DEP1 = #{record.dep1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usr != null">
+        USR = #{record.usr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkInclude != null">
+        CHK_INCLUDE = #{record.chkInclude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkIrp != null">
+        CHK_IRP = #{record.chkIrp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkTrp != null">
+        CHK_TRP = #{record.chkTrp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkMan != null">
+        CHK_MAN = #{record.chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clsDate != null">
+        CLS_DATE = #{record.clsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.chkPay1 != null">
+        CHK_PAY1 = #{record.chkPay1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payDays != null">
+        PAY_DAYS = #{record.payDays,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payFlag != null">
+        PAY_FLAG = #{record.payFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkPay2 != null">
+        CHK_PAY2 = #{record.chkPay2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkPay3 != null">
+        CHK_PAY3 = #{record.chkPay3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtnMaxPay != null">
+        AMTN_MAX_PAY = #{record.amtnMaxPay,jdbcType=NUMERIC},
+      </if>
+      <if test="record.chkQk != null">
+        CHK_QK = #{record.chkQk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtnQk != null">
+        AMTN_QK = #{record.amtnQk,jdbcType=NUMERIC},
+      </if>
+      <if test="record.usr1 != null">
+        USR1 = #{record.usr1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysDate != null">
+        SYS_DATE = #{record.sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rtoDiscnt != null">
+        RTO_DISCNT = #{record.rtoDiscnt,jdbcType=NUMERIC},
+      </if>
+      <if test="record.chkIrp2 != null">
+        CHK_IRP2 = #{record.chkIrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logon != null">
+        LOGON = #{record.logon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.whNo != null">
+        WH_NO = #{record.whNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopOrder != null">
+        STOP_ORDER = #{record.stopOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtnCtrl != null">
+        RTN_CTRL = #{record.rtnCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drpId != null">
+        DRP_ID = #{record.drpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upr4Id != null">
+        UPR4_ID = #{record.upr4Id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yhWh1 != null">
+        YH_WH1 = #{record.yhWh1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yhWh2 != null">
+        YH_WH2 = #{record.yhWh2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoIr != null">
+        ACC_NO_IR = #{record.accNoIr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoIp != null">
+        ACC_NO_IP = #{record.accNoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.b2cId != null">
+        B2C_ID = #{record.b2cId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNo != null">
+        CARD_NO = #{record.cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prtweeksPo != null">
+        PRTWEEKS_PO = #{record.prtweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.soweeksPo != null">
+        SOWEEKS_PO = #{record.soweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.langId != null">
+        LANG_ID = #{record.langId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDrp1 != null">
+        CHK_DRP1 = #{record.chkDrp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDrp2 != null">
+        CHK_DRP2 = #{record.chkDrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDrp3 != null">
+        CHK_DRP3 = #{record.chkDrp3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srvNo != null">
+        SRV_NO = #{record.srvNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusIdx != null">
+        CUS_IDX = #{record.cusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xnNo != null">
+        XN_NO = #{record.xnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cwork != null">
+        CWORK = #{record.cwork,jdbcType=INTEGER},
+      </if>
+      <if test="record.chkBarcode != null">
+        CHK_BARCODE = #{record.chkBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoZp != null">
+        ACC_NO_ZP = #{record.accNoZp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hmId != null">
+        HM_ID = #{record.hmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pswdPay != null">
+        PSWD_PAY = #{record.pswdPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtnFl != null">
+        AMTN_FL = #{record.amtnFl,jdbcType=NUMERIC},
+      </if>
+      <if test="record.amtnFled != null">
+        AMTN_FLED = #{record.amtnFled,jdbcType=NUMERIC},
+      </if>
+      <if test="record.chkSbrto != null">
+        CHK_SBRTO = #{record.chkSbrto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deproNo != null">
+        DEPRO_NO = #{record.deproNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtoFqsk != null">
+        RTO_FQSK = #{record.rtoFqsk,jdbcType=NUMERIC},
+      </if>
+      <if test="record.dateflagFqsk != null">
+        DATEFLAG_FQSK = #{record.dateflagFqsk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateFqsk != null">
+        DATE_FQSK = #{record.dateFqsk,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.qsFqsk != null">
+        QS_FQSK = #{record.qsFqsk,jdbcType=INTEGER},
+      </if>
+      <if test="record.localId != null">
+        LOCAL_ID = #{record.localId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleId != null">
+        RULE_ID = #{record.ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tel1Code != null">
+        TEL1_CODE = #{record.tel1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uniNo2 != null">
+        UNI_NO2 = #{record.uniNo2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fpName2 != null">
+        FP_NAME2 = #{record.fpName2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeName != null">
+        CODE_NAME = #{record.codeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkKd != null">
+        CHK_KD = #{record.chkKd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wsCusNo != null">
+        WS_CUS_NO = #{record.wsCusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autoCasnChk != null">
+        AUTO_CASN_CHK = #{record.autoCasnChk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nsrCode != null">
+        NSR_CODE = #{record.nsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namePy != null">
+        NAME_PY = #{record.namePy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bizDsc1 != null">
+        BIZ_DSC1 = #{record.bizDsc1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusSrc != null">
+        CUS_SRC = #{record.cusSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoAr2 != null">
+        ACC_NO_AR2 = #{record.accNoAr2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNoAp2 != null">
+        ACC_NO_AP2 = #{record.accNoAp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitLimit != null">
+        VISIT_LIMIT = #{record.visitLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.bbDd != null">
+        BB_DD = #{record.bbDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.soDd != null">
+        SO_DD = #{record.soDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mobId != null">
+        MOB_ID = #{record.mobId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ttTypeSet != null">
+        TT_TYPE_SET = #{record.ttTypeSet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exTrdId != null">
+        EX_TRD_ID = #{record.exTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imTrdId != null">
+        IM_TRD_ID = #{record.imTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusNoKd != null">
+        CUS_NO_KD = #{record.cusNoKd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkZhangId2 != null">
+        CHK_ZHANG_ID2 = #{record.chkZhangId2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pjsqWh != null">
+        PJSQ_WH = #{record.pjsqWh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jdNo != null">
+        JD_NO = #{record.jdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fpType != null">
+        FP_TYPE = #{record.fpType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkCx != null">
+        CHK_CX = #{record.chkCx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkMinXf != null">
+        CHK_MIN_XF = #{record.chkMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bilMinXf != null">
+        BIL_MIN_XF = #{record.bilMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkTypeMinxf != null">
+        CHK_TYPE_MINXF = #{record.chkTypeMinxf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtnMinXf != null">
+        AMTN_MIN_XF = #{record.amtnMinXf,jdbcType=NUMERIC},
+      </if>
+      <if test="record.remS != null">
+        REM_S = #{record.remS,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depFh != null">
+        DEP_FH = #{record.depFh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.whFh != null">
+        WH_FH = #{record.whFh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusFh != null">
+        CUS_FH = #{record.cusFh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkO2oFx != null">
+        CHK_O2O_FX = #{record.chkO2oFx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkMall != null">
+        CHK_MALL = #{record.chkMall,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fxLevel != null">
+        FX_LEVEL = #{record.fxLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.djLc != null">
+        DJ_LC = #{record.djLc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.djPay != null">
+        DJ_PAY = #{record.djPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.djSq != null">
+        DJ_SQ = #{record.djSq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amtnDj != null">
+        AMTN_DJ = #{record.amtnDj,jdbcType=NUMERIC},
+      </if>
+      <if test="record.limNrType != null">
+        LIM_NR_TYPE = #{record.limNrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkFullPay != null">
+        CHK_FULL_PAY = #{record.chkFullPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkCk != null">
+        CHK_CK = #{record.chkCk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iscustkey != null">
+        ISCUSTKEY = #{record.iscustkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supLevel != null">
+        SUP_LEVEL = #{record.supLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brdNo != null">
+        BRD_NO = #{record.brdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caNo != null">
+        CA_NO = #{record.caNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ca1No != null">
+        CA1_NO = #{record.ca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nbrdNo != null">
+        NBRD_NO = #{record.nbrdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ncaNo != null">
+        NCA_NO = #{record.ncaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nca1No != null">
+        NCA1_NO = #{record.nca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interest != null">
+        INTEREST = #{record.interest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nszgFlag != null">
+        NSZG_FLAG = #{record.nszgFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baccNo != null">
+        BACC_NO = #{record.baccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkIndx1 != null">
+        CHK_INDX1 = #{record.chkIndx1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null">
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sCode != null">
+        S_CODE = #{record.sCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.djYe != null">
+        DJ_YE = #{record.djYe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkFl != null">
+        CHK_FL = #{record.chkFl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zqBtCtrl != null">
+        ZQ_BT_CTRL = #{record.zqBtCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkPrdBt != null">
+        CHK_PRD_BT = #{record.chkPrdBt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tzbhDd != null">
+        TZBH_DD = #{record.tzbhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tzbhBilId != null">
+        TZBH_BIL_ID = #{record.tzbhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tzfhDd != null">
+        TZFH_DD = #{record.tzfhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tzfhBilId != null">
+        TZFH_BIL_ID = #{record.tzfhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkSkipLim != null">
+        CHK_SKIP_LIM = #{record.chkSkipLim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yhType != null">
+        YH_TYPE = #{record.yhType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tempflag != null">
+        TEMPFLAG = #{record.tempflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.b2btype != null">
+        B2BTYPE = #{record.b2btype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iscoop != null">
+        ISCOOP = #{record.iscoop,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ckUsewh != null">
+        CK_USEWH = #{record.ckUsewh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usewhId != null">
+        USEWH_ID = #{record.usewhId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkTh != null">
+        CHK_TH = #{record.chkTh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prePsdays != null">
+        PRE_PSDAYS = #{record.prePsdays,jdbcType=INTEGER},
+      </if>
+      <if test="record.nmEng != null">
+        NM_ENG = #{record.nmEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.adr1 != null">
+        ADR1 = #{record.adr1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.adr2 != null">
+        ADR2 = #{record.adr2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.adrEng != null">
+        ADR_ENG = #{record.adrEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rem != null">
+        REM = #{record.rem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.workitm != null">
+        WORKITM = #{record.workitm,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.mainPrd != null">
+        MAIN_PRD = #{record.mainPrd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.upDd != null">
+        UP_DD = #{record.upDd,jdbcType=BINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update CUST
+    set CUS_NO = #{record.cusNo,jdbcType=VARCHAR},
+      IDX2 = #{record.idx2,jdbcType=VARCHAR},
+      CUS_ARE = #{record.cusAre,jdbcType=VARCHAR},
+      MAS_CUS = #{record.masCus,jdbcType=VARCHAR},
+      OBJ_ID = #{record.objId,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      SNM = #{record.snm,jdbcType=VARCHAR},
+      PAY_DD = #{record.payDd,jdbcType=SMALLINT},
+      CLS_MTH = #{record.clsMth,jdbcType=VARCHAR},
+      CLS_DD = #{record.clsDd,jdbcType=SMALLINT},
+      MM_END = #{record.mmEnd,jdbcType=SMALLINT},
+      CHK_DD = #{record.chkDd,jdbcType=SMALLINT},
+      UNI_NO = #{record.uniNo,jdbcType=VARCHAR},
+      BOS_NM = #{record.bosNm,jdbcType=VARCHAR},
+      CNT_JOB1 = #{record.cntJob1,jdbcType=VARCHAR},
+      CNT_MAN1 = #{record.cntMan1,jdbcType=VARCHAR},
+      CNT_JOB2 = #{record.cntJob2,jdbcType=VARCHAR},
+      CNT_MAN2 = #{record.cntMan2,jdbcType=VARCHAR},
+      ACC_MAN = #{record.accMan,jdbcType=VARCHAR},
+      SAL = #{record.sal,jdbcType=VARCHAR},
+      TEL1 = #{record.tel1,jdbcType=VARCHAR},
+      TEL2 = #{record.tel2,jdbcType=VARCHAR},
+      FAX = #{record.fax,jdbcType=VARCHAR},
+      ZIP = #{record.zip,jdbcType=VARCHAR},
+      LIM_NR = #{record.limNr,jdbcType=NUMERIC},
+      LIM_NC = #{record.limNc,jdbcType=NUMERIC},
+      CRD_ID = #{record.crdId,jdbcType=VARCHAR},
+      INV_ID = #{record.invId,jdbcType=VARCHAR},
+      ID1_TAX = #{record.id1Tax,jdbcType=VARCHAR},
+      ID2_TAX = #{record.id2Tax,jdbcType=VARCHAR},
+      CLS1 = #{record.cls1,jdbcType=VARCHAR},
+      CLS2 = #{record.cls2,jdbcType=VARCHAR},
+      STR_DD = #{record.strDd,jdbcType=TIMESTAMP},
+      END_DD = #{record.endDd,jdbcType=TIMESTAMP},
+      CUR = #{record.cur,jdbcType=VARCHAR},
+      CRD_NR_NC = #{record.crdNrNc,jdbcType=VARCHAR},
+      E_MAIL = #{record.eMail,jdbcType=VARCHAR},
+      SEND_MTH = #{record.sendMth,jdbcType=VARCHAR},
+      SEND_WH = #{record.sendWh,jdbcType=VARCHAR},
+      BNK_NAME = #{record.bnkName,jdbcType=VARCHAR},
+      ID_CODE = #{record.idCode,jdbcType=VARCHAR},
+      CUS_LEVEL = #{record.cusLevel,jdbcType=VARCHAR},
+      INC_CHECK = #{record.incCheck,jdbcType=VARCHAR},
+      LS_RTO = #{record.lsRto,jdbcType=NUMERIC},
+      COMPNET = #{record.compnet,jdbcType=VARCHAR},
+      COMP_DD = #{record.compDd,jdbcType=TIMESTAMP},
+      CAPSUM = #{record.capsum,jdbcType=NUMERIC},
+      BUSISUM = #{record.busisum,jdbcType=NUMERIC},
+      SALMS = #{record.salms,jdbcType=INTEGER},
+      BUSINOTE = #{record.businote,jdbcType=VARCHAR},
+      CHK_CRD = #{record.chkCrd,jdbcType=VARCHAR},
+      S_FLAG = #{record.sFlag,jdbcType=VARCHAR},
+      INITNUM = #{record.initnum,jdbcType=NUMERIC},
+      NOTIFY = #{record.notify,jdbcType=VARCHAR},
+      BROKER = #{record.broker,jdbcType=VARCHAR},
+      VESSEL = #{record.vessel,jdbcType=VARCHAR},
+      LOADING_PORT = #{record.loadingPort,jdbcType=VARCHAR},
+      DIS_PORT = #{record.disPort,jdbcType=VARCHAR},
+      MANU_PLACE = #{record.manuPlace,jdbcType=VARCHAR},
+      EPAPER = #{record.epaper,jdbcType=VARCHAR},
+      TRAN_REC = #{record.tranRec,jdbcType=VARCHAR},
+      PSWD = #{record.pswd,jdbcType=VARCHAR},
+      PSWD_HIT = #{record.pswdHit,jdbcType=VARCHAR},
+      PSWD_ANS = #{record.pswdAns,jdbcType=VARCHAR},
+      APPLY_DD = #{record.applyDd,jdbcType=TIMESTAMP},
+      BIZ_DSC = #{record.bizDsc,jdbcType=VARCHAR},
+      COUNTRY = #{record.country,jdbcType=VARCHAR},
+      BANK_NO = #{record.bankNo,jdbcType=VARCHAR},
+      ACC_NO_AR = #{record.accNoAr,jdbcType=VARCHAR},
+      ACC_NO_AP = #{record.accNoAp,jdbcType=VARCHAR},
+      ACC_NO_R0 = #{record.accNoR0,jdbcType=VARCHAR},
+      ACC_NO_P0 = #{record.accNoP0,jdbcType=VARCHAR},
+      SO_CRD = #{record.soCrd,jdbcType=VARCHAR},
+      FP_NAME = #{record.fpName,jdbcType=VARCHAR},
+      CHK_FAX = #{record.chkFax,jdbcType=VARCHAR},
+      RTO_TAX = #{record.rtoTax,jdbcType=NUMERIC},
+      CHK_CUS_IDX = #{record.chkCusIdx,jdbcType=VARCHAR},
+      CY_ID = #{record.cyId,jdbcType=VARCHAR},
+      REGIST_CODE = #{record.registCode,jdbcType=VARCHAR},
+      CORP_ID = #{record.corpId,jdbcType=VARCHAR},
+      M_CUST = #{record.mCust,jdbcType=VARCHAR},
+      SAL_NO = #{record.salNo,jdbcType=VARCHAR},
+      CHK_DEP = #{record.chkDep,jdbcType=VARCHAR},
+      RTO_KK = #{record.rtoKk,jdbcType=NUMERIC},
+      DEP = #{record.dep,jdbcType=VARCHAR},
+      RTO_FL = #{record.rtoFl,jdbcType=NUMERIC},
+      RTO_YL = #{record.rtoYl,jdbcType=NUMERIC},
+      DEP1 = #{record.dep1,jdbcType=VARCHAR},
+      USR = #{record.usr,jdbcType=VARCHAR},
+      CHK_INCLUDE = #{record.chkInclude,jdbcType=VARCHAR},
+      CHK_IRP = #{record.chkIrp,jdbcType=VARCHAR},
+      CHK_TRP = #{record.chkTrp,jdbcType=VARCHAR},
+      CHK_MAN = #{record.chkMan,jdbcType=VARCHAR},
+      CLS_DATE = #{record.clsDate,jdbcType=TIMESTAMP},
+      CHK_PAY1 = #{record.chkPay1,jdbcType=VARCHAR},
+      PAY_DAYS = #{record.payDays,jdbcType=SMALLINT},
+      PAY_FLAG = #{record.payFlag,jdbcType=VARCHAR},
+      CHK_PAY2 = #{record.chkPay2,jdbcType=VARCHAR},
+      CHK_PAY3 = #{record.chkPay3,jdbcType=VARCHAR},
+      AMTN_MAX_PAY = #{record.amtnMaxPay,jdbcType=NUMERIC},
+      CHK_QK = #{record.chkQk,jdbcType=VARCHAR},
+      AMTN_QK = #{record.amtnQk,jdbcType=NUMERIC},
+      USR1 = #{record.usr1,jdbcType=VARCHAR},
+      SYS_DATE = #{record.sysDate,jdbcType=TIMESTAMP},
+      RTO_DISCNT = #{record.rtoDiscnt,jdbcType=NUMERIC},
+      CHK_IRP2 = #{record.chkIrp2,jdbcType=VARCHAR},
+      LOGON = #{record.logon,jdbcType=VARCHAR},
+      WH_NO = #{record.whNo,jdbcType=VARCHAR},
+      STOP_ORDER = #{record.stopOrder,jdbcType=VARCHAR},
+      RTN_CTRL = #{record.rtnCtrl,jdbcType=VARCHAR},
+      DRP_ID = #{record.drpId,jdbcType=VARCHAR},
+      UPR4_ID = #{record.upr4Id,jdbcType=VARCHAR},
+      YH_WH1 = #{record.yhWh1,jdbcType=VARCHAR},
+      YH_WH2 = #{record.yhWh2,jdbcType=VARCHAR},
+      ACC_NO_IR = #{record.accNoIr,jdbcType=VARCHAR},
+      ACC_NO_IP = #{record.accNoIp,jdbcType=VARCHAR},
+      B2C_ID = #{record.b2cId,jdbcType=VARCHAR},
+      CARD_NO = #{record.cardNo,jdbcType=VARCHAR},
+      PRTWEEKS_PO = #{record.prtweeksPo,jdbcType=SMALLINT},
+      SOWEEKS_PO = #{record.soweeksPo,jdbcType=SMALLINT},
+      LANG_ID = #{record.langId,jdbcType=VARCHAR},
+      CHK_DRP1 = #{record.chkDrp1,jdbcType=VARCHAR},
+      CHK_DRP2 = #{record.chkDrp2,jdbcType=VARCHAR},
+      CHK_DRP3 = #{record.chkDrp3,jdbcType=VARCHAR},
+      SRV_NO = #{record.srvNo,jdbcType=VARCHAR},
+      CUS_IDX = #{record.cusIdx,jdbcType=VARCHAR},
+      XN_NO = #{record.xnNo,jdbcType=VARCHAR},
+      CWORK = #{record.cwork,jdbcType=INTEGER},
+      CHK_BARCODE = #{record.chkBarcode,jdbcType=VARCHAR},
+      ACC_NO_ZP = #{record.accNoZp,jdbcType=VARCHAR},
+      HM_ID = #{record.hmId,jdbcType=VARCHAR},
+      PSWD_PAY = #{record.pswdPay,jdbcType=VARCHAR},
+      AMTN_FL = #{record.amtnFl,jdbcType=NUMERIC},
+      AMTN_FLED = #{record.amtnFled,jdbcType=NUMERIC},
+      CHK_SBRTO = #{record.chkSbrto,jdbcType=VARCHAR},
+      DEPRO_NO = #{record.deproNo,jdbcType=VARCHAR},
+      RTO_FQSK = #{record.rtoFqsk,jdbcType=NUMERIC},
+      DATEFLAG_FQSK = #{record.dateflagFqsk,jdbcType=VARCHAR},
+      DATE_FQSK = #{record.dateFqsk,jdbcType=TIMESTAMP},
+      QS_FQSK = #{record.qsFqsk,jdbcType=INTEGER},
+      LOCAL_ID = #{record.localId,jdbcType=VARCHAR},
+      RULE_ID = #{record.ruleId,jdbcType=INTEGER},
+      TEL1_CODE = #{record.tel1Code,jdbcType=VARCHAR},
+      UNI_NO2 = #{record.uniNo2,jdbcType=VARCHAR},
+      FP_NAME2 = #{record.fpName2,jdbcType=VARCHAR},
+      CODE_NAME = #{record.codeName,jdbcType=VARCHAR},
+      CHK_KD = #{record.chkKd,jdbcType=VARCHAR},
+      WS_CUS_NO = #{record.wsCusNo,jdbcType=VARCHAR},
+      AUTO_CASN_CHK = #{record.autoCasnChk,jdbcType=VARCHAR},
+      NSR_CODE = #{record.nsrCode,jdbcType=VARCHAR},
+      NAME_PY = #{record.namePy,jdbcType=VARCHAR},
+      BIZ_DSC1 = #{record.bizDsc1,jdbcType=VARCHAR},
+      CUS_SRC = #{record.cusSrc,jdbcType=VARCHAR},
+      ACC_NO_AR2 = #{record.accNoAr2,jdbcType=VARCHAR},
+      ACC_NO_AP2 = #{record.accNoAp2,jdbcType=VARCHAR},
+      VISIT_LIMIT = #{record.visitLimit,jdbcType=INTEGER},
+      BB_DD = #{record.bbDd,jdbcType=TIMESTAMP},
+      SO_DD = #{record.soDd,jdbcType=TIMESTAMP},
+      MOB_ID = #{record.mobId,jdbcType=VARCHAR},
+      TT_TYPE_SET = #{record.ttTypeSet,jdbcType=VARCHAR},
+      EX_TRD_ID = #{record.exTrdId,jdbcType=VARCHAR},
+      IM_TRD_ID = #{record.imTrdId,jdbcType=VARCHAR},
+      CUS_NO_KD = #{record.cusNoKd,jdbcType=VARCHAR},
+      CHK_ZHANG_ID2 = #{record.chkZhangId2,jdbcType=VARCHAR},
+      PJSQ_WH = #{record.pjsqWh,jdbcType=VARCHAR},
+      JD_NO = #{record.jdNo,jdbcType=VARCHAR},
+      FP_TYPE = #{record.fpType,jdbcType=VARCHAR},
+      CHK_CX = #{record.chkCx,jdbcType=VARCHAR},
+      CHK_MIN_XF = #{record.chkMinXf,jdbcType=VARCHAR},
+      BIL_MIN_XF = #{record.bilMinXf,jdbcType=VARCHAR},
+      CHK_TYPE_MINXF = #{record.chkTypeMinxf,jdbcType=VARCHAR},
+      AMTN_MIN_XF = #{record.amtnMinXf,jdbcType=NUMERIC},
+      REM_S = #{record.remS,jdbcType=VARCHAR},
+      DEP_FH = #{record.depFh,jdbcType=VARCHAR},
+      WH_FH = #{record.whFh,jdbcType=VARCHAR},
+      CUS_FH = #{record.cusFh,jdbcType=VARCHAR},
+      CHK_O2O_FX = #{record.chkO2oFx,jdbcType=VARCHAR},
+      CHK_MALL = #{record.chkMall,jdbcType=VARCHAR},
+      FX_LEVEL = #{record.fxLevel,jdbcType=VARCHAR},
+      DJ_LC = #{record.djLc,jdbcType=VARCHAR},
+      DJ_PAY = #{record.djPay,jdbcType=VARCHAR},
+      DJ_SQ = #{record.djSq,jdbcType=VARCHAR},
+      AMTN_DJ = #{record.amtnDj,jdbcType=NUMERIC},
+      LIM_NR_TYPE = #{record.limNrType,jdbcType=VARCHAR},
+      CHK_FULL_PAY = #{record.chkFullPay,jdbcType=VARCHAR},
+      CHK_CK = #{record.chkCk,jdbcType=VARCHAR},
+      ISCUSTKEY = #{record.iscustkey,jdbcType=VARCHAR},
+      SUP_LEVEL = #{record.supLevel,jdbcType=VARCHAR},
+      BRD_NO = #{record.brdNo,jdbcType=VARCHAR},
+      CA_NO = #{record.caNo,jdbcType=VARCHAR},
+      CA1_NO = #{record.ca1No,jdbcType=VARCHAR},
+      NBRD_NO = #{record.nbrdNo,jdbcType=VARCHAR},
+      NCA_NO = #{record.ncaNo,jdbcType=VARCHAR},
+      NCA1_NO = #{record.nca1No,jdbcType=VARCHAR},
+      INTEREST = #{record.interest,jdbcType=VARCHAR},
+      NSZG_FLAG = #{record.nszgFlag,jdbcType=VARCHAR},
+      BACC_NO = #{record.baccNo,jdbcType=VARCHAR},
+      CHK_INDX1 = #{record.chkIndx1,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      S_CODE = #{record.sCode,jdbcType=VARCHAR},
+      DJ_YE = #{record.djYe,jdbcType=VARCHAR},
+      CHK_FL = #{record.chkFl,jdbcType=VARCHAR},
+      ZQ_BT_CTRL = #{record.zqBtCtrl,jdbcType=VARCHAR},
+      CHK_PRD_BT = #{record.chkPrdBt,jdbcType=VARCHAR},
+      TZBH_DD = #{record.tzbhDd,jdbcType=TIMESTAMP},
+      TZBH_BIL_ID = #{record.tzbhBilId,jdbcType=VARCHAR},
+      TZFH_DD = #{record.tzfhDd,jdbcType=TIMESTAMP},
+      TZFH_BIL_ID = #{record.tzfhBilId,jdbcType=VARCHAR},
+      CHK_SKIP_LIM = #{record.chkSkipLim,jdbcType=VARCHAR},
+      YH_TYPE = #{record.yhType,jdbcType=VARCHAR},
+      TEMPFLAG = #{record.tempflag,jdbcType=VARCHAR},
+      B2BTYPE = #{record.b2btype,jdbcType=VARCHAR},
+      ISCOOP = #{record.iscoop,jdbcType=VARCHAR},
+      CK_USEWH = #{record.ckUsewh,jdbcType=VARCHAR},
+      USEWH_ID = #{record.usewhId,jdbcType=VARCHAR},
+      CHK_TH = #{record.chkTh,jdbcType=VARCHAR},
+      PRE_PSDAYS = #{record.prePsdays,jdbcType=INTEGER},
+      NM_ENG = #{record.nmEng,jdbcType=LONGVARCHAR},
+      ADR1 = #{record.adr1,jdbcType=LONGVARCHAR},
+      ADR2 = #{record.adr2,jdbcType=LONGVARCHAR},
+      ADR_ENG = #{record.adrEng,jdbcType=LONGVARCHAR},
+      REM = #{record.rem,jdbcType=LONGVARCHAR},
+      WORKITM = #{record.workitm,jdbcType=LONGVARCHAR},
+      MAIN_PRD = #{record.mainPrd,jdbcType=LONGVARCHAR},
+      UP_DD = #{record.upDd,jdbcType=BINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CUST
+    set CUS_NO = #{record.cusNo,jdbcType=VARCHAR},
+      IDX2 = #{record.idx2,jdbcType=VARCHAR},
+      CUS_ARE = #{record.cusAre,jdbcType=VARCHAR},
+      MAS_CUS = #{record.masCus,jdbcType=VARCHAR},
+      OBJ_ID = #{record.objId,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      SNM = #{record.snm,jdbcType=VARCHAR},
+      PAY_DD = #{record.payDd,jdbcType=SMALLINT},
+      CLS_MTH = #{record.clsMth,jdbcType=VARCHAR},
+      CLS_DD = #{record.clsDd,jdbcType=SMALLINT},
+      MM_END = #{record.mmEnd,jdbcType=SMALLINT},
+      CHK_DD = #{record.chkDd,jdbcType=SMALLINT},
+      UNI_NO = #{record.uniNo,jdbcType=VARCHAR},
+      BOS_NM = #{record.bosNm,jdbcType=VARCHAR},
+      CNT_JOB1 = #{record.cntJob1,jdbcType=VARCHAR},
+      CNT_MAN1 = #{record.cntMan1,jdbcType=VARCHAR},
+      CNT_JOB2 = #{record.cntJob2,jdbcType=VARCHAR},
+      CNT_MAN2 = #{record.cntMan2,jdbcType=VARCHAR},
+      ACC_MAN = #{record.accMan,jdbcType=VARCHAR},
+      SAL = #{record.sal,jdbcType=VARCHAR},
+      TEL1 = #{record.tel1,jdbcType=VARCHAR},
+      TEL2 = #{record.tel2,jdbcType=VARCHAR},
+      FAX = #{record.fax,jdbcType=VARCHAR},
+      ZIP = #{record.zip,jdbcType=VARCHAR},
+      LIM_NR = #{record.limNr,jdbcType=NUMERIC},
+      LIM_NC = #{record.limNc,jdbcType=NUMERIC},
+      CRD_ID = #{record.crdId,jdbcType=VARCHAR},
+      INV_ID = #{record.invId,jdbcType=VARCHAR},
+      ID1_TAX = #{record.id1Tax,jdbcType=VARCHAR},
+      ID2_TAX = #{record.id2Tax,jdbcType=VARCHAR},
+      CLS1 = #{record.cls1,jdbcType=VARCHAR},
+      CLS2 = #{record.cls2,jdbcType=VARCHAR},
+      STR_DD = #{record.strDd,jdbcType=TIMESTAMP},
+      END_DD = #{record.endDd,jdbcType=TIMESTAMP},
+      CUR = #{record.cur,jdbcType=VARCHAR},
+      CRD_NR_NC = #{record.crdNrNc,jdbcType=VARCHAR},
+      E_MAIL = #{record.eMail,jdbcType=VARCHAR},
+      SEND_MTH = #{record.sendMth,jdbcType=VARCHAR},
+      SEND_WH = #{record.sendWh,jdbcType=VARCHAR},
+      BNK_NAME = #{record.bnkName,jdbcType=VARCHAR},
+      ID_CODE = #{record.idCode,jdbcType=VARCHAR},
+      CUS_LEVEL = #{record.cusLevel,jdbcType=VARCHAR},
+      INC_CHECK = #{record.incCheck,jdbcType=VARCHAR},
+      LS_RTO = #{record.lsRto,jdbcType=NUMERIC},
+      COMPNET = #{record.compnet,jdbcType=VARCHAR},
+      COMP_DD = #{record.compDd,jdbcType=TIMESTAMP},
+      CAPSUM = #{record.capsum,jdbcType=NUMERIC},
+      BUSISUM = #{record.busisum,jdbcType=NUMERIC},
+      SALMS = #{record.salms,jdbcType=INTEGER},
+      BUSINOTE = #{record.businote,jdbcType=VARCHAR},
+      CHK_CRD = #{record.chkCrd,jdbcType=VARCHAR},
+      S_FLAG = #{record.sFlag,jdbcType=VARCHAR},
+      INITNUM = #{record.initnum,jdbcType=NUMERIC},
+      NOTIFY = #{record.notify,jdbcType=VARCHAR},
+      BROKER = #{record.broker,jdbcType=VARCHAR},
+      VESSEL = #{record.vessel,jdbcType=VARCHAR},
+      LOADING_PORT = #{record.loadingPort,jdbcType=VARCHAR},
+      DIS_PORT = #{record.disPort,jdbcType=VARCHAR},
+      MANU_PLACE = #{record.manuPlace,jdbcType=VARCHAR},
+      EPAPER = #{record.epaper,jdbcType=VARCHAR},
+      TRAN_REC = #{record.tranRec,jdbcType=VARCHAR},
+      PSWD = #{record.pswd,jdbcType=VARCHAR},
+      PSWD_HIT = #{record.pswdHit,jdbcType=VARCHAR},
+      PSWD_ANS = #{record.pswdAns,jdbcType=VARCHAR},
+      APPLY_DD = #{record.applyDd,jdbcType=TIMESTAMP},
+      BIZ_DSC = #{record.bizDsc,jdbcType=VARCHAR},
+      COUNTRY = #{record.country,jdbcType=VARCHAR},
+      BANK_NO = #{record.bankNo,jdbcType=VARCHAR},
+      ACC_NO_AR = #{record.accNoAr,jdbcType=VARCHAR},
+      ACC_NO_AP = #{record.accNoAp,jdbcType=VARCHAR},
+      ACC_NO_R0 = #{record.accNoR0,jdbcType=VARCHAR},
+      ACC_NO_P0 = #{record.accNoP0,jdbcType=VARCHAR},
+      SO_CRD = #{record.soCrd,jdbcType=VARCHAR},
+      FP_NAME = #{record.fpName,jdbcType=VARCHAR},
+      CHK_FAX = #{record.chkFax,jdbcType=VARCHAR},
+      RTO_TAX = #{record.rtoTax,jdbcType=NUMERIC},
+      CHK_CUS_IDX = #{record.chkCusIdx,jdbcType=VARCHAR},
+      CY_ID = #{record.cyId,jdbcType=VARCHAR},
+      REGIST_CODE = #{record.registCode,jdbcType=VARCHAR},
+      CORP_ID = #{record.corpId,jdbcType=VARCHAR},
+      M_CUST = #{record.mCust,jdbcType=VARCHAR},
+      SAL_NO = #{record.salNo,jdbcType=VARCHAR},
+      CHK_DEP = #{record.chkDep,jdbcType=VARCHAR},
+      RTO_KK = #{record.rtoKk,jdbcType=NUMERIC},
+      DEP = #{record.dep,jdbcType=VARCHAR},
+      RTO_FL = #{record.rtoFl,jdbcType=NUMERIC},
+      RTO_YL = #{record.rtoYl,jdbcType=NUMERIC},
+      DEP1 = #{record.dep1,jdbcType=VARCHAR},
+      USR = #{record.usr,jdbcType=VARCHAR},
+      CHK_INCLUDE = #{record.chkInclude,jdbcType=VARCHAR},
+      CHK_IRP = #{record.chkIrp,jdbcType=VARCHAR},
+      CHK_TRP = #{record.chkTrp,jdbcType=VARCHAR},
+      CHK_MAN = #{record.chkMan,jdbcType=VARCHAR},
+      CLS_DATE = #{record.clsDate,jdbcType=TIMESTAMP},
+      CHK_PAY1 = #{record.chkPay1,jdbcType=VARCHAR},
+      PAY_DAYS = #{record.payDays,jdbcType=SMALLINT},
+      PAY_FLAG = #{record.payFlag,jdbcType=VARCHAR},
+      CHK_PAY2 = #{record.chkPay2,jdbcType=VARCHAR},
+      CHK_PAY3 = #{record.chkPay3,jdbcType=VARCHAR},
+      AMTN_MAX_PAY = #{record.amtnMaxPay,jdbcType=NUMERIC},
+      CHK_QK = #{record.chkQk,jdbcType=VARCHAR},
+      AMTN_QK = #{record.amtnQk,jdbcType=NUMERIC},
+      USR1 = #{record.usr1,jdbcType=VARCHAR},
+      SYS_DATE = #{record.sysDate,jdbcType=TIMESTAMP},
+      RTO_DISCNT = #{record.rtoDiscnt,jdbcType=NUMERIC},
+      CHK_IRP2 = #{record.chkIrp2,jdbcType=VARCHAR},
+      LOGON = #{record.logon,jdbcType=VARCHAR},
+      WH_NO = #{record.whNo,jdbcType=VARCHAR},
+      STOP_ORDER = #{record.stopOrder,jdbcType=VARCHAR},
+      RTN_CTRL = #{record.rtnCtrl,jdbcType=VARCHAR},
+      DRP_ID = #{record.drpId,jdbcType=VARCHAR},
+      UPR4_ID = #{record.upr4Id,jdbcType=VARCHAR},
+      YH_WH1 = #{record.yhWh1,jdbcType=VARCHAR},
+      YH_WH2 = #{record.yhWh2,jdbcType=VARCHAR},
+      ACC_NO_IR = #{record.accNoIr,jdbcType=VARCHAR},
+      ACC_NO_IP = #{record.accNoIp,jdbcType=VARCHAR},
+      B2C_ID = #{record.b2cId,jdbcType=VARCHAR},
+      CARD_NO = #{record.cardNo,jdbcType=VARCHAR},
+      PRTWEEKS_PO = #{record.prtweeksPo,jdbcType=SMALLINT},
+      SOWEEKS_PO = #{record.soweeksPo,jdbcType=SMALLINT},
+      LANG_ID = #{record.langId,jdbcType=VARCHAR},
+      CHK_DRP1 = #{record.chkDrp1,jdbcType=VARCHAR},
+      CHK_DRP2 = #{record.chkDrp2,jdbcType=VARCHAR},
+      CHK_DRP3 = #{record.chkDrp3,jdbcType=VARCHAR},
+      SRV_NO = #{record.srvNo,jdbcType=VARCHAR},
+      CUS_IDX = #{record.cusIdx,jdbcType=VARCHAR},
+      XN_NO = #{record.xnNo,jdbcType=VARCHAR},
+      CWORK = #{record.cwork,jdbcType=INTEGER},
+      CHK_BARCODE = #{record.chkBarcode,jdbcType=VARCHAR},
+      ACC_NO_ZP = #{record.accNoZp,jdbcType=VARCHAR},
+      HM_ID = #{record.hmId,jdbcType=VARCHAR},
+      PSWD_PAY = #{record.pswdPay,jdbcType=VARCHAR},
+      AMTN_FL = #{record.amtnFl,jdbcType=NUMERIC},
+      AMTN_FLED = #{record.amtnFled,jdbcType=NUMERIC},
+      CHK_SBRTO = #{record.chkSbrto,jdbcType=VARCHAR},
+      DEPRO_NO = #{record.deproNo,jdbcType=VARCHAR},
+      RTO_FQSK = #{record.rtoFqsk,jdbcType=NUMERIC},
+      DATEFLAG_FQSK = #{record.dateflagFqsk,jdbcType=VARCHAR},
+      DATE_FQSK = #{record.dateFqsk,jdbcType=TIMESTAMP},
+      QS_FQSK = #{record.qsFqsk,jdbcType=INTEGER},
+      LOCAL_ID = #{record.localId,jdbcType=VARCHAR},
+      RULE_ID = #{record.ruleId,jdbcType=INTEGER},
+      TEL1_CODE = #{record.tel1Code,jdbcType=VARCHAR},
+      UNI_NO2 = #{record.uniNo2,jdbcType=VARCHAR},
+      FP_NAME2 = #{record.fpName2,jdbcType=VARCHAR},
+      CODE_NAME = #{record.codeName,jdbcType=VARCHAR},
+      CHK_KD = #{record.chkKd,jdbcType=VARCHAR},
+      WS_CUS_NO = #{record.wsCusNo,jdbcType=VARCHAR},
+      AUTO_CASN_CHK = #{record.autoCasnChk,jdbcType=VARCHAR},
+      NSR_CODE = #{record.nsrCode,jdbcType=VARCHAR},
+      NAME_PY = #{record.namePy,jdbcType=VARCHAR},
+      BIZ_DSC1 = #{record.bizDsc1,jdbcType=VARCHAR},
+      CUS_SRC = #{record.cusSrc,jdbcType=VARCHAR},
+      ACC_NO_AR2 = #{record.accNoAr2,jdbcType=VARCHAR},
+      ACC_NO_AP2 = #{record.accNoAp2,jdbcType=VARCHAR},
+      VISIT_LIMIT = #{record.visitLimit,jdbcType=INTEGER},
+      BB_DD = #{record.bbDd,jdbcType=TIMESTAMP},
+      SO_DD = #{record.soDd,jdbcType=TIMESTAMP},
+      MOB_ID = #{record.mobId,jdbcType=VARCHAR},
+      TT_TYPE_SET = #{record.ttTypeSet,jdbcType=VARCHAR},
+      EX_TRD_ID = #{record.exTrdId,jdbcType=VARCHAR},
+      IM_TRD_ID = #{record.imTrdId,jdbcType=VARCHAR},
+      CUS_NO_KD = #{record.cusNoKd,jdbcType=VARCHAR},
+      CHK_ZHANG_ID2 = #{record.chkZhangId2,jdbcType=VARCHAR},
+      PJSQ_WH = #{record.pjsqWh,jdbcType=VARCHAR},
+      JD_NO = #{record.jdNo,jdbcType=VARCHAR},
+      FP_TYPE = #{record.fpType,jdbcType=VARCHAR},
+      CHK_CX = #{record.chkCx,jdbcType=VARCHAR},
+      CHK_MIN_XF = #{record.chkMinXf,jdbcType=VARCHAR},
+      BIL_MIN_XF = #{record.bilMinXf,jdbcType=VARCHAR},
+      CHK_TYPE_MINXF = #{record.chkTypeMinxf,jdbcType=VARCHAR},
+      AMTN_MIN_XF = #{record.amtnMinXf,jdbcType=NUMERIC},
+      REM_S = #{record.remS,jdbcType=VARCHAR},
+      DEP_FH = #{record.depFh,jdbcType=VARCHAR},
+      WH_FH = #{record.whFh,jdbcType=VARCHAR},
+      CUS_FH = #{record.cusFh,jdbcType=VARCHAR},
+      CHK_O2O_FX = #{record.chkO2oFx,jdbcType=VARCHAR},
+      CHK_MALL = #{record.chkMall,jdbcType=VARCHAR},
+      FX_LEVEL = #{record.fxLevel,jdbcType=VARCHAR},
+      DJ_LC = #{record.djLc,jdbcType=VARCHAR},
+      DJ_PAY = #{record.djPay,jdbcType=VARCHAR},
+      DJ_SQ = #{record.djSq,jdbcType=VARCHAR},
+      AMTN_DJ = #{record.amtnDj,jdbcType=NUMERIC},
+      LIM_NR_TYPE = #{record.limNrType,jdbcType=VARCHAR},
+      CHK_FULL_PAY = #{record.chkFullPay,jdbcType=VARCHAR},
+      CHK_CK = #{record.chkCk,jdbcType=VARCHAR},
+      ISCUSTKEY = #{record.iscustkey,jdbcType=VARCHAR},
+      SUP_LEVEL = #{record.supLevel,jdbcType=VARCHAR},
+      BRD_NO = #{record.brdNo,jdbcType=VARCHAR},
+      CA_NO = #{record.caNo,jdbcType=VARCHAR},
+      CA1_NO = #{record.ca1No,jdbcType=VARCHAR},
+      NBRD_NO = #{record.nbrdNo,jdbcType=VARCHAR},
+      NCA_NO = #{record.ncaNo,jdbcType=VARCHAR},
+      NCA1_NO = #{record.nca1No,jdbcType=VARCHAR},
+      INTEREST = #{record.interest,jdbcType=VARCHAR},
+      NSZG_FLAG = #{record.nszgFlag,jdbcType=VARCHAR},
+      BACC_NO = #{record.baccNo,jdbcType=VARCHAR},
+      CHK_INDX1 = #{record.chkIndx1,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      S_CODE = #{record.sCode,jdbcType=VARCHAR},
+      DJ_YE = #{record.djYe,jdbcType=VARCHAR},
+      CHK_FL = #{record.chkFl,jdbcType=VARCHAR},
+      ZQ_BT_CTRL = #{record.zqBtCtrl,jdbcType=VARCHAR},
+      CHK_PRD_BT = #{record.chkPrdBt,jdbcType=VARCHAR},
+      TZBH_DD = #{record.tzbhDd,jdbcType=TIMESTAMP},
+      TZBH_BIL_ID = #{record.tzbhBilId,jdbcType=VARCHAR},
+      TZFH_DD = #{record.tzfhDd,jdbcType=TIMESTAMP},
+      TZFH_BIL_ID = #{record.tzfhBilId,jdbcType=VARCHAR},
+      CHK_SKIP_LIM = #{record.chkSkipLim,jdbcType=VARCHAR},
+      YH_TYPE = #{record.yhType,jdbcType=VARCHAR},
+      TEMPFLAG = #{record.tempflag,jdbcType=VARCHAR},
+      B2BTYPE = #{record.b2btype,jdbcType=VARCHAR},
+      ISCOOP = #{record.iscoop,jdbcType=VARCHAR},
+      CK_USEWH = #{record.ckUsewh,jdbcType=VARCHAR},
+      USEWH_ID = #{record.usewhId,jdbcType=VARCHAR},
+      CHK_TH = #{record.chkTh,jdbcType=VARCHAR},
+      PRE_PSDAYS = #{record.prePsdays,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.CustWithBLOBs">
+    update CUST
+    <set>
+      <if test="idx2 != null">
+        IDX2 = #{idx2,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAre != null">
+        CUS_ARE = #{cusAre,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAre == null">
+        CUS_ARE = CUS_ARE,
+      </if>
+      <if test="masCus != null">
+        MAS_CUS = #{masCus,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+        OBJ_ID = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="snm != null">
+        SNM = #{snm,jdbcType=VARCHAR},
+      </if>
+      <if test="payDd != null">
+        PAY_DD = #{payDd,jdbcType=SMALLINT},
+      </if>
+      <if test="clsMth != null">
+        CLS_MTH = #{clsMth,jdbcType=VARCHAR},
+      </if>
+      <if test="clsDd != null">
+        CLS_DD = #{clsDd,jdbcType=SMALLINT},
+      </if>
+      <if test="mmEnd != null">
+        MM_END = #{mmEnd,jdbcType=SMALLINT},
+      </if>
+      <if test="chkDd != null">
+        CHK_DD = #{chkDd,jdbcType=SMALLINT},
+      </if>
+      <if test="uniNo != null">
+        UNI_NO = #{uniNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bosNm != null">
+        BOS_NM = #{bosNm,jdbcType=VARCHAR},
+      </if>
+      <if test="cntJob1 != null">
+        CNT_JOB1 = #{cntJob1,jdbcType=VARCHAR},
+      </if>
+      <if test="cntMan1 != null">
+        CNT_MAN1 = #{cntMan1,jdbcType=VARCHAR},
+      </if>
+      <if test="cntJob2 != null">
+        CNT_JOB2 = #{cntJob2,jdbcType=VARCHAR},
+      </if>
+      <if test="cntMan2 != null">
+        CNT_MAN2 = #{cntMan2,jdbcType=VARCHAR},
+      </if>
+      <if test="accMan != null">
+        ACC_MAN = #{accMan,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null">
+        SAL = #{sal,jdbcType=VARCHAR},
+      </if>
+      <if test="tel1 != null">
+        TEL1 = #{tel1,jdbcType=VARCHAR},
+      </if>
+      <if test="tel2 != null">
+        TEL2 = #{tel2,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        FAX = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null">
+        ZIP = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="limNr != null">
+        LIM_NR = #{limNr,jdbcType=NUMERIC},
+      </if>
+      <if test="limNc != null">
+        LIM_NC = #{limNc,jdbcType=NUMERIC},
+      </if>
+      <if test="crdId != null">
+        CRD_ID = #{crdId,jdbcType=VARCHAR},
+      </if>
+      <if test="invId != null">
+        INV_ID = #{invId,jdbcType=VARCHAR},
+      </if>
+      <if test="id1Tax != null">
+        ID1_TAX = #{id1Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="id2Tax != null">
+        ID2_TAX = #{id2Tax,jdbcType=VARCHAR},
+      </if>
+      <if test="cls1 != null">
+        CLS1 = #{cls1,jdbcType=VARCHAR},
+      </if>
+      <if test="cls2 != null">
+        CLS2 = #{cls2,jdbcType=VARCHAR},
+      </if>
+      <if test="strDd != null">
+        STR_DD = #{strDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDd != null">
+        END_DD = #{endDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cur != null">
+        CUR = #{cur,jdbcType=VARCHAR},
+      </if>
+      <if test="crdNrNc != null">
+        CRD_NR_NC = #{crdNrNc,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        E_MAIL = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMth != null">
+        SEND_MTH = #{sendMth,jdbcType=VARCHAR},
+      </if>
+      <if test="sendWh != null">
+        SEND_WH = #{sendWh,jdbcType=VARCHAR},
+      </if>
+      <if test="bnkName != null">
+        BNK_NAME = #{bnkName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCode != null">
+        ID_CODE = #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cusLevel != null">
+        CUS_LEVEL = #{cusLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="incCheck != null">
+        INC_CHECK = #{incCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="lsRto != null">
+        LS_RTO = #{lsRto,jdbcType=NUMERIC},
+      </if>
+      <if test="compnet != null">
+        COMPNET = #{compnet,jdbcType=VARCHAR},
+      </if>
+      <if test="compDd != null">
+        COMP_DD = #{compDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="capsum != null">
+        CAPSUM = #{capsum,jdbcType=NUMERIC},
+      </if>
+      <if test="busisum != null">
+        BUSISUM = #{busisum,jdbcType=NUMERIC},
+      </if>
+      <if test="salms != null">
+        SALMS = #{salms,jdbcType=INTEGER},
+      </if>
+      <if test="businote != null">
+        BUSINOTE = #{businote,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCrd != null">
+        CHK_CRD = #{chkCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="sFlag != null">
+        S_FLAG = #{sFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="initnum != null">
+        INITNUM = #{initnum,jdbcType=NUMERIC},
+      </if>
+      <if test="notify != null">
+        NOTIFY = #{notify,jdbcType=VARCHAR},
+      </if>
+      <if test="broker != null">
+        BROKER = #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="vessel != null">
+        VESSEL = #{vessel,jdbcType=VARCHAR},
+      </if>
+      <if test="loadingPort != null">
+        LOADING_PORT = #{loadingPort,jdbcType=VARCHAR},
+      </if>
+      <if test="disPort != null">
+        DIS_PORT = #{disPort,jdbcType=VARCHAR},
+      </if>
+      <if test="manuPlace != null">
+        MANU_PLACE = #{manuPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="epaper != null">
+        EPAPER = #{epaper,jdbcType=VARCHAR},
+      </if>
+      <if test="tranRec != null">
+        TRAN_REC = #{tranRec,jdbcType=VARCHAR},
+      </if>
+      <if test="pswd != null">
+        PSWD = #{pswd,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdHit != null">
+        PSWD_HIT = #{pswdHit,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdAns != null">
+        PSWD_ANS = #{pswdAns,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDd != null">
+        APPLY_DD = #{applyDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bizDsc != null">
+        BIZ_DSC = #{bizDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        BANK_NO = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAr != null">
+        ACC_NO_AR = #{accNoAr,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAp != null">
+        ACC_NO_AP = #{accNoAp,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoR0 != null">
+        ACC_NO_R0 = #{accNoR0,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoP0 != null">
+        ACC_NO_P0 = #{accNoP0,jdbcType=VARCHAR},
+      </if>
+      <if test="soCrd != null">
+        SO_CRD = #{soCrd,jdbcType=VARCHAR},
+      </if>
+      <if test="fpName != null">
+        FP_NAME = #{fpName,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFax != null">
+        CHK_FAX = #{chkFax,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoTax != null">
+        RTO_TAX = #{rtoTax,jdbcType=NUMERIC},
+      </if>
+      <if test="chkCusIdx != null">
+        CHK_CUS_IDX = #{chkCusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="cyId != null">
+        CY_ID = #{cyId,jdbcType=VARCHAR},
+      </if>
+      <if test="registCode != null">
+        REGIST_CODE = #{registCode,jdbcType=VARCHAR},
+      </if>
+      <if test="corpId != null">
+        CORP_ID = #{corpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mCust != null">
+        M_CUST = #{mCust,jdbcType=VARCHAR},
+      </if>
+      <if test="salNo != null">
+        SAL_NO = #{salNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDep != null">
+        CHK_DEP = #{chkDep,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoKk != null">
+        RTO_KK = #{rtoKk,jdbcType=NUMERIC},
+      </if>
+      <if test="dep != null">
+        DEP = #{dep,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoFl != null">
+        RTO_FL = #{rtoFl,jdbcType=NUMERIC},
+      </if>
+      <if test="rtoYl != null">
+        RTO_YL = #{rtoYl,jdbcType=NUMERIC},
+      </if>
+      <if test="dep1 != null">
+        DEP1 = #{dep1,jdbcType=VARCHAR},
+      </if>
+      <if test="usr != null">
+        USR = #{usr,jdbcType=VARCHAR},
+      </if>
+      <if test="chkInclude != null">
+        CHK_INCLUDE = #{chkInclude,jdbcType=VARCHAR},
+      </if>
+      <if test="chkIrp != null">
+        CHK_IRP = #{chkIrp,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTrp != null">
+        CHK_TRP = #{chkTrp,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMan != null">
+        CHK_MAN = #{chkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="clsDate != null">
+        CLS_DATE = #{clsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chkPay1 != null">
+        CHK_PAY1 = #{chkPay1,jdbcType=VARCHAR},
+      </if>
+      <if test="payDays != null">
+        PAY_DAYS = #{payDays,jdbcType=SMALLINT},
+      </if>
+      <if test="payFlag != null">
+        PAY_FLAG = #{payFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPay2 != null">
+        CHK_PAY2 = #{chkPay2,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPay3 != null">
+        CHK_PAY3 = #{chkPay3,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnMaxPay != null">
+        AMTN_MAX_PAY = #{amtnMaxPay,jdbcType=NUMERIC},
+      </if>
+      <if test="chkQk != null">
+        CHK_QK = #{chkQk,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnQk != null">
+        AMTN_QK = #{amtnQk,jdbcType=NUMERIC},
+      </if>
+      <if test="usr1 != null">
+        USR1 = #{usr1,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDate != null">
+        SYS_DATE = #{sysDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rtoDiscnt != null">
+        RTO_DISCNT = #{rtoDiscnt,jdbcType=NUMERIC},
+      </if>
+      <if test="chkIrp2 != null">
+        CHK_IRP2 = #{chkIrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="logon != null">
+        LOGON = #{logon,jdbcType=VARCHAR},
+      </if>
+      <if test="whNo != null">
+        WH_NO = #{whNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stopOrder != null">
+        STOP_ORDER = #{stopOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnCtrl != null">
+        RTN_CTRL = #{rtnCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="drpId != null">
+        DRP_ID = #{drpId,jdbcType=VARCHAR},
+      </if>
+      <if test="upr4Id != null">
+        UPR4_ID = #{upr4Id,jdbcType=VARCHAR},
+      </if>
+      <if test="yhWh1 != null">
+        YH_WH1 = #{yhWh1,jdbcType=VARCHAR},
+      </if>
+      <if test="yhWh2 != null">
+        YH_WH2 = #{yhWh2,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoIr != null">
+        ACC_NO_IR = #{accNoIr,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoIp != null">
+        ACC_NO_IP = #{accNoIp,jdbcType=VARCHAR},
+      </if>
+      <if test="b2cId != null">
+        B2C_ID = #{b2cId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prtweeksPo != null">
+        PRTWEEKS_PO = #{prtweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="soweeksPo != null">
+        SOWEEKS_PO = #{soweeksPo,jdbcType=SMALLINT},
+      </if>
+      <if test="langId != null">
+        LANG_ID = #{langId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp1 != null">
+        CHK_DRP1 = #{chkDrp1,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp2 != null">
+        CHK_DRP2 = #{chkDrp2,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDrp3 != null">
+        CHK_DRP3 = #{chkDrp3,jdbcType=VARCHAR},
+      </if>
+      <if test="srvNo != null">
+        SRV_NO = #{srvNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusIdx != null">
+        CUS_IDX = #{cusIdx,jdbcType=VARCHAR},
+      </if>
+      <if test="xnNo != null">
+        XN_NO = #{xnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cwork != null">
+        CWORK = #{cwork,jdbcType=INTEGER},
+      </if>
+      <if test="chkBarcode != null">
+        CHK_BARCODE = #{chkBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoZp != null">
+        ACC_NO_ZP = #{accNoZp,jdbcType=VARCHAR},
+      </if>
+      <if test="hmId != null">
+        HM_ID = #{hmId,jdbcType=VARCHAR},
+      </if>
+      <if test="pswdPay != null">
+        PSWD_PAY = #{pswdPay,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnFl != null">
+        AMTN_FL = #{amtnFl,jdbcType=NUMERIC},
+      </if>
+      <if test="amtnFled != null">
+        AMTN_FLED = #{amtnFled,jdbcType=NUMERIC},
+      </if>
+      <if test="chkSbrto != null">
+        CHK_SBRTO = #{chkSbrto,jdbcType=VARCHAR},
+      </if>
+      <if test="deproNo != null">
+        DEPRO_NO = #{deproNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rtoFqsk != null">
+        RTO_FQSK = #{rtoFqsk,jdbcType=NUMERIC},
+      </if>
+      <if test="dateflagFqsk != null">
+        DATEFLAG_FQSK = #{dateflagFqsk,jdbcType=VARCHAR},
+      </if>
+      <if test="dateFqsk != null">
+        DATE_FQSK = #{dateFqsk,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qsFqsk != null">
+        QS_FQSK = #{qsFqsk,jdbcType=INTEGER},
+      </if>
+      <if test="localId != null">
+        LOCAL_ID = #{localId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleId != null">
+        RULE_ID = #{ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="tel1Code != null">
+        TEL1_CODE = #{tel1Code,jdbcType=VARCHAR},
+      </if>
+      <if test="uniNo2 != null">
+        UNI_NO2 = #{uniNo2,jdbcType=VARCHAR},
+      </if>
+      <if test="fpName2 != null">
+        FP_NAME2 = #{fpName2,jdbcType=VARCHAR},
+      </if>
+      <if test="codeName != null">
+        CODE_NAME = #{codeName,jdbcType=VARCHAR},
+      </if>
+      <if test="chkKd != null">
+        CHK_KD = #{chkKd,jdbcType=VARCHAR},
+      </if>
+      <if test="wsCusNo != null">
+        WS_CUS_NO = #{wsCusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCasnChk != null">
+        AUTO_CASN_CHK = #{autoCasnChk,jdbcType=VARCHAR},
+      </if>
+      <if test="nsrCode != null">
+        NSR_CODE = #{nsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="namePy != null">
+        NAME_PY = #{namePy,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDsc1 != null">
+        BIZ_DSC1 = #{bizDsc1,jdbcType=VARCHAR},
+      </if>
+      <if test="cusSrc != null">
+        CUS_SRC = #{cusSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAr2 != null">
+        ACC_NO_AR2 = #{accNoAr2,jdbcType=VARCHAR},
+      </if>
+      <if test="accNoAp2 != null">
+        ACC_NO_AP2 = #{accNoAp2,jdbcType=VARCHAR},
+      </if>
+      <if test="visitLimit != null">
+        VISIT_LIMIT = #{visitLimit,jdbcType=INTEGER},
+      </if>
+      <if test="bbDd != null">
+        BB_DD = #{bbDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="soDd != null">
+        SO_DD = #{soDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobId != null">
+        MOB_ID = #{mobId,jdbcType=VARCHAR},
+      </if>
+      <if test="ttTypeSet != null">
+        TT_TYPE_SET = #{ttTypeSet,jdbcType=VARCHAR},
+      </if>
+      <if test="exTrdId != null">
+        EX_TRD_ID = #{exTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="imTrdId != null">
+        IM_TRD_ID = #{imTrdId,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNoKd != null">
+        CUS_NO_KD = #{cusNoKd,jdbcType=VARCHAR},
+      </if>
+      <if test="chkZhangId2 != null">
+        CHK_ZHANG_ID2 = #{chkZhangId2,jdbcType=VARCHAR},
+      </if>
+      <if test="pjsqWh != null">
+        PJSQ_WH = #{pjsqWh,jdbcType=VARCHAR},
+      </if>
+      <if test="jdNo != null">
+        JD_NO = #{jdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fpType != null">
+        FP_TYPE = #{fpType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCx != null">
+        CHK_CX = #{chkCx,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMinXf != null">
+        CHK_MIN_XF = #{chkMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="bilMinXf != null">
+        BIL_MIN_XF = #{bilMinXf,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTypeMinxf != null">
+        CHK_TYPE_MINXF = #{chkTypeMinxf,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnMinXf != null">
+        AMTN_MIN_XF = #{amtnMinXf,jdbcType=NUMERIC},
+      </if>
+      <if test="remS != null">
+        REM_S = #{remS,jdbcType=VARCHAR},
+      </if>
+      <if test="depFh != null">
+        DEP_FH = #{depFh,jdbcType=VARCHAR},
+      </if>
+      <if test="whFh != null">
+        WH_FH = #{whFh,jdbcType=VARCHAR},
+      </if>
+      <if test="cusFh != null">
+        CUS_FH = #{cusFh,jdbcType=VARCHAR},
+      </if>
+      <if test="chkO2oFx != null">
+        CHK_O2O_FX = #{chkO2oFx,jdbcType=VARCHAR},
+      </if>
+      <if test="chkMall != null">
+        CHK_MALL = #{chkMall,jdbcType=VARCHAR},
+      </if>
+      <if test="fxLevel != null">
+        FX_LEVEL = #{fxLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="djLc != null">
+        DJ_LC = #{djLc,jdbcType=VARCHAR},
+      </if>
+      <if test="djPay != null">
+        DJ_PAY = #{djPay,jdbcType=VARCHAR},
+      </if>
+      <if test="djSq != null">
+        DJ_SQ = #{djSq,jdbcType=VARCHAR},
+      </if>
+      <if test="amtnDj != null">
+        AMTN_DJ = #{amtnDj,jdbcType=NUMERIC},
+      </if>
+      <if test="limNrType != null">
+        LIM_NR_TYPE = #{limNrType,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFullPay != null">
+        CHK_FULL_PAY = #{chkFullPay,jdbcType=VARCHAR},
+      </if>
+      <if test="chkCk != null">
+        CHK_CK = #{chkCk,jdbcType=VARCHAR},
+      </if>
+      <if test="iscustkey != null">
+        ISCUSTKEY = #{iscustkey,jdbcType=VARCHAR},
+      </if>
+      <if test="supLevel != null">
+        SUP_LEVEL = #{supLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="brdNo != null">
+        BRD_NO = #{brdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="caNo != null">
+        CA_NO = #{caNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ca1No != null">
+        CA1_NO = #{ca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="nbrdNo != null">
+        NBRD_NO = #{nbrdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ncaNo != null">
+        NCA_NO = #{ncaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nca1No != null">
+        NCA1_NO = #{nca1No,jdbcType=VARCHAR},
+      </if>
+      <if test="interest != null">
+        INTEREST = #{interest,jdbcType=VARCHAR},
+      </if>
+      <if test="nszgFlag != null">
+        NSZG_FLAG = #{nszgFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="baccNo != null">
+        BACC_NO = #{baccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chkIndx1 != null">
+        CHK_INDX1 = #{chkIndx1,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="sCode != null">
+        S_CODE = #{sCode,jdbcType=VARCHAR},
+      </if>
+      <if test="djYe != null">
+        DJ_YE = #{djYe,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFl != null">
+        CHK_FL = #{chkFl,jdbcType=VARCHAR},
+      </if>
+      <if test="zqBtCtrl != null">
+        ZQ_BT_CTRL = #{zqBtCtrl,jdbcType=VARCHAR},
+      </if>
+      <if test="chkPrdBt != null">
+        CHK_PRD_BT = #{chkPrdBt,jdbcType=VARCHAR},
+      </if>
+      <if test="tzbhDd != null">
+        TZBH_DD = #{tzbhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tzbhBilId != null">
+        TZBH_BIL_ID = #{tzbhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="tzfhDd != null">
+        TZFH_DD = #{tzfhDd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tzfhBilId != null">
+        TZFH_BIL_ID = #{tzfhBilId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkSkipLim != null">
+        CHK_SKIP_LIM = #{chkSkipLim,jdbcType=VARCHAR},
+      </if>
+      <if test="yhType != null">
+        YH_TYPE = #{yhType,jdbcType=VARCHAR},
+      </if>
+      <if test="tempflag != null">
+        TEMPFLAG = #{tempflag,jdbcType=VARCHAR},
+      </if>
+      <if test="b2btype != null">
+        B2BTYPE = #{b2btype,jdbcType=VARCHAR},
+      </if>
+      <if test="iscoop != null">
+        ISCOOP = #{iscoop,jdbcType=VARCHAR},
+      </if>
+      <if test="ckUsewh != null">
+        CK_USEWH = #{ckUsewh,jdbcType=VARCHAR},
+      </if>
+      <if test="usewhId != null">
+        USEWH_ID = #{usewhId,jdbcType=VARCHAR},
+      </if>
+      <if test="chkTh != null">
+        CHK_TH = #{chkTh,jdbcType=VARCHAR},
+      </if>
+      <if test="prePsdays != null">
+        PRE_PSDAYS = #{prePsdays,jdbcType=INTEGER},
+      </if>
+      <if test="nmEng != null">
+        NM_ENG = #{nmEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adr1 != null">
+        ADR1 = #{adr1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adr2 != null">
+        ADR2 = #{adr2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adrEng != null">
+        ADR_ENG = #{adrEng,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rem != null">
+        REM = #{rem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="workitm != null">
+        WORKITM = #{workitm,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mainPrd != null">
+        MAIN_PRD = #{mainPrd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="upDd != null">
+        UP_DD = #{upDd,jdbcType=BINARY},
+      </if>
+    </set>
+    where CUS_NO = #{cusNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.winwin.picreport.Edto.CustWithBLOBs">
+    update CUST
+    set IDX2 = #{idx2,jdbcType=VARCHAR},
+      CUS_ARE = #{cusAre,jdbcType=VARCHAR},
+      MAS_CUS = #{masCus,jdbcType=VARCHAR},
+      OBJ_ID = #{objId,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SNM = #{snm,jdbcType=VARCHAR},
+      PAY_DD = #{payDd,jdbcType=SMALLINT},
+      CLS_MTH = #{clsMth,jdbcType=VARCHAR},
+      CLS_DD = #{clsDd,jdbcType=SMALLINT},
+      MM_END = #{mmEnd,jdbcType=SMALLINT},
+      CHK_DD = #{chkDd,jdbcType=SMALLINT},
+      UNI_NO = #{uniNo,jdbcType=VARCHAR},
+      BOS_NM = #{bosNm,jdbcType=VARCHAR},
+      CNT_JOB1 = #{cntJob1,jdbcType=VARCHAR},
+      CNT_MAN1 = #{cntMan1,jdbcType=VARCHAR},
+      CNT_JOB2 = #{cntJob2,jdbcType=VARCHAR},
+      CNT_MAN2 = #{cntMan2,jdbcType=VARCHAR},
+      ACC_MAN = #{accMan,jdbcType=VARCHAR},
+      SAL = #{sal,jdbcType=VARCHAR},
+      TEL1 = #{tel1,jdbcType=VARCHAR},
+      TEL2 = #{tel2,jdbcType=VARCHAR},
+      FAX = #{fax,jdbcType=VARCHAR},
+      ZIP = #{zip,jdbcType=VARCHAR},
+      LIM_NR = #{limNr,jdbcType=NUMERIC},
+      LIM_NC = #{limNc,jdbcType=NUMERIC},
+      CRD_ID = #{crdId,jdbcType=VARCHAR},
+      INV_ID = #{invId,jdbcType=VARCHAR},
+      ID1_TAX = #{id1Tax,jdbcType=VARCHAR},
+      ID2_TAX = #{id2Tax,jdbcType=VARCHAR},
+      CLS1 = #{cls1,jdbcType=VARCHAR},
+      CLS2 = #{cls2,jdbcType=VARCHAR},
+      STR_DD = #{strDd,jdbcType=TIMESTAMP},
+      END_DD = #{endDd,jdbcType=TIMESTAMP},
+      CUR = #{cur,jdbcType=VARCHAR},
+      CRD_NR_NC = #{crdNrNc,jdbcType=VARCHAR},
+      E_MAIL = #{eMail,jdbcType=VARCHAR},
+      SEND_MTH = #{sendMth,jdbcType=VARCHAR},
+      SEND_WH = #{sendWh,jdbcType=VARCHAR},
+      BNK_NAME = #{bnkName,jdbcType=VARCHAR},
+      ID_CODE = #{idCode,jdbcType=VARCHAR},
+      CUS_LEVEL = #{cusLevel,jdbcType=VARCHAR},
+      INC_CHECK = #{incCheck,jdbcType=VARCHAR},
+      LS_RTO = #{lsRto,jdbcType=NUMERIC},
+      COMPNET = #{compnet,jdbcType=VARCHAR},
+      COMP_DD = #{compDd,jdbcType=TIMESTAMP},
+      CAPSUM = #{capsum,jdbcType=NUMERIC},
+      BUSISUM = #{busisum,jdbcType=NUMERIC},
+      SALMS = #{salms,jdbcType=INTEGER},
+      BUSINOTE = #{businote,jdbcType=VARCHAR},
+      CHK_CRD = #{chkCrd,jdbcType=VARCHAR},
+      S_FLAG = #{sFlag,jdbcType=VARCHAR},
+      INITNUM = #{initnum,jdbcType=NUMERIC},
+      NOTIFY = #{notify,jdbcType=VARCHAR},
+      BROKER = #{broker,jdbcType=VARCHAR},
+      VESSEL = #{vessel,jdbcType=VARCHAR},
+      LOADING_PORT = #{loadingPort,jdbcType=VARCHAR},
+      DIS_PORT = #{disPort,jdbcType=VARCHAR},
+      MANU_PLACE = #{manuPlace,jdbcType=VARCHAR},
+      EPAPER = #{epaper,jdbcType=VARCHAR},
+      TRAN_REC = #{tranRec,jdbcType=VARCHAR},
+      PSWD = #{pswd,jdbcType=VARCHAR},
+      PSWD_HIT = #{pswdHit,jdbcType=VARCHAR},
+      PSWD_ANS = #{pswdAns,jdbcType=VARCHAR},
+      APPLY_DD = #{applyDd,jdbcType=TIMESTAMP},
+      BIZ_DSC = #{bizDsc,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      BANK_NO = #{bankNo,jdbcType=VARCHAR},
+      ACC_NO_AR = #{accNoAr,jdbcType=VARCHAR},
+      ACC_NO_AP = #{accNoAp,jdbcType=VARCHAR},
+      ACC_NO_R0 = #{accNoR0,jdbcType=VARCHAR},
+      ACC_NO_P0 = #{accNoP0,jdbcType=VARCHAR},
+      SO_CRD = #{soCrd,jdbcType=VARCHAR},
+      FP_NAME = #{fpName,jdbcType=VARCHAR},
+      CHK_FAX = #{chkFax,jdbcType=VARCHAR},
+      RTO_TAX = #{rtoTax,jdbcType=NUMERIC},
+      CHK_CUS_IDX = #{chkCusIdx,jdbcType=VARCHAR},
+      CY_ID = #{cyId,jdbcType=VARCHAR},
+      REGIST_CODE = #{registCode,jdbcType=VARCHAR},
+      CORP_ID = #{corpId,jdbcType=VARCHAR},
+      M_CUST = #{mCust,jdbcType=VARCHAR},
+      SAL_NO = #{salNo,jdbcType=VARCHAR},
+      CHK_DEP = #{chkDep,jdbcType=VARCHAR},
+      RTO_KK = #{rtoKk,jdbcType=NUMERIC},
+      DEP = #{dep,jdbcType=VARCHAR},
+      RTO_FL = #{rtoFl,jdbcType=NUMERIC},
+      RTO_YL = #{rtoYl,jdbcType=NUMERIC},
+      DEP1 = #{dep1,jdbcType=VARCHAR},
+      USR = #{usr,jdbcType=VARCHAR},
+      CHK_INCLUDE = #{chkInclude,jdbcType=VARCHAR},
+      CHK_IRP = #{chkIrp,jdbcType=VARCHAR},
+      CHK_TRP = #{chkTrp,jdbcType=VARCHAR},
+      CHK_MAN = #{chkMan,jdbcType=VARCHAR},
+      CLS_DATE = #{clsDate,jdbcType=TIMESTAMP},
+      CHK_PAY1 = #{chkPay1,jdbcType=VARCHAR},
+      PAY_DAYS = #{payDays,jdbcType=SMALLINT},
+      PAY_FLAG = #{payFlag,jdbcType=VARCHAR},
+      CHK_PAY2 = #{chkPay2,jdbcType=VARCHAR},
+      CHK_PAY3 = #{chkPay3,jdbcType=VARCHAR},
+      AMTN_MAX_PAY = #{amtnMaxPay,jdbcType=NUMERIC},
+      CHK_QK = #{chkQk,jdbcType=VARCHAR},
+      AMTN_QK = #{amtnQk,jdbcType=NUMERIC},
+      USR1 = #{usr1,jdbcType=VARCHAR},
+      SYS_DATE = #{sysDate,jdbcType=TIMESTAMP},
+      RTO_DISCNT = #{rtoDiscnt,jdbcType=NUMERIC},
+      CHK_IRP2 = #{chkIrp2,jdbcType=VARCHAR},
+      LOGON = #{logon,jdbcType=VARCHAR},
+      WH_NO = #{whNo,jdbcType=VARCHAR},
+      STOP_ORDER = #{stopOrder,jdbcType=VARCHAR},
+      RTN_CTRL = #{rtnCtrl,jdbcType=VARCHAR},
+      DRP_ID = #{drpId,jdbcType=VARCHAR},
+      UPR4_ID = #{upr4Id,jdbcType=VARCHAR},
+      YH_WH1 = #{yhWh1,jdbcType=VARCHAR},
+      YH_WH2 = #{yhWh2,jdbcType=VARCHAR},
+      ACC_NO_IR = #{accNoIr,jdbcType=VARCHAR},
+      ACC_NO_IP = #{accNoIp,jdbcType=VARCHAR},
+      B2C_ID = #{b2cId,jdbcType=VARCHAR},
+      CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      PRTWEEKS_PO = #{prtweeksPo,jdbcType=SMALLINT},
+      SOWEEKS_PO = #{soweeksPo,jdbcType=SMALLINT},
+      LANG_ID = #{langId,jdbcType=VARCHAR},
+      CHK_DRP1 = #{chkDrp1,jdbcType=VARCHAR},
+      CHK_DRP2 = #{chkDrp2,jdbcType=VARCHAR},
+      CHK_DRP3 = #{chkDrp3,jdbcType=VARCHAR},
+      SRV_NO = #{srvNo,jdbcType=VARCHAR},
+      CUS_IDX = #{cusIdx,jdbcType=VARCHAR},
+      XN_NO = #{xnNo,jdbcType=VARCHAR},
+      CWORK = #{cwork,jdbcType=INTEGER},
+      CHK_BARCODE = #{chkBarcode,jdbcType=VARCHAR},
+      ACC_NO_ZP = #{accNoZp,jdbcType=VARCHAR},
+      HM_ID = #{hmId,jdbcType=VARCHAR},
+      PSWD_PAY = #{pswdPay,jdbcType=VARCHAR},
+      AMTN_FL = #{amtnFl,jdbcType=NUMERIC},
+      AMTN_FLED = #{amtnFled,jdbcType=NUMERIC},
+      CHK_SBRTO = #{chkSbrto,jdbcType=VARCHAR},
+      DEPRO_NO = #{deproNo,jdbcType=VARCHAR},
+      RTO_FQSK = #{rtoFqsk,jdbcType=NUMERIC},
+      DATEFLAG_FQSK = #{dateflagFqsk,jdbcType=VARCHAR},
+      DATE_FQSK = #{dateFqsk,jdbcType=TIMESTAMP},
+      QS_FQSK = #{qsFqsk,jdbcType=INTEGER},
+      LOCAL_ID = #{localId,jdbcType=VARCHAR},
+      RULE_ID = #{ruleId,jdbcType=INTEGER},
+      TEL1_CODE = #{tel1Code,jdbcType=VARCHAR},
+      UNI_NO2 = #{uniNo2,jdbcType=VARCHAR},
+      FP_NAME2 = #{fpName2,jdbcType=VARCHAR},
+      CODE_NAME = #{codeName,jdbcType=VARCHAR},
+      CHK_KD = #{chkKd,jdbcType=VARCHAR},
+      WS_CUS_NO = #{wsCusNo,jdbcType=VARCHAR},
+      AUTO_CASN_CHK = #{autoCasnChk,jdbcType=VARCHAR},
+      NSR_CODE = #{nsrCode,jdbcType=VARCHAR},
+      NAME_PY = #{namePy,jdbcType=VARCHAR},
+      BIZ_DSC1 = #{bizDsc1,jdbcType=VARCHAR},
+      CUS_SRC = #{cusSrc,jdbcType=VARCHAR},
+      ACC_NO_AR2 = #{accNoAr2,jdbcType=VARCHAR},
+      ACC_NO_AP2 = #{accNoAp2,jdbcType=VARCHAR},
+      VISIT_LIMIT = #{visitLimit,jdbcType=INTEGER},
+      BB_DD = #{bbDd,jdbcType=TIMESTAMP},
+      SO_DD = #{soDd,jdbcType=TIMESTAMP},
+      MOB_ID = #{mobId,jdbcType=VARCHAR},
+      TT_TYPE_SET = #{ttTypeSet,jdbcType=VARCHAR},
+      EX_TRD_ID = #{exTrdId,jdbcType=VARCHAR},
+      IM_TRD_ID = #{imTrdId,jdbcType=VARCHAR},
+      CUS_NO_KD = #{cusNoKd,jdbcType=VARCHAR},
+      CHK_ZHANG_ID2 = #{chkZhangId2,jdbcType=VARCHAR},
+      PJSQ_WH = #{pjsqWh,jdbcType=VARCHAR},
+      JD_NO = #{jdNo,jdbcType=VARCHAR},
+      FP_TYPE = #{fpType,jdbcType=VARCHAR},
+      CHK_CX = #{chkCx,jdbcType=VARCHAR},
+      CHK_MIN_XF = #{chkMinXf,jdbcType=VARCHAR},
+      BIL_MIN_XF = #{bilMinXf,jdbcType=VARCHAR},
+      CHK_TYPE_MINXF = #{chkTypeMinxf,jdbcType=VARCHAR},
+      AMTN_MIN_XF = #{amtnMinXf,jdbcType=NUMERIC},
+      REM_S = #{remS,jdbcType=VARCHAR},
+      DEP_FH = #{depFh,jdbcType=VARCHAR},
+      WH_FH = #{whFh,jdbcType=VARCHAR},
+      CUS_FH = #{cusFh,jdbcType=VARCHAR},
+      CHK_O2O_FX = #{chkO2oFx,jdbcType=VARCHAR},
+      CHK_MALL = #{chkMall,jdbcType=VARCHAR},
+      FX_LEVEL = #{fxLevel,jdbcType=VARCHAR},
+      DJ_LC = #{djLc,jdbcType=VARCHAR},
+      DJ_PAY = #{djPay,jdbcType=VARCHAR},
+      DJ_SQ = #{djSq,jdbcType=VARCHAR},
+      AMTN_DJ = #{amtnDj,jdbcType=NUMERIC},
+      LIM_NR_TYPE = #{limNrType,jdbcType=VARCHAR},
+      CHK_FULL_PAY = #{chkFullPay,jdbcType=VARCHAR},
+      CHK_CK = #{chkCk,jdbcType=VARCHAR},
+      ISCUSTKEY = #{iscustkey,jdbcType=VARCHAR},
+      SUP_LEVEL = #{supLevel,jdbcType=VARCHAR},
+      BRD_NO = #{brdNo,jdbcType=VARCHAR},
+      CA_NO = #{caNo,jdbcType=VARCHAR},
+      CA1_NO = #{ca1No,jdbcType=VARCHAR},
+      NBRD_NO = #{nbrdNo,jdbcType=VARCHAR},
+      NCA_NO = #{ncaNo,jdbcType=VARCHAR},
+      NCA1_NO = #{nca1No,jdbcType=VARCHAR},
+      INTEREST = #{interest,jdbcType=VARCHAR},
+      NSZG_FLAG = #{nszgFlag,jdbcType=VARCHAR},
+      BACC_NO = #{baccNo,jdbcType=VARCHAR},
+      CHK_INDX1 = #{chkIndx1,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      S_CODE = #{sCode,jdbcType=VARCHAR},
+      DJ_YE = #{djYe,jdbcType=VARCHAR},
+      CHK_FL = #{chkFl,jdbcType=VARCHAR},
+      ZQ_BT_CTRL = #{zqBtCtrl,jdbcType=VARCHAR},
+      CHK_PRD_BT = #{chkPrdBt,jdbcType=VARCHAR},
+      TZBH_DD = #{tzbhDd,jdbcType=TIMESTAMP},
+      TZBH_BIL_ID = #{tzbhBilId,jdbcType=VARCHAR},
+      TZFH_DD = #{tzfhDd,jdbcType=TIMESTAMP},
+      TZFH_BIL_ID = #{tzfhBilId,jdbcType=VARCHAR},
+      CHK_SKIP_LIM = #{chkSkipLim,jdbcType=VARCHAR},
+      YH_TYPE = #{yhType,jdbcType=VARCHAR},
+      TEMPFLAG = #{tempflag,jdbcType=VARCHAR},
+      B2BTYPE = #{b2btype,jdbcType=VARCHAR},
+      ISCOOP = #{iscoop,jdbcType=VARCHAR},
+      CK_USEWH = #{ckUsewh,jdbcType=VARCHAR},
+      USEWH_ID = #{usewhId,jdbcType=VARCHAR},
+      CHK_TH = #{chkTh,jdbcType=VARCHAR},
+      PRE_PSDAYS = #{prePsdays,jdbcType=INTEGER},
+      NM_ENG = #{nmEng,jdbcType=LONGVARCHAR},
+      ADR1 = #{adr1,jdbcType=LONGVARCHAR},
+      ADR2 = #{adr2,jdbcType=LONGVARCHAR},
+      ADR_ENG = #{adrEng,jdbcType=LONGVARCHAR},
+      REM = #{rem,jdbcType=LONGVARCHAR},
+      WORKITM = #{workitm,jdbcType=LONGVARCHAR},
+      MAIN_PRD = #{mainPrd,jdbcType=LONGVARCHAR},
+      UP_DD = #{upDd,jdbcType=BINARY}
+    where CUS_NO = #{cusNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.Cust">
+    update CUST
+    set IDX2 = #{idx2,jdbcType=VARCHAR},
+      CUS_ARE = #{cusAre,jdbcType=VARCHAR},
+      MAS_CUS = #{masCus,jdbcType=VARCHAR},
+      OBJ_ID = #{objId,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SNM = #{snm,jdbcType=VARCHAR},
+      PAY_DD = #{payDd,jdbcType=SMALLINT},
+      CLS_MTH = #{clsMth,jdbcType=VARCHAR},
+      CLS_DD = #{clsDd,jdbcType=SMALLINT},
+      MM_END = #{mmEnd,jdbcType=SMALLINT},
+      CHK_DD = #{chkDd,jdbcType=SMALLINT},
+      UNI_NO = #{uniNo,jdbcType=VARCHAR},
+      BOS_NM = #{bosNm,jdbcType=VARCHAR},
+      CNT_JOB1 = #{cntJob1,jdbcType=VARCHAR},
+      CNT_MAN1 = #{cntMan1,jdbcType=VARCHAR},
+      CNT_JOB2 = #{cntJob2,jdbcType=VARCHAR},
+      CNT_MAN2 = #{cntMan2,jdbcType=VARCHAR},
+      ACC_MAN = #{accMan,jdbcType=VARCHAR},
+      SAL = #{sal,jdbcType=VARCHAR},
+      TEL1 = #{tel1,jdbcType=VARCHAR},
+      TEL2 = #{tel2,jdbcType=VARCHAR},
+      FAX = #{fax,jdbcType=VARCHAR},
+      ZIP = #{zip,jdbcType=VARCHAR},
+      LIM_NR = #{limNr,jdbcType=NUMERIC},
+      LIM_NC = #{limNc,jdbcType=NUMERIC},
+      CRD_ID = #{crdId,jdbcType=VARCHAR},
+      INV_ID = #{invId,jdbcType=VARCHAR},
+      ID1_TAX = #{id1Tax,jdbcType=VARCHAR},
+      ID2_TAX = #{id2Tax,jdbcType=VARCHAR},
+      CLS1 = #{cls1,jdbcType=VARCHAR},
+      CLS2 = #{cls2,jdbcType=VARCHAR},
+      STR_DD = #{strDd,jdbcType=TIMESTAMP},
+      END_DD = #{endDd,jdbcType=TIMESTAMP},
+      CUR = #{cur,jdbcType=VARCHAR},
+      CRD_NR_NC = #{crdNrNc,jdbcType=VARCHAR},
+      E_MAIL = #{eMail,jdbcType=VARCHAR},
+      SEND_MTH = #{sendMth,jdbcType=VARCHAR},
+      SEND_WH = #{sendWh,jdbcType=VARCHAR},
+      BNK_NAME = #{bnkName,jdbcType=VARCHAR},
+      ID_CODE = #{idCode,jdbcType=VARCHAR},
+      CUS_LEVEL = #{cusLevel,jdbcType=VARCHAR},
+      INC_CHECK = #{incCheck,jdbcType=VARCHAR},
+      LS_RTO = #{lsRto,jdbcType=NUMERIC},
+      COMPNET = #{compnet,jdbcType=VARCHAR},
+      COMP_DD = #{compDd,jdbcType=TIMESTAMP},
+      CAPSUM = #{capsum,jdbcType=NUMERIC},
+      BUSISUM = #{busisum,jdbcType=NUMERIC},
+      SALMS = #{salms,jdbcType=INTEGER},
+      BUSINOTE = #{businote,jdbcType=VARCHAR},
+      CHK_CRD = #{chkCrd,jdbcType=VARCHAR},
+      S_FLAG = #{sFlag,jdbcType=VARCHAR},
+      INITNUM = #{initnum,jdbcType=NUMERIC},
+      NOTIFY = #{notify,jdbcType=VARCHAR},
+      BROKER = #{broker,jdbcType=VARCHAR},
+      VESSEL = #{vessel,jdbcType=VARCHAR},
+      LOADING_PORT = #{loadingPort,jdbcType=VARCHAR},
+      DIS_PORT = #{disPort,jdbcType=VARCHAR},
+      MANU_PLACE = #{manuPlace,jdbcType=VARCHAR},
+      EPAPER = #{epaper,jdbcType=VARCHAR},
+      TRAN_REC = #{tranRec,jdbcType=VARCHAR},
+      PSWD = #{pswd,jdbcType=VARCHAR},
+      PSWD_HIT = #{pswdHit,jdbcType=VARCHAR},
+      PSWD_ANS = #{pswdAns,jdbcType=VARCHAR},
+      APPLY_DD = #{applyDd,jdbcType=TIMESTAMP},
+      BIZ_DSC = #{bizDsc,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      BANK_NO = #{bankNo,jdbcType=VARCHAR},
+      ACC_NO_AR = #{accNoAr,jdbcType=VARCHAR},
+      ACC_NO_AP = #{accNoAp,jdbcType=VARCHAR},
+      ACC_NO_R0 = #{accNoR0,jdbcType=VARCHAR},
+      ACC_NO_P0 = #{accNoP0,jdbcType=VARCHAR},
+      SO_CRD = #{soCrd,jdbcType=VARCHAR},
+      FP_NAME = #{fpName,jdbcType=VARCHAR},
+      CHK_FAX = #{chkFax,jdbcType=VARCHAR},
+      RTO_TAX = #{rtoTax,jdbcType=NUMERIC},
+      CHK_CUS_IDX = #{chkCusIdx,jdbcType=VARCHAR},
+      CY_ID = #{cyId,jdbcType=VARCHAR},
+      REGIST_CODE = #{registCode,jdbcType=VARCHAR},
+      CORP_ID = #{corpId,jdbcType=VARCHAR},
+      M_CUST = #{mCust,jdbcType=VARCHAR},
+      SAL_NO = #{salNo,jdbcType=VARCHAR},
+      CHK_DEP = #{chkDep,jdbcType=VARCHAR},
+      RTO_KK = #{rtoKk,jdbcType=NUMERIC},
+      DEP = #{dep,jdbcType=VARCHAR},
+      RTO_FL = #{rtoFl,jdbcType=NUMERIC},
+      RTO_YL = #{rtoYl,jdbcType=NUMERIC},
+      DEP1 = #{dep1,jdbcType=VARCHAR},
+      USR = #{usr,jdbcType=VARCHAR},
+      CHK_INCLUDE = #{chkInclude,jdbcType=VARCHAR},
+      CHK_IRP = #{chkIrp,jdbcType=VARCHAR},
+      CHK_TRP = #{chkTrp,jdbcType=VARCHAR},
+      CHK_MAN = #{chkMan,jdbcType=VARCHAR},
+      CLS_DATE = #{clsDate,jdbcType=TIMESTAMP},
+      CHK_PAY1 = #{chkPay1,jdbcType=VARCHAR},
+      PAY_DAYS = #{payDays,jdbcType=SMALLINT},
+      PAY_FLAG = #{payFlag,jdbcType=VARCHAR},
+      CHK_PAY2 = #{chkPay2,jdbcType=VARCHAR},
+      CHK_PAY3 = #{chkPay3,jdbcType=VARCHAR},
+      AMTN_MAX_PAY = #{amtnMaxPay,jdbcType=NUMERIC},
+      CHK_QK = #{chkQk,jdbcType=VARCHAR},
+      AMTN_QK = #{amtnQk,jdbcType=NUMERIC},
+      USR1 = #{usr1,jdbcType=VARCHAR},
+      SYS_DATE = #{sysDate,jdbcType=TIMESTAMP},
+      RTO_DISCNT = #{rtoDiscnt,jdbcType=NUMERIC},
+      CHK_IRP2 = #{chkIrp2,jdbcType=VARCHAR},
+      LOGON = #{logon,jdbcType=VARCHAR},
+      WH_NO = #{whNo,jdbcType=VARCHAR},
+      STOP_ORDER = #{stopOrder,jdbcType=VARCHAR},
+      RTN_CTRL = #{rtnCtrl,jdbcType=VARCHAR},
+      DRP_ID = #{drpId,jdbcType=VARCHAR},
+      UPR4_ID = #{upr4Id,jdbcType=VARCHAR},
+      YH_WH1 = #{yhWh1,jdbcType=VARCHAR},
+      YH_WH2 = #{yhWh2,jdbcType=VARCHAR},
+      ACC_NO_IR = #{accNoIr,jdbcType=VARCHAR},
+      ACC_NO_IP = #{accNoIp,jdbcType=VARCHAR},
+      B2C_ID = #{b2cId,jdbcType=VARCHAR},
+      CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      PRTWEEKS_PO = #{prtweeksPo,jdbcType=SMALLINT},
+      SOWEEKS_PO = #{soweeksPo,jdbcType=SMALLINT},
+      LANG_ID = #{langId,jdbcType=VARCHAR},
+      CHK_DRP1 = #{chkDrp1,jdbcType=VARCHAR},
+      CHK_DRP2 = #{chkDrp2,jdbcType=VARCHAR},
+      CHK_DRP3 = #{chkDrp3,jdbcType=VARCHAR},
+      SRV_NO = #{srvNo,jdbcType=VARCHAR},
+      CUS_IDX = #{cusIdx,jdbcType=VARCHAR},
+      XN_NO = #{xnNo,jdbcType=VARCHAR},
+      CWORK = #{cwork,jdbcType=INTEGER},
+      CHK_BARCODE = #{chkBarcode,jdbcType=VARCHAR},
+      ACC_NO_ZP = #{accNoZp,jdbcType=VARCHAR},
+      HM_ID = #{hmId,jdbcType=VARCHAR},
+      PSWD_PAY = #{pswdPay,jdbcType=VARCHAR},
+      AMTN_FL = #{amtnFl,jdbcType=NUMERIC},
+      AMTN_FLED = #{amtnFled,jdbcType=NUMERIC},
+      CHK_SBRTO = #{chkSbrto,jdbcType=VARCHAR},
+      DEPRO_NO = #{deproNo,jdbcType=VARCHAR},
+      RTO_FQSK = #{rtoFqsk,jdbcType=NUMERIC},
+      DATEFLAG_FQSK = #{dateflagFqsk,jdbcType=VARCHAR},
+      DATE_FQSK = #{dateFqsk,jdbcType=TIMESTAMP},
+      QS_FQSK = #{qsFqsk,jdbcType=INTEGER},
+      LOCAL_ID = #{localId,jdbcType=VARCHAR},
+      RULE_ID = #{ruleId,jdbcType=INTEGER},
+      TEL1_CODE = #{tel1Code,jdbcType=VARCHAR},
+      UNI_NO2 = #{uniNo2,jdbcType=VARCHAR},
+      FP_NAME2 = #{fpName2,jdbcType=VARCHAR},
+      CODE_NAME = #{codeName,jdbcType=VARCHAR},
+      CHK_KD = #{chkKd,jdbcType=VARCHAR},
+      WS_CUS_NO = #{wsCusNo,jdbcType=VARCHAR},
+      AUTO_CASN_CHK = #{autoCasnChk,jdbcType=VARCHAR},
+      NSR_CODE = #{nsrCode,jdbcType=VARCHAR},
+      NAME_PY = #{namePy,jdbcType=VARCHAR},
+      BIZ_DSC1 = #{bizDsc1,jdbcType=VARCHAR},
+      CUS_SRC = #{cusSrc,jdbcType=VARCHAR},
+      ACC_NO_AR2 = #{accNoAr2,jdbcType=VARCHAR},
+      ACC_NO_AP2 = #{accNoAp2,jdbcType=VARCHAR},
+      VISIT_LIMIT = #{visitLimit,jdbcType=INTEGER},
+      BB_DD = #{bbDd,jdbcType=TIMESTAMP},
+      SO_DD = #{soDd,jdbcType=TIMESTAMP},
+      MOB_ID = #{mobId,jdbcType=VARCHAR},
+      TT_TYPE_SET = #{ttTypeSet,jdbcType=VARCHAR},
+      EX_TRD_ID = #{exTrdId,jdbcType=VARCHAR},
+      IM_TRD_ID = #{imTrdId,jdbcType=VARCHAR},
+      CUS_NO_KD = #{cusNoKd,jdbcType=VARCHAR},
+      CHK_ZHANG_ID2 = #{chkZhangId2,jdbcType=VARCHAR},
+      PJSQ_WH = #{pjsqWh,jdbcType=VARCHAR},
+      JD_NO = #{jdNo,jdbcType=VARCHAR},
+      FP_TYPE = #{fpType,jdbcType=VARCHAR},
+      CHK_CX = #{chkCx,jdbcType=VARCHAR},
+      CHK_MIN_XF = #{chkMinXf,jdbcType=VARCHAR},
+      BIL_MIN_XF = #{bilMinXf,jdbcType=VARCHAR},
+      CHK_TYPE_MINXF = #{chkTypeMinxf,jdbcType=VARCHAR},
+      AMTN_MIN_XF = #{amtnMinXf,jdbcType=NUMERIC},
+      REM_S = #{remS,jdbcType=VARCHAR},
+      DEP_FH = #{depFh,jdbcType=VARCHAR},
+      WH_FH = #{whFh,jdbcType=VARCHAR},
+      CUS_FH = #{cusFh,jdbcType=VARCHAR},
+      CHK_O2O_FX = #{chkO2oFx,jdbcType=VARCHAR},
+      CHK_MALL = #{chkMall,jdbcType=VARCHAR},
+      FX_LEVEL = #{fxLevel,jdbcType=VARCHAR},
+      DJ_LC = #{djLc,jdbcType=VARCHAR},
+      DJ_PAY = #{djPay,jdbcType=VARCHAR},
+      DJ_SQ = #{djSq,jdbcType=VARCHAR},
+      AMTN_DJ = #{amtnDj,jdbcType=NUMERIC},
+      LIM_NR_TYPE = #{limNrType,jdbcType=VARCHAR},
+      CHK_FULL_PAY = #{chkFullPay,jdbcType=VARCHAR},
+      CHK_CK = #{chkCk,jdbcType=VARCHAR},
+      ISCUSTKEY = #{iscustkey,jdbcType=VARCHAR},
+      SUP_LEVEL = #{supLevel,jdbcType=VARCHAR},
+      BRD_NO = #{brdNo,jdbcType=VARCHAR},
+      CA_NO = #{caNo,jdbcType=VARCHAR},
+      CA1_NO = #{ca1No,jdbcType=VARCHAR},
+      NBRD_NO = #{nbrdNo,jdbcType=VARCHAR},
+      NCA_NO = #{ncaNo,jdbcType=VARCHAR},
+      NCA1_NO = #{nca1No,jdbcType=VARCHAR},
+      INTEREST = #{interest,jdbcType=VARCHAR},
+      NSZG_FLAG = #{nszgFlag,jdbcType=VARCHAR},
+      BACC_NO = #{baccNo,jdbcType=VARCHAR},
+      CHK_INDX1 = #{chkIndx1,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      S_CODE = #{sCode,jdbcType=VARCHAR},
+      DJ_YE = #{djYe,jdbcType=VARCHAR},
+      CHK_FL = #{chkFl,jdbcType=VARCHAR},
+      ZQ_BT_CTRL = #{zqBtCtrl,jdbcType=VARCHAR},
+      CHK_PRD_BT = #{chkPrdBt,jdbcType=VARCHAR},
+      TZBH_DD = #{tzbhDd,jdbcType=TIMESTAMP},
+      TZBH_BIL_ID = #{tzbhBilId,jdbcType=VARCHAR},
+      TZFH_DD = #{tzfhDd,jdbcType=TIMESTAMP},
+      TZFH_BIL_ID = #{tzfhBilId,jdbcType=VARCHAR},
+      CHK_SKIP_LIM = #{chkSkipLim,jdbcType=VARCHAR},
+      YH_TYPE = #{yhType,jdbcType=VARCHAR},
+      TEMPFLAG = #{tempflag,jdbcType=VARCHAR},
+      B2BTYPE = #{b2btype,jdbcType=VARCHAR},
+      ISCOOP = #{iscoop,jdbcType=VARCHAR},
+      CK_USEWH = #{ckUsewh,jdbcType=VARCHAR},
+      USEWH_ID = #{usewhId,jdbcType=VARCHAR},
+      CHK_TH = #{chkTh,jdbcType=VARCHAR},
+      PRE_PSDAYS = #{prePsdays,jdbcType=INTEGER}
+    where CUS_NO = #{cusNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

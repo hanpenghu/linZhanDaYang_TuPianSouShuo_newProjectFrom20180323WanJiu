@@ -268,6 +268,29 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
         mm.setCusNo(s.getCusNo());
+        /**
+         * 2018_4_28   weekday(6)   17:25:41 老郑让加的,根据下面sql加的
+         * update a set a.tax_id=b.ID1_TAX from mf_pos a,cust b where a.cus_no=b.cus_no and ISNULL(a.TAX_ID,'')=''
+         *
+         *根据  mm的CusNo,找到
+         * */
+        try {
+            CustExample custExample=new CustExample();
+            custExample.createCriteria().andMCustNotEqualTo(p.threeEyeCalculate(mm.getCusNo()==null,"",mm.getCusNo()));
+            List<Cust> custs = cnst.custMapper.selectByExample(custExample);
+            if(p.notEmpty(custs)){
+                String id1Tax = custs.get(0).getId1Tax();
+                mm.setTaxId(p.threeEyeCalculate(id1Tax==null,"",id1Tax));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            l.error("新加功能异常");
+            p.p("-------------------------------------------------------");
+            p.p("新加功能异常");
+            p.p("-------------------------------------------------------");
+        }
+
+
         mm.setTaxId(s.getTaxId());
         //老郑说了,这个客户单号也用osNo填充
         mm.setCusOsNo(s.getOsNo());
