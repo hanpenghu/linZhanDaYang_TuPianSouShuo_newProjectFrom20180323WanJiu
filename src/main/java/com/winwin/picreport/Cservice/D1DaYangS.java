@@ -23,7 +23,7 @@ import java.util.List;
 public class D1DaYangS {
     @Autowired
     private Cnst cnst;
-
+    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     //////////////////////////////////////////////////////////////////////////////////////////
     public List<CategoryNameCode> fenlei() {
         List<CategoryNameCode> categoryNameCodeList = new ArrayList<>();
@@ -87,6 +87,8 @@ public class D1DaYangS {
 
             ////这种用于显示在: 页面的<销售定价>那一栏
             if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)){
+
+                l.error("--《销售定价》页面显示用---------------------------------");
                 //此时是要返回已经采购定价但未销售定价的数据
                 //那么判断当前的prdtSampX1所携带的prdNo在数据库是否有对应的采购定价但是没有对应的
                 //的销售定价,如果是继续,不是就break
@@ -105,6 +107,7 @@ public class D1DaYangS {
                 if(!(p.notEmpty(upDefsBuy)&&p.empty(upDefsSale))){
                     //已经采购过但未销售过的相反的方向
                     //此时不能通过
+                    l.error("-----该商品不适合显示在《销售定价》页面-------------------------");
                     continue;//跳到下一个id进行
                 }
             }
