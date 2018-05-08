@@ -125,14 +125,14 @@
                     </choose>
 
         AND
-                    --产品负责人
-                    isnull(sal_No,'') LIKE
+                    --产品负责人,模糊查询
+                    isnull(sal_name,'') LIKE
                     <choose>
-                        <when test="salNo != null and salNo != '' ">
-                            ('%' +( #{salNo}) + '%')
+                        <when test="salName != null and salName != '' ">
+                            ('%' +( #{salName}) + '%')
                         </when>
                         <otherwise>
-                            isnull(sal_No,'')
+                            isnull(sal_name,'')
                         </otherwise>
                     </choose>
         AND
