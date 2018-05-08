@@ -158,6 +158,8 @@ public interface A001TongYongMapper {
    @Select("Select top 1 prd_no from prdt where name=#{prdCode} order by prd_no desc")
    String selectTop1PrdtNo(@Param("prdCode") String prdCode);
 
+
+
    @Select("Select top 1 prd_no from prdt where IDX1=#{indx1} order by prd_no desc")
    String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
 
