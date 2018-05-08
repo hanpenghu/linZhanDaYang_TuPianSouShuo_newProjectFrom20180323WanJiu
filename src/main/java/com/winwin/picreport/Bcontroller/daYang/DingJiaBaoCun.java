@@ -37,14 +37,19 @@ public class DingJiaBaoCun {
 
 
      {"uuid":"填入给前端的唯一标识","noTransUpSale":"没有运费的销售定价",
-     "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unitZhu":"","unitFu":""}
+     "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注"
+     ,"qty":"数量","unitZhu":"","unitFu":""}
 
 
      采购传入方式//币别徐勇来拆,运费我来拆分
 
 
+
+
+     //这个uuid是用来将来获得货号进行相关操作的,  后台的dingJiaGuanLian并没有用这个uuid
      {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",
-     "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注","qty":"数量","unitZhu":"","unitFu":""}
+     "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注",
+     "qty":"数量","unitZhu":"","unitFu":""}
 
 
      unitZhu指的是主单位
@@ -120,7 +125,7 @@ public class DingJiaBaoCun {
     Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币
 
         //生成界面依次插入的四条记录的关联的uuid
-        String uid = p.uuid();
+        String uid = p.uuid();//用来跟一个字符串组合成该次定价的唯一标识, 比如4条数据一个标识
         ups.forEach(v->v.setDingJiaGuanLian(stra.b().a(Cnst.SamplesSys).a(uid).g()));
 
 //        synchronized (this){

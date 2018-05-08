@@ -14,7 +14,13 @@ import java.util.List;
 public class PrdtSamp0 extends PrdtSamp{
     private String usr;//登录的会员名不再用了,因为我在PrdtSamp里已经有了UserName(用户名)和tenantId了
     //价格列表,采购和销售合并//其实后来弄成单独销售的了
+    /**
+     林展的还需要加一个接口，销售定价现在展示的是所有的数据，
+     需要调整为(1和2同事满足)展示1.已经进行过采购定价、2.还未进行销售定价，的数据进行展示
+
+     * */
     private List<UpDefMy01>upDefMyList=new ArrayList<>();
+
 
     //价格列表,单独采购的
     private List<UpDefMy01>upDefMyListBuy=new ArrayList<>();

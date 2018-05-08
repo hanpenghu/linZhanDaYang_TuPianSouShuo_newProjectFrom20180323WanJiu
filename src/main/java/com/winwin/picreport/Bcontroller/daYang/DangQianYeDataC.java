@@ -3,8 +3,11 @@ package com.winwin.picreport.Bcontroller.daYang;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Futils.FenYe;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin
 @RestController
@@ -245,10 +248,19 @@ public class DangQianYeDataC {
     @RequestMapping(value = InterFaceCnst.dangqianyeData,
             method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    FenYe dangqianyeData(@RequestBody FenYe fenYe) {
+    public @ResponseBody//注意:增加一个request获得参数,所有数据库定价类型分类的参数
+    //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
+    //代表 已经采购定价但未销售定价的所有数据
+    FenYe dangqianyeData(@RequestBody FenYe fenYe, HttpServletRequest request) {
+        String  dingJiaType= request.getParameter("dingJiaType");
+//        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
+//            //此时是要返回已经采购定价但未销售定价的数据
+        //这种用于显示在: 页面的销售定价那一栏
+//        }
+        // /d/dangqianyeData?dingJiaType=yiJingCaiGouDingJiaDanWeiXiaoShouDingJia  此时证明你调的接口是为了在页面上的(销售定价的显示)
+
         return cnst.fenLei
-                .dangqianyeData(fenYe);//主要传过来当前页和每页显示数量
+                .dangqianyeData(fenYe,dingJiaType);//主要传过来当前页和每页显示数量
     }
 
 

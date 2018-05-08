@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Component
@@ -14,11 +16,12 @@ public class GetPriceModelUpdef {
     @Autowired
    private Cnst cnst;
     public void GetPriceModel(PrdtSamp0 prdtSampX) {
+
         String prdNo=prdtSampX.getPrdNo();
         //动态sql,如果第二个参数是null的话就选出来所有的
-        List<UpDefMy01> upDefMyList1= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.salPriceId);//这个其实变成销售的了
+        List<UpDefMy01> upDefMyList1= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.salPriceId);//这个其实变成销售的了//1销售
         ////动态sql,如果第二个参数不是null的话就选出来对应的priceId
-        List<UpDefMy01> upDefMyListBuy1= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.buyPriceId);//这个其实变成采购的了
+        List<UpDefMy01> upDefMyListBuy1= cnst.a001TongYongMapper.getUpDefMy(prdNo,Cnst.buyPriceId);//这个其实变成采购的了//2采购
         //走一遍 get方法,等于给该赋值的字段赋值,因为我在get方法里面做了赋值运算
         //最后把up设置成null是为了在接口返回给前端再调get方法的时候不再计算了
         upDefMyListBuy1.forEach(v->{v.getNoTransUpBuy();v.getHaveTransUpBuy();v.getNoTransUpSale();v.getHaveTransUpSale();v.setUp(null);});
@@ -26,30 +29,6 @@ public class GetPriceModelUpdef {
         //接下来是把时间完全一样的带运费和不带运费的合并成一项
         List<UpDefMy01> upDefMyList = this.merageSameTimeUpDefMy01(upDefMyList1);
         List<UpDefMy01> upDefMyListBuy=this.merageSameTimeUpDefMy01(upDefMyListBuy1);
-
-//
-//        if(NotEmpty.empty(upDefMyList)){
-//            UpDefMy01 upDefMy01=new UpDefMy01();
-//            upDefMy01.setCurId(Cnst.testDataCurrentCode);
-//            upDefMy01.setCurName(Cnst.testDataCurrentName);
-//            upDefMy01.setQty(new BigDecimal(1111110));
-//            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
-//            upDefMy01.setUp(new BigDecimal(0));
-//            //为了给徐勇做实验用
-//            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
-//        }
-//
-//        if(NotEmpty.empty(upDefMyListBuy)){
-//            UpDefMy01 upDefMy01=new UpDefMy01();
-//            upDefMy01.setCurId(Cnst.testDataCurrentCode);
-//            upDefMy01.setCurName(Cnst.testDataCurrentName);
-//            upDefMy01.setQty(new BigDecimal(1110));
-//            upDefMy01.setSDd(p.tod(p.unixBir,p.d3));
-//            upDefMy01.setUp(new BigDecimal(99));
-//            //为了给徐勇做实验用
-//            upDefMyList.addAll(p.gp().setArl(upDefMy01).getArl());
-//        }
-
         prdtSampX.setUpDefMyList(upDefMyList);
         prdtSampX.setUpDefMyListBuy(upDefMyListBuy);
     }
