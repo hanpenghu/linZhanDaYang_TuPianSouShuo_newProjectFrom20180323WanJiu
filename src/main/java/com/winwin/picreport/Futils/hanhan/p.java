@@ -26,6 +26,8 @@ public strictfp class p {
     /*public static void main(String[]args){
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
+   public static final List<String>imgSufixs=Arrays.asList(".jpg",".jpeg",".png",".bmp",".gif"
+            ,".jpeg2000",".JPG",".JPEG",".PNG",".BMP",".GIF",".JPEG2000");
 
     private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };//md5用

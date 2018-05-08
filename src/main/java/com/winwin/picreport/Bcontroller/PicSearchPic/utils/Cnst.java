@@ -13,7 +13,8 @@ public interface Cnst {
     Integer searchResultcount=10;
     //码隆的sdk版本
     String maLongSdkVersion="1";
-    String testPicUrl="http://61.177.44.218:8070/suoLueTuWenJianJia/2a01e950-51c9-4c40-b443-8a4b36b1455d!WW-NEEL-TEST5.png";
+    //后来缩略图和附件放到一个文件夹了
+    String testPicUrl="http://61.177.44.218:8070/suoLueTuAndFuJian/2a01e950-51c9-4c40-b443-8a4b36b1455d!WW-NEEL-TEST5.png";
 
 
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +60,17 @@ public class PicToMaLong {
             }
 
             //得到所有的带后缀名字的文件名字(其实是图片名字)
-            List<String> fileNames = Arrays.asList(thumDic.list());
+            List<String> fileNames1 = Arrays.asList(thumDic.list());
+
+
+            //过滤是图片的文件,不是图片的不要给码隆
+            List<String> fileNames=new ArrayList<String>();
+            for(String s:fileNames1){
+                if(p.imgSufixs.contains(s.substring(s.lastIndexOf(".")))){
+                    //此时是图片
+                    fileNames.add(s);
+                }
+            }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
