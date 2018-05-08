@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/d")
 public class DangQianYeDataC {
-
+private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
     //
@@ -254,6 +254,7 @@ public class DangQianYeDataC {
     FenYe dangqianyeData(@RequestBody FenYe fenYe, HttpServletRequest request) {
         //这个参数只是决定后面那个界面再调数据
         String  dingJiaType= request.getParameter("dingJiaType");
+        l.error("---当前页数据,用于那个界面？----dingJiaType="+dingJiaType+"---------------------");
 //        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
 //            //此时是要返回已经采购定价但未销售定价的数据
         //这种用于显示在: 页面的销售定价那一栏
