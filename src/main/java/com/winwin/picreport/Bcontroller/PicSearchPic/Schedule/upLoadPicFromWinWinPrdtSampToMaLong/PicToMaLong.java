@@ -24,8 +24,8 @@ public class PicToMaLong {
     @Autowired
     private CnstO cnstO;
 
-    //每天18点运行
-    @Scheduled(cron="0 0 18 * * ?")
+    //每天凌晨01点运行
+    @Scheduled(cron="0 0 01 * * ?")
     public void startTask(){
 
 
