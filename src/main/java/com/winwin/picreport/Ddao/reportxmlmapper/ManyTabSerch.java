@@ -153,6 +153,13 @@ public interface ManyTabSerch {
             (@Param("dangQianYe") Integer dangQianYe
                     , @Param("meiYeXianShiShu") Integer meiYeXianShiShu);
 
+
+
+//    selectDangQianYeSuoYouIdOfXiaoShouDingJia
+
+    List<String> selectDangQianYeSuoYouIdOfXiaoShouDingJia
+            (@Param("dangQianYe") Integer dangQianYe
+                    , @Param("meiYeXianShiShu") Integer meiYeXianShiShu);
     /**
      * 得到某页分页id,打样未确认的
      */

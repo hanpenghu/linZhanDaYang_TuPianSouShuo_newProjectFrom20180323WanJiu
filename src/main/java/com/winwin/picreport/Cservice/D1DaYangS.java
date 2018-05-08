@@ -74,50 +74,24 @@ public class D1DaYangS {
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp0> prdtSampList = new ArrayList<>();
-        List<String> idList = cnst.manyTabSerch.selectDangQianYeSuoYouId
-                (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+
+        List<String> idList=new ArrayList<String>();
+        ////这种用于显示在: 页面的<销售定价>那一栏
+        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
+            l.error("--《销售定价》页面显示用---------------------------------");
+            idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia
+                    (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        }else{
+            idList = cnst.manyTabSerch.selectDangQianYeSuoYouId
+                    (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+        }
+
+
+
+//        selectDangQianYeSuoYouIdOfXiaoShouDingJia
+
         for (String id : idList) {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
-
-
-
-
-
-
-
-            ////这种用于显示在: 页面的<销售定价>那一栏
-            if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)){
-
-                l.error("--《销售定价》页面显示用---------------------------------");
-                //此时是要返回已经采购定价但未销售定价的数据
-                //那么判断当前的prdtSampX1所携带的prdNo在数据库是否有对应的采购定价但是没有对应的
-                //的销售定价,如果是继续,不是就break
-                String prdNo = prdtSampX1.getPrdNo();
-                UpDefExample ude=new UpDefExample();
-                ude.createCriteria().andPrdNoEqualTo(prdNo)
-                        .andOlefieldLike("%"+Cnst.SamplesSys+"%")
-                        .andPriceIdEqualTo(Cnst.buyPriceId);
-
-                List<UpDef> upDefsBuy = cnst.upDefMapper.selectByExample(ude);
-
-                ude.createCriteria().andPrdNoEqualTo(prdNo)
-                        .andOlefieldLike("%"+Cnst.SamplesSys+"%")
-                        .andPriceIdEqualTo(Cnst.salPriceId);
-                List<UpDef> upDefsSale = cnst.upDefMapper.selectByExample(ude);
-                if(!(p.notEmpty(upDefsBuy)&&p.empty(upDefsSale))){
-                    //已经采购过但未销售过的相反的方向
-                    //此时不能通过
-                    l.error("-----该商品不适合显示在《销售定价》页面-------------------------");
-                    continue;//跳到下一个id进行
-                }
-            }
-
-
-
-
-
-
-
 
             PrdtSamp0 prdtSampX = this.getP0(prdtSampX1);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

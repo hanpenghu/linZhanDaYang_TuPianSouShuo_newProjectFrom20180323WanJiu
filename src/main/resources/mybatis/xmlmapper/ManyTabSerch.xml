@@ -21,6 +21,26 @@
 
     </select>
 
+
+    <!-- 用于打样的显示销售定价的页面的,却别在于,这里需要显示已经有采购定价的但是没有销售定价的-->
+    <select id="selectDangQianYeSuoYouIdOfXiaoShouDingJia" resultType="java.lang.String">
+ select top(#{meiYeXianShiShu})
+        id
+        from
+        PRDT_SAMP  where id not in
+        (
+            select top
+                (
+                        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+                )
+            id from PRDT_SAMP
+             where prd_no  in(select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%')
+             ORDER BY insertDate DESC
+        )
+         and prd_no  in(select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%')
+        ORDER BY insertDate DESC
+    </select><!--price_id='2'代表采购定价的   olefield LIKE '%SamplesSys%'代表林展系统的-->
+
     <!-- 林展分页打样未确认-->
     <select id="selectDangQianYeSuoYouIdNotConfirm" resultType="java.lang.String">
         select top(#{meiYeXianShiShu})

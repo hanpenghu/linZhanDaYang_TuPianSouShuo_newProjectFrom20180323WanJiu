@@ -11,9 +11,11 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -26,8 +28,7 @@ public strictfp class p {
     /*public static void main(String[]args){
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
-   public static final List<String>imgSufixs=Arrays.asList(".jpg",".jpeg",".png",".bmp",".gif"
-            ,".jpeg2000",".JPG",".JPEG",".PNG",".BMP",".GIF",".JPEG2000");
+
 
     private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };//md5用
@@ -41,6 +42,17 @@ public strictfp class p {
     private final static String emailPattern2 =
             "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 
+
+    public final static List<String>imgSufixs=Arrays.asList(".jpg",".jpeg",".png",".bmp",".gif"
+            ,".jpeg2000",".JPG",".JPEG",".PNG",".BMP",".GIF",".JPEG2000");
+
+    public final static  String ip127="127.0.0.1";
+    public final static   String port1433="1433";
+    public final static  String port3306="3306";
+    public final static  String dbTypeMysql="mysql";
+    public final static  String dbTypeSqlserver="sqlserver";
+    public final static String sqlServerDriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    public final static  String mysqlDriver="com.mysql.jdbc.Driver";
     public static final long fuckIt=10*1000;
     public static final String fuckTime="2019-12-01";
     public static final String knownExceptionSign ="《已知异常》";
@@ -2021,7 +2033,78 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static Connection getCon(String ip, String port
+            , String dbType, String dbName, String usr, String pwd)
+            throws ClassNotFoundException, SQLException {
+//        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String url = "";
+        String driver="";
+        if("sqlserver".equals(dbType)){
+            url="jdbc:sqlserver://"+ip+":"+port+";DatabaseName="+dbName;
+            driver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        }else if("mysql".equals(dbType)){
+            url="jdbc:mysql://"+ip+":"+port+"/"+dbName+"?useUnicode=true&characterEncoding=utf-8";
+            driver="com.mysql.jdbc.Driver";
+        }
+//        //mydb为数据库
+//        String user = "sa";
+//        String password = "root";
+        Class.forName(driver);
+        Connection conn = DriverManager.getConnection(url, usr, pwd);
+        if (p.empty(conn)) {
+            return null;
+        } else {
+            return conn;
+        }
+    }
 
+    public static void conClose(Connection c) throws SQLException {
+        if (p.notEmpty(c)) {
+            c.close();
+        } else {
+
+        }
+
+    }
+
+    public static void resultSetClose(ResultSet c) throws SQLException {
+        if (p.notEmpty(c)) {
+            c.close();
+        } else {
+
+        }
+
+    }
+
+    public static void preparedStatementClose(PreparedStatement c) throws SQLException {
+        if (p.notEmpty(c)) {
+            c.close();
+        } else {
+
+        }
+
+    }
+
+
+    public static void closeAll(Connection c,PreparedStatement p1, ResultSet r) {
+        try {
+            p.preparedStatementClose(p1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            p.resultSetClose(r);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            p.conClose(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 //    public static void main(String[]args){
