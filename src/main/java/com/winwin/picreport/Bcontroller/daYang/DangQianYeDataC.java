@@ -252,6 +252,7 @@ public class DangQianYeDataC {
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
     FenYe dangqianyeData(@RequestBody FenYe fenYe, HttpServletRequest request) {
+        //这个参数只是决定后面那个界面再调数据
         String  dingJiaType= request.getParameter("dingJiaType");
 //        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
 //            //此时是要返回已经采购定价但未销售定价的数据
