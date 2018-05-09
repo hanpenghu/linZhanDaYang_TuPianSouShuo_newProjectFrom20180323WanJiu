@@ -187,6 +187,8 @@ public interface ManyTabSerch {
     @Select("Select count(id) from prdt_samp")
     Integer getCountOfAll();
 
+    Integer getCountOfAllUseForSalePricing();
+
     @Select("Select count(id) from prdt_samp where isconfirm=0")
     Integer getCountOfAllNotConfirm();
 
@@ -302,5 +304,7 @@ public interface ManyTabSerch {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Select({"select  wh,name from  my_wh WHERE wh != '00000000'"})
     List<MyWh001> getAllWh();
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

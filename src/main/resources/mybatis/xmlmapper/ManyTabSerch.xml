@@ -34,12 +34,43 @@
                         (#{meiYeXianShiShu})*((#{dangQianYe})-1)
                 )
             id from PRDT_SAMP
-             where prd_no  in(select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%')
+             where prd_no  in
+             (
+                          select a.prd_no from
+                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a
+                            where a.prd_no
+                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)
+
+             )
              ORDER BY insertDate DESC
         )
-         and prd_no  in(select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%')
+         and prd_no  in
+         (
+                select a.prd_no from
+                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a
+                            where a.prd_no
+                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)
+         )
         ORDER BY insertDate DESC
     </select><!--price_id='2'代表采购定价的   olefield LIKE '%SamplesSys%'代表林展系统的-->
+
+
+    <!--用于查找所有的已经 采购定价但是没有销售定价的货品 -->
+    <select id="getCountOfAllUseForSalePricing" resultType="java.lang.Integer">
+        Select count(id) from prdt_samp
+        where prd_no  in
+             (
+                          select a.prd_no from
+                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a
+                            where a.prd_no
+                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)
+
+             )
+    </select>
+
+
+
+
 
     <!-- 林展分页打样未确认-->
     <select id="selectDangQianYeSuoYouIdNotConfirm" resultType="java.lang.String">

@@ -124,8 +124,14 @@ public class D1DaYangS {
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
-        fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
-        fenYe.setZongYeShu();
+        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
+            fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
+            fenYe.setZongYeShu();
+        }else{
+            fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllUseForSalePricing());
+            fenYe.setZongYeShu();
+        }
+
         return fenYe;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
