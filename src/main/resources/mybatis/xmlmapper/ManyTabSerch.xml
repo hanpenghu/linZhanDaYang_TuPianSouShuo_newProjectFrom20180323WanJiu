@@ -56,7 +56,7 @@
 
 
     <!--用于查找所有的已经 采购定价但是没有销售定价的货品 -->
-    <select id="getCountOfAllUseForSalePricing" resultType="java.lang.Integer">
+    <select id="getCountOfAllUseForSalePricing">
         Select count(id) from prdt_samp
         where prd_no  in
              (

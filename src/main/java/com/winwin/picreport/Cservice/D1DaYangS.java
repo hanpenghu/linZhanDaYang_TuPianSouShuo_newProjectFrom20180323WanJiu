@@ -125,10 +125,11 @@ public class D1DaYangS {
         }
         fenYe.setPrdtSampList(prdtSampList);
         if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
-            fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
-            fenYe.setZongYeShu();
-        }else{
             fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllUseForSalePricing());
+            fenYe.setZongYeShu();
+
+        }else{
+            fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
             fenYe.setZongYeShu();
         }
 
