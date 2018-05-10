@@ -1,37 +1,36 @@
-{
-  "logistics": {
+{"logistics": {
     "salesorder": {
-      "page": "F"
+      "page": "T"
     },
     "salesorderForSAP": {
-      "page": "F"
+      "page": "T"
     },
     "salesDetail": {
-      "page": "F"
+      "page": "T"
     },
     "productCode": {
-      "page": "F"
+      "page": "T"
     },
     "purchasePricing": {
-      "page": "F"
+      "page": "T"
     },
     "salesPricing": {
-      "page": "F",
+      "page": "T",
       "part": {
-        "purchasePrice": "F",
-        "salesPrice": "F"
+        "purchasePrice": "T",
+        "salesPrice": "T"
       }
     },
     "sampleConfirm": {
-      "page": "F"
+      "page": "T"
     }
   },
   "ai": {
     "picture": {
-      "page": "F"
+      "page": "T"
     },
     "uploadImg": {
-      "page": "F"
+      "page": "T"
     }
   }
 }

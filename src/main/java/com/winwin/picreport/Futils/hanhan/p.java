@@ -1608,7 +1608,22 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
             }
         }
     }
+    public static boolean isPic(String jueDuiLuJing){
+        try {
+            String s=jueDuiLuJing.substring(jueDuiLuJing.lastIndexOf("."));
+            if(p.imgSufixs.contains(s)){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    public static boolean isPic(File file){
+        return isPic(file.getAbsolutePath());
+    }
 //    public static void main(String[]args){
 //        //_________________true_________________
 //        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(isNumeric("11231212333333333333333333333333333333"))).sad(p.dexhx).gad());

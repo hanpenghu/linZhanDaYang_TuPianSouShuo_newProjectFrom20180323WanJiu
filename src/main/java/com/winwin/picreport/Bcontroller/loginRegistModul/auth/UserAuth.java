@@ -18,7 +18,9 @@ public class UserAuth {
 
     //暗添加权限模块
     public void addAuth(Msg msg) {
-        String authJsonStr = "{\"logistics\":{\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}}}";
+//        String authJsonStr = "{\"logistics\":{\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}}}";
+        //增加以图搜图权限后
+        String  authJsonStr="{\"logistics\":{\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}},\"ai\":{\"picture\":{\"page\":\"F\"},\"uploadImg\":{\"page\":\"F\"}}}";
         String tenantId = msg.getTenantId();
         String user_Name = msg.getUserEmail();//前端限制必须填写,
 //        auth=a001TongYongMapper.getAuth(tenantId,user_Name);
@@ -97,6 +99,14 @@ public class UserAuth {
     //                样品确认
                             authJsonStr = authJsonStr.replace("\"sampleConfirm\":{\"page\":\"F\"}", 
                                     "\"sampleConfirm\":{\"page\":\"" + modelUsers.getCanUse() + "\"}");
+
+
+                        }else if(p.dy(modelName, "picture")){
+
+                            authJsonStr=authJsonStr.replace("\"ai\":{\"picture\":{\"page\":\"F\"}","\"ai\":{\"picture\":{\"page\":\""+ modelUsers.getCanUse()+"\"}");
+
+                        }else if(p.dy(modelName,"uploadImg")){
+                            authJsonStr=authJsonStr.replace("\"uploadImg\":{\"page\":\"F\"}","\"uploadImg\":{\"page\":\""+modelUsers.getCanUse()+"\"}");
                         }
 
 

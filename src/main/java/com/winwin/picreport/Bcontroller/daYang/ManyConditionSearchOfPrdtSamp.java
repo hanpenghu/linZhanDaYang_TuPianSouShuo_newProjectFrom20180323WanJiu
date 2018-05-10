@@ -105,18 +105,27 @@ public class ManyConditionSearchOfPrdtSamp {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<PrdtSamp0> prdtSampList = cnst.a001TongYongMapper
+        List<PrdtSamp0> prdtSampListOrg = cnst.a001TongYongMapper
                 .chanPinBianMaJianDangTiaoJianChaXun(p1);
 
 
+        List<PrdtSamp0> prdtSampList= new  ArrayList<>();
+        if(p.notEmpty(prdtSampListOrg)){
+            for(PrdtSamp0 prdtSamp0:prdtSampListOrg){
+                //插入价格模块,走一遍这个模块就插入了
+                cnst.getPriceModelUpdef.GetPriceModel(prdtSamp0);
+                prdtSampList.add(prdtSamp0);
+            }
+        }
 
-        p.p(p.zhifgf);
-        p.p(prdtSampList);
-        p.p(p.zhifgf);
+
+//        p.p(p.zhifgf);
+//        p.p(prdtSampList);
+//        p.p(p.zhifgf);
 
 
 
-        p.p(prdtSampList);
+//        p.p(prdtSampList);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
         f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
