@@ -26,13 +26,13 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     private CnstO cnstO;
 
 
-    @Scheduled(fixedDelay = Long.MAX_VALUE,initialDelay = 7000)//启动项目执行一次
+//    @Scheduled(fixedDelay = Long.MAX_VALUE,initialDelay = 7000)//启动项目执行一次
     public void qiDong_XiangMu_shiHou_ShangChuan_YiCi(){
         duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong();
 
     }
 
-    @Scheduled(cron="0 0 1 0 0 ? *")//每天凌晨一点执行
+    @Scheduled(cron="0 0 1 * * ?")//每天凌晨一点执行
     public void meiTian_dingShi_zhiXing(){
         duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong();
     }
@@ -60,6 +60,7 @@ public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
         String suoLueTuWenJianJia = cnstO.suoLueTuWenJianJia;
         //得到缩略图文件夹路径   ./daYangSuoLueTuAndFuJianZongPath/suoLueTuWenJianJia/
         String suoLueTuWenJianJiaPath=daYangSuoLueTuAndFuJianZongPath+suoLueTuWenJianJia;
+        l.error("-----------suoLueTuWenJianJiaPath:"+suoLueTuWenJianJiaPath+"------------------------------");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //下面是得到所有图片集的模块
@@ -93,6 +94,7 @@ public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
         for(String fileName:fileNames){
             //得到记录已经上传图片名字的文本
             String havenUpRecPath = daYangSuoLueTuAndFuJianZongPath+"havenUpRec.json";
+            l.error("----jiLu shangChuan TuPian de wenBen LuJing----"+havenUpRecPath+"------------------------");
             /**
              *判断当前图片名字是否在文本中,在的话就不用上传了
              * */
@@ -113,7 +115,8 @@ public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
                         fileNamess=JSON.parseArray(havaUpFileNameJson,String.class);
                     }
                     if(fileNamess.contains(fileName)){
-                        break;//打断当前循环,不再执行下面代码,进行下一个
+
+                        continue;//不再执行下面代码,进行下一个图片
                     }
                 }
             } catch (IOException e) {
@@ -132,37 +135,16 @@ public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
             DataSetSingleModifyExample1 g = DataSetSingleModifyExample1.g();
             //上传单条数据的例子
             DataSetModifyResponse res = g.run(client, Cnst.image_set_idOfWinWinPrdtSamp, url);
-            l.error("-----shangChuanFanHuiXinXi: ----------" + res.getMessage() + "---------------");
+            if(null!=res){
+                l.error("-----shangChuan--maLong--fanHui--xinXi-----"+res.getMessage()+"--------------------");
+            }
 
 
             /**
              *下面是记录已经上传过的文件名到文件中的模块
              * */
-            try {
-                File havenUpFile = new File(havenUpRecPath);
-                if (p.notExists(havenUpFile)) {
-                    //不存在,就创建
-                    havenUpFile.createNewFile();
-                }
-                havenUpFile = new File(havenUpRecPath);
-                if (p.exists(havenUpFile)) {
-                    List<String> fileNamess;
-                    //存在,就向里面添加已经上传过的图片数据
-                    String havaUpFileNameJson = p.readAllTxt(havenUpRecPath);
-                    if (p.empty(havaUpFileNameJson)) {
-                        fileNamess = new LinkedList<>();
-                    } else {
-                        fileNamess = JSON.parseArray(havaUpFileNameJson, String.class);
-                    }
-                    fileNamess.add(fileName);
-                    //得到添加内容后的json
-                    String jsonAlreadyAdd = JSON.toJSONString(fileNamess);
-                    //将 jsonAlreadyAdd 放入记录文本中
-                    p.writeToTxt(jsonAlreadyAdd, havenUpRecPath);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            jiLu_yiJing_ShangChuan_DeTuPian(havenUpRecPath,fileName);
+
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +154,35 @@ public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
     }
 }
 
-
+public void jiLu_yiJing_ShangChuan_DeTuPian(
+        String yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing
+        ,String dangQianDe_tuPian_QuanMingCheng){
+    try {
+        File havenUpFile = new File(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+        if (p.notExists(havenUpFile)) {
+            //不存在,就创建
+            havenUpFile.createNewFile();
+        }
+        havenUpFile = new File(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+        if (p.exists(havenUpFile)) {
+            List<String> fileNamess;
+            //存在,就向里面添加已经上传过的图片数据
+            String havaUpFileNameJson = p.readAllTxt(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+            if (p.empty(havaUpFileNameJson)) {
+                fileNamess = new LinkedList<>();
+            } else {
+                fileNamess = JSON.parseArray(havaUpFileNameJson, String.class);
+            }
+            fileNamess.add(dangQianDe_tuPian_QuanMingCheng);
+            //得到添加内容后的json
+            String jsonAlreadyAdd = JSON.toJSONString(fileNamess);
+            //将 jsonAlreadyAdd 放入记录文本中
+            p.writeToTxt(jsonAlreadyAdd, yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 
 }

@@ -51,9 +51,6 @@ public class PicSearchPicUseMultipartFileC {
 //@RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian(@RequestParam("file")MultipartFile file){//@RequestParam("file")
         List<SearchResult> list=new ArrayList<>();
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//        System.out.println(file.getOriginalFilename());
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         if (!file.isEmpty()) {
             if (file.getContentType().contains("image")) {
                 File dest=null;
