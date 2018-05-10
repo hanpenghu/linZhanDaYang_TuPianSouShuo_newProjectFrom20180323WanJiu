@@ -94,33 +94,7 @@ public class D1DaYangS {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
 
             PrdtSamp0 prdtSampX = this.getP0(prdtSampX1);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          //后期的分类存在了prdt_Samp表,所以下面代码不要了     2018_2_27   weekday(2)   16:24:10
 
-           /* //找到页面显示的产品名称的上级作为产品分类
-            //先拿到产品名称的代号
-            String idxNo = prdtSampX.getIdxNo();
-            //通过idxno找到上级fenLeiNo
-            //0000000000的肯定没上级
-            if(p.bdy(Cnst.ten0,idxNo)){
-                Map<String,String> fenLeis=cnst.a001TongYongMapper.getFenLeiNoFromIndx(idxNo);
-                //fenLeis非空
-                if(p.notEmpty(fenLeis)){
-                    try {
-                        prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));
-                        prdtSampX.setFenLeiNo(fenLeis.get(Cnst.fenLeiNo));
-                    } catch (Exception e) {
-                        p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
-                        p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace("prdtSampX.setFenLeiName(fenLeis.get(Cnst.fenLeiName));失败")).sad(p.dexhx).gad());
-                        p.p(p.gp().sad(p.dexhx).sad(p.zhifgf).sad(p.zhifgf).sad(p.dexhx).gad());
-//                e.printStackTrace();
-                    }
-                }
-            }else{
-                 p.p(p.gp().sad(p.dexhx).sad("idxNo=").sad(idxNo).sad(p.dexhx).gad());
-            }*/
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);

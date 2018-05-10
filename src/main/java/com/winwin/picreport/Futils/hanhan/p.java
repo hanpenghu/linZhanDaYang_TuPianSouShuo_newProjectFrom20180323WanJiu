@@ -194,6 +194,9 @@ public strictfp class p {
     public static String uuid(){
         return UUID.randomUUID().toString();
     }
+    public static String uuidNo_(){
+        return UUID.randomUUID().toString().replace("-","");
+    }
 
     /*public static void main(String[]args){
          p.p(p.gp().sad(p.dexhx).sad(p.uuid()).sad(p.dexhx).gad());
@@ -1583,7 +1586,256 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 //    public static void main(String[]args){
 //             p.p(p.gp().sad(p.dexhx).sad(p.strValeOfNullSpace(p.dianHouWeiShu(123123.001D))).sad(p.dexhx).gad());
 //    }
+    /**
+     *截取字符串
+     * 注意索引start是从0开始,
+     * 截取是
+     * 包括startHave
+     * 不包括endNotHave
+     *
+     * 如果被截取对象是空的,就返回空
+     *
+     *
+     *
+     * 注意当endNotHave已经超过最大能索引到的东西的时候
+     * ,直接截取 startHave后面所有的
+     * */
+    public static String strCut(String originalStr,int startHave,int endNotHave){
+        int length = originalStr.length();
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(startHave>length){
+            return"";
+        }else if(startHave==length){
+            return "";
+        }else if(startHave<length&&endNotHave>length){
+            return originalStr.substring(startHave);
+        }else{
+            return originalStr.substring(startHave,endNotHave);
+        }
+    }
 
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(strCut("eer",2,4));
+//        p.p("eer".indexOf(3));//-1
+//        p.p("-------------------------------------------------------");
+//    }
+
+    /**
+     *截取originalStr中从startHave(包括)到endNotHave(不包括)的字符串
+     *
+     * 注意这个方法使用的前提是:  startHave和endNotHave只出现过一次
+     * dsfasdfa使用该函数
+     * strCut("dsfasdfa","sf","df")
+     * 后变成
+     * sfas
+     * 可以发现,截取的是从sf开始并包括sf
+     * 从df结束,并不包括df
+     *
+     * 这个是跟官方截取一直的[)方式
+     *
+     * 有头无尾
+     * */
+    public static String strCut(String originalStr,String startHave,String endNotHave){
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(!originalStr.contains(startHave)||!originalStr.contains(endNotHave)){
+            //此时没法截取,因为不包含要 截取的头或者尾部
+            return "";
+        }else{
+            return originalStr.substring(originalStr.indexOf(startHave),originalStr.indexOf(endNotHave));
+        }
+    }
+
+
+    /**
+     * 注意这个方法使用的前提是:  startHave和endNotHave只出现过一次
+     * (]
+     *strCutNoHead("sdabkjwp","da","jw")
+     * 得到的是
+     * bkjw
+     * 无头有尾
+     * */
+
+    public static String strCutNoHead(String originalStr,String startNotHave,String endHave){
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(!originalStr.contains(startNotHave)||!originalStr.contains(endHave)){
+            //此时没法截取,因为不包含要 截取的头或者尾部
+            return "";
+        }else{
+            return originalStr.substring(
+                    p.strIndxTail(originalStr,startNotHave)+1
+                    ,p.strIndxTail(originalStr,endHave)+1
+            );
+        }
+    }
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(strCutNoHead("sdabkjwp","da","jw"));
+//        p.p("-------------------------------------------------------");
+//    }
+
+    /**
+     *注意这个方法使用的前提是:  startHave和endNotHave只出现过一次
+     * 无头无尾
+     *()方式截取
+     * strCutNoHeadTail("sdabkj","da","j")
+     * 得到的是bk,就是截取da和j之间的东西
+     * */
+
+    public static String strCutNoHeadNoTail(String originalStr,String startNotHave,String endNotHave){
+
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(!originalStr.contains(startNotHave)||!originalStr.contains(endNotHave)){
+            //此时没法截取,因为不包含要 截取的头或者尾部
+            return "";
+        } else{
+            return originalStr.substring(p.strIndxTail(originalStr,startNotHave)+1,originalStr.indexOf(endNotHave));
+        }
+
+    }
+
+    /**
+     * 注意这个方法使用的前提是:  startHave和endNotHave只出现过一次
+     * 有头有尾
+     *[]这种截取方式
+     * strCutHaveHeadAndTail("sdabkjwp","da","jw")
+     * 得到的结果是
+     * dabkjw
+     * */
+    public static String strCutHaveHeadAndTail(String originalStr,String startHave,String endHave){
+
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(!originalStr.contains(startHave)||!originalStr.contains(endHave)){
+            //此时没法截取,因为不包含要 截取的头或者尾部
+            return "";
+        } else{
+            return originalStr.substring(
+                    p.strIndxHead(originalStr,startHave)
+                    ,p.strIndxTail(originalStr,endHave)+1
+            );
+        }
+
+    }
+
+
+
+
+    /**
+     * 注意这个方法使用的前提是:  startHave只出现过一次
+     * 从头带头到底
+     * [------最后这种
+     *从  索引startHave开始(包括startHave索引处的字符)
+     * 到字符串结束为止
+     * */
+    public static String strCut(String originalStr,int startHave){
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(originalStr.length()-1<startHave){
+            return "";
+        }else{
+            return originalStr.substring(startHave);
+        }
+    }
+
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(strCut("sdfasdf",7));
+//        p.p("-------------------------------------------------------");
+//    }
+
+    /**注意这个方法使用的前提是:  startHave只出现过一次
+     * [------这种
+     * 从头带头到尾
+     *截取字符串originalStr从startHave(包括)开始
+     * 到最后结束
+     *
+     * */
+    public static String strCut(String originalStr,String startHave){
+        if(null==originalStr||"".equals(originalStr)){
+            return "";
+        }else if(!originalStr.contains(startHave)){
+            return "";
+        }else{
+            return originalStr.substring(originalStr.indexOf(startHave));
+        }
+    }
+
+    /**
+     *
+     * 索引要索引字符串的头
+     *字符串中字符的索引,该索引从0开始的
+     * strIndxHead("dsfasdfa","sf")得到的结果是1,
+     * 因为d是第0位,sf就是第1位,这里是将sf当成整体,
+     * 其实是索引的sf中的s的索引作为sf整体的索引了
+     *
+     * 其实官方的不包含要索引的字符串的时候,返回的也是-1
+     *
+     *
+     *
+     * strIndxHead("1211221","1")=1证明  索引的是第一次出现的位置,毕竟1有那么多,他只索引了第一个
+     * */
+
+    public static int strIndxHead(String strOrignal,String strIndx){
+        if(null==strOrignal){
+            return -1;
+        }else if(!strOrignal.contains(strIndx)){
+            return -1;
+        }else{
+            return strOrignal.indexOf(strIndx);
+        }
+
+    }
+
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(strIndxHead("1211221","1"));//0 ,证明索引的是第一次出现的位置
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+    /**
+     * 索引要索引字符串的尾部
+     * tail是尾巴的意思
+     *得到strIndx索引的最后一位索引
+     * strIndxTail("dsfa_sdfa","sfa")=3
+     * */
+    public static int strIndxTail(String strOrignal,String strIndx){
+        if(null==strOrignal){
+            return -1;
+        }else if(!strOrignal.contains(strIndx)){
+            return -1;
+        }else{
+            return strOrignal.indexOf(strIndx)+strIndx.length()-1;
+        }
+
+    }
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(strIndxTail("dsfa_sdfa","sfa"));
+//        p.p("-------------------------------------------------------");
+//    }
+    /**
+     * 索引整个字符串的下一个字符串的索引
+     *
+     *strNextIndx("dsfa_sdfa","fa")得到的结果是4
+     * 因为这个我设计的是得到"_"的索引,
+     * 通过第一个"fa"所在位置推断"_"的索引是4
+     * */
+    public static int strNextIndx(String strOrignal,String strIndx){
+        if(null==strOrignal){
+            return -1;
+        }else if(!strOrignal.contains(strIndx)){
+            return -1;
+        }else{
+            return strOrignal.indexOf(strIndx)+strIndx.length();
+        }
+
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

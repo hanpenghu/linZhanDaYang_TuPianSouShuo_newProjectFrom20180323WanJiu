@@ -5,8 +5,10 @@ import cn.productai.api.core.exceptions.ClientException;
 import cn.productai.api.pai.entity.search.ImageSearchByImageUrlRequest;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
+import com.winwin.picreport.Futils.hanhan.p;
 
 import java.util.Date;
 public class TestExample {
@@ -14,9 +16,13 @@ public class TestExample {
     public static void main(String[]args){
         Date date1=new Date();
        long time1= date1.getTime();
-        new TestExample().fullFlowExample
-                ("http://116.62.224.172:8070/lzpic/1/WW-VSUP5950-858.jpeg",
+        ImageSearchResponse imageSearchResponse = new TestExample().fullFlowExample
+                ("http://61.177.44.218:8070/111.jpg",
                         Cnst.serviceIdOfWinWinPrdtSamp, Cnst.searchResultcount);
+
+        p.p("-------------------------------------------------------");
+        p.p(JSON.toJSONString(imageSearchResponse));
+        p.p("-------------------------------------------------------");
         Date date2=new Date();
         long time2 = date2.getTime();
         long time3=time2-time1;

@@ -4,6 +4,8 @@ import cn.productai.api.core.base.BaseResponse;
 import cn.productai.api.pai.response.SearchResult;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+
 /**
  * Created by Thinkpad on 2017/7/4.
  *
@@ -63,5 +65,18 @@ public class ImageSearchResponse extends BaseResponse {
 
     public void setDownloadTime(double downloadTime) {
         this.downloadTime = downloadTime;
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("cn.productai.api.pai.entity.search.ImageSearchResponse{");
+        sb.append("results=").append(results == null ? "null" : Arrays.asList(results).toString());
+        sb.append(", dataSetIndexVersion='").append(dataSetIndexVersion).append('\'');
+        sb.append(", searchTime=").append(searchTime);
+        sb.append(", location=").append(location == null ? "null" : Arrays.asList(location).toString());
+        sb.append(", downloadTime=").append(downloadTime);
+        sb.append('}');
+        return sb.toString();
     }
 }
