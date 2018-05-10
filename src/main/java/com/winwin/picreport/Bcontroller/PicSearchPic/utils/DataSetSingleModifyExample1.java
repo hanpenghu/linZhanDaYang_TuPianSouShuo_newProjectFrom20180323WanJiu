@@ -29,8 +29,8 @@ public class DataSetSingleModifyExample1 {
     }
     public DataSetModifyResponse  run(IWebClient client,String image_set_id,String imageUrl) {
 
-        p.p("==>  Demo - 向数据集增加单条数据  <==");
-        p.p("See https://api-doc.productai.cn/doc/pai.html#向数据集增加单条数据 for details.\r\n");
+        p.p("==>  Demo - xiang shuJuJi tianJia yiTiao jiLu  <==");
+        p.p("See https://api-doc.productai.cn/doc/pai.html#---xiang shuJuJi tianJia danTiao shuJu    ---- for details.\r\n");
         //参数1是image_set_id
         DataSetSingleAddByImageUrlRequest request = new DataSetSingleAddByImageUrlRequest(image_set_id,null,null);
 //        request.setImageUrl("http://test.waltercrow.co.nz/wp/wp-content/uploads/2010/06/muji-clothes.jpg");
