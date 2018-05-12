@@ -177,11 +177,32 @@ public interface A001TongYongMapper {
                               @Param("mainUnit")String mainUnit);
 
 
-
+   List<UpDefMy01> getUpDefMy20180512Buy(@Param("prdNo")String prdNo
+           , @Param("priceId")String priceId
+           ,@Param("bilType") String bilType);
 
     List<UpDefMy01> getUpDefMy(@Param("prdNo") String prdNo,@Param("priceId")String priceId);
 
 
+   List<UpDefMy01> getUpDefMy20180512Sale(
+           @Param("prdNo") String prdNo
+           ,@Param("priceId")String priceId
+           ,@Param("bilType")String bilType
+           ,@Param("CurId")String CurId
+
+   );
+
+   UpDefMy01 getUpDefMy20180512Saleone(@Param("prdNo")String prdNo,
+                                  @Param("priceId")String priceId,
+                                  @Param("bilType")String bilType,
+                                  @Param("CurId")String CurId,
+                                  @Param("olefield")String olefield);
+
+
+   UpDefMy01 getUpDefMy20180512BuyOne(@Param("prdNo")String prdNo,
+                                      @Param("priceId")String priceId,
+                                      @Param("bilType")String bilType,
+                                      @Param("olefield")String olefield);
 
     @Select({"SELECT IDX_UP FROM INDX WHERE IDX_NO=#{idxNo}"})
    String deDaoShangJi_IdxNo(@Param("idxNo") String idxNo);
@@ -315,4 +336,7 @@ public interface A001TongYongMapper {
 
    @Select({"update prdt set ut=#{mainUnit} where prd_no=#{prdtNo}"})
    int updateUtToPrdtUsePrdNo(@Param("prdtNo") String prdtNo,@Param("mainUnit")  String mainUnit);
+
+
+
 }

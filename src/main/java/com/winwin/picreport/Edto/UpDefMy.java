@@ -39,7 +39,7 @@ public class UpDefMy {
     //单位
     protected String unit;//
     //币别
-    protected String curId;//usd代表美金,在数据库能找到
+    protected String curId;//USD代表美金,在数据库能找到RMB代表人民币
     //币名
     protected String curName;
 

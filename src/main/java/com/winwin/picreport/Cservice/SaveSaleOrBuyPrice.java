@@ -259,7 +259,7 @@ public class SaveSaleOrBuyPrice {
         /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //采购含运费入库
         if(p.notEmpty(gmp.get("haveTransUpBuy"))){
-            //01代表不含运费//其他代表是含运费的
+            //1代表不含运费//其他代表是含运费的
             upDef.setBilType(p.space);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST5~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -276,8 +276,8 @@ public class SaveSaleOrBuyPrice {
         }
         //采购不含运费入库
         if(p.notEmpty( gmp.get("noTransUpBuy"))){
-            //01代表不含运费//其他代表是含运费的
-            upDef.setBilType("01");
+            //1代表不含运费//其他代表是含运费的
+            upDef.setBilType("1");
             upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST9~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
@@ -342,8 +342,8 @@ public class SaveSaleOrBuyPrice {
         //销售含运费入库
         if(p.notEmpty( gmp.get("haveTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
-            //01代表不含运费//其他代表是含运费的
-            upDef.setBilType(p.space);
+            //1代表不含运费//2代表销售含运费
+            upDef.setBilType("2");
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
             if(null==upDef.getCusNo()){
                 upDef.setCusNo(p.space);
@@ -362,8 +362,8 @@ public class SaveSaleOrBuyPrice {
         //销售不含运费入库
         if(p.notEmpty( gmp.get("noTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~16~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            //01代表不含运费//其他代表是含运费的
-            upDef.setBilType("01");
+            //1代表不含运费//其他代表是含运费的
+            upDef.setBilType("1");
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
             if(null==upDef.getCusNo()){

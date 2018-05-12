@@ -1,8 +1,7 @@
 package com.winwin.picreport.Edto;
 
 //我的定价表
-
-import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.p;
 import java.math.BigDecimal;
 public class UpDefMy01 extends UpDefMy {
@@ -29,6 +28,31 @@ public class UpDefMy01 extends UpDefMy {
     //含运费单价销售价格//up_def中bil_type!=01
     BigDecimal haveTransUpSale;//
 
+    //注意:采购只有本币
+    //由于销售价格有本币和外币区别,所以加2个字段区分//然后上面2个作为本币销售
+    //不含运费单价的销售价格外币
+    BigDecimal noTransUpSaleWaiBi;//
+    //含运费单价销售价格外币//up_def中bil_type!=01
+    BigDecimal haveTransUpSaleWaiBi;//
+
+    public BigDecimal getNoTransUpSaleWaiBi() {
+        return noTransUpSaleWaiBi;
+    }
+
+    public UpDefMy01 setNoTransUpSaleWaiBi(BigDecimal noTransUpSaleWaiBi) {
+        this.noTransUpSaleWaiBi = noTransUpSaleWaiBi;
+        return this;
+    }
+
+    public BigDecimal getHaveTransUpSaleWaiBi() {
+        return haveTransUpSaleWaiBi;
+    }
+
+    public UpDefMy01 setHaveTransUpSaleWaiBi(BigDecimal haveTransUpSaleWaiBi) {
+        this.haveTransUpSaleWaiBi = haveTransUpSaleWaiBi;
+        return this;
+    }
+
     public String getDingJiaGuanLian() {
         return dingJiaGuanLian;
     }
@@ -44,8 +68,8 @@ public class UpDefMy01 extends UpDefMy {
 
     //采购的情况
     public BigDecimal getNoTransUpBuy() {
-        if(p.dy(this.bilType,"01")&&p.dy(this.priceId,"2")){
-            if(NotEmpty.notEmpty(this.up)){
+        if(p.dy(this.bilType,Cnst.buyBilTypeNoTrans)&&p.dy(this.priceId,Cnst.buyPriceId)){
+            if(p.notEmpty(this.up)){
                 this.noTransUpBuy=this.up;
                 return this.up;
             }
@@ -54,6 +78,8 @@ public class UpDefMy01 extends UpDefMy {
         return noTransUpBuy;
     }
 
+
+
     public UpDefMy01 setNoTransUpBuy(BigDecimal noTransUpBuy) {
         this.noTransUpBuy = noTransUpBuy;
         return this;
@@ -61,8 +87,8 @@ public class UpDefMy01 extends UpDefMy {
 
 
     public BigDecimal getHaveTransUpBuy() {
-        if(p.bdy(this.bilType,"01")&&p.dy(this.priceId,"2")){
-            if(NotEmpty.notEmpty(this.up)){
+        if(p.bdy(this.bilType,Cnst.buyBilTypeHaveTrans)&&p.dy(this.priceId,Cnst.buyPriceId)){
+            if(p.notEmpty(this.up)){
                 this.haveTransUpBuy=this.up;
                 return this.up;
             }
@@ -77,8 +103,8 @@ public class UpDefMy01 extends UpDefMy {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //销售的情况
     public BigDecimal getNoTransUpSale() {
-        if(p.dy(this.bilType,"01")&&p.dy(this.priceId,"1")){
-            if(NotEmpty.notEmpty(this.up)){
+        if(p.dy(this.bilType, Cnst.saleBilTypeNoTrans)&&p.dy(this.priceId,Cnst.salPriceId)){
+            if(p.notEmpty(this.up)){
                 this.noTransUpSale=this.up;
                 return this.up;
             }
@@ -93,8 +119,8 @@ public class UpDefMy01 extends UpDefMy {
     }
 
     public BigDecimal getHaveTransUpSale() {
-        if(p.bdy(this.bilType,"01")&&p.dy(this.priceId,"1")){
-            if(NotEmpty.notEmpty(this.up)){
+        if(p.bdy(this.bilType,Cnst.saleBilTypeHaveTrans)&&p.dy(this.priceId,Cnst.salPriceId)){
+            if(p.notEmpty(this.up)){
                 this.haveTransUpSale=this.up;
                 return this.up;
             }

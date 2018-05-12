@@ -245,6 +245,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     //select top 100* from PRDT where name='WW-NEPEP-0013'
     //select *from alter_price_rec//修改价格记录表,修改一次记录一次
     ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
+    //    /d/dangqianyeData      {"dangQianYe":"1","meiYeXianShiShu":"1"}
     @RequestMapping(value = InterFaceCnst.dangqianyeData,
             method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})

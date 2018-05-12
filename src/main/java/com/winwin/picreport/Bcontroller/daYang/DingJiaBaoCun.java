@@ -36,6 +36,7 @@ public class DingJiaBaoCun {
      销售 传入方式//币别徐勇来拆,运费我来拆分
 
 
+     uuid是prdt_samp表中的uuid
      {"uuid":"填入给前端的唯一标识","noTransUpSale":"没有运费的销售定价",
      "haveTransUpSale":"有运费的销售定价","curId":"RMB","curName":"人民币","remFront":"客户备注"
      ,"qty":"数量","unitZhu":"","unitFu":""}
@@ -45,7 +46,7 @@ public class DingJiaBaoCun {
 
 
 
-
+     uuid是prdt_samp表中的uuid
      //这个uuid是用来将来获得货号进行相关操作的,  后台的dingJiaGuanLian并没有用这个uuid
      {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",
      "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注",
@@ -120,6 +121,7 @@ public class DingJiaBaoCun {
    //49成功,50失败
     //保存采购和销售价格
     //保存采购的时候要供应商不要客户,保存销售的时候供应商和客户都不要
+//    /saveSaleOrBuyPrice
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
     public @ResponseBody
     Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币

@@ -283,7 +283,134 @@
 
 
 
+    <select id="getUpDefMy20180512Buy" resultMap="UpDefMyBaseResultMap">
+        Select
+        top 20
+        a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
+        from up_def a
+        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
+        where
+        a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.OLEFIELD like '%SamplesSys%'
+        AND
+        a.price_id= #{priceId}
+        AND
+        a.bil_type=#{bilType}
+        ORDER BY
+        a.s_dd DESC
+    </select>
 
+
+    <select id="getUpDefMy20180512BuyOne" resultMap="UpDefMyBaseResultMap">
+        Select
+        top 20
+        a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
+        from up_def a
+        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
+        where
+        a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.price_id= #{priceId}
+        AND
+        a.bil_type=#{bilType}
+        and
+        a.OLEFIELD=#{olefield}
+        ORDER BY
+        a.s_dd DESC
+    </select>
+
+
+    <select id="getUpDefMy20180512Sale" resultMap="UpDefMyBaseResultMap">
+        Select
+        top 20
+        a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
+        from up_def a
+        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
+        where
+        a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.OLEFIELD like '%SamplesSys%'
+                AND
+                a.price_id=#{priceId}
+                AND
+                a.cur_id=#{CurId}
+                AND
+                a.bil_type=#{bilType}
+        ORDER BY
+        a.s_dd DESC
+    </select>
+
+
+
+    <select id="getUpDefMy20180512Saleone" resultMap="UpDefMyBaseResultMap">
+        Select
+        top 1   ----其实本来也只有一个
+        a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
+        from up_def a
+        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN cur_id b ON a.cur_id=b.cur_id
+        where
+        a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        AND
+        a.OLEFIELD=#{olefield}
+        AND
+        a.price_id=#{priceId}
+
+        <if test="CurId != null and CurId != ''">
+         AND a.cur_id = 'RMB' ---此时是本币
+        </if>
+        <if test="CurId != null and CurId == ''">
+            AND a.cur_id != 'RMB'---此时是外币,外币我传的是空过来
+        </if>
+        AND
+        a.bil_type=#{bilType}
+        ORDER BY
+        a.s_dd DESC
+    </select>
 
 
 

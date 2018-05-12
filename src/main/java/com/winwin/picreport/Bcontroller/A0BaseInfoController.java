@@ -15,6 +15,7 @@ public class A0BaseInfoController {
     @Autowired
     private Cnst cnst;
 //////////////////////////////////////////////////////////////////////////
+    // /base/allKeHu
 @RequestMapping(value=InterFaceCnst.allKeHu,method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<KeHu> getAllCustOf_obj_id_1_that_KeHuNotChangShang(){
          List<KeHu> keHus =cnst.manyTabSerch.getAllCustOf_obj_id_1_that_KeHuNotChangShang();
@@ -23,6 +24,7 @@ public class A0BaseInfoController {
 
 
 //所有仓库接口
+    // /base/allWh
     @RequestMapping(value=InterFaceCnst.allWh,method= RequestMethod.POST
             ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<MyWh001> getAllWh(){
@@ -34,6 +36,7 @@ public class A0BaseInfoController {
 
 
 
+    // /base/allFactory
     //所有厂商接口
     @RequestMapping(value= InterFaceCnst.allFactory,method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<KeHu> getAll_obj_id_2_that_ChangShang(){
@@ -47,13 +50,14 @@ public class A0BaseInfoController {
 //        return keHus;
 //    }
 ////////////////////////////////////////////////////////////////////////////////////////////
+    //   /base/allYeWuYuan
 @RequestMapping(value=InterFaceCnst.allYeWuYuan,method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
     List<YeWuYuan> YeWuYuans =cnst.manyTabSerch.getAllYeWuYuan();
     return YeWuYuans;
 }
 ////////////////////////////////////////////////////////////////////////////
-
+//  /base/CurrentType
     @RequestMapping(value=InterFaceCnst.CurrentType,method= RequestMethod.POST
             ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody Msg CurrentType(){
@@ -63,6 +67,7 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
     }
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+    //   /base/allUnit
     @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
             ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody Msg allUnit(){

@@ -205,14 +205,14 @@
 
 	<build>
 		<!--包含mapper xml文件-->
-		<resources>
+		<!--<resources>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
 			</resource>
-		</resources>
+		</resources>-->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

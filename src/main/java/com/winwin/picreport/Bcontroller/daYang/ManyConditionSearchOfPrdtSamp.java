@@ -113,7 +113,8 @@ public class ManyConditionSearchOfPrdtSamp {
         if(p.notEmpty(prdtSampListOrg)){
             for(PrdtSamp0 prdtSamp0:prdtSampListOrg){
                 //插入价格模块,走一遍这个模块就插入了
-                cnst.getPriceModelUpdef.GetPriceModel(prdtSamp0);
+//                cnst.getPriceModelUpdef.GetPriceModel(prdtSamp0);
+                cnst.getPriceModelUpdef20180512.getPriceModel(prdtSamp0);
                 prdtSampList.add(prdtSamp0);
             }
         }

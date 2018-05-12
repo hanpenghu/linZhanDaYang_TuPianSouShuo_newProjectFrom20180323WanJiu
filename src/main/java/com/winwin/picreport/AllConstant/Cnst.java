@@ -1,5 +1,6 @@
 package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
+import com.winwin.picreport.Acomponent.GetPriceModelUpdef20180512;
 import com.winwin.picreport.Acomponent.SapsoChongfu;
 import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
 import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
@@ -23,6 +24,21 @@ public class Cnst {
     public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1
     public static final String buyPriceId="2";//采购的是2
+
+    public static final String saleBilTypeHaveTrans="2";//销售有运费代码
+    public static final String saleBilTypeNoTrans="1";//销售不含运费
+
+    public static final String buyBilTypeHaveTrans="";//采购有运费
+
+    public static final String buyBilTypeNoTrans="1";//采购无运费
+
+    public static final String benBi="RMB";//本币是RMB 外币直接是不等于RMB的
+
+    public static final String waiBi="";
+
+
+
+
     public static final String deskPath="C:\\Users\\Administrator\\Desktop\\";
     public static final String  xlsHouZhuiWuDian="xls";
     public static final String  javaXieGang="/";
@@ -76,6 +92,9 @@ public class Cnst {
 
 
 
+
+    @Autowired
+    public GetPriceModelUpdef20180512 getPriceModelUpdef20180512;
 
     @Autowired
     public CustMapper custMapper;
