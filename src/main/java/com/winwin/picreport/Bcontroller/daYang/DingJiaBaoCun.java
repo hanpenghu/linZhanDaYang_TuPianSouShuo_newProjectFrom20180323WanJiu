@@ -118,12 +118,31 @@ public class DingJiaBaoCun {
         }
     }
     }*/
-   //49成功,50失败
+
+  /*  {"uuid":"填入给前端的唯一标识","noTransUpBuy":"没有运费的采购定价",
+            "haveTransUpBuy":"有运费的采购定价","curId":"RMB","curName":"人民币","remFront":"客户备注",
+            "qty":"数量","unitZhu":"","unitFu":""}*/
+/*
+  [{"uuid":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","noTransUpBuy":"12",
+            "haveTransUpBuy":"13","curId":"RMB","curName":"人民币","remFront":"客户备注1",
+            "qty":"100","unitZhu":"kg","unitFu":""},{"uuid":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","noTransUpBuy":"12.5",
+            "haveTransUpBuy":"13.5","curId":"USD","curName":"美元","remFront":"客户备注2",
+            "qty":"100","unitZhu":"kg","unitFu":""}]*/
+
+
+/*
+[{"uuid":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","noTransUpSale":"14",
+            "haveTransUpSale":"14.5","curId":"RMB","curName":"人民币","remFront":"客户备注3",
+            "qty":"1000","unitZhu":"kg","unitFu":""},{"uuid":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","noTransUpSale":"15",
+            "haveTransUpSale":"15.5","curId":"USD","curName":"美元","remFront":"客户备注4",
+            "qty":"1000","unitZhu":"","unitFu":"哈哈"}]*/
+//    http://127.0.0.1:8070/saveSaleOrBuyPrice?token=MTUyMDQ5MDMyNDk5NXt-fWlwYWNle359MTM2NDE5Mjg3NDE=
+
     //保存采购和销售价格
     //保存采购的时候要供应商不要客户,保存销售的时候供应商和客户都不要
 //    /saveSaleOrBuyPrice
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
-    public @ResponseBody
+    public @ResponseBody//49成功,50失败
     Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币
 
         //生成界面依次插入的四条记录的关联的uuid

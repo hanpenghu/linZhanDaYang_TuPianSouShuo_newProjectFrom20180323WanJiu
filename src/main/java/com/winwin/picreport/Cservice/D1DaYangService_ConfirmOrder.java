@@ -46,7 +46,7 @@ public class D1DaYangService_ConfirmOrder {
             }
 
             //添加价格模块//经过下一个方法,就会自动赋予一个模块
-            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+            cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
         }
 //        p.p("----------打样未确认的当前页数据全部插入FenYeLei的prdtSampList完成--一下是prdtSampList----json化后的形式---------------------------------------");
@@ -96,7 +96,8 @@ public class D1DaYangService_ConfirmOrder {
                 System.out.println("有一个insertdate无法format成insertdateStr,，对应的id是："+id);
             }
             //添加价格模块//经过下一个方法,就会自动赋予一个模块
-            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+//            cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+            cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX);
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
@@ -116,7 +117,7 @@ public class D1DaYangService_ConfirmOrder {
                         "前端传过来的json对象是null","","48");
             }
             String id = prdtSamp.getId();
-            if(!NotEmpty.notEmpty(id)){
+            if(!p.notEmpty(id)){
                 return MessageGenerate.generateMessage(
                         "确认失败","确认失败",
                         "前端传过来的id是空字符串或者是null","","48");

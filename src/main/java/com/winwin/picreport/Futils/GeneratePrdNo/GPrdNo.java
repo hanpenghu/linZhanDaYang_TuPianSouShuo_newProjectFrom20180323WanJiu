@@ -26,10 +26,12 @@ public class GPrdNo {
     public void prdtSampObjGetPrdNo(PrdtSamp0 prdtSamp){
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
+
         //在prdt表中找该prdtCode是否对应一个name字段,有可能多个,但是我们只要一个,所以,我们要自己写sql找到top 1
         String prdtNo=cnst.a001TongYongMapper.selectTop1PrdtNo(prdCode);
-        if(NotEmpty.notEmpty(prdtNo)){
-            p.p("~~~~~~货号在prdt中已经存在存在,~~~~~prdtNo="+prdtNo+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        if(p.notEmpty(prdtNo)){
+
             //如果不是空的,我们就要把这个prdtNo放到prdtSamp里面,将来进行插入prdt_samp表用
             prdtSamp.setPrdNo(prdtNo);
             //此时再判断 该prdNo在prdt表中对应的有ut没有,没有就插入一个,有的话算了
@@ -46,19 +48,6 @@ public class GPrdNo {
             this.prdtSampObjGetPrdNoByIndxGenerate(prdtSamp);
         }
 
-        //专门为了价格保存做的额,因为主表插入的时候会插入prd_no,但是价格保存不会动主表,动的up_def
-        //为了对不保存价格的时候没有prdNo,用这里的流水,但是流完后没有加入到打样主表,prdt_samp,我们再加入一次
-
-       /* prdtNo=prdtSamp.getPrdNo();
-        String uuid = prdtSamp.getId();
-        //放入prdt_samp
-        PrdtSamp pp=new PrdtSamp();
-        pp.setPrdNo(prdtNo);
-        pp.setId(uuid);
-        if(cnst.manyTabSerch.countByIdOfprdtSamp(uuid)>0){
-            //有记录在prdtSamp模块了再更新不迟//没有该id的记录的话证明不是采购定价或者销售定价里调用这个模块,不必更新
-            cnst.prdtSampMapper.updateByPrimaryKey(pp);
-        }*/
 
 
     }
@@ -73,11 +62,11 @@ public class GPrdNo {
             String indx1=prdtSamp.getFenLeiNo();
             //在prdt里面找到相同的indx1的prdNo流水最大的那个
 //            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~得到最大prdNo递归之前实验~~~~~~~~~~~~~~~~~~~~~~~~");
+
             String prdNoMax = cnst.getMaxPrdNo.getAllUpAndDownIdxNo(indx1);
-            p.p("~~~~~~~~~~~~~~~未加1未转化成long的String的prdNoMax~~~~~~~~~prdNoMax=~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~");
+
             //将prdNoMax转化成long
-            if(NotEmpty.notEmpty(prdNoMax)){
+            if(p.notEmpty(prdNoMax)){
 //                long l = Long.parseLong(prdNoMax);
 //                p.p("~~~~~~~~~~~~~~~~~~~~~~~~未加1的prdno~~~"+l+"~~~~~~~~~~~~~~~~~~~~~");
 //                l++;
@@ -89,11 +78,7 @@ public class GPrdNo {
                 String prdCode = prdtSamp.getPrdCode();
                 String usr=prdtSamp.getUsr();
                 String chkMan=prdtSamp.getUsr();
-                p.p("~~~开始~~~~~com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
-                p.p("prdNoMax="+prdNoMax);p.p("indx1="+indx1);p.p("prdCode="+prdCode);
-                p.p("usr="+usr);p.p("chkMan="+chkMan);
-                p.p("~~~结束~~~~~com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo.prdtSampObjGetPrdNoByIndxGenerate~~~~~~~~~~~~~~~~流水prdNo~~~~~~~~~~~~~~~~~~~~~~~~");
-                //给prdt也添加一个货号
+
 //                try {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
 //                knd=1,dfu_ut=1,usr='ADMIN',chk_man='ADMIN'

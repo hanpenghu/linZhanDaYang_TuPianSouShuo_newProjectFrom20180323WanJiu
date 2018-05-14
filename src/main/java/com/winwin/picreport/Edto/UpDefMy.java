@@ -43,4 +43,91 @@ public class UpDefMy {
     //币名
     protected String curName;
 
+    public String getHjNo() {
+        return hjNo;
+    }
+
+    public void setHjNo(String hjNo) {
+        this.hjNo = hjNo;
+    }
+
+    public String getOlefield() {
+        return olefield;
+    }
+
+    public void setOlefield(String olefield) {
+        this.olefield = olefield;
+    }
+
+    public String getPriceId() {
+        return priceId;
+    }
+
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
+    }
+
+    public String getBilType() {
+        return bilType;
+    }
+
+    public void setBilType(String bilType) {
+        this.bilType = bilType;
+    }
+
+    public BigDecimal getUp() {
+        return up;
+    }
+
+    public void setUp(BigDecimal up) {
+        this.up = up;
+    }
+
+    public String getRemOfPrdtSampOs() {
+        return remOfPrdtSampOs;
+    }
+
+    public void setRemOfPrdtSampOs(String remOfPrdtSampOs) {
+        this.remOfPrdtSampOs = remOfPrdtSampOs;
+    }
+
+    public Date getSDd() {
+        return sDd;
+    }
+
+    public void setSDd(Date sDd) {
+        this.sDd = sDd;
+    }
+
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    public void setQty(BigDecimal qty) {
+        this.qty = qty;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getCurId() {
+        return curId;
+    }
+
+    public void setCurId(String curId) {
+        this.curId = curId;
+    }
+
+    public String getCurName() {
+        return curName;
+    }
+
+    public void setCurName(String curName) {
+        this.curName = curName;
+    }
 }

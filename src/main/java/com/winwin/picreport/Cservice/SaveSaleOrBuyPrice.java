@@ -139,28 +139,48 @@ public class SaveSaleOrBuyPrice {
 //////////////////////////货号流水模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //获得uuid对应的prdt_no
             String prdNo= cnst.manyTabSerch.selectPrdNoFromPrdtSamp(uuid);
-            //如果货号是空的,先流水一下
+
             if(p.empty(prdNo)){
-                //下面流水一次单号//注意必须先得到index
+
+
                 PrdtSamp prdtSamp = cnst.prdtSampMapper
                         .selectByPrimaryKey(uuid);
                 PrdtSamp0 prdtSamp0=new PrdtSamp0();
                 BeanUtils.copyProperties(prdtSamp,prdtSamp0);
+
+
+
+
+                //2018_5_14   weekday(1)   17:23:11
+                prdNo=cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp0.getPrdCode());
+                if(p.empty(prdNo)){//注意这边没有分类,无法帮  他流水,需要客户自己去prdt表注册商品的到品号
+                    p.p("-------------------------------------------------------");
+                    p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
+                    p.p("-------------------------------------------------------");
+                    return  Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
+                            .setMsg("此名称在ERP中无对应品号，不能定价，请完善资料！")
+                            .setChMsg("");
+                }else{
+                    //此时prdt表中有货号,把这个货号放入打样表中
+                    cnst.a001TongYongMapper.updatePrdNoByUuid(uuid,prdNo);
+                }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //给prdtSamp流水prdtNo//下面是prdno流水模块
+//                //给prdtSamp流水prdtNo//下面是prdno流水模块//注意prdt表中如果对应的code没有录入,是不行的
 //                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                prdNo=prdtSamp0.getPrdNo();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             }else{
-                //此时货号不是空的//曾经出现过PrdtSamp表有货号但是在prdt里面不存在,此时就要再prdt里插入该货号
-                //这种情况是老郑认为删除打样流水到prdt里的货号导致的
-                PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
-                PrdtSamp0 prdtSamp0=new PrdtSamp0();
-                BeanUtils.copyProperties(prdtSamp,prdtSamp0);
-                //此时prdNo已经存在存在prdt_Samp,那么我们看看这个prdNo在prdt表是否存在//不存在就插入一个,
-                //此时不存在  曾经是老郑认为删除打样流水货号导致的
-                //注意我们插入到prdt的记录会带rem字段是SamplesSys的标记,在mapper的sql中可以看到
-                cnst.gPrdNo.reSetPrdNo(prdtSamp0);
+//                //此时货号不是空的//曾经出现过PrdtSamp表有货号但是在prdt里面不存在,此时就要再prdt里插入该货号
+//                //这种情况是老郑认为删除打样流水到prdt里的货号导致的
+//                PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
+//                PrdtSamp0 prdtSamp0=new PrdtSamp0();
+//                BeanUtils.copyProperties(prdtSamp,prdtSamp0);
+//                //此时prdNo已经存在存在prdt_Samp,那么我们看看这个prdNo在prdt表是否存在//不存在就插入一个,
+//                //此时不存在  曾经是老郑认为删除打样流水货号导致的
+//                //注意我们插入到prdt的记录会带rem字段是SamplesSys的标记,在mapper的sql中可以看到
+//                cnst.gPrdNo.reSetPrdNo(prdtSamp0);
             }
 /////////////prdt表单位对比插入模块/////////////////////////////////////////////////////////////////////////////////
             /**
@@ -244,7 +264,7 @@ public class SaveSaleOrBuyPrice {
         upDef.setCurId((String)gmp.get("curId"));
         //得到单位//updef的unit字段里面1指的是主单位,2指的是副单位而已
         upDef.setUnit("1");
-        upDef.setPriceId("2");
+        upDef.setPriceId(Cnst.buyPriceId);
         /////////////////////////////////////////////////////////////////////////////////////
         upDef.setCusNo((String)gmp.get("cusNo"));
         upDef.setUsr((String)gmp.get("usr"));
@@ -260,7 +280,7 @@ public class SaveSaleOrBuyPrice {
         //采购含运费入库
         if(p.notEmpty(gmp.get("haveTransUpBuy"))){
             //1代表不含运费//其他代表是含运费的
-            upDef.setBilType(p.space);
+            upDef.setBilType(Cnst.buyBilTypeHaveTrans);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST5~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
@@ -277,7 +297,7 @@ public class SaveSaleOrBuyPrice {
         //采购不含运费入库
         if(p.notEmpty( gmp.get("noTransUpBuy"))){
             //1代表不含运费//其他代表是含运费的
-            upDef.setBilType("1");
+            upDef.setBilType(Cnst.buyBilTypeNoTrans);
             upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST9~~~~~~~~~~~~~~~~~~~~~~~~");
             //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
@@ -325,7 +345,7 @@ public class SaveSaleOrBuyPrice {
         //得到单位//updef的unit字段里面1指的是主单位,2指的是副单位而已
         upDef.setUnit("1");
         //1代表销售,2代表采购
-        upDef.setPriceId("1");
+        upDef.setPriceId(Cnst.salPriceId);
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -343,7 +363,7 @@ public class SaveSaleOrBuyPrice {
         if(p.notEmpty( gmp.get("haveTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
             //1代表不含运费//2代表销售含运费
-            upDef.setBilType("2");
+            upDef.setBilType(Cnst.saleBilTypeHaveTrans);
             upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
             if(null==upDef.getCusNo()){
                 upDef.setCusNo(p.space);
@@ -363,7 +383,7 @@ public class SaveSaleOrBuyPrice {
         if(p.notEmpty( gmp.get("noTransUpSale"))){
             p.p("~~~~~~~~~~~~~~~~~~~~~~16~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
             //1代表不含运费//其他代表是含运费的
-            upDef.setBilType("1");
+            upDef.setBilType(Cnst.saleBilTypeNoTrans);
             upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
             p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
             if(null==upDef.getCusNo()){

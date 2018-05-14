@@ -129,20 +129,10 @@ public class D1DaYangService {
             //下面主要是判断产品编码是否存在,存在就return
 
             String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
-//            p.p(prdtSamp);
+
             PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
 
-            //老郑说暂时不需要判断数据库产品重复,只要判断前端不要重复提交
 
-          /*  Integer it = cnst.a001TongYongMapper.isPrdCodeExist(prdtSampOb.getPrdCode());
-            if (it > 0) {
-                return mg.gm(Msg.gmg().setStatus(
-                        StatusCnst.dbMistakeCausePrdtSampFalse)
-                        .setMsg("产品编码已经存在")
-                        .setChMsg("有重复的PrdCode")
-                        .setOtherMsg("有重复数据"));
-            }
-*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

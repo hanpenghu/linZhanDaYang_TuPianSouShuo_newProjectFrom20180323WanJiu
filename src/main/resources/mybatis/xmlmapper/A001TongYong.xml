@@ -17,7 +17,9 @@
 //    //采购价格列表
 //    List<UpDefMy>upDefMyListByer=new ArrayList<>();
     -->
-    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
+
+
+<!--    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
         <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
         <id column="QTY" jdbcType="NUMERIC" property="qty" />
         <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
@@ -27,8 +29,8 @@
         <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
         <result column="price_id" jdbcType="VARCHAR" property="priceId" />
         <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
-        <result column="ut" jdbcType="VARCHAR" property="unit" />
-    </resultMap>
+       &lt;!&ndash; <result column="ut" jdbcType="VARCHAR" property="unit" />&ndash;&gt;
+    </resultMap>-->
    <!-- <sql id="PrdtSampBase_Column_List">
         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
         cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
@@ -249,18 +251,18 @@
     <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
        Select
        top 20
-       a.s_dd --as sDd,---价格创建日期
-       ,a.up --as up ,--价格
-       ,a.qty --as qty ,--数量
-       ,isnull(a.HJ_NO,'') as unit---单位
-       ,a.cur_id ---as curId,----币别代号
-       ,a.bil_type----01代表不含运费的单价
-       ,a.rem---备注,打样系统的会存为"打样系统"
-       ,a.price_id----1代表销售价格, 2代表采购价格
-       ,b.name ----as curName ----币别名字
-       --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,a.HJ_NO---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
-       from up_def a
+        from up_def a
        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
         LEFT JOIN cur_id b ON a.cur_id=b.cur_id
        where
@@ -286,10 +288,10 @@
     <select id="getUpDefMy20180512Buy" resultMap="UpDefMyBaseResultMap">
         Select
         top 20
-        a.s_dd --as sDd,---价格创建日期
+         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
-        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.HJ_NO---单位
         ,a.cur_id ---as curId,----币别代号
         ,a.bil_type----01代表不含运费的单价
         ,a.rem---备注,打样系统的会存为"打样系统"
@@ -308,18 +310,31 @@
         a.price_id= #{priceId}
         AND
         a.bil_type=#{bilType}
-        ORDER BY
+         GROUP BY
+         a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,a.HJ_NO---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'')
+
+         ORDER BY
         a.s_dd DESC
     </select>
 
 
     <select id="getUpDefMy20180512BuyOne" resultMap="UpDefMyBaseResultMap">
         Select
-        top 20
-        a.s_dd --as sDd,---价格创建日期
+        top 1
+         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
-        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.HJ_NO---单位
         ,a.cur_id ---as curId,----币别代号
         ,a.bil_type----01代表不含运费的单价
         ,a.rem---备注,打样系统的会存为"打样系统"
@@ -341,7 +356,19 @@
         ORDER BY
         a.s_dd DESC
     </select>
-
+    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
+        <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
+        <id column="QTY" jdbcType="NUMERIC" property="qty" />
+        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
+        <result column="UP" jdbcType="NUMERIC" property="up" />
+        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+        <result column="name" jdbcType="VARCHAR" property="curName" />
+        <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
+        <result column="price_id" jdbcType="VARCHAR" property="priceId" />
+        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
+        <result column="hj_no" jdbcType="VARCHAR" property="unit" />
+        <!-- <result column="ut" jdbcType="VARCHAR" property="unit" />-->
+    </resultMap>
 
     <select id="getUpDefMy20180512Sale" resultMap="UpDefMyBaseResultMap">
         Select
@@ -349,7 +376,7 @@
         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
-        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.HJ_NO---单位
         ,a.cur_id ---as curId,----币别代号
         ,a.bil_type----01代表不含运费的单价
         ,a.rem---备注,打样系统的会存为"打样系统"
@@ -370,9 +397,31 @@
                 a.cur_id=#{CurId}
                 AND
                 a.bil_type=#{bilType}
-        ORDER BY
+
+        GROUP BY
+         a.s_dd --as sDd,---价格创建日期
+        ,a.up --as up ,--价格
+        ,a.qty --as qty ,--数量
+        ,a.HJ_NO---单位
+        ,a.cur_id ---as curId,----币别代号
+        ,a.bil_type----01代表不含运费的单价
+        ,a.rem---备注,打样系统的会存为"打样系统"
+        ,a.price_id----1代表销售价格, 2代表采购价格
+        ,b.name ----as curName ----币别名字
+        --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
+        ,isnull(a.OLEFIELD,'')
+
+         ORDER BY
         a.s_dd DESC
     </select>
+
+    <!--  UpDefMy01 getUpDefMy20180512Saleone(@Param("prdNo")String prdNo,
+        @Param("priceId")String priceId,
+        @Param("bilType")String bilType,
+        @Param("CurId")String CurId,
+        @Param("olefield")String olefield);-->
+
+
 
 
 
@@ -382,7 +431,7 @@
         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
-        ,isnull(a.HJ_NO,'') as unit---单位
+        ,a.HJ_NO---单位
         ,a.cur_id ---as curId,----币别代号
         ,a.bil_type----01代表不含运费的单价
         ,a.rem---备注,打样系统的会存为"打样系统"
@@ -401,11 +450,11 @@
         a.price_id=#{priceId}
 
         <if test="CurId != null and CurId != ''">
-         AND a.cur_id = 'RMB' ---此时是本币
+         AND a.cur_id = #{CurId} ---此时是本币
         </if>
         <if test="CurId != null and CurId == ''">
-            AND a.cur_id != 'RMB'---此时是外币,外币我传的是空过来
-        </if>
+            AND a.cur_id != 'RMB'
+     </if>
         AND
         a.bil_type=#{bilType}
         ORDER BY

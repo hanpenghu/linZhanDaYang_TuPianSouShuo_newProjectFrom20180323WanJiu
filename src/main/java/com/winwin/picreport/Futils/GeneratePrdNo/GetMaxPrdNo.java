@@ -19,30 +19,6 @@ public class GetMaxPrdNo {
 
     //找到idxNo的所有上下级 idxNp
     public String  getAllUpAndDownIdxNo(String idxNo){
-        /*String s = this.deDaoZuiShangJi_IdxNo(idxNo);
-        List<String> idxnos = this.deDaoSuoYouJiBie_IdxNo(s);
-        System.out.println("~~~对了~~~~~~~~~~"+idxnos+"~~~~~~~~~~~deDaoSuoYouJiBie_IdxNo~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<String>prdNoMaxs=new ArrayList<>();
-        for(String indxno:idxnos){
-            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indxno);
-            if(NotEmpty.notEmpty(prdNoMax)){
-                prdNoMaxs.add(prdNoMax);
-            }
-
-        }
-        System.out.println("~~~~~~~~~prdNoMaxs排序前    "+prdNoMaxs+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Collections.sort(prdNoMaxs,(v1,v2)->{
-            long long1 = new Long(v1);
-            long long2 = new Long(v2);
-            if(long1<long2){
-                return 1;
-            } else if(long1==long2){
-                return 0;
-            }else{return -1;}
-
-        });
-        System.out.println("~~~~~~~~~prdNoMaxs排序后   "+prdNoMaxs+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        String maxPrdNoSecond = this.getMaxPrdNoSecond(prdNoMaxs.get(0));*/
         //在prdt里面找到相同的indx1的prdNo流水最大的那个
             String maxPrdNoSecond= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(idxNo);
         maxPrdNoSecond = this.getMaxPrdNoSecond(maxPrdNoSecond);
