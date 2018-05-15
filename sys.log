@@ -1,115 +1,292 @@
-2018-05-14 00:01:28,679 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:01:53,531 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:08:27,715 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:14:02,480 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:14:03,071 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:14:47,061 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:15:41,153 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:16:15,554 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:25:58,160 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:27:53,582 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:39:37,168 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:39:50,576 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:49:14,597 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:49:57,135 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 00:53:04,994 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 00:53:21,558 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:05:07,398 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:06:30,673 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:08:18,026 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:16:59,362 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:21:35,809 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:23:30,650 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:23:31,248 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:25:44,967 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:25:45,569 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:26:44,175 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:26:44,786 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:27:54,737 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:33:40,535 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:34:03,791 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:35:31,010 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:39:26,592 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:46:43,894 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:46:44,474 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:47:10,975 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:47:27,000 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:52:26,268 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:52:46,914 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:53:28,424 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:53:57,103 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:54:54,331 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:54:54,912 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:56:01,408 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:56:02,006 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 01:58:17,315 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 01:58:17,887 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 02:01:14,389 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:01:14,971 ERROR (AllExceptionHandler.java:17)- null
-2018-05-14 02:09:01,697 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:23:02,657 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:23:04,019 ERROR (AllExceptionHandler.java:17)- 
-### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 关键字 'GROUP' 附近有语法错误。
-### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
-### The error may involve defaultParameterMap
+2018-05-15 11:18:07,673 ERROR (DingJiaXiuGai.java:150)- 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
 ### The error occurred while setting parameters
-### SQL: Select         top 20         a.s_dd --as sDd,---价格创建日期         ,a.up --as up ,--价格         ,a.qty --as qty ,--数量         ,a.HJ_NO---单位         ,a.cur_id ---as curId,----币别代号         ,a.bil_type----01代表不含运费的单价         ,a.rem---备注,打样系统的会存为"打样系统"         ,a.price_id----1代表销售价格, 2代表采购价格         ,b.name ----as curName ----币别名字         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段         from up_def a         LEFT JOIN  prdt d ON d.prd_no=a.prd_no         LEFT JOIN cur_id b ON a.cur_id=b.cur_id         where         a.prd_no=?         AND         a.OLEFIELD like '%SamplesSys%'                 AND                 a.price_id=?                 AND                 a.cur_id=?                 AND                 a.bil_type=?         ORDER BY         a.s_dd DESC         GROUP BY          a.s_dd --as sDd,---价格创建日期         ,a.up --as up ,--价格         ,a.qty --as qty ,--数量         ,a.HJ_NO---单位         ,a.cur_id ---as curId,----币别代号         ,a.bil_type----01代表不含运费的单价         ,a.rem---备注,打样系统的会存为"打样系统"         ,a.price_id----1代表销售价格, 2代表采购价格         ,b.name ----as curName ----币别名字         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段         ,isnull(a.OLEFIELD,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 关键字 'GROUP' 附近有语法错误。
-; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 关键字 'GROUP' 附近有语法错误。
-2018-05-14 02:24:08,285 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:25:26,117 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:25:29,287 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:28:22,781 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 02:28:23,448 ERROR (AllExceptionHandler.java:17)- 
-### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 选择列表中的列 'up_def.S_DD' 无效，因为该列没有包含在聚合函数或 GROUP BY 子句中。
-### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
-### The error may involve defaultParameterMap
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+java.lang.RuntimeException: 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
 ### The error occurred while setting parameters
-### SQL: Select         top 20         a.s_dd --as sDd,---价格创建日期         ,a.up --as up ,--价格         ,a.qty --as qty ,--数量         ,a.HJ_NO---单位         ,a.cur_id ---as curId,----币别代号         ,a.bil_type----01代表不含运费的单价         ,a.rem---备注,打样系统的会存为"打样系统"         ,a.price_id----1代表销售价格, 2代表采购价格         ,b.name ----as curName ----币别名字         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段         from up_def a         LEFT JOIN  prdt d ON d.prd_no=a.prd_no         LEFT JOIN cur_id b ON a.cur_id=b.cur_id         where         a.prd_no=?         AND         a.OLEFIELD like '%SamplesSys%'                 AND                 a.price_id=?                 AND                 a.cur_id=?                 AND                 a.bil_type=?          GROUP BY          isnull(a.OLEFIELD,'')           ORDER BY         a.s_dd DESC
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 选择列表中的列 'up_def.S_DD' 无效，因为该列没有包含在聚合函数或 GROUP BY 子句中。
-; uncategorized SQLException for SQL []; SQL state [S0001]; error code [8120]; 选择列表中的列 'up_def.S_DD' 无效，因为该列没有包含在聚合函数或 GROUP BY 子句中。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 选择列表中的列 'up_def.S_DD' 无效，因为该列没有包含在聚合函数或 GROUP BY 子句中。
-2018-05-14 11:09:14,590 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 11:09:24,976 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 11:27:42,857 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 11:34:40,137 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 15:01:38,526 ERROR (AllExceptionHandler.java:17)- 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 将截断字符串或二进制数据。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.insertUnitToUt1OfPrdt-Inline
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+	at com.winwin.picreport.Futils.hanhan.p.throwE(p.java:2204)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:187)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
+	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+2018-05-15 11:18:07,985 ERROR (DingJiaXiuGaiService.java:185)- [{"alterTime":"2018-05-15 11:18:03.291","bilType":"1","curIdAfter":"RMB","curIdBefore":"RMB","dingJiaGuanLian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea408","dingJiaZhuJian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea4081RMB","prdtCode":"WW-NE-BR1","prdtSampUuid":"beccdd23-3b87-40ab-aa93-76ee77bd36ad","qtyAfter":"123","qtyBefore":"123","remFrontAfter":"hanhan","remFrontBefore":"hanhan","saleOrBuy":"buy","tenantId":"ipace","unitAfter":"主:yard","unitBefore":"主:yard","upAfter":"1113","upBefore":"111","userName":"演示数据"},{"bilType":"","curIdAfter":"RMB","curIdBefore":"RMB","dingJiaGuanLian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea408","dingJiaZhuJian":"","prdtCode":"WW-NE-BR1","prdtSampUuid":"beccdd23-3b87-40ab-aa93-76ee77bd36ad","qtyAfter":"123","qtyBefore":"123","remFrontAfter":"hanhan","remFrontBefore":"hanhan","saleOrBuy":"buy","tenantId":"ipace","unitAfter":"主:yard","unitBefore":"主:yard","upAfter":"2223","upBefore":"222","userName":"演示数据"}]
+2018-05-15 11:18:07,986 ERROR (DingJiaXiuGaiService.java:186)- 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
 ### The error occurred while setting parameters
-### SQL: UPDATE PRDT SET UT1=? WHERE prd_no=?
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 将截断字符串或二进制数据。
-; SQL []; 将截断字符串或二进制数据。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 将截断字符串或二进制数据。
-2018-05-14 15:20:49,778 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 15:27:38,502 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 15:27:41,948 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 15:28:23,382 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:17,492 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:20,968 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:22,201 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:22,355 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:22,516 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:22,648 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:29:59,318 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:30:04,379 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:32:53,671 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:35:46,869 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:36:53,147 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:39:49,765 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:41:08,058 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 15:45:25,532 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 16:52:36,413 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 17:01:51,856 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 17:24:52,580 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 17:29:12,754 ERROR (AllExceptionHandler.java:17)- Mapper method 'com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUtToPrdtUsePrdNo attempted to return null from a method with a primitive return type (int).
-2018-05-14 17:30:35,501 ERROR (AllExceptionHandler.java:17)- Mapper method 'com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUtToPrdtUsePrdNo attempted to return null from a method with a primitive return type (int).
-2018-05-14 17:35:04,789 ERROR (AllExceptionHandler.java:17)- Mapper method 'com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUtToPrdtUsePrdNo attempted to return null from a method with a primitive return type (int).
-2018-05-14 17:36:37,293 ERROR (AllExceptionHandler.java:17)- Mapper method 'com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUtToPrdtUsePrdNo attempted to return null from a method with a primitive return type (int).
-2018-05-14 17:39:42,546 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 18:15:00,609 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:17:54,741 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:18:44,668 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:19:18,353 ERROR (AllExceptionHandler.java:17)- 保存定价失败
-2018-05-14 18:21:59,848 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:22:01,583 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:23:34,065 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-14 18:24:58,669 ERROR (AllExceptionHandler.java:17)- 保存定价失败
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+org.springframework.dao.DeadlockLoserDataAccessException: 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### The error occurred while setting parameters
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:263)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
+	at com.sun.proxy.$Proxy71.update(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:294)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy85.updateUpdef(Unknown Source)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:152)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
+	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:232)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1672)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:460)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:405)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7535)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:2438)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:208)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:183)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:387)
+	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.execute(NewProxyPreparedStatement.java:989)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:46)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:63)
+	at com.sun.proxy.$Proxy106.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:198)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	... 71 common frames omitted
+2018-05-15 11:18:08,000 ERROR (DingJiaXiuGai.java:150)- 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### The error occurred while setting parameters
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+java.lang.RuntimeException: 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### The error occurred while setting parameters
+### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
+	at com.winwin.picreport.Futils.hanhan.p.throwE(p.java:2204)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:187)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
+	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
+	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+2018-05-15 11:18:11,130 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:18:58,246 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:19:28,214 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:29:51,773 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:29:53,872 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:29:55,916 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 11:45:23,350 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 12:37:22,790 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 12:37:58,151 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 14:45:33,694 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-15 14:45:33,833 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------

@@ -131,27 +131,13 @@ public class D1DaYangS {
         String prdtSampUuid = prdtSampX.getId();
 
 
-        //插入价格修改记录模块
-        //首先得到该id下的价格修改模块
-
-        //根据id得到销售价格修改的
-//        AlterPriceRecExample aa=new AlterPriceRecExample();
-//        aa.createCriteria()
-//                .andPrdtSampUuidEqualTo(prdtSampX.getId())
-//                .andSaleOrBuyEqualTo("sale");
-//        List<AlterPriceRec> saleAlterRecList = cnst.alterPriceRecMapper.selectByExample(aa);
 
         List<AlterPriceRecToFront> saleAlterRecList= cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"sale");
         
         
         prdtSampX.setSaleAlterRecList(saleAlterRecList);
 
-//根据id得到采购价格修改的
-//        AlterPriceRecExample aaa=new AlterPriceRecExample();
-//        aaa.createCriteria()
-//                .andPrdtSampUuidEqualTo(prdtSampX.getId())
-//                .andSaleOrBuyEqualTo("buy");
-//        List<AlterPriceRec> buyAlterRecList = cnst.alterPriceRecMapper.selectByExample(aaa);
+
 
         List<AlterPriceRecToFront> buyAlterRecList =cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"buy");
         prdtSampX.setBuyAlterRecList(buyAlterRecList);

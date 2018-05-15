@@ -1,6 +1,8 @@
 package com.winwin.picreport.Edto;
 
 public class AlterPriceRec {
+
+    protected String prdNo;//dingJiaGuanLian+bilType+curidBefore+prdNo确定唯一一条记录在up_def
     protected String dingJiaGuanLian;//定价关联
     protected String userName;//前端登录用户名
     protected String tenantId;//登录用户所在公司名
@@ -15,7 +17,7 @@ public class AlterPriceRec {
     protected String unitAfter;//单位修改后
     protected String remFrontBefore;//备注修改前
     protected String remFrontAfter;//备注修改后
-    protected String bilType;//运费类型(对于当次修改,运费类型是确定的没有before与after之分)   01代表没有运费,空字符串代表有运费
+    protected String bilType;//运费类型(对于当次修改,运费类型是确定的没有before与after之分)  采购 1代表没有运费,空字符串代表有运费
     protected String curIdBefore;//币别修改前     RMB是人民币   USD是usDollor
     protected String curIdAfter;//币别修改后
 
@@ -38,6 +40,14 @@ public class AlterPriceRec {
     protected String haveTransUpOtherBefore;
 //含运费单价外币修改后
     protected String haveTransUpOtherAfter;
+
+    public String getPrdNo() {
+        return prdNo;
+    }
+
+    public void setPrdNo(String prdNo) {
+        this.prdNo = prdNo;
+    }
 
     public String getDingJiaGuanLian() {
         return dingJiaGuanLian;

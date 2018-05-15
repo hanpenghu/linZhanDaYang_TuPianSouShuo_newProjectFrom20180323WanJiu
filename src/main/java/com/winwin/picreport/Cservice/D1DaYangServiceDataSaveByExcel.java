@@ -158,9 +158,9 @@ public class D1DaYangServiceDataSaveByExcel {
                     if(p.empty(p0.getPrdNo())){
                         String s=p.gp().sad("产品编码为：《")
                                 .sad(p0.getPrdCode())
-                                .sad("》的产品中类《")
+                                .sad("》对应的产品中类《")
                                 .sad(p0.getFenLeiName())
-                                .sad("》无法匹配,所有数据未导入").gad();
+                                .sad("》不存在,请手动录入该中类！所有数据未导入！").gad();
                         Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
                         p.p("-------------------------------------------------------");
                         p.p(s);

@@ -41,10 +41,11 @@ public class DingJiaXiuGai {
 
     //定价修改传入值
   /* [
-    {//dingJiaGuanLian+bilType+curIdBefore可以找到up_def的唯一一条数据
-        //用来在up_def定价表定义唯一数据
+    {//dingJiaGuanLian+bilType+curIdBefore+prdNo可以找到up_def的唯一一条数据
+        //用来在up_def定价表定义唯一数据,如果是prdNo是空的,就 返回""
+        "prdNo":""
         "dingJiaGuanLian": "SamplesSysd105df95-4ab5-4d55-869c-e54aa3e1b59c",
-            //sale代表当前传入的是销售的定价修改
+            //,
             "saleOrBuy": "sale",
             //修改人的用户名
             "userName": "hanpenghu",
@@ -140,6 +141,7 @@ public class DingJiaXiuGai {
         if(p.empty(alterPrices)){
             return Msg.gmg().setMsg("定价修改失败,前端传过来的是空数组或者null").setStatus("0");
         }
+
 
         try {
             return cnst.dingJiaXiuGaiService.dingJiaXiuGai(alterPrices);

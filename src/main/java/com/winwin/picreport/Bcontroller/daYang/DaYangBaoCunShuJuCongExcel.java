@@ -22,6 +22,7 @@ public class DaYangBaoCunShuJuCongExcel {
     private Cnst cnst;
 
 
+
     /**
      * 上传一个包含信息的excel到数据库
      * 这个一次只能穿一个附件
@@ -44,13 +45,15 @@ public class DaYangBaoCunShuJuCongExcel {
      *
      *
      */
-    @RequestMapping(value = InterFaceCnst.dataSaveByExcel,
+    @RequestMapping(
+            value = InterFaceCnst.dataSaveByExcel,
             method = RequestMethod.POST, //客户端请求的类型
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,//接受的类型
             produces = MediaType.APPLICATION_JSON_VALUE)//返回的类型
     public @ResponseBody
     List<Msg> dataSaveByExcel(
-            @RequestParam(value = p.excel, required = false) MultipartFile excel
+            @RequestParam(value = p.excel, required = false)
+                    MultipartFile excel
             ,HttpServletRequest r
     ) {
 

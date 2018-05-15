@@ -47,8 +47,13 @@ public class DingJiaXiuGaiService {
 
 
             for(AlterPrice alterPrice:alterPrices){
+               String saleOrBuy= alterPrice.getSaleOrBuy();
+                if(p.bdy(saleOrBuy,"sale")&&p.bdy(saleOrBuy,"buy")){
+                    return Msg.gmg().setMsg("定价修改失败,前端没有传过来saleOrBuy字段以确定是销售还是采购的修改").setStatus("0");
+                }
 
-                if(p.bdy(alterPrice.getCurIdBefore(),"RMB")) {
+
+                if(p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)) {
                     //此时是外币的时候,得到修改前后的币别
                     curIdBefore=alterPrice.getCurIdBefore();
                     curIdAfter=alterPrice.getCurIdAfter();
@@ -57,22 +62,22 @@ public class DingJiaXiuGaiService {
                 /**
                  *得到8种组合单价
                  * */
-                //得到无运费本币修改之前价格
-                if(p.dy(alterPrice.getBilType(),"01")&&p.dy(alterPrice.getCurIdBefore(),"RMB")){
+                //得到无运费本币修改之前价格//销售和采购的无运费都是1,不用分2种情况
+                if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeNoTrans)&&p.dy(alterPrice.getCurIdBefore(),Cnst.benBi)){
                     noTransUpMyBefore=alterPrice.getUpBefore();
                 }
                 //得到无运费本币修改之后价格
-                if(p.dy(alterPrice.getBilType(),"01")&&p.dy(alterPrice.getCurIdAfter(),"RMB")){
+                if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeNoTrans)&&p.dy(alterPrice.getCurIdAfter(),Cnst.benBi)){
                     noTransUpMyAfter=alterPrice.getUpAfter();
                 }
 
                 //得到无运费外币币修改之前价格
-                if(p.dy(alterPrice.getBilType(),"01")&&p.bdy(alterPrice.getCurIdBefore(),"RMB")){
+                if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeNoTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
                     noTransUpOtherBefore=alterPrice.getUpBefore();
                 }
 
                 //得到无运费外币币修改之后价格
-                if(p.dy(alterPrice.getBilType(),"01")&&p.bdy(alterPrice.getCurIdBefore(),"RMB")){
+                if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeNoTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
                     noTransUpOtherAfter=alterPrice.getUpAfter();
                 }
 
@@ -81,24 +86,45 @@ public class DingJiaXiuGaiService {
                 //以下是有运费,以上是无运费
 
 
+                if(p.dy("buy",saleOrBuy)){
+                    //得到有运费本币修改之前价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeHaveTrans)&&p.dy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpMyBefore=alterPrice.getUpBefore();
+                    }
+                    //得到有运费本币修改之后价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeHaveTrans)&&p.dy(alterPrice.getCurIdAfter(),Cnst.benBi)){
+                        haveTransUpMyAfter=alterPrice.getUpAfter();
+                    }
 
-                //得到有运费本币修改之前价格
-                if(p.bdy(alterPrice.getBilType(),"01")&&p.dy(alterPrice.getCurIdBefore(),"RMB")){
-                    haveTransUpMyBefore=alterPrice.getUpBefore();
-                }
-                //得到有运费本币修改之后价格
-                if(p.bdy(alterPrice.getBilType(),"01")&&p.dy(alterPrice.getCurIdAfter(),"RMB")){
-                    haveTransUpMyAfter=alterPrice.getUpAfter();
-                }
+                    //得到有运费外币币修改之前价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeHaveTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpOtherBefore=alterPrice.getUpBefore();
+                    }
 
-                //得到有运费外币币修改之前价格
-                if(p.bdy(alterPrice.getBilType(),"01")&&p.bdy(alterPrice.getCurIdBefore(),"RMB")){
-                    haveTransUpOtherBefore=alterPrice.getUpBefore();
+                    //得到有运费外币币修改之后价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.buyBilTypeHaveTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpOtherAfter=alterPrice.getUpAfter();
+                    }
                 }
+                if(p.dy("sale",saleOrBuy)){
+                    //得到有运费本币修改之前价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.saleBilTypeHaveTrans)&&p.dy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpMyBefore=alterPrice.getUpBefore();
+                    }
+                    //得到有运费本币修改之后价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.saleBilTypeHaveTrans)&&p.dy(alterPrice.getCurIdAfter(),Cnst.benBi)){
+                        haveTransUpMyAfter=alterPrice.getUpAfter();
+                    }
 
-                //得到有运费外币币修改之后价格
-                if(p.bdy(alterPrice.getBilType(),"01")&&p.bdy(alterPrice.getCurIdBefore(),"RMB")){
-                    haveTransUpOtherAfter=alterPrice.getUpAfter();
+                    //得到有运费外币币修改之前价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.saleBilTypeHaveTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpOtherBefore=alterPrice.getUpBefore();
+                    }
+
+                    //得到有运费外币币修改之后价格
+                    if(p.dy(alterPrice.getBilType(),Cnst.saleBilTypeHaveTrans)&&p.bdy(alterPrice.getCurIdBefore(),Cnst.benBi)){
+                        haveTransUpOtherAfter=alterPrice.getUpAfter();
+                    }
                 }
 
 
@@ -112,6 +138,7 @@ public class DingJiaXiuGaiService {
                         .a(p.strNullToSpace(alterPrice.getDingJiaGuanLian()))
                         .a(p.strNullToSpace(alterPrice.getBilType()))
                         .a(p.strNullToSpace(alterPrice.getCurIdBefore()))
+                        .a(p.strNullToSpace(alterPrice.getPrdNo()))
                         .g();
                 //设置定价主键,将来更新updef表 用
                 alterPrice.setDingJiaZhuJian(dingJiaZhuJian);
@@ -134,6 +161,7 @@ public class DingJiaXiuGaiService {
             }
             /**
              *插入修改记录表之前要先把价格跟有没有运费,是本币还是外币组合成一条数据
+             * 注意记录表只是记录我们打样系统中uuid对应那个记录的价格被修改的次数,不是对应某个prdNo的次数
              * */
             //准备一个存储合并后数据的对象
             AlterPrice alterPriceMeraged=new AlterPrice();

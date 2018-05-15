@@ -116,7 +116,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             "estimateprice": null,
             //小单费
             "littleorderprice": null,
-            //模具费用发票号
+            //模具费用发票号    
             "modelcostinvoiceno": null,
             //财务起订量
             "financestartsellcount": null,

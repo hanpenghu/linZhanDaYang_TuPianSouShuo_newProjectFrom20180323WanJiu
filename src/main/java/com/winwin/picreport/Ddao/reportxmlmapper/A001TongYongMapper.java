@@ -274,21 +274,13 @@ public interface A001TongYongMapper {
            "up=#{upAfter}," +
            "hj_no=#{unitAfter}," +
            "rem =#{remFrontAfter} " +
-           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')"})
+           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')"})
    Integer updateUpdef(AlterPrice alterPrice);
 
 
 
-//   @Insert({"insert into alter_price_rec(ding_Jia_Guan_Lian,user_Name,tenant_Id" +
-//           ",alter_Time,prdt_Code,prdt_Samp_Uuid,qty_Before" +
-//           ",qty_After,up_Before,up_After,unit_Before,unit_After" +
-//           ",rem_Front_Before,rem_Front_After,bil_Type" +
-//           ",cur_Id_Before,cur_Id_After)values" +
-//           "(#{dingJiaGuanLian},#{userName},#{tenantId},#{alterTime}" +
-//           ",#{prdtCode},#{prdtSampUuid},#{qtyBefore}" +
-//           ",#{qtyAfter},#{upBefore},#{upAfter},#{unitBefore},#{unitAfter}" +
-//           ",#{remFrontBefore},#{remFrontAfter},#{bilType},#{curIdBefore},#{curIdAfter})"})
-//   Integer insertAlterPriceRec(AlterPrice alterPrice);
+
+
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
