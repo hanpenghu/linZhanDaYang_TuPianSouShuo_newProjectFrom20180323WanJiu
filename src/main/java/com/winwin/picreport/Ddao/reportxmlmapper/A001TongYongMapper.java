@@ -335,4 +335,11 @@ public interface A001TongYongMapper {
 
    @Update({"update prdt_samp set prd_no=#{prdNo} where id=#{uuid}"})
     int updatePrdNoByUuid(@Param("uuid")String uuid,@Param("prdNo")String prdNo);
+
+   @Select({"select isnull(attach,'') from prdt_samp where id=#{id}"})
+   String selectAttachUseId(@Param("id") String id);
+
+
+   @Update({"update prdt_samp set attach=#{attach2save} where id=#{id}"})
+   int updateAttachById(@Param("id")String id,@Param("attach2save") String attach2save);
 }

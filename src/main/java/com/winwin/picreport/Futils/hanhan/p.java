@@ -1977,6 +1977,30 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     *springBoot  jarPath
+     * 得到springboot  jar所在路径,最后带杠的
+     *
+     * //注意这种路径只是得到springboot  的jar所在的路径
+     * */
+
+    public static  String  springBootJarPath(){
+    //创建一个文件//注意这个文件直接会生成在springboot  jar所在的文件夹中
+    File file = new File("1");
+    try {
+        file.createNewFile();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    String absolutePath = file.getAbsolutePath();
+
+    String jarPath=absolutePath.substring(0,absolutePath.length()-1);
+    if(file .exists()) {
+        file.delete();
+    }
+    return jarPath;
+
+}
 
     /**
      *得到springboot打包后的jar路径

@@ -31,7 +31,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 //                .excludePathPatterns("/base/*")
 //                //程序员POSTMAN修改验证模块
 //                .excludePathPatterns("/authUpdate");
-//        registry.addWebRequestInterceptor()
+////        registry.addWebRequestInterceptor()
         super.addInterceptors(registry);
     }
 

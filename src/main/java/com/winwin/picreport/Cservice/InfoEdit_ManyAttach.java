@@ -63,8 +63,8 @@ public class InfoEdit_ManyAttach {
                 prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
             }
 
-            if (NotEmpty.notEmpty(prdtSampOb)) {
-                if (!NotEmpty.notEmpty(prdtSampOb.getId())) {
+            if (p.notEmpty(prdtSampOb)) {
+                if (p.empty(prdtSampOb.getId())) {
                     return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
                 }
             } else {

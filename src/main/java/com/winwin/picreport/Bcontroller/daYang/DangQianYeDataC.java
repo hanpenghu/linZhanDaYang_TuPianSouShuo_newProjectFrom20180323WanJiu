@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
@@ -253,6 +254,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
     FenYe dangqianyeData(@RequestBody FenYe fenYe, HttpServletRequest request) {
+
         //这个参数只是决定后面那个界面再调数据
         String  dingJiaType= request.getParameter("dingJiaType");
         l.error("---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<"+dingJiaType+">---------------------");

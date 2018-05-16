@@ -149,6 +149,7 @@ public interface ManyTabSerch {
     List<PinPai> pinPai();
 
 
+
     List<String> selectDangQianYeSuoYouId
             (@Param("dangQianYe") Integer dangQianYe
                     , @Param("meiYeXianShiShu") Integer meiYeXianShiShu);

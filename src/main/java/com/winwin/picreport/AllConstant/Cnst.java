@@ -78,6 +78,7 @@ public class Cnst {
 
 
 
+
     public static String getProjectPath(){
         String jarPath = SpringbootJarPath.JarLuJingGet();
         return jarPath;
@@ -95,6 +96,9 @@ public class Cnst {
 
     @Autowired
     public GetPriceModelUpdef20180512 getPriceModelUpdef20180512;
+
+    @Autowired
+    public DaYangBatUploadAttach daYangBatUploadAttach;
 
     @Autowired
     public CustMapper custMapper;
@@ -187,6 +191,21 @@ public class Cnst {
     public String dirUrl;
 
     public static final String dirUrlStr="${dirUrl}";
+
+    @Value("${dataSource001PORT}")
+    public  String dataSource001PORT;
+
+    @Value("${Database001Name}")
+    public String Database001Name;
+
+    @Value("${spring.datasource.username}")
+    public String dBUserName;
+
+    @Value("${spring.datasource.password}")
+    public String dBPWd;
+
+    @Value("${dataSource001IP}")
+    public  String dataSource001IP;
 
     @Value("${suoLueTuWenJianJia}")
     public String suoLueTuWenJianJia;

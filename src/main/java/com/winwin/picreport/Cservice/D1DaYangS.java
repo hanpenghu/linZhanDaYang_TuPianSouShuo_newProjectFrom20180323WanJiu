@@ -11,16 +11,22 @@ import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service("fenLei")
 public class D1DaYangS {
+
     @Autowired
     private Cnst cnst;
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
@@ -68,7 +74,7 @@ public class D1DaYangS {
     //注意:增加一个request获得参数,所有数据库定价类型分类的参数
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
-    public FenYe dangqianyeData(FenYe fenYe,String dingJiaType) {
+    public FenYe dangqianyeData(FenYe fenYe,String dingJiaType)  {
 
 
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
@@ -78,9 +84,34 @@ public class D1DaYangS {
         List<String> idList=new ArrayList<String>();
         ////这种用于显示在: 页面的<销售定价>那一栏
         if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
-            l.error("--《销售定价》页面显示用---------------------------------");
-            idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia
-                    (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+            l.error("--《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------");
+
+//            idList = cnst.manyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia
+//                    (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+            //手动建立连接
+            Connection con= null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                con = p.getCon(cnst.dataSource001IP,cnst.dataSource001PORT,p.dbTypeSqlserver,cnst.Database001Name,cnst.dBUserName,cnst.dBPWd);
+                String sql="select top(?)        id        from        PRDT_SAMP  where id not in        (            select top                (                        (?)*((?)-1)                )            id from PRDT_SAMP             where prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )             ORDER BY insertDate DESC        )         and prd_no  in         (                select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)         )        ORDER BY insertDate DESC";
+                ps = con.prepareStatement(sql);
+
+                ps.setInt(1,fenYe.getMeiYeXianShiShu());
+                ps.setInt(2,fenYe.getMeiYeXianShiShu());
+                ps.setInt(3,fenYe.getDangQianYe());
+                rs = ps.executeQuery();
+
+                while(rs.next()){
+                    idList.add(rs.getString("id"));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                l.error(e.getMessage(),e);
+
+            }
+            p.closeAll(con,ps,rs);
         }else{
             idList = cnst.manyTabSerch.selectDangQianYeSuoYouId
                     (fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
@@ -99,8 +130,27 @@ public class D1DaYangS {
         }
         fenYe.setPrdtSampList(prdtSampList);
         if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
-            fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAllUseForSalePricing());
-            fenYe.setZongYeShu();
+            //手动建立连接
+            Connection con= null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                con = p.getCon(cnst.dataSource001IP,cnst.dataSource001PORT,p.dbTypeSqlserver,cnst.Database001Name,cnst.dBUserName,cnst.dBPWd);
+                String sql="Select count(id) from prdt_samp        where prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )";
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                int countID=0;
+                while(rs.next()){
+                    countID=rs.getInt(1);
+                }
+                fenYe.setZongJiLuShu(countID);
+                fenYe.setZongYeShu();
+            } catch (Exception e) {
+                e.printStackTrace();
+                l.error(e.getMessage(),e);
+
+            }
+            p.closeAll(con,ps,rs);
 
         }else{
             fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
@@ -111,7 +161,7 @@ public class D1DaYangS {
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @Transactional
+//    @Transactional
     public PrdtSamp0 getP0(PrdtSamp prdtSampX1) {
         PrdtSamp0 prdtSampX = new PrdtSamp0();
         BeanUtils.copyProperties(prdtSampX1, prdtSampX);

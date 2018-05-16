@@ -103,6 +103,7 @@ public class DaYangBaoCunShuJuCongYeMian {
      @RequestParam(value = "attach10", required = false) MultipartFile attach10,
      HttpServletRequest request) {
 
+
         List<MultipartFile> attachList = new ArrayList();
         attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);
         attachList.add(attach6);attachList.add(attach7);attachList.add(attach8);attachList.add(attach9);attachList.add(attach10);
