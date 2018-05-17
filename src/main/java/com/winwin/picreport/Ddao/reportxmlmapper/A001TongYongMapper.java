@@ -309,9 +309,9 @@ public interface A001TongYongMapper {
 
    @Select({"select top 1 isnull(model_uuid,'') as modelUuid,isnull(model_name,'') as modelName,isnull(rem,'') as rem from model_auth where model_uuid=#{modelUuid}"})
    Model getModels(@Param("modelUuid")String modelUuid);
-   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////attach//////////////////////////////////////////////////////////////////////
    //图片搜索模块的根据图片afterUrl得到打样的简单信息
-   @Select({" select prd_code as prdtCode,idx_name as prdtName from prdt_samp   where thum like #{urlAfter}"})
+   @Select({" select prd_code as prdtCode,idx_name as prdtName from prdt_samp   where thum like #{urlAfter} or attach like #{urlAfter}"})
     List<SimplePrdtSamp> getSimplePrdtSamps(@Param("urlAfter") String urlAfter);
 
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

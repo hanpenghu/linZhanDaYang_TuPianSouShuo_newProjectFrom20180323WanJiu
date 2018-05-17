@@ -29,7 +29,6 @@ public class Cnst {
     public static final String saleBilTypeNoTrans="1";//销售不含运费
 
     public static final String buyBilTypeHaveTrans="";//采购有运费
-
     public static final String buyBilTypeNoTrans="1";//采购无运费
 
     public static final String benBi="RMB";//本币是RMB 外币直接是不等于RMB的
@@ -93,6 +92,12 @@ public class Cnst {
 
 
 
+    @Autowired
+    public DyDeleteOneImg dyDeleteOneImg;
+
+
+    @Autowired
+    public DyDeleteOneAttach dyDeleteOneAttach;
 
     @Autowired
     public GetPriceModelUpdef20180512 getPriceModelUpdef20180512;

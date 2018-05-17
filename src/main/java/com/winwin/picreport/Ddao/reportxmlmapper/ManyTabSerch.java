@@ -306,6 +306,18 @@ public interface ManyTabSerch {
     @Select({"select  wh,name from  my_wh WHERE wh != '00000000'"})
     List<MyWh001> getAllWh();
 
+    @Select({"select top 1 attach from prdt_samp where attach like #{urlInDb}"})
+    String selectAttachsUse_urlInDb(@Param("urlInDb") String urlInDb);
+
+    @Update({"update prdt_samp set attach=#{attachsStr} where attach like #{urlInDb}"})
+    int updateAttach(@Param("urlInDb") String urlInDb,@Param("attachsStr") String attachsStr);
+
+    @Select({"select top 1 thum from prdt_samp where thum like #{urlInDb}"})
+    String selectSuoLueTuUse_urlInDb(@Param("urlInDb") String urlInDb);
+
+    @Update({"update prdt_samp set thum=#{thum} where thum like #{urlInDb}"})
+    int updateThum(@Param("urlInDb") String urlInDb,@Param("thum") String thum);
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

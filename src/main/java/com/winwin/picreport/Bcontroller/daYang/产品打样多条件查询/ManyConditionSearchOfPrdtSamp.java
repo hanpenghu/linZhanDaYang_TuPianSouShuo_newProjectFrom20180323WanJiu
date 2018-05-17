@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang;
+package com.winwin.picreport.Bcontroller.daYang.产品打样多条件查询;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp0;

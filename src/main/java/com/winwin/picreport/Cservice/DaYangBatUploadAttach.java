@@ -40,7 +40,9 @@ private Cnst cnst;
             if(null==attach){msgList.add("该id《"+id+"》在表prdt_samp不存在！");p.throwE("该id《"+id+"》对应的记录在表prdt_samp不存在！");}
             AttachS attchs = getAttachS2Save(multipartFileList);
 
-            int k=cnst.a001TongYongMapper.updateAttachById(id,attach+attchs.getToSave2Db());
+            //更新附件字段// 必须是  /  不能是  \  分隔符
+            int k=cnst.a001TongYongMapper.updateAttachById(id,attach+attchs.getToSave2Db().replace(File.separator,"/"));
+
             if(k!=1){msgList.add("更新id《"+id+"》的附件失败");p.throwE("更新id《"+id+"》的附件失败");}
             int ii=0;
             for(File file:fileList){
@@ -50,7 +52,10 @@ private Cnst cnst;
         }
         delFileList(fileList);
     }
-    
+
+
+
+
     private List<File> multipartFile2RealFile(List<MultipartFile>multipartFileList,List<String> msgList){
         List<File>fileList=new LinkedList<File>();
         for(MultipartFile m:multipartFileList){

@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang;
+package com.winwin.picreport.Bcontroller.daYang.样品确认模块里的批量确认批量上传附件;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;

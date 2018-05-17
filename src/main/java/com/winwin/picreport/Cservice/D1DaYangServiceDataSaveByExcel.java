@@ -77,6 +77,7 @@ public class D1DaYangServiceDataSaveByExcel {
         if(shangChuanTongYiReturn.isHavaIgll(excel.getOriginalFilename())){
             return shangChuanTongYiReturn.yourPicNameCanNotHaveIgll();
         }
+
         String path=p.gp()
                 .sad(Cnst.getProjectPath())
                 .sad(Cnst.javaXieGang)
@@ -432,10 +433,12 @@ public class D1DaYangServiceDataSaveByExcel {
             }
             //下面是判断所有的prdtSamp里面有没有prdtCode是重复的,如果有,就不能导入
             int sizeBefor = list.size();
+            //去重复
             Set<PrdtSamp> prdtSampSet = new TreeSet<>(Comparator.comparing(PrdtSamp::getPrdCode));
-            prdtSampSet.addAll(list);
+            prdtSampSet.addAll(list);//放进来去重复
+
             int sizeAfter = prdtSampSet.size();
-            if(sizeBefor!=sizeAfter){
+            if(sizeBefor!=sizeAfter){//不相等证明有重复
                 hanhanFileUtil.Del(file);
                 return mg.gm(Msg.gmg()
 //                            .setMsg(msgCnst.failSave.getValue())

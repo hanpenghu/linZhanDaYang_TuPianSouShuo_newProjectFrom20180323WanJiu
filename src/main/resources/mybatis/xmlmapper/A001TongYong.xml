@@ -46,6 +46,7 @@
 
 
         (
+
                 insertDate
                 BETWEEN
                 <choose>
@@ -66,32 +67,7 @@
                     </otherwise>
                 </choose>
         )
-        AND
-        (
 
-
-         confirmTimeStr is NULL   OR confirmTimeStr='' OR
-
-                    confirmTimeStr
-                    BETWEEN
-                    <choose>
-                        <when test="confirmtimestr != null and confirmtimestr != ''">
-                            #{confirmtimestr}
-                        </when>
-                        <otherwise>
-                            '1970-01-01'
-                        </otherwise>
-                    </choose>
-                    AND
-                    <choose>
-                        <when test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
-                            #{confirmtimestrEnd}
-                        </when>
-                        <otherwise>
-                            '9999-01-01'
-                        </otherwise>
-                    </choose>
-        )
         AND
                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
                         isnull(idx_Name,'') LIKE
@@ -148,6 +124,13 @@
                 isnull(isConfirm,9)
             </otherwise>
         </choose>
+
+        <if test="confirmtimestr != null and confirmtimestr != ''">
+            <![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>
+        </if>
+        <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+            <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+        </if>
     </sql>
 
     <!--登录验证用的  得到修改跟人信息接口 -->
@@ -465,32 +448,112 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper>
+
+
+
+
+
+
+
+<!--
+
+        (
+        insertDate
+        BETWEEN
+<choose>
+<when test="insertdateStr != null and insertdateStr != ''">
+    #{insertdateStr}
+</when>
+<otherwise>
+    '1970-01-01'
+</otherwise>
+</choose>
+        AND
+<choose>
+<when test="insertdateStrEnd != null and insertdateStrEnd != ''">
+    #{insertdateStrEnd}
+</when>
+<otherwise>
+    '9999-01-01'
+</otherwise>
+</choose>
+        )
+        AND
+        (
+        confirmTimeStr
+        BETWEEN
+<choose>
+<when test="confirmtimestr != null and confirmtimestr != ''">
+    #{confirmtimestr}
+</when>
+<otherwise>
+    '1970-01-01'
+</otherwise>
+</choose>
+        AND
+<choose>
+<when test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+    #{confirmtimestrEnd}
+</when>
+<otherwise>
+    '9999-01-01'
+</otherwise>
+</choose>
+        )
+        AND
+        &#45;&#45;产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
+        isnull(idx_Name,'') LIKE
+<choose>
+<when test="idxName != null and idxName != ''">
+    ('%' + (#{idxName}) + '%')
+</when>
+<otherwise>
+    isnull(idx_Name,'')
+</otherwise>
+</choose>
+        AND
+        -&#45;&#45;产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
+        isnull(fen_lei_name,'') LIKE
+<choose>
+<when test=" fenLeiName != null and fenLeiName != '' ">
+    ('%'+( #{fenLeiName})+ '%')
+</when>
+<otherwise>
+    isnull(fen_lei_name,'')
+</otherwise>
+</choose>
+        AND
+        &#45;&#45;产品编码
+        isnull(prd_Code,'') LIKE
+<choose>
+<when test=" prdCode != null and prdCode != '' ">
+    ('%'+( #{prdCode}) +'%')
+</when>
+<otherwise>
+    isnull(prd_Code,'')
+</otherwise>
+</choose>
+
+        AND
+        &#45;&#45;产品负责人,模糊查询
+        isnull(sal_name,'') LIKE
+<choose>
+<when test="salName != null and salName != '' ">
+    ('%' +( #{salName}) + '%')
+</when>
+<otherwise>
+    isnull(sal_name,'')
+</otherwise>
+</choose>
+        AND
+        &#45;&#45;是否已经打样确认，1是确认   0是未确认   ""确认+未确认
+        isnull(isConfirm,9)=
+<choose>
+<when test=" isconfirm != null">
+    #{isconfirm}
+</when>
+<otherwise>
+    isnull(isConfirm,9)
+</otherwise>
+</choose>-->

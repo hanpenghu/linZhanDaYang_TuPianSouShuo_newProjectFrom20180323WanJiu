@@ -1,895 +1,101 @@
-2018-05-15 11:18:07,673 ERROR (DingJiaXiuGai.java:150)- 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+2018-05-17 11:45:38,674 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-17 12:34:46,517 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-java.lang.RuntimeException: 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:34:53,939 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 51)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-	at com.winwin.picreport.Futils.hanhan.p.throwE(p.java:2204)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:187)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 11:18:07,985 ERROR (DingJiaXiuGaiService.java:185)- [{"alterTime":"2018-05-15 11:18:03.291","bilType":"1","curIdAfter":"RMB","curIdBefore":"RMB","dingJiaGuanLian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea408","dingJiaZhuJian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea4081RMB","prdtCode":"WW-NE-BR1","prdtSampUuid":"beccdd23-3b87-40ab-aa93-76ee77bd36ad","qtyAfter":"123","qtyBefore":"123","remFrontAfter":"hanhan","remFrontBefore":"hanhan","saleOrBuy":"buy","tenantId":"ipace","unitAfter":"主:yard","unitBefore":"主:yard","upAfter":"1113","upBefore":"111","userName":"演示数据"},{"bilType":"","curIdAfter":"RMB","curIdBefore":"RMB","dingJiaGuanLian":"SamplesSys022e7e21-d39a-48a3-8040-d4d668aea408","dingJiaZhuJian":"","prdtCode":"WW-NE-BR1","prdtSampUuid":"beccdd23-3b87-40ab-aa93-76ee77bd36ad","qtyAfter":"123","qtyBefore":"123","remFrontAfter":"hanhan","remFrontBefore":"hanhan","saleOrBuy":"buy","tenantId":"ipace","unitAfter":"主:yard","unitBefore":"主:yard","upAfter":"2223","upBefore":"222","userName":"演示数据"}]
-2018-05-15 11:18:07,986 ERROR (DingJiaXiuGaiService.java:186)- 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:34:59,113 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-org.springframework.dao.DeadlockLoserDataAccessException: 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:35:02,326 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:263)
-	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
-	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
-	at com.sun.proxy.$Proxy71.update(Unknown Source)
-	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:294)
-	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62)
-	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
-	at com.sun.proxy.$Proxy85.updateUpdef(Unknown Source)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:152)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:232)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1672)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:460)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:405)
-	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7535)
-	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:2438)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:208)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:183)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:387)
-	at com.mchange.v2.c3p0.impl.NewProxyPreparedStatement.execute(NewProxyPreparedStatement.java:989)
-	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:46)
-	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
-	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
-	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
-	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:63)
-	at com.sun.proxy.$Proxy106.update(Unknown Source)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:198)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
-	... 71 common frames omitted
-2018-05-15 11:18:08,000 ERROR (DingJiaXiuGai.java:150)- 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:35:19,090 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-java.lang.RuntimeException: 
-### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateUpdef-Inline
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:35:22,852 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
 ### The error occurred while setting parameters
-### SQL: update up_def set  cur_id =?,qty=?, up=?,hj_no=?,rem =?   where ?=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')
-### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-; SQL []; 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 事务(进程 ID 52)与另一个进程被死锁在 锁 | 通信缓冲区 资源上，并且已被选作死锁牺牲品。请重新运行该事务。
-	at com.winwin.picreport.Futils.hanhan.p.throwE(p.java:2204)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService.dingJiaXiuGai(DingJiaXiuGaiService.java:187)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$FastClassBySpringCGLIB$$29957851.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
-	at com.winwin.picreport.Cservice.DingJiaXiuGaiService$$EnhancerBySpringCGLIB$$4eb09414.dingJiaXiuGai(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DingJiaXiuGai.dingJiaXiuGai(DingJiaXiuGai.java:147)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 11:18:11,130 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:18:58,246 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:19:28,214 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:29:51,773 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:29:53,872 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:29:55,916 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 11:45:23,350 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 12:37:22,790 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 12:37:58,151 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 14:45:33,694 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 14:45:33,833 ERROR (DangQianYeDataC.java:258)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-15 18:19:33,677 ERROR (DaYangBatUploadAttach.java:66)- 附件保存到文件夹失败！
-java.io.IOException: java.io.FileNotFoundException: C:\Users\Administrator\AppData\Local\Temp\tomcat.6065998272990332139.8070\work\Tomcat\localhost\ROOT\.\daYangSuoLueTuAndFuJianZongPath\suoLueTuAndFuJian\0baf2019-3fe3-43a8-8169-f5daf429b0d5!attach1 (系统找不到指定的路径。)
-	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:122)
-	at org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile.transferTo(StandardMultipartHttpServletRequest.java:302)
-	at com.winwin.picreport.Cservice.DaYangBatUploadAttach.f(DaYangBatUploadAttach.java:63)
-	at com.winwin.picreport.Cservice.DaYangBatUploadAttach$$FastClassBySpringCGLIB$$36248192.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:738)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
-	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
-	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:282)
-	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:673)
-	at com.winwin.picreport.Cservice.DaYangBatUploadAttach$$EnhancerBySpringCGLIB$$43f3a233.f(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DaYangAttachBatUpLoad.piLiangShangChuanFuJian_yangPinQueRenMoKuai(DaYangAttachBatUpLoad.java:52)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.io.FileNotFoundException: C:\Users\Administrator\AppData\Local\Temp\tomcat.6065998272990332139.8070\work\Tomcat\localhost\ROOT\.\daYangSuoLueTuAndFuJianZongPath\suoLueTuAndFuJian\0baf2019-3fe3-43a8-8169-f5daf429b0d5!attach1 (系统找不到指定的路径。)
-	at java.io.FileOutputStream.open0(Native Method)
-	at java.io.FileOutputStream.open(FileOutputStream.java:270)
-	at java.io.FileOutputStream.<init>(FileOutputStream.java:213)
-	at java.io.FileOutputStream.<init>(FileOutputStream.java:162)
-	at org.apache.tomcat.util.http.fileupload.disk.DiskFileItem.write(DiskFileItem.java:394)
-	at org.apache.catalina.core.ApplicationPart.write(ApplicationPart.java:120)
-	... 67 common frames omitted
-2018-05-15 19:29:42,185 ERROR (AllExceptionHandler.java:17)- Required request body is missing: public com.winwin.picreport.Futils.FenYe com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(com.winwin.picreport.Futils.FenYe,javax.servlet.http.HttpServletRequest)
-2018-05-15 19:31:13,695 ERROR (AllExceptionHandler.java:17)- Required request body is missing: public com.winwin.picreport.Futils.FenYe com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(com.winwin.picreport.Futils.FenYe,javax.servlet.http.HttpServletRequest)
-2018-05-15 19:33:43,418 ERROR (DangQianYeDataC.java:259)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:33:43,909 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用---------------------------------
-2018-05-15 19:33:46,450 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 19:36:37,167 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:36:37,629 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 19:36:38,148 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 19:38:58,066 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:38:58,484 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 19:38:58,924 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.exceptions.PersistenceException: 
-### Error querying database.  Cause: java.lang.UnsupportedOperationException
-### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\ManyTabSerch.xml]
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia
-### The error occurred while handling results
-### SQL: select top(?)         id         from         PRDT_SAMP  where id not in         (             select top                 (                         (?)*((?)-1)                 )             id from PRDT_SAMP              where prd_no  in              (                           select a.prd_no from                             (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                             where a.prd_no                             not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)               )              ORDER BY insertDate DESC         )          and prd_no  in          (                 select a.prd_no from                             (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                             where a.prd_no                             not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)          )         ORDER BY insertDate DESC
-### Cause: java.lang.UnsupportedOperationException
-2018-05-15 19:42:56,231 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:42:56,651 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 19:42:58,921 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 19:51:36,622 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:51:37,041 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 19:51:39,395 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 19:52:35,843 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 19:52:36,266 ERROR (D1DaYangS.java:81)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 19:52:36,753 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.exceptions.PersistenceException: 
-### Error querying database.  Cause: java.lang.UnsupportedOperationException
-### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\ManyTabSerch.xml]
-### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.selectDangQianYeSuoYouIdOfXiaoShouDingJia
-### The error occurred while handling results
-### SQL: select top(?)         id         from         PRDT_SAMP  where id not in         (             select top                 (                         (?)*((?)-1)                 )             id from PRDT_SAMP              where prd_no  in              (                           select a.prd_no from                             (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                             where a.prd_no                             not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)               )              ORDER BY insertDate DESC         )          and prd_no  in          (                 select a.prd_no from                             (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                             where a.prd_no                             not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)          )         ORDER BY insertDate DESC
-### Cause: java.lang.UnsupportedOperationException
-2018-05-15 20:27:50,510 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:27:50,916 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:27:50,939 ERROR (D1DaYangS.java:109)- null
-java.lang.NullPointerException: null
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:104)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$585db039.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:27:51,064 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:30:05,616 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:30:06,049 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:30:06,069 ERROR (D1DaYangS.java:112)- null
-java.lang.NullPointerException: null
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:107)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$9cfef734.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:30:06,191 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:37:10,467 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:37:10,911 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:37:10,930 ERROR (D1DaYangS.java:112)- null
-java.lang.NullPointerException: null
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:107)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$abfc46bb.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:37:11,066 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:40:06,697 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:40:07,111 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:40:07,130 ERROR (D1DaYangS.java:113)- The index 1 is out of range.
-com.microsoft.sqlserver.jdbc.SQLServerException: The index 1 is out of range.
-	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:206)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.setterGetParam(SQLServerPreparedStatement.java:940)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.setValue(SQLServerPreparedStatement.java:954)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.setInt(SQLServerPreparedStatement.java:1249)
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:100)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$93590a2e.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:40:07,277 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:41:15,339 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:41:15,768 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:41:15,788 ERROR (D1DaYangS.java:113)- null
-java.lang.NullPointerException: null
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:108)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$9b0e0b77.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:41:15,945 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:47:23,578 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:47:24,007 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:47:24,027 ERROR (D1DaYangS.java:110)- The value is not set for the parameter number 1.
-com.microsoft.sqlserver.jdbc.SQLServerException: The value is not set for the parameter number 1.
-	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:206)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.buildParamTypeDefinitions(SQLServerPreparedStatement.java:292)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.buildPreparedStrings(SQLServerPreparedStatement.java:246)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:437)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:405)
-	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7535)
-	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:2438)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:208)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:183)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeQuery(SQLServerPreparedStatement.java:317)
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:99)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$76fa8580.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:47:24,161 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:48:17,025 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:48:17,455 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:48:17,475 ERROR (D1DaYangS.java:110)- The value is not set for the parameter number 1.
-com.microsoft.sqlserver.jdbc.SQLServerException: The value is not set for the parameter number 1.
-	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDriverError(SQLServerException.java:206)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.buildParamTypeDefinitions(SQLServerPreparedStatement.java:292)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.buildPreparedStrings(SQLServerPreparedStatement.java:246)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:437)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:405)
-	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7535)
-	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:2438)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:208)
-	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:183)
-	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeQuery(SQLServerPreparedStatement.java:317)
-	at com.winwin.picreport.Cservice.D1DaYangS.dangqianyeData(D1DaYangS.java:99)
-	at com.winwin.picreport.Cservice.D1DaYangS$$FastClassBySpringCGLIB$$246f939d.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:669)
-	at com.winwin.picreport.Cservice.D1DaYangS$$EnhancerBySpringCGLIB$$a3796b8.dangqianyeData(<generated>)
-	at com.winwin.picreport.Bcontroller.daYang.DangQianYeDataC.dangqianyeData(DangQianYeDataC.java:268)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:967)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:901)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:799)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1457)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.lang.Thread.run(Thread.java:745)
-2018-05-15 20:48:17,614 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:49:02,055 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:49:02,566 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:49:05,195 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:50:22,638 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:50:23,100 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:50:25,647 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:52:25,197 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:52:25,620 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-15 20:52:28,010 ERROR (AllExceptionHandler.java:17)- nested exception is org.apache.ibatis.executor.ExecutorException: A query was run and no Result Maps were found for the Mapped Statement 'com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch.getCountOfAllUseForSalePricing'.  It's likely that neither a Result Type nor a Result Map was specified.
-2018-05-15 20:59:51,704 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
-2018-05-15 20:59:52,136 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
-2018-05-16 10:30:18,559 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-16 10:30:21,108 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-16 10:34:10,084 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:38,682 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:40,588 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:41,580 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:42,080 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:42,237 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 12:39:50,613 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-17 12:39:53,677 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-17 12:40:07,627 ERROR (AllExceptionHandler.java:17)- 
+### Error querying database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+### The error may exist in file [E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes\mybatis\xmlmapper\A001TongYong.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT         TOP         (?)               id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,      cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,      insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm,      Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo,      modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice,      businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name,      user_name, tenant_id, main_unit             FROM         PRDT_SAMP         WHERE         id NOT IN         (             select top             (                 (?)*((?)-1)             )id from PRDT_SAMP             WHERE                                          (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                                  ORDER BY insertdate DESC         )         AND                               (                  insertDate                 BETWEEN                                           '1970-01-01'                                       AND                                           '9999-01-01'                               )          AND                         --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来                         isnull(idx_Name,'') LIKE                                                           isnull(idx_Name,'')                                       AND             ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来                   isnull(fen_lei_name,'') LIKE                                                           isnull(fen_lei_name,'')                                       AND         --产品编码                     isnull(prd_Code,'') LIKE                                                   isnull(prd_Code,'')                                    AND                     --产品负责人,模糊查询                     isnull(sal_name,'') LIKE                                                   isnull(sal_name,'')                                   AND         --是否已经打样确认，1是确认   0是未确认   ""确认+未确认         isnull(isConfirm,9)=                           isnull(isConfirm,9)                                        AND confirmTimeStr >=  ?                                      AND confirmtimestrEnd <=  ?                            ORDER BY insertdate DESC
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+; bad SQL grammar []; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 列名 'confirmtimestrEnd' 无效。
+2018-05-17 13:39:36,332 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-05-17 13:40:19,285 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------

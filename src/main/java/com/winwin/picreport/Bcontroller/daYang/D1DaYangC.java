@@ -19,39 +19,14 @@ import java.util.*;
 public class D1DaYangC {
     @Autowired
     private Cnst cnst;
-    /**
-     * Content-Type:application/x-www-form-urlencoded
-     ****************************************************************************************
-     * 删除单个附件
-     * */
-    @RequestMapping(value = InterFaceCnst.deleteOneAttach,
-            method = RequestMethod.POST, produces =
-            {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<Msg>
-            deleteOneAttach(@RequestParam(value = "attachUrl", required = false)
-                                                               String attachUrl) {
 
-        return cnst.deleteOneImg.deleteOneAttach(attachUrl);
-    }
+
 
     /**
      ****************************************************************************************
      * */
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     *删除单张图片接口,要求前端传过来图片全路径
-     *Content-Type:application/x-www-form-urlencoded
-     * ajax请求头设置为:
-     * x-www-form-urlencoded
-     * */
 
-    @RequestMapping(value = InterFaceCnst.deleteOneImage,
-            method = RequestMethod.POST,
-            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<Msg> deleteOneImage
-    (@RequestParam(value = Cnst.imgUrl, required = false) String imgUrl) {
-        return cnst.deleteOneImg.deleteOneImage(imgUrl);
-    }
 
     /**
  *delete 一条数据库信息并delete对应的图片和附件资源

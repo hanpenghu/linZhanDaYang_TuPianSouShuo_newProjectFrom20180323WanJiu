@@ -18,12 +18,7 @@ import java.util.List;
 @Transactional
 @Service("deleteOneImg")
 public class D1DaYangServiceOfDeleteOneImg {
-//    @Value("${fuJianWenJianJia}")
-//    private String fuJianWenJianJia;
-//    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
-//    private String daYangSuoLueTuAndFuJianZongPath;
-//    @Value("${suoLueTuWenJianJia}")
-//    private String suoLueTuWenJianJia;
+
     @Autowired
     private Cnst cnst;
     /**
@@ -33,7 +28,7 @@ public class D1DaYangServiceOfDeleteOneImg {
 //"http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg"
 
     public List<Msg> deleteOneImage(String imgUrl) {
-//        synchronized (this) {
+
             if(imgUrl==null){
                 return MessageGenerate.generateMessage("您要删除的图片不存在",
                         "您要删除的图片不存在",
