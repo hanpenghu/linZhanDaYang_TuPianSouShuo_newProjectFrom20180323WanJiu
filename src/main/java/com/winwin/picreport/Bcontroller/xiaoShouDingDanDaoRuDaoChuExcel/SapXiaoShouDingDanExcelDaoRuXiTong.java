@@ -48,12 +48,13 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
 
 
-    p.p("-------------------------------------------------------");
-    if(shouDingDanFromExcels==null||shouDingDanFromExcels.size()<50){
-        p.p(JSON.toJSONString(shouDingDanFromExcels));
+    p.p("-------------------hebing danhao+huohao+chengfen+biaoshenbeizhu  daoru xitong (sap)-------start-----------------------------");
+    if(p.notEmpty(shouDingDanFromExcels)&&shouDingDanFromExcels.size()<50){
+        for(ShouDingDanFromExcel s:shouDingDanFromExcels){
+            p.p("---danhao--<"+s.getOsNo()+">-----huohao--<"+s.getPrdNo()+">---chengfen---<"+s.getCfdm()+">--biaoshen beizhu-----<"+s.getRemBody()+">-----------------------");
+        }
     }
-
-    p.p("-------------------------------------------------------");
+    p.p("-------------------hebing danhao+huohao+chengfen+biaoshenbeizhu  daoru xitong (sap)-------end------------------------------------");
 
     Date date = p.getDate();
 
@@ -230,9 +231,17 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
         //注意:传进来的list3已经是同一订单号下面了
         //去重所有相同的(货号+成分代码)的组合放入set集合,因为同一订单下,货号+成分代码一起相同才能合并
+        /**
+         *2018_5_30   weekday(3)   10:19:16
+         * by winston, 原来是  单号+货号+成分代码才能合并
+         * 现在变为   单号+货号+成分代码+表身备注  一样才能合并
+         * */
         Set<String>prdNoAndCfdmSet =new HashSet<>();
         for(ShouDingDanFromExcel shouDingDanFromExcel:list3){
-            prdNoAndCfdmSet.add(shouDingDanFromExcel.getPrdNo().trim()+shouDingDanFromExcel.getCfdm().trim());
+            prdNoAndCfdmSet.add
+                    (shouDingDanFromExcel.getPrdNo().trim()
+                            +shouDingDanFromExcel.getCfdm().trim()
+                            +shouDingDanFromExcel.getRemBody().trim());
         }
 
 //         p.p(p.gp().sad(p.dexhx).sad(prdNoAndCfdmSet.toString()).sad(p.dexhx).gad());
@@ -242,8 +251,11 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
             List<ShouDingDanFromExcel>list0=new ArrayList<>();
             for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
-                if(prdNoAndCfdm.equals(shouDingDanFromExcel.getPrdNo().trim()
-                        +shouDingDanFromExcel.getCfdm().trim())){
+                if(prdNoAndCfdm.equals(
+                        shouDingDanFromExcel.getPrdNo().trim()
+                        +shouDingDanFromExcel.getCfdm().trim()
+                        +shouDingDanFromExcel.getRemBody().trim()
+                )){
                     list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
                 }
             }

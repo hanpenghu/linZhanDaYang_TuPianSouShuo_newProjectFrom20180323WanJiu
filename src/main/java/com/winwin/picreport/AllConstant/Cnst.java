@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Order(2)
@@ -91,6 +93,8 @@ public class Cnst {
     }
 
 
+    @Autowired
+    public DyExcelBf dyExcelBf;
 
     @Autowired
     public DyDeleteOneImg dyDeleteOneImg;
@@ -273,5 +277,6 @@ public class Cnst {
     public static final String testDataCurrentCode="实验数据货币代号";
     public static final String testDataCurrentName="实验数据货币名称";
     public static final String testDataUnit="实验数据单位";
-    
+
+
 }
