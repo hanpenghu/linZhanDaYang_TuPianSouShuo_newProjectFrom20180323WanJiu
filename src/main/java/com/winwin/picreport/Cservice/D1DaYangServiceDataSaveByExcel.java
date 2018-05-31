@@ -362,7 +362,7 @@ public class D1DaYangServiceDataSaveByExcel {
                     hanhanFileUtil.Del(file);
                     return mg.gm(Msg.gmg()
 //                            .setMsg(msgCnst.failSave.getValue())
-                            .setMsg(msgCnst.excelYouChongFuShuJuZaiDB.getValue())
+                            .setMsg("重复数据《"+prdtSamp.getPrdCode()+"》")
                             .setChMsg(msgCnst.excelYouChongFuShuJuZaiDB.getValue())
                             .setStatus(msgCnst.failSaveStatus.getValue()));
                 }
