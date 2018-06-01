@@ -18,9 +18,9 @@ public class A {
 	protected static final Logger logger = LoggerFactory.getLogger(A.class);
 	//过期时间通过application配置到拦截器
 	public static void main(String[] args) {
-		logger.info("--------SpringBoot开始加载---------");
+		logger.info("--------SpringBoot kaishi jiazai---------");
 		SpringApplication.run(A.class, args);
-		logger.info("-------SpringBoot加载完毕---------");
+		logger.info("-------SpringBoot jiazai wanbi---------");
 	}
 
 

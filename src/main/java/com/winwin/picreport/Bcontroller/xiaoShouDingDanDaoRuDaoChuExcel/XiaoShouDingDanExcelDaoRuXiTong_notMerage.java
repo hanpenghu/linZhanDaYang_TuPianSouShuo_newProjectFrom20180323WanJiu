@@ -42,17 +42,8 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 public @ResponseBody List<Msg>
 shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels){
 
+    this.打印当前对象(shouDingDanFromExcels);
 
-    p.p("-------------------------------------------------------");
-    p.p(JSON.toJSONString(shouDingDanFromExcels));
-    p.p("-------------------------------------------------------");
-
-
-//    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//    if(shouDingDanFromExcels.size()<=50){
-//        System.out.println(shouDingDanFromExcels);
-//    }
-//    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
     List<Msg> listmsg=new ArrayList<>();
 //    long time01=new Date().getTime();
     try {
@@ -60,7 +51,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //检查shouDingDanFromExcels里面的osno订单号是否统一 一样,不一样不行
         //根据osNo订单号去重复//这里单单是为了看是否是统一单号
-        TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
+        TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<ShouDingDanFromExcel>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
         set1.addAll(shouDingDanFromExcels);
         int size = set1.size();
 //        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOfNullSpace(size)).sad(p.dexhx).gad());
@@ -328,6 +319,21 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 //    }
 
 //////////////////////////////////////////////////////////////////
+
+
+    public void 打印当前对象(List<ShouDingDanFromExcel> shouDingDanFromExcels){
+        try {
+            if(p.notEmpty(shouDingDanFromExcels)){
+                if(shouDingDanFromExcels.size()<50){
+                    p.p("-------------------------------------------------------");
+                    p.p(JSON.toJSONString(shouDingDanFromExcels));
+                    p.p("-------------------------------------------------------");
+                }
+            }
+        } catch (Exception e) {}
+    }
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
