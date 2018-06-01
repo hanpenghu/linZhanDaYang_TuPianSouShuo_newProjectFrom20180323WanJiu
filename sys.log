@@ -1,20 +1,2 @@
-2018-05-30 10:51:53,727 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 10:53:10,987 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:129)- _________________sap销售订单导入时间_________________
-47
-____________________________________________
-
-2018-05-30 11:07:21,103 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:129)- _________________sap销售订单导入时间_________________
-0
-____________________________________________
-
-2018-05-30 11:11:38,489 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:129)- _________________sap销售订单导入时间_________________
-0
-____________________________________________
-
-2018-05-30 13:48:07,395 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:48:13,264 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:52:03,857 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:53:19,592 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:53:33,042 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:53:52,122 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
-2018-05-30 13:54:12,551 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-06-01 15:50:59,450 ERROR (AllExceptionHandler.java:17)- Required request body is missing: public org.springframework.http.ResponseEntity<byte[]> com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DyExport.打样产品导出(com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.ExportXlsParam) throws java.io.IOException
+2018-06-01 15:56:57,647 ERROR (AllExceptionHandler.java:17)- Required request body is missing: public org.springframework.http.ResponseEntity<byte[]> com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DyExport.打样产品导出(com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.ExportXlsParam) throws java.io.IOException

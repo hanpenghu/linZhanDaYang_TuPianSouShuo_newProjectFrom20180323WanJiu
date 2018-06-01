@@ -3,7 +3,9 @@ package com.winwin.picreport.AllConstant;
 //注意  接口中默认是常量   public static final
 public interface InterFaceCnst {
 
-
+    //打样导出excel的临时目录名字,跟目录下创建
+    String temp2xiaZai="temp2xiaZai";
+    String yiChangWuFaXiaZai="异常，无法下载";
     public static final String ContentTypeJsonAndCharsetUtf8="application/json;charset=utf-8";
     //dao层路径
      String daoCnst="com.winwin.picreport.Ddao";
@@ -112,4 +114,5 @@ public interface InterFaceCnst {
     String mfPssDaBao="mfPssDaBao";
     String allWh="allWh";
     String batUpLoadAttach="batUpLoadAttach";
+
 }

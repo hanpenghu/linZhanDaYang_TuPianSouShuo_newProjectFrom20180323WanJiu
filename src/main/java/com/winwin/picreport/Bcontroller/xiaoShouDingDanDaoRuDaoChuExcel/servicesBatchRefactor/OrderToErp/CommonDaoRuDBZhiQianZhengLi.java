@@ -78,7 +78,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
                     //sap行号不能为空
                     if(p.empty(shouDingDanFromExcel.getSaphh())){
-                        String s1="有saphh(SAP行号)为空,可能在"+kkk+"行附近,可以通过货品名称"+ prdName +"来查找";
+                        String s1="有saphh(SAP行号)为空,可能在"+(kkk+1)+"行附近,可以通过货品名称"+ prdName +"来查找";
                         msg.setMsg(s1);
                         listmsg.add(msg);
                         throw new RuntimeException(s1);
@@ -90,7 +90,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
                     if (p.empty(shouDingDanFromExcel.getEbNo())) {
                         String ssss=stra.b()
                                 .a("有《EB单号》为空")
-                                .a(",应该在"+kkk+"行附近,")
+                                .a(",应该在"+(kkk+1)+"行附近,")
                                 .a("请根据货号: ")
                                 .a(shouDingDanFromExcel.getPrdNo())
                                 .a("  查找").g();
@@ -413,7 +413,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         try {
             t.setUp(new BigDecimal(s.getUp().trim()));
         } catch (Exception e) {l.error(e.getMessage(),e);
-            String sss="有价格不正确,大概在"+iii+"行附近,根据货品名称《"+s.getPrdName()+"》 去找到！";
+            String sss="有价格不正确,大概在"+(iii+1)+"行附近,根据货品名称《"+s.getPrdName()+"》 去找到！";
             listmsg.add(Msg.gmg().setMsg(sss));
             p.throwE(sss);
         }
@@ -579,7 +579,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         if (p.empty(s.getPrdNo())) {
             String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
             if(p.empty(prdNo)){
-                String s1="有货号为空,根据品名在erp也找不到对应的货号,可能在"+jiShuQi+"行附近";
+                String s1="有货号为空,根据品名在erp也找不到对应的货号,可能在"+(jiShuQi+1)+"行附近";
                 s1=s1+",对应的品名为："+s.getPrdName();
                 msg.setMsg(s1);
                 listmsg.add(msg);
@@ -592,7 +592,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         //如果此时货号还是空的,就抛出异常
         if (p.empty(s.getPrdNo())) {
-            msg.setMsg("有货号为空且根据货品名字在erp找不到货号,可能在"+jiShuQi+"行附近"+",对应的品名为："+s.getPrdName());
+            msg.setMsg("有货号为空且根据货品名字在erp找不到货号,可能在"+(jiShuQi+1)+"行附近"+",对应的品名为："+s.getPrdName());
             listmsg.add(msg);
             //这个功能是迎合老郑说的:货品代号（品号） PRDT.PRD_NO里不存在提示整单不能导入
             throw new RuntimeException(msg.getMsg());
@@ -608,7 +608,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
         if(p.empty(s.getPrdName())){
-            String s1="有品名为空,可能在"+jiShuQi+"行附近";
+            String s1="有品名为空,可能在"+(jiShuQi+1)+"行附近";
             msg.setMsg(s1);
             listmsg.add(msg);
             throw new RuntimeException(s1);
@@ -623,7 +623,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         if(p.empty(s.getOsNo())){
             //由于合并过,所以无法确定精确行数
-            String s1="excel有单号为空,可能在"+jiShuQi+"行附近";
+            String s1="excel有单号为空,可能在"+(jiShuQi+1)+"行附近";
             msg.setMsg(s1);
             listmsg.add(msg);
             throw new RuntimeException(s1);
@@ -654,7 +654,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         //如果单价有问题,就要抛出异常
         if (p.empty(s.getUp()) || p.dy(s.getUp(),"0")) {
-            msg.setMsg("有单价《为空>或者《0》,估计在"+jiShuQi+"行附近,可以根据货号"+s.getPrdNo()+"查找");
+            msg.setMsg("有单价《为空>或者《0》,估计在"+(jiShuQi+1)+"行附近,可以根据货号"+s.getPrdNo()+"查找");
             listmsg.add(msg);
             throw new RuntimeException(msg.getMsg());
         }
