@@ -46,6 +46,18 @@ public class ShouDingDanFromExcel {
     private String realWidth="";//实际幅宽
     private String realLength="";//实际长度
     private String salNo="";//业务员代号
+    //2018_6_1   weekday(5)   9:50:37加上
+    /**
+     *3）	标准订单的导入格式里加一列对方品号（最好列次序不要固定，识别列名就可以）。
+     * 如果excel有品号按照品号，如果excel里无品号，有客户代码，对方品号，
+     * 按同时符合这两个条件的查出品号
+     * select  prd_no  from prdt_cus1 where  cus_no=客户代码 and sup_prd_no=对方品号
+     * */
+    //对方品号
+    private String duiFangPrdNo="";
+
+
+
 
 
     public String getWh() {
@@ -337,44 +349,52 @@ public class ShouDingDanFromExcel {
         return this;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("com.winwin.picreport.Edto.ShouDingDanFromExcel{");
-        sb.append("osDd='").append(osDd).append('\'');
-        sb.append(", estDd='").append(estDd).append('\'');
-        sb.append(", taxId='").append(taxId).append('\'');
-        sb.append(", osNo='").append(osNo).append('\'');
-        sb.append(", cusOsNo='").append(cusOsNo).append('\'');
-        sb.append(", saphh='").append(saphh).append('\'');
-        sb.append(", remhead='").append(remhead).append('\'');
-        sb.append(", sapph='").append(sapph).append('\'');
-        sb.append(", prdNo='").append(prdNo).append('\'');
-        sb.append(", sapwlm='").append(sapwlm).append('\'');
-        sb.append(", cfdm='").append(cfdm).append('\'');
-        sb.append(", prdName='").append(prdName).append('\'');
-        sb.append(", curId='").append(curId).append('\'');
-        sb.append(", excRto='").append(excRto).append('\'');
-        sb.append(", qty='").append(qty).append('\'');
-        sb.append(", unit='").append(unit).append('\'');
-        sb.append(", up='").append(up).append('\'');
-        sb.append(", amtn='").append(amtn).append('\'');
-        sb.append(", tax='").append(tax).append('\'');
-        sb.append(", amt='").append(amt).append('\'');
-        sb.append(", taxRto='").append(taxRto).append('\'');
-        sb.append(", remBody='").append(remBody).append('\'');
-        sb.append(", cusNo='").append(cusNo).append('\'');
-        sb.append(", caiGouNo='").append(caiGouNo).append('\'');
-        sb.append(", maiTouNo='").append(maiTouNo).append('\'');
-        sb.append(", ebNo='").append(ebNo).append('\'');
-        sb.append(", luoHao='").append(luoHao).append('\'');
-        sb.append(", gangHao='").append(gangHao).append('\'');
-        sb.append(", realWidth='").append(realWidth).append('\'');
-        sb.append(", realLength='").append(realLength).append('\'');
-        sb.append(", salNo='").append(salNo).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public String getDuiFangPrdNo() {
+        return duiFangPrdNo;
     }
 
+    public void setDuiFangPrdNo(String duiFangPrdNo) {
+        this.duiFangPrdNo = duiFangPrdNo;
+    }
+
+    @Override
+    public String toString() {
+        return "ShouDingDanFromExcel{" +
+                "wh='" + wh + '\'' +
+                ", osDd='" + osDd + '\'' +
+                ", estDd='" + estDd + '\'' +
+                ", taxId='" + taxId + '\'' +
+                ", osNo='" + osNo + '\'' +
+                ", cusOsNo='" + cusOsNo + '\'' +
+                ", saphh='" + saphh + '\'' +
+                ", remhead='" + remhead + '\'' +
+                ", sapph='" + sapph + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", sapwlm='" + sapwlm + '\'' +
+                ", cfdm='" + cfdm + '\'' +
+                ", prdName='" + prdName + '\'' +
+                ", curId='" + curId + '\'' +
+                ", excRto='" + excRto + '\'' +
+                ", qty='" + qty + '\'' +
+                ", unit='" + unit + '\'' +
+                ", up='" + up + '\'' +
+                ", amtn='" + amtn + '\'' +
+                ", tax='" + tax + '\'' +
+                ", amt='" + amt + '\'' +
+                ", taxRto='" + taxRto + '\'' +
+                ", remBody='" + remBody + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", caiGouNo='" + caiGouNo + '\'' +
+                ", maiTouNo='" + maiTouNo + '\'' +
+                ", ebNo='" + ebNo + '\'' +
+                ", luoHao='" + luoHao + '\'' +
+                ", gangHao='" + gangHao + '\'' +
+                ", realWidth='" + realWidth + '\'' +
+                ", realLength='" + realLength + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", duiFangPrdNo='" + duiFangPrdNo + '\'' +
+                '}';
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
