@@ -66,6 +66,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
                 String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
                 for (ShouDingDanFromExcel shouDingDanFromExcel : listx) {
 
+                    //直接set进去
+                    this.通过对方品号获取prdNo(shouDingDanFromExcel,msg,listmsg);
+
                     String prdName = shouDingDanFromExcel.getPrdName();
 
 
@@ -205,6 +208,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
     }
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
@@ -654,6 +659,33 @@ public class CommonDaoRuDBZhiQianZhengLi {
             throw new RuntimeException(msg.getMsg());
         }
     }
+    private void 通过对方品号获取prdNo(ShouDingDanFromExcel s,Msg msg, List<Msg> listmsg) {
+        /**
+         * 3）	标准订单的导入格式里加一列对方品号（最好列次序不要固定，识别列名就可以）。
+         如果excel有品号按照品号，如果excel里无品号，有客户代码，
+         对方品号，按同时符合这两个条件的查出品号select
+         prd_no  from prdt_cus1 where  cus_no=客户代码 and sup_prd_no=对方品号
+         * */
+        try {
+            if(p.empty(s.getPrdNo())){
 
+
+                String prdNo=cnst.a001TongYongMapper
+                        .getPrdNoUseCus_noAndSup_prd_noFromPrdt_cus1
+                                (s.getCusOsNo(),s.getDuiFangPrdNo());
+
+
+                if(p.notEmpty(prdNo)){
+                    s.setPrdNo(prdNo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            msg.setMsg(" 《通过对方品号获取prdNo()方法》  异常 ");
+            msg.setOtherMsg(e.toString());
+            listmsg.add(msg);
+            throw new RuntimeException(msg.getMsg());
+        }
+    }
 /////////////////////////////////////////////////////////////////////////////////
 }
