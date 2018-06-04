@@ -22,7 +22,11 @@ import java.util.*;
 @Component
 public class CommonDaoRuDBZhiQianZhengLi {
 
-
+    /**
+     * 查找货号的优先次序
+    优先次序：货号(最精确)，货名找货号，对方货号找货号
+    *
+    * */
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
 
@@ -67,14 +71,14 @@ public class CommonDaoRuDBZhiQianZhengLi {
                 for (ShouDingDanFromExcel shouDingDanFromExcel : listx) {
 
                     //直接set进去
-                    this.通过对方品号获取prdNo(shouDingDanFromExcel,msg,listmsg);
+//                    this.通过对方品号获取prdNo(shouDingDanFromExcel,msg,listmsg);
 
                     String prdName = shouDingDanFromExcel.getPrdName();
 
 
                     //数据非法的时候这个方法会抛出异常//这个是通用数据非法处理器
                     //该方法主要判断有些数据不能为空
-                    this.isDataIgll(msg,shouDingDanFromExcel, listmsg,kkk);
+                    this.a判断数据是否非法并获取prd_no(msg,shouDingDanFromExcel, listmsg,kkk);
 
                     //sap行号不能为空
                     if(p.empty(shouDingDanFromExcel.getSaphh())){
@@ -100,6 +104,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
                     }
 
                         Sapso b = new Sapso();
+                        b.setSupPrdNo(shouDingDanFromExcel.getDuiFangPrdNo());
                         b.setOsno(shouDingDanFromExcel.getOsNo());
                         b.setPrdno(shouDingDanFromExcel.getPrdNo());
                         b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
@@ -176,7 +181,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
             ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
             AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-
+//            p.p("-------------------------------------------------------");
+//            p.p("《"+shouDingDanFromExcel.getPrdName()+"："+shouDingDanFromExcel.getPrdNo()+"》");
+//            p.p("-------------------------------------------------------");
             this.saveOneShouDingDanFromExcelToTable
                     (shouDingDanFromExcel, listmsg,iii,mm,
                             tfPosWithBLOBsList,tfPosZList,sapsoList);
@@ -221,11 +228,12 @@ public class CommonDaoRuDBZhiQianZhengLi {
                     ,List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
         Msg msg = new Msg();
 
-
+//直接set进去
+//        this.通过对方品号获取prdNo(s,msg,listmsg);
 
 
         //数据非法的时候这个方法会抛出异常//数据非法搜集器
-        this.isDataIgll(msg,s, listmsg,iii+1);
+        this.a判断数据是否非法并获取prd_no(msg,s, listmsg,iii+1);
 
 
 
@@ -359,7 +367,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         //之所以cusosno也传入osno,是因为老郑20170929让这么做的
         t.setCusOsNo(s.getOsNo());
         t.setOsId(OrderPreCnst.SO);
-
+        t.setSupPrdNo(s.getDuiFangPrdNo());
 
         t.setPrdNo(s.getPrdNo());
         t.setPrdName(s.getPrdName());
@@ -413,7 +421,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         try {
             t.setUp(new BigDecimal(s.getUp().trim()));
         } catch (Exception e) {l.error(e.getMessage(),e);
-            String sss="有价格不正确,大概在"+(iii+1)+"行附近,根据货品名称《"+s.getPrdName()+"》 去找到！";
+            String sss="有价格不正确,在"+(iii+1)+"行附近,根据货品名称《"+s.getPrdName()+"》 去找到！";
             listmsg.add(Msg.gmg().setMsg(sss));
             p.throwE(sss);
         }
@@ -425,9 +433,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
 
-        p.p("---------s.getWh是"+s.getWh()+"---------------导入sapSoExcel实验仓库----以下是tfpos得到的wh---------------------------");
-        p.p(t.getWh());
-        p.p("-------------------------------------------------------");
+//        p.p("---------s.getWh是"+s.getWh()+"---------------导入sapSoExcel实验仓库----以下是tfpos得到的wh---------------------------");
+//        p.p(t.getWh());
+//        p.p("-------------------------------------------------------");
 
 
 
@@ -502,6 +510,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
         PrdtExample prdtExample = new PrdtExample();
+
         prdtExample.createCriteria().andPrdNoEqualTo(pdt.getPrdNo()).andNameEqualTo(pdt.getName());
         long l2 = cnst.prdtMapper.countByExample(prdtExample);
         //此时数据库prdt表没有该条记录,我们下面不再插入其他记录,而是告诉客户,该记录在数据库prdt表不存在,请自行注册该商品到数据库,
@@ -510,9 +519,11 @@ public class CommonDaoRuDBZhiQianZhengLi {
         if (l2 == 0) {
             msg.setWeiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao(t.getOsNo());
             msg.setNotExsitThisPrdtNoInPrdtTab(pdt.getPrdNo());
-            msg.setMsg("--------------该订单号osNo=" + t.getOsNo() +
-                    "这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo=" + pdt.getPrdNo()
-                    + ")--没有在商品表Prdt表里面或者 商品名=" + pdt.getName() + "不在商品表中,导致无法插入数据,--------");
+//            msg.setMsg("--------------该订单号osNo=" + t.getOsNo() +
+//                    "这批(整个excel的数据)一个也没有插入,插入数据的时候遇到--商品(prdtNo=" + pdt.getPrdNo()
+//                    + ")--没有在商品表Prdt表里面或者 商品名=" + pdt.getName() + "不在商品表中,导致无法插入数据,--------");
+            msg.setMsg("商品《"+pdt.getPrdNo()+"》对应《"+pdt.getName()+"》在erp中不存在!");
+            msg.setOtherMsg("根据对方货号sup_prd_no获得的货号在prdt中对应的当前货名不符合！");
             listmsg.add(msg);
             //不再进行下面步骤
             throw new RuntimeException(msg.getMsg());
@@ -573,13 +584,16 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
 
     //数据非法的时候会抛出异常到前端
-    public void isDataIgll(Msg msg,ShouDingDanFromExcel s, List<Msg> listmsg,int jiShuQi) {
+    public void a判断数据是否非法并获取prd_no(Msg msg, ShouDingDanFromExcel s, List<Msg> listmsg, int jiShuQi) {
 
         //在使用货号之前如果是空的,先流水一下货号
         if (p.empty(s.getPrdNo())) {
             String prdNo=cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
             if(p.empty(prdNo)){
-                String s1="有货号为空,根据品名在erp也找不到对应的货号,可能在"+(jiShuQi+1)+"行附近";
+                this.通过对方品号获取prdNo(s,msg,listmsg);
+            }
+            if(p.empty(prdNo)){
+                String s1="有货号为空,根据品名和对方货号在erp也找不到对应的货号,在"+(jiShuQi+1)+"行附近";
                 s1=s1+",对应的品名为："+s.getPrdName();
                 msg.setMsg(s1);
                 listmsg.add(msg);

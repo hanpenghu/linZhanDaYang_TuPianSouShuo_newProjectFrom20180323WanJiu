@@ -447,6 +447,124 @@
 
 
 
+    <select id="getPrdtSamp001" resultType="com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DaoChu">
+                select
+                    isnull(a.id,'') as id,
+                    isnull(a.prd_code,'') as prdCode,
+                   isnull(a.idx_name,'') as idxName,
+                   isnull(a.idx_no,'') as idxNo,
+                   isnull(a.fen_lei_no,'') as fenLeiNo,
+                  isnull(a.fen_lei_name,'') as  fenLeiName,
+                    isnull(a.mark_name,'') as markName,
+                    isnull(a.mark_no,'') as markNo,
+                    isnull(a.colour,'')as colour,
+                    isnull(a.size,'') as size,
+                    isnull(a.sal_name,'') as salName,
+                   isnull(a.sal_No,'') as salNo,
+                    isnull(a.cus_no,'') as cusNo,
+                    isnull(a.cus_name,'') as cusName,
+                    isnull(a.isfenjie,'') as isfenjie,
+                   isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
+                   isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
+                    isnull(a.samp_requ,'') as sampRequ,
+                    isnull(a.samp_desc,'') as sampDesc,
+                     isnull(a.thum,'') as thum,
+                     isnull(a.attach,'') as attach,
+                     isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
+                     isnull(a.confirmman,'') as confirmman,
+                  isnull(a.confirmtimestr,'') as confirmtimestr,
+                   isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
+                    isnull(a.category,'')as category,
+                    isnull(a.teamname,'') as teamname,
+                   isnull(a.confirmrem,'')as confirmrem,
+                  isnull(a.unit,'') as unit,
+                    isnull(a.businessdesc,'')as businessdesc,
+                     isnull(a.financedesc,'') as financedesc ,
+                     isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
+                    isnull(convert(varchar(36),a.modelcost),'')as modelcost,
+                     isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
+                     isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
+                    isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
+                     isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
+                    isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
+                     isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
+                     isnull(a.buyerdesc,'')as buyerdesc,
+                    isnull(a.prd_No,'') as prdNo,
+                    isnull(a.salemandesc,'')salemandesc,
+                     isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
+                    isnull(a.cus_No_Give,'') as   cusNoGive,
+                    isnull(a.cus_Name_Give,'') as cusNameGive,
+                    isnull(a.user_Name,'') as userName,
+                    isnull(a.tenant_Id,'') as  tenantId,
+                     isnull(a.main_Unit,'') as mainUnit
+                from prdt_samp a WHERE a.id IN
+                <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+    </select>
+
+
+    <select id="getPrdtSamp002" resultType="com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DaoChu">
+        select
+        top 1
+        isnull(a.id,'') as id,
+        isnull(a.prd_code,'') as prdCode,
+        isnull(a.idx_name,'') as idxName,
+        isnull(a.idx_no,'') as idxNo,
+        isnull(a.fen_lei_no,'') as fenLeiNo,
+        isnull(a.fen_lei_name,'') as  fenLeiName,
+        isnull(a.mark_name,'') as markName,
+        isnull(a.mark_no,'') as markNo,
+        isnull(a.colour,'')as colour,
+        isnull(a.size,'') as size,
+        isnull(a.sal_name,'') as salName,
+        isnull(a.sal_No,'') as salNo,
+        isnull(a.cus_no,'') as cusNo,
+        isnull(a.cus_name,'') as cusName,
+        isnull(a.isfenjie,'') as isfenjie,
+        isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
+        isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
+        isnull(a.samp_requ,'') as sampRequ,
+        isnull(a.samp_desc,'') as sampDesc,
+        isnull(a.thum,'') as thum,
+        isnull(a.attach,'') as attach,
+        isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
+        isnull(a.confirmman,'') as confirmman,
+        isnull(a.confirmtimestr,'') as confirmtimestr,
+        isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
+        isnull(a.category,'')as category,
+        isnull(a.teamname,'') as teamname,
+        isnull(a.confirmrem,'')as confirmrem,
+        isnull(a.unit,'') as unit,
+        isnull(a.businessdesc,'')as businessdesc,
+        isnull(a.financedesc,'') as financedesc ,
+        isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
+        isnull(convert(varchar(36),a.modelcost),'')as modelcost,
+        isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
+        isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
+        isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
+        isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
+        isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
+        isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
+        isnull(a.buyerdesc,'')as buyerdesc,
+        isnull(a.prd_No,'') as prdNo,
+        isnull(a.salemandesc,'')salemandesc,
+        isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
+        isnull(a.cus_No_Give,'') as   cusNoGive,
+        isnull(a.cus_Name_Give,'') as cusNameGive,
+        isnull(a.user_Name,'') as userName,
+        isnull(a.tenant_Id,'') as  tenantId,
+        isnull(a.main_Unit,'') as mainUnit
+        ,isnull(convert(varchar(33),u.up),'') as up
+        from prdt_samp a
+        left join   up_def u  on   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
+        where id = #{id}
+        order by u.s_dd desc
+    </select>
+
+
+
+
 
 </mapper>
 

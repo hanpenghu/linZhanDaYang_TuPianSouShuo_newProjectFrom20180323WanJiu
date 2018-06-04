@@ -221,7 +221,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             if (p.notEmpty(shouDingDanFromExcels)) {
                 if (shouDingDanFromExcels.size() < 50) {
                     p.p("-------------------------------------------------------");
-                    p.p(JSON.toJSONString(shouDingDanFromExcels));
+                    p.p(shouDingDanFromExcels);
                     p.p("-------------------------------------------------------");
                 }
             }

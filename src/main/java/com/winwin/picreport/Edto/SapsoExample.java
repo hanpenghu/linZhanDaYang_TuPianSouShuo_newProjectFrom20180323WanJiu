@@ -1274,6 +1274,76 @@ public class SapsoExample {
             addCriterion("chengFenDaiMa not between", value1, value2, "chengfendaima");
             return (Criteria) this;
         }
+
+        public Criteria andSupPrdNoIsNull() {
+            addCriterion("sup_prd_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoIsNotNull() {
+            addCriterion("sup_prd_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoEqualTo(String value) {
+            addCriterion("sup_prd_no =", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoNotEqualTo(String value) {
+            addCriterion("sup_prd_no <>", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoGreaterThan(String value) {
+            addCriterion("sup_prd_no >", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoGreaterThanOrEqualTo(String value) {
+            addCriterion("sup_prd_no >=", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoLessThan(String value) {
+            addCriterion("sup_prd_no <", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoLessThanOrEqualTo(String value) {
+            addCriterion("sup_prd_no <=", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoLike(String value) {
+            addCriterion("sup_prd_no like", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoNotLike(String value) {
+            addCriterion("sup_prd_no not like", value, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoIn(List<String> values) {
+            addCriterion("sup_prd_no in", values, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoNotIn(List<String> values) {
+            addCriterion("sup_prd_no not in", values, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoBetween(String value1, String value2) {
+            addCriterion("sup_prd_no between", value1, value2, "supPrdNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupPrdNoNotBetween(String value1, String value2) {
+            addCriterion("sup_prd_no not between", value1, value2, "supPrdNo");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

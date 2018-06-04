@@ -171,7 +171,57 @@ public strictfp class p {
     private List arl=new ArrayList();
     private Map<String,Object>map=new HashMap<>();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public static List<?extends Object> removeNull(List<?extends Object> list) {
+    if(notEmpty(list)){
+        while(list.contains(null)){
+            //这种方式是可以变长删除元素的
+            for(int i=0;i<list.size();i++){
+                if(null==list.get(i)){
+                    list.remove(null);
+                }
+            }
+        }
+    }
+    return list;
+}
+    /**
+     * 使用默认分隔符{~}的  后置分隔符
+     * 分隔符在后面开始
+     *按顺序拆分带组合分隔符的字符串
+     * 适用于
+     *
+     * 阿拉山口打飞{~}机爱丽丝打飞{~}机埃里克的{~}
+     *
+     * 这种
+     * 最后还带分隔符的组合
+     * 截取后是
+     * [阿拉山口打飞, 机爱丽丝打飞, 机埃里克的]
+     * */
+    public static String zuHeFenGeFu="{~}";
 
+    public static List<String>chaiFenZuHeFenGeFu(String s){
+        List<String>list=new LinkedList<>();
+        while(s.contains(zuHeFenGeFu)){
+            //就是按照{~}拆分
+            String ss = s.substring(0, s.indexOf(zuHeFenGeFu));
+            list.add(ss);
+            s=s.substring(s.indexOf(zuHeFenGeFu)+3);
+        }
+
+        return list;
+    }
+
+
+    public static String strCutEndNothave(String orignalStr,String endNotHave){
+        return  orignalStr.substring(0,orignalStr.indexOf(endNotHave));
+    }
+
+
+
+    public static String strCutNoHead(String originalStr,String startNotHave){
+        String waiJia="{~}";
+        return  strCutNoHeadNoTail(originalStr+waiJia,startNotHave,waiJia);
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -1735,6 +1785,11 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
             //此时没法截取,因为不包含要 截取的头或者尾部
             return "";
         } else{
+            p.p("-------------------------我曹------------------------------");
+            p.p2(p.strIndxTail(originalStr,startNotHave));
+            p.p2(originalStr.indexOf(endNotHave));
+            p.p("-----------------我曹--------------------------------------");
+
             return originalStr.substring(p.strIndxTail(originalStr,startNotHave)+1,originalStr.indexOf(endNotHave));
         }
 
@@ -2295,6 +2350,335 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 
 
+
+    /*【群主】变色龙 2018-04-08 15:52:41
+    一般 秒级 + 3位随机数*/
+
+
+    /**
+     *生成2数字之间的随机数,其实是[min,max],其实就是这个区间包括min,也包括max
+     * */
+    public static int randomDigit(int min,int max){
+        Random random = new Random();
+        int s = random.nextInt(max)%(max-min+1) + min;
+        return s;
+    }
+    /**
+     *生成0到100之间的随机数
+     * */
+    public static int random0_100(){
+        Random random = new Random();
+        int s = random.nextInt(100);
+        return s;
+    }
+
+    /**
+     *生成0到999之间的随机数
+     * */
+    public static int random0_999(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        return s;
+    }
+
+
+
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(random0_999AndTime());
+//        p.p("-------------------------------------------------------");
+//    }
+
+//    public static void main(String[]args) throws InterruptedException {
+//        while(true){
+//            String s = timeStampRandom0999();
+//            p.p("---------------------------"+s.length()+"----------------------------");
+//            p.p(s);
+//            p.p("-------------------------------------------------------");
+////            Thread.sleep(2000);
+//        }
+//
+//    }
+
+
+
+    /**
+     *时间戳+0到999之间随机码做id
+     * 毫秒级时间戳13位+1到3位随机   共14到16位
+     * 152318040010237
+     * 这种
+     * */
+    public static String timeStampRandom0999(){
+        return String.valueOf(p.getTimeStamp())+String.valueOf(p.random0_999());
+    }
+
+    /**
+     * 毫秒级时间戳13位
+     *时间戳+"-"+0到999之间随机码做id
+     * 1523180466849-593
+     * 这种
+     * 13位时间戳+"-"+1到3位随机数共15到17位
+     * */
+    public static String timeStamp_Random0999(){
+        return String.valueOf(p.getTimeStamp())+"-"+String.valueOf(p.random0_999());
+    }
+
+    /**
+     *毫秒级时间+0到999之间的随机数
+     * 180531223635864906
+     * yyMMddHHmmssSSS+  1到3位随机码
+     * 共16到18位
+     * */
+
+    public static String  suiji01(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.dtoStr(p.getDate(),"yyMMddHHmmssSSS")+p.strValeOf(s);
+        return s101;
+    }
+
+    /**
+     *秒级时间+0到999之间的随机数
+     * 180531223913822
+     * yyMMddHHmmss+  1到3位随机码
+     * 共13到15位
+     * */
+    public static String  suiji02(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.dtoStr(p.getDate(),"yyMMddHHmmss")+p.strValeOf(s);
+        return s101;
+    }
+
+
+
+    /**
+     *
+     *毫秒级时间+0到999之间的随机数
+     * 2018-04-08 17:20:18.507 84
+     * */
+    public static String  timeAndRandom0_999(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.dtoStr(p.getDate(), d16)+" "+p.strValeOf(s);
+        return s101;
+    }
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(timeAndRandom0_999NoHead());
+//        p.p("-------------------------------------------------------");
+//    }
+    /**
+     *
+     * 这种
+     *18-04-08 17:22:57.666 634
+     * */
+    public static String  timeAndRandom0_999NoHead(){
+
+        return p.timeAndRandom0_999().substring(2);
+    }
+
+    /**
+     * 推荐1给傻逼项目用,
+     * 这种:  毫秒级时间+"-"+ 0到999的随机数
+     *23位到 25位
+     *
+     *18-04-08-17:25:23.646-670
+     *
+     * */
+    public static String  timeAndRandom0_999NoHead_(){
+
+        return p.timeAndRandom0_999NoHead().replace(" ","-");
+    }
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(timeAndRandom0_999NoHead_1());
+//        p.p("-------------------------------------------------------");
+//    }
+
+    /**
+     * 推荐3给傻逼项目
+     *下面这种23到25位是上面的变形版
+     * ,主要是用于文件名的时候冒号不行的改进
+     * 18-04-09-12_03_56.108-347
+     * 这种
+     * */
+    public static String  timeAndRandom0_999NoHead_1(){
+
+        return p.timeAndRandom0_999NoHead_().replace(":","_");
+    }
+
+
+    /**
+     * 用于角色权限id的角色id
+     * 推荐3给傻逼项目
+     *下面这种30到32位是上面的变形版
+     * ,主要是用于文件名的时候冒号不行的改进
+     * roleId-18-04-15-12_56_37.487-392
+     * 这种
+     * */
+    public static String  timeRoleId(){
+
+        return "roleId"+"-"+p.timeAndRandom0_999NoHead_().replace(":","_");
+    }
+
+
+    /**
+     * 用于角色权限id的用户id
+     * 推荐3给傻逼项目
+     *下面这种29到31位是上面的变形版
+     * ,主要是用于文件名的时候冒号不行的改进
+     * usrId-18-04-15-12_58_27.402-396
+     * 这种
+     * */
+    public static String  timeUsrId(){
+
+        return "usrId"+"-"+p.timeAndRandom0_999NoHead_().replace(":","_");
+    }
+
+    /**
+     * 用于角色权限id的权限id
+     * 推荐3给傻逼项目
+     *下面这种28到30位是上面的变形版
+     * ,主要是用于文件名的时候冒号不行的改进
+     * qxId-18-04-15-13_00_15.477-365
+     * 这种
+     * */
+    public static String  timeQxId(){
+
+        return "qxId"+"-"+p.timeAndRandom0_999NoHead_().replace(":","_");
+    }
+
+
+//    public static void main(String[]args){
+//
+//        p.p("-------------------------------------------------------");
+//        p.p(timeQxId());
+//        p.p("-------------------------------------------------------");
+//    }
+
+    /**
+     * 推荐
+     *保险的id
+     * 时间+八位随机数
+     * 2018-04-09 11:37:35.982 11074079
+     * 固定带2个空格是32位
+     * 其中时间23位
+     * */
+
+    public static String timeAnd8Wei(){
+        byte[] lock = new byte[0];
+        // 位数，默认是8位
+        long w = 100000000;
+        long r = 0;
+        synchronized (lock) {
+            r = (long) ((Math.random() + 1) * w);
+        }
+        return p.dtoStr(p.getDate(),p.d16) +" "+ String.valueOf(r).substring(1);
+    }
+//    public static void main(String[]args){
+//
+//
+//        p.p("-------------------------------------------------------");
+//        p.p(timeAnd8Wei());
+//        p.p("-------------------------------------------------------");
+//
+//
+//    }
+
+    /**
+     *0到999之间的随机数 跟上生成的毫秒级时间
+     * 24 2018-04-08 17:19:40.397
+     * */
+    public static String  random0_999AndTime(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.strValeOf(s)+" "+ p.dtoStr(p.getDate(), d16);
+        return s101;
+    }
+    /**
+     *毫秒级时间去掉符号+" "+随机码
+     * Symbol是随机码的意思
+     * 20180408165527961 737
+     * 上面这种
+     * */
+    public static String  timeAndRandom0_999NoSymbol(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.dtoStr(p.getDate(), d16).replace(" ","")+" "+p.strValeOf(s);
+        s101=s101.replace("-","");
+        s101=s101.replace(":","");
+        s101=s101.replace(".","");
+        return s101;
+    }
+    /**
+     *下面一个方法是为了解决String.valueOf(str)当str=null的情况的方法
+     * */
+    public static String strValeOf(Object o){
+        if (null==o){
+            return "null";
+        }else {
+            return String.valueOf(o);
+        }
+    }
+    public static String strValeOfNull(Object o){
+        if (null==o){
+            return null;
+        }else {
+            return String.valueOf(o);
+        }
+    }
+
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(timeAndRandom0_999NoSymbol());
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+    /**
+     * 种17位到19位随机数
+     *   180408170201088 878
+     *   上面这种 15位+一位空格+  1到3位随机数
+     * */
+    public static String  timeAndRandom0_999NoSymbolRemoveHead(){
+        return p.timeAndRandom0_999NoSymbol().substring(2);
+    }
+    /**
+     * 推荐2给一般项目用
+     * 这种17位到19位随机数
+     *   180408171524866-547
+     *   上面这种 15位+ - +  1到3位随机数
+     * */
+    public static String  timeAndRandom0_999NoSymbolRemoveHead_(){
+        return p.timeAndRandom0_999NoSymbolRemoveHead().replace(" ","-");
+    }
+
+    /**
+     *毫秒级时间去掉符号+" "+随机码
+     * Symbol是随机码的意思
+     * 20180408165748545179
+     * 上面这种
+     * */
+    public static String  timeAndRandom0_999NoSymbolNoSpace(){
+        Random random = new Random();
+        int s = random.nextInt(999);
+        String s101 = p.dtoStr(p.getDate(), d16).replace(" ","")+p.strValeOf(s);
+        s101=s101.replace("-","");
+        s101=s101.replace(":","");
+        s101=s101.replace(".","");
+        return s101;
+    }
+
+    /**
+     * 16到18位
+     *180408170814386251
+     * 这种,时间去掉20这个头后+0到999之间的随机数
+     * */
+    public static String  timeAndRandom0_999NoSymbolNoSpaceRemoveHead(){
+
+        return p.timeAndRandom0_999NoSymbolNoSpace().substring(2);
+    }
 
     /**
      *封装三目运算符号

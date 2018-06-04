@@ -1,11 +1,14 @@
 package com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel;
 
+import com.winwin.picreport.Futils.hanhan.p;
+
 import java.util.Date;
 
 /**
  * Created by Administrator on 2018/6/1.
  */
 public class DaoChu {
+
     private String id;//一条录入记录的唯一标识符号
     private String prdCode;//产品编码
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +53,8 @@ public class DaoChu {
     //---缩略图名字包含的路径字符串,用;隔开,路径里面有!导致用户的缩略名字不能有!和;
     private String thum;
 
+
+
     //附件路径字符串,多个用;隔开,名字中的！做分隔符号
     private String attach;
     ///////////////////////////////////////////////////////////////////////////
@@ -83,6 +88,7 @@ public class DaoChu {
     private String littleorderprice;//小单费
 
     private String modelcostinvoiceno;//模具费用发票号
+
     //财务起订量
     private String financestartsellcount;
     //财务模具费
@@ -112,6 +118,46 @@ public class DaoChu {
     //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
     private String mainUnit;
 
+    //未分类之前的单价
+    private String  up;
+
+    //含运费本币销售价格
+    private String  haveTransUpSaleBenBi;
+
+
+    //含运费单价销售外币价格
+    private String haveTransUpSaleWaiBi;
+
+    //无运费单价销售本币
+    private String noTransUpSaleBenBi;
+
+    //无运费单价销售WaiBi
+    private String noTransUpSaleWaiBi;
+
+
+    public String getNoTransUpSaleWaiBi() {
+        return noTransUpSaleWaiBi;
+    }
+
+    public void setNoTransUpSaleWaiBi(String noTransUpSaleWaiBi) {
+        this.noTransUpSaleWaiBi = noTransUpSaleWaiBi;
+    }
+
+    public String getHaveTransUpSaleWaiBi() {
+        return haveTransUpSaleWaiBi;
+    }
+
+    public void setHaveTransUpSaleWaiBi(String haveTransUpSaleWaiBi) {
+        this.haveTransUpSaleWaiBi = haveTransUpSaleWaiBi;
+    }
+
+    public String getNoTransUpSaleBenBi() {
+        return noTransUpSaleBenBi;
+    }
+
+    public void setNoTransUpSaleBenBi(String noTransUpSaleBenBi) {
+        this.noTransUpSaleBenBi = noTransUpSaleBenBi;
+    }
 
     public String getId() {
         return id;
@@ -270,6 +316,7 @@ public class DaoChu {
     }
 
     public void setThum(String thum) {
+        //suoLueTuAndFuJian/636260305823469446.jpg;
         this.thum = thum;
     }
 
@@ -495,5 +542,80 @@ public class DaoChu {
 
     public void setMainUnit(String mainUnit) {
         this.mainUnit = mainUnit;
+    }
+
+    public String getHaveTransUpSaleBenBi() {
+        return haveTransUpSaleBenBi;
+    }
+
+    public void setHaveTransUpSaleBenBi(String haveTransUpSaleBenBi) {
+        this.haveTransUpSaleBenBi = haveTransUpSaleBenBi;
+    }
+
+    public String getUp() {
+        return up;
+    }
+
+    public void setUp(String up) {
+        this.up = up;
+    }
+
+    @Override
+    public String toString() {
+        return "DaoChu{" +
+                "id='" + id + '\'' +
+                ", prdCode='" + prdCode + '\'' +
+                ", idxName='" + idxName + '\'' +
+                ", idxNo='" + idxNo + '\'' +
+                ", fenLeiNo='" + fenLeiNo + '\'' +
+                ", fenLeiName='" + fenLeiName + '\'' +
+                ", markName='" + markName + '\'' +
+                ", markNo='" + markNo + '\'' +
+                ", colour='" + colour + '\'' +
+                ", size='" + size + '\'' +
+                ", salName='" + salName + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", isfenjie='" + isfenjie + '\'' +
+                ", sampMake='" + sampMake + '\'' +
+                ", sampSend='" + sampSend + '\'' +
+                ", sampRequ='" + sampRequ + '\'' +
+                ", sampDesc='" + sampDesc + '\'' +
+                ", thum='" + thum + '\'' +
+                ", attach='" + attach + '\'' +
+                ", insertdate='" + insertdate + '\'' +
+                ", confirmman='" + confirmman + '\'' +
+                ", confirmtimestr='" + confirmtimestr + '\'' +
+                ", isconfirm='" + isconfirm + '\'' +
+                ", category='" + category + '\'' +
+                ", teamname='" + teamname + '\'' +
+                ", confirmrem='" + confirmrem + '\'' +
+                ", unit='" + unit + '\'' +
+                ", businessdesc='" + businessdesc + '\'' +
+                ", financedesc='" + financedesc + '\'' +
+                ", startsellcount='" + startsellcount + '\'' +
+                ", modelcost='" + modelcost + '\'' +
+                ", estimateprice='" + estimateprice + '\'' +
+                ", littleorderprice='" + littleorderprice + '\'' +
+                ", modelcostinvoiceno='" + modelcostinvoiceno + '\'' +
+                ", financestartsellcount='" + financestartsellcount + '\'' +
+                ", financemodelcost='" + financemodelcost + '\'' +
+                ", financelittleorderprice='" + financelittleorderprice + '\'' +
+                ", buyerdesc='" + buyerdesc + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", salemandesc='" + salemandesc + '\'' +
+                ", stopusedate='" + stopusedate + '\'' +
+                ", cusNoGive='" + cusNoGive + '\'' +
+                ", cusNameGive='" + cusNameGive + '\'' +
+                ", userName='" + userName + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", mainUnit='" + mainUnit + '\'' +
+                ", up='" + up + '\'' +
+                ", haveTransUpSaleBenBi='" + haveTransUpSaleBenBi + '\'' +
+                ", haveTransUpSaleWaiBi='" + haveTransUpSaleWaiBi + '\'' +
+                ", noTransUpSaleBenBi='" + noTransUpSaleBenBi + '\'' +
+                ", noTransUpSaleWaiBi='" + noTransUpSaleWaiBi + '\'' +
+                '}';
     }
 }

@@ -2,112 +2,42 @@ package com.winwin.picreport.Edto;
 
 import java.math.BigDecimal;
 
-public class Sapso implements Comparable<Sapso>{
-    private Integer id=-1;
+public class Sapso {
+    private Integer id;
 
-    private String timesamebatch="";
+    private String timesamebatch;
 
-    private String uuid="";
+    private String uuid;
 
-    private String osno="";
+    private String osno;
 
-    private String ebno="";
+    private String ebno;
 
-    private String caigouno="";
+    private String caigouno;
 
-    private String prdno="";
+    private String prdno;
 
-    private String saphh="";
+    private String saphh;
 
-    private Double saphhDouble=0d;
+    private String sapph;
 
+    private String sapwlm;
 
+    private BigDecimal qty;
 
-    private String sapph="";
+    private String maitouno;
 
-    private String sapwlm="";
+    private String luohao;
 
-    private BigDecimal qty=new BigDecimal(0);
-    private Double qtyDouble=0D;
+    private String ganghao;
 
-    private String maitouno="";
+    private String realwidth;
 
-    private String luohao="";
+    private String reallength;
 
-    private String ganghao="";
+    private String chengfendaima;
 
-    private String realwidth="";
-
-    private String reallength="";
-
-    private String danHao_HuoHao_ChengFenDaiMa="";
-
-    private String chengFenDaiMa="";//原来用的历史遗留问题//导出订单的时候sql自己 写的用了这个
-
-    private String chengfendaima;//这个是对应数据库的//导入的时候用了这个//这个是后来加在sapso的字段
-
-
-    private String supPrdNo;//对方货号
-
-    public String getSupPrdNo() {
-        return supPrdNo;
-    }
-
-    public void setSupPrdNo(String supPrdNo) {
-        this.supPrdNo = supPrdNo == null ? null : supPrdNo.trim();
-    }
-
-    public Double getSaphhDouble() {
-
-        if("".equals(this.saphh)){
-            this.saphhDouble=0d;
-        }else{
-            try {
-                this.saphhDouble= Double.parseDouble(this.saphh);
-            } catch (NumberFormatException e) {
-                this.saphhDouble=0d;
-            }
-        }
-
-        return saphhDouble;
-    }
-
-    public Sapso setSaphhDouble(double saphhDouble) {
-        this.saphhDouble = saphhDouble;
-        return this;
-    }
-
-
-
-    public String getDanHao_HuoHao_ChengFenDaiMa() {
-        this.danHao_HuoHao_ChengFenDaiMa=this.osno.trim()+this.prdno.trim()+this.chengFenDaiMa.trim();
-        return danHao_HuoHao_ChengFenDaiMa;
-    }
-
-    public Sapso setDanHao_HuoHao_ChengFenDaiMa(String danHao_HuoHao_ChengFenDaiMa) {
-        this.danHao_HuoHao_ChengFenDaiMa = danHao_HuoHao_ChengFenDaiMa;
-        return this;
-    }
-
-
-
-
-
-    public Double getQtyDouble() {
-        try {
-            this.qtyDouble=qty.doubleValue();
-        } catch (Exception e) {
-            this.qtyDouble=0D;
-        }
-
-
-        return this.qtyDouble;
-    }
-
-    public Sapso setQtyDouble(Double qtyDouble) {
-        this.qtyDouble = qtyDouble;
-        return this;
-    }
+    private String supPrdNo;
 
     public Integer getId() {
         return id;
@@ -134,7 +64,7 @@ public class Sapso implements Comparable<Sapso>{
     }
 
     public String getOsno() {
-        return osno.trim();
+        return osno;
     }
 
     public void setOsno(String osno) {
@@ -158,7 +88,7 @@ public class Sapso implements Comparable<Sapso>{
     }
 
     public String getPrdno() {
-        return prdno.trim();
+        return prdno;
     }
 
     public void setPrdno(String prdno) {
@@ -237,27 +167,19 @@ public class Sapso implements Comparable<Sapso>{
         this.reallength = reallength == null ? null : reallength.trim();
     }
 
-    @Override//
-    public int compareTo(Sapso o) {
-///this在后是降序,this在前是升序
-
-        return this.getSaphhDouble().compareTo(o.getSaphhDouble());//降序
-
-    }
-
-    public String getChengFenDaiMa() {
-        return chengFenDaiMa.trim();
-    }
-
-    public Sapso setChengFenDaiMa(String chengFenDaiMa) {
-        this.chengFenDaiMa = chengFenDaiMa;
-        return this;
-    }
     public String getChengfendaima() {
         return chengfendaima;
     }
 
     public void setChengfendaima(String chengfendaima) {
         this.chengfendaima = chengfendaima == null ? null : chengfendaima.trim();
+    }
+
+    public String getSupPrdNo() {
+        return supPrdNo;
+    }
+
+    public void setSupPrdNo(String supPrdNo) {
+        this.supPrdNo = supPrdNo == null ? null : supPrdNo.trim();
     }
 }

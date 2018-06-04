@@ -34,7 +34,7 @@ public class Cnst {
     public static final String buyBilTypeNoTrans="1";//采购无运费
 
     public static final String benBi="RMB";//本币是RMB 外币直接是不等于RMB的
-
+    public static final String USD="USD";
     public static final String waiBi="";
 
 
