@@ -184,6 +184,29 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
     }
     return list;
 }
+
+
+
+
+    /**
+     *剪切2头,空格,避免空指针
+     * 截取两头空格避免空指针
+     * */
+    public static String trimNoNull(String str2Trim){
+        if(null==str2Trim){
+            return "";
+        }else{
+            return str2Trim.trim();
+        }
+    }
+
+    public static String trimHaveNull(String str2Trim){
+        if(null==str2Trim){
+            return null;
+        }else{
+            return str2Trim.trim();
+        }
+    }
     /**
      * 使用默认分隔符{~}的  后置分隔符
      * 分隔符在后面开始

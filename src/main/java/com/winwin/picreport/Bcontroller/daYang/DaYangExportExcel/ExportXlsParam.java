@@ -1,6 +1,5 @@
-package com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel;
+package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**

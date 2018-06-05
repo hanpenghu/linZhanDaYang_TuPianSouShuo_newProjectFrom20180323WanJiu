@@ -368,3 +368,8 @@ java.lang.RuntimeException: 商品《11201889》《WW-NE5950-NSB06-NWF》在erp�
 1
 ____________________________________________
 
+2018-06-04 19:48:27,924 ERROR (AllExceptionHandler.java:17)- create asm deserializer error, com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.ExportXlsParam
+2018-06-04 19:51:13,222 ERROR (AllExceptionHandler.java:17)- create asm deserializer error, com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.ExportXlsParam
+2018-06-04 19:52:39,147 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\打样下载18-06-04-19_52_39.033-906.xls' does not exist
+2018-06-04 19:52:52,598 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\打样下载18-06-04-19_52_52.593-201.xls' does not exist
+2018-06-04 19:54:02,661 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-04-19_54_02.568-76.xls' does not exist

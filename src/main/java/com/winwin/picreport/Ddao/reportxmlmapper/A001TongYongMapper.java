@@ -2,7 +2,7 @@ package com.winwin.picreport.Ddao.reportxmlmapper;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPriceRecToFront;
-import com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DaoChu;
+import com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.Model;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.ModelUsers;
 import com.winwin.picreport.Edto.*;
@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.sql.ParameterMetaData;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

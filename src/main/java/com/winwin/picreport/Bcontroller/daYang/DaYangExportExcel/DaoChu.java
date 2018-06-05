@@ -1,8 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel;
-
-import com.winwin.picreport.Futils.hanhan.p;
-
-import java.util.Date;
+package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 /**
  * Created by Administrator on 2018/6/1.

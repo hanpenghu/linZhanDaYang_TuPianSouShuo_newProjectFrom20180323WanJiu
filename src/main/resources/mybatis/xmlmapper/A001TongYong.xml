@@ -447,7 +447,7 @@
 
 
 
-    <select id="getPrdtSamp001" resultType="com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DaoChu">
+    <select id="getPrdtSamp001" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
                 select
                     isnull(a.id,'') as id,
                     isnull(a.prd_code,'') as prdCode,
@@ -504,7 +504,7 @@
     </select>
 
 
-    <select id="getPrdtSamp002" resultType="com.winwin.picreport.Bcontroller.daYang.打样产品导出Excel.DaoChu">
+    <select id="getPrdtSamp002" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
         select
         top 1
         isnull(a.id,'') as id,
@@ -554,10 +554,11 @@
         isnull(a.cus_Name_Give,'') as cusNameGive,
         isnull(a.user_Name,'') as userName,
         isnull(a.tenant_Id,'') as  tenantId,
-        isnull(a.main_Unit,'') as mainUnit
+        isnull(p.ut,isnull(a.main_Unit,'')) as mainUnit
         ,isnull(convert(varchar(33),u.up),'') as up
         from prdt_samp a
-        left join   up_def u  on   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
+        LEFT JOIN prdt p    on   a.prd_no=p.prd_no
+        left join up_def u  on   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
         where id = #{id}
         order by u.s_dd desc
     </select>
