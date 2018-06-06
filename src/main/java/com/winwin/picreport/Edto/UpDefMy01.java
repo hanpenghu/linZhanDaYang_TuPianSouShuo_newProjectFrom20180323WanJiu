@@ -10,7 +10,7 @@ public class UpDefMy01 extends UpDefMy {
     String unitZhu;//主单位
     String unitFu;//副单位
     String usr;//操作员,登录的会员名
-    String cusNo;
+    String cusNo;//客户或者厂商
     //输入到up_def里面的rem备注
     String rem;//这个备注徐勇传过来
     //前端备注,不用了

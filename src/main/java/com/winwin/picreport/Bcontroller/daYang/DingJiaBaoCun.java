@@ -10,6 +10,7 @@ import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 @CrossOrigin
 @RestController
@@ -144,20 +145,22 @@ public class DingJiaBaoCun {
     @RequestMapping(value= InterFaceCnst.saveSaleOrBuyPrice,method = RequestMethod.POST)
     public @ResponseBody//49成功,50失败
     Msg saveSaleOrBuyPrice(@RequestBody List<UpDefMy01> ups){//一般传过来2个,一个本币,一个外币
-
-        //生成界面依次插入的四条记录的关联的uuid
-        String uid = p.uuid();//用来跟一个字符串组合成该次定价的唯一标识, 比如4条数据一个标识
-        ups.forEach(v->v.setDingJiaGuanLian(stra.b().a(Cnst.SamplesSys).a(uid).g()));
-
-//        synchronized (this){
-
-        p.p("-------------------------------！！！！！！保存价格开始！！！！！--------------------------------------");
-        return cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice0(ups);
-//            p.p(up);
-//            p.p("-------------------------------！！！！！！保存价格结束！！！！！--------------------------------------");
-//        }
-
-
+        List<String>msgs=new LinkedList<String>();
+        try {
+            //生成界面依次插入的四条记录的关联的uuid
+            String uid = p.uuid();//用来跟一个字符串组合成该次定价的唯一标识, 比如4条数据一个标识
+            ups.forEach(v->v.setDingJiaGuanLian(stra.b().a(Cnst.SamplesSys).a(uid).g()));
+            p.p("-------------------------------！！！！！！保存价格开始！！！！！--------------------------------------");
+            cnst.saveSaleOrBuyPrice.saveSaleOrBuyPrice0(ups,msgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if(msgs.contains(e.getMessage())){
+                return Msg.gmg().setMsg(e.getMessage()).setStatus(p.s50);// 已知异常
+            }else{
+                return Msg.gmg().setStatus(p.s50).setMsg("《未知异常》");
+            }
+        }
+        return Msg.gmg().setStatus(p.s49).setMsg("《保存成功》");
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

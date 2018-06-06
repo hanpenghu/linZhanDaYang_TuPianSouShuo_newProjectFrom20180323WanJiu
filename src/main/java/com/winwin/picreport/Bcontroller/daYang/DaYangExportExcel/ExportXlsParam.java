@@ -11,6 +11,28 @@ public class ExportXlsParam {
     private List<String> ids;
     //那些字段需要插入excel
     private List<String>fields;
+    //确认  起始时间
+    private String startConfirmTime;
+
+    //确认  结束时间
+    private String endConfirmTime;
+
+
+    public String getStartConfirmTime() {
+        return startConfirmTime;
+    }
+
+    public void setStartConfirmTime(String startConfirmTime) {
+        this.startConfirmTime = startConfirmTime;
+    }
+
+    public String getEndConfirmTime() {
+        return endConfirmTime;
+    }
+
+    public void setEndConfirmTime(String endConfirmTime) {
+        this.endConfirmTime = endConfirmTime;
+    }
 
     public List<String> getIds() {
         return ids;

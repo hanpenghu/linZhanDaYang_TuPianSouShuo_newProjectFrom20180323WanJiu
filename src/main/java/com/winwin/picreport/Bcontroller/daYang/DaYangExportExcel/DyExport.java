@@ -1,8 +1,10 @@
 package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.BeanUtils;
@@ -14,10 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,10 +52,19 @@ public class DyExport {
      * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
      */
 
-    @RequestMapping(value = "dyExportExcel", method = RequestMethod.POST)//
-    public ResponseEntity<byte[]> 打样产品导出(@RequestBody ExportXlsParam ep) throws Exception {
+    @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
+    public ResponseEntity<byte[]> 打样产品导出(@Param("param")String param) throws Exception {
 //        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
-//        ExportXlsParam ep =JSON.parseObject(ss,ExportXlsParam.class);
+
+        ExportXlsParam ep = null;
+        try {
+            ep = JSON.parseObject(param,ExportXlsParam.class);
+        } catch (Exception e) {
+            l.error("前端传过来到dyExportExcel打样导出excel的接口",e);
+            return null;
+        }
+
+
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
                 List<String> ids = ep.getIds();
@@ -84,8 +98,13 @@ public class DyExport {
     }
 
 
-
-
+//    public static void main(String[]args){
+//        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
+//        p.p("-------------------------------------------------------");
+//        p.p(URLEncoder.encode(ss));
+//        p.p("-------------------------------------------------------");
+//
+//    }
 
 
 

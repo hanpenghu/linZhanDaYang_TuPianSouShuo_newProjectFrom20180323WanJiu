@@ -1,20 +1,15 @@
 package com.winwin.picreport.Cservice;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.AllConstant.Constant.msgCnst;
-import com.winwin.picreport.AllConstant.StatusCnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefMy01;
-import com.winwin.picreport.Futils.MsgGenerate.Msg;
-//import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
-//import java.util.Date;
 import java.util.List;
 import java.util.Map;
 /**
@@ -33,25 +28,16 @@ import java.util.Map;
 @Transactional
 public class SaveSaleOrBuyPrice {
     @Autowired
+
     private Cnst cnst;
 
     //由于后期加了一个本币和外币在一个界面,所以这里用循环,就是说这个list里面其实就2个东西
-    public Msg saveSaleOrBuyPrice0(List<UpDefMy01> ups){
-        Msg msg=null;
+    public void saveSaleOrBuyPrice0(List<UpDefMy01> ups,List<String>msgs){
         for(UpDefMy01 u:ups){
-            msg = this.saveSaleOrBuyPrice(u);
-            if(p.dy(msg.getStatus(),StatusCnst.excelSaveSucc)){
-                //此时保存成功,继续
-            }else{
-                //此时保存失败
-                throw new RuntimeException("保存定价失败");
-            }
+            this.saveSaleOrBuyPrice(u,msgs);
         }
-        return msg;
     }
-        public Msg saveSaleOrBuyPrice(UpDefMy01 up){
-
-
+        public void saveSaleOrBuyPrice(UpDefMy01 up,List<String>msgs){
             String usr=up.getUsr();
             String cusNo=up.getCusNo();
             if(null==cusNo){//联合主键之一,不能为null
@@ -113,8 +99,9 @@ public class SaveSaleOrBuyPrice {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
                 p.p("币别代号没有传过来");
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg("curId 币别代号没有传过来");
+                String s="curId 币别代号没有传过来";
+                msgs.add(s);
+               throw new RuntimeException(s);
             }
             //把上面的东西放在一个map里面好处理
             Map<String, Object> gmp = p.gp()
@@ -157,9 +144,9 @@ public class SaveSaleOrBuyPrice {
                     p.p("-------------------------------------------------------");
                     p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
                     p.p("-------------------------------------------------------");
-                    return  Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                            .setMsg("此名称在ERP中无对应品号，不能定价，请完善资料！")
-                            .setChMsg("");
+                    String s="此名称在ERP中无对应品号，不能定价，请完善资料！";
+                    msgs.add(s);
+                    throw new RuntimeException(s);
                 }else{
                     //此时prdt表中有货号,把这个货号放入打样表中
                     cnst.a001TongYongMapper.updatePrdNoByUuid(uuid,prdNo);
@@ -220,9 +207,10 @@ public class SaveSaleOrBuyPrice {
             if(p.empty(prdNo)){
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST2~~~~~~~~~~~~~~~~~~~~~~~~");
                 //空的单号,必须告诉前端终止
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg(msgCnst.failSave.getValue())
-                        .setChMsg(msgCnst.failSave.getValue());
+                String s="此名称在ERP中无对应品号，不能定价，请完善资料！《后台流水后货号依然为空》";
+                msgs.add(s);
+                throw new RuntimeException(s);
+
             }else{
                 gmp.put("prdNo",prdNo);
 
@@ -231,11 +219,11 @@ public class SaveSaleOrBuyPrice {
                 if(haveTransUpBuy==null&&noTransUpBuy==null){
                     p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST3~~~~~~~~~~~~~~~~~~~~~~~~");
                     //按销售保存
-                   return this.saveAsSaler(gmp);
+                    this.saveAsSaler(gmp,msgs);
                 }else{
                     p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST4~~~~~~~~~~~~~~~~~~~~~~~~");
                     //现在是采购的,按采购保存
-                    return this.saveAsBuyer(gmp);
+                     this.saveAsBuyer(gmp,msgs);
 
                 }
 
@@ -243,7 +231,7 @@ public class SaveSaleOrBuyPrice {
         }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //采购的价格入库
-    private Msg saveAsBuyer(Map<String,Object> gmp) {
+    private void saveAsBuyer(Map<String,Object> gmp,List<String> msgs) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,8 +276,9 @@ public class SaveSaleOrBuyPrice {
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST6~~~~~~~~~~~~~~~~~~~~~~~~");
             if(insert==0) {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST7~~~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg("保存采购价格含运费的失败");
+                String s="保存采购价格含运费的失败";
+                msgs.add(s);
+                throw new RuntimeException(s);
             }else{
 
             }
@@ -304,17 +293,17 @@ public class SaveSaleOrBuyPrice {
             int insert= cnst.upDefMapper.insert(upDef);
             if(insert==0) {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~10~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg("保存采购价格不含运费的失败");
+
+                String s="保存采购价格不含运费的失败";
+                msgs.add(s);
+                throw new RuntimeException(s);
             }else{
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~11~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
-                        .setMsg("保存采购价格成功");
+
             }
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
-                .setMsg("保存采购价格成功");
+
 
     }
     /**
@@ -322,7 +311,7 @@ public class SaveSaleOrBuyPrice {
      * */
 
     //销售的价格入库
-    private Msg saveAsSaler(Map<String, Object> gmp) {
+    private void saveAsSaler(Map<String, Object> gmp,List<String> msgs) {
         String unit=(String)gmp.get("unit");
         UpDef upDef=new UpDef();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -373,8 +362,10 @@ public class SaveSaleOrBuyPrice {
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~13~~~~~~~~~~~~~~~~");
             if(insert==0) {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST14~~~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg("保存销售价格含运费的失败");
+
+                String s="保存销售价格含运费的失败";
+                msgs.add(s);
+                throw new RuntimeException(s);
             }else{
 
             }
@@ -393,17 +384,15 @@ public class SaveSaleOrBuyPrice {
             int insert=cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             if(insert==0) {
                 p.p("~~~~~~~~~~~~~~~~~~~~~~18~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveFalse)
-                        .setMsg("保存销售价格不含运费的失败");
+
+                String s="保存销售价格不含运费的失败";
+                msgs.add(s);
+                throw new RuntimeException(s);
             }else{
                 p.p("~~~~~~~~~~~~~~~~~~~~~~19~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-                return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
-                        .setMsg("保存销售价格的成功");
             }
         }
 
-        return Msg.gmg().setStatus(StatusCnst.excelSaveSucc)
-                .setMsg("保存销售价格的成功");
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
