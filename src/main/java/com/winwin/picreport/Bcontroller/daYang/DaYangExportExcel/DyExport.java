@@ -50,6 +50,8 @@ public class DyExport {
      * 0009c584-ff12-4c86-9392-8f5319df12cf  thum有东西
      * <p>
      * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
+     *
+     * 这种方式并不完美,完美的方式是返回一个url给前端下载,
      */
 
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
@@ -60,7 +62,7 @@ public class DyExport {
         try {
             ep = JSON.parseObject(param,ExportXlsParam.class);
         } catch (Exception e) {
-            l.error("前端传过来到dyExportExcel打样导出excel的接口",e);
+            l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化",e);
             return null;
         }
 
@@ -98,13 +100,6 @@ public class DyExport {
     }
 
 
-//    public static void main(String[]args){
-//        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
-//        p.p("-------------------------------------------------------");
-//        p.p(URLEncoder.encode(ss));
-//        p.p("-------------------------------------------------------");
-//
-//    }
 
 
 
@@ -190,7 +185,7 @@ public class DyExport {
                 /*NE CODE
                 NE编码*/
                 if("NE CODE NE编码".equals(s)){
-                    cell.setCellValue(""); // 设置内容  2
+                    cell.setCellValue(daoChu.getNmEng()); // 设置内容  2
                 }
 
                 if("Win Win Model# WinWin编号".equals(s)){
@@ -242,7 +237,7 @@ public class DyExport {
                     cell.setCellValue(daoChu.getHaveTransUpSaleBenBi()); // 设置内容--17
                 }
                 if("MOQ 起订量要求 (Lisa填写)".equals(s)){
-                    cell.setCellValue(""); // 设置内容--18
+                    cell.setCellValue(daoChu.getFinancestartsellcount()); // 设置内容--18
                 }
                 if("财务小单费".equals(s)){
                     cell.setCellValue(daoChu.getFinancelittleorderprice()); // 设置内容--19

@@ -5,6 +5,10 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
  */
 public class DaoChu {
 
+    //select nm_eng,* from cust
+    //NE CODE NE编码
+    private String nmEng;
+
     private String id;//一条录入记录的唯一标识符号
     private String prdCode;//产品编码
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -554,6 +558,14 @@ public class DaoChu {
 
     public void setUp(String up) {
         this.up = up;
+    }
+
+    public String getNmEng() {
+        return nmEng;
+    }
+
+    public void setNmEng(String nmEng) {
+        this.nmEng = nmEng;
     }
 
     @Override

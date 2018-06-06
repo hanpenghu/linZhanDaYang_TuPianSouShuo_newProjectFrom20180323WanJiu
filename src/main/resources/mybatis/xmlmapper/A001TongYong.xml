@@ -555,10 +555,12 @@
         isnull(a.user_Name,'') as userName,
         isnull(a.tenant_Id,'') as  tenantId,
         isnull(p.ut,isnull(a.main_Unit,'')) as mainUnit
-        ,isnull(convert(varchar(33),u.up),'') as up
-        from prdt_samp a
-        LEFT JOIN prdt p    on   a.prd_no=p.prd_no
-        left join up_def u  on   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
+        ,isnull(CONVERT(VARCHAR(33),u.up),'') as up
+        ,isnull(x.nm_eng,'') as  nmEng
+        FROM prdt_samp a
+        LEFT JOIN PRDT p    ON   a.PRD_NO=p.PRD_NO
+        LEFT JOIN UP_DEF u  ON   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
+        LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
         where id = #{id}
         order by u.s_dd desc
     </select>

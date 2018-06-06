@@ -585,6 +585,12 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
     //数据非法的时候会抛出异常到前端
     public void a判断数据是否非法并获取prd_no(Msg msg, ShouDingDanFromExcel s, List<Msg> listmsg, int jiShuQi) {
+        //2018_6_6   weekday(3)   16:13:40添加
+        if(p.empty(s.getCurId())){
+            msg.setMsg("有 币别 为空: 在《"+(jiShuQi+1)+"》行附近查找");
+            listmsg.add(msg);
+            throw new RuntimeException(msg.getMsg());
+        }
 
         //在使用货号之前如果是空的,先流水一下货号
         if (p.empty(s.getPrdNo())) {
@@ -650,12 +656,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         }
 
 
-        /*if(s.getRemhead()!=null&&s.getRemhead().length()>(16*5)){//注意这个可以是空字符串
-            String s1="表头备注长度不能大于16个字符";
-            msg.setMsg(s1);
-            listmsg.add(msg);
-            throw new RuntimeException(s1);
-        }*/
+
 
 
         if(s.getRemBody()!=null&&s.getRemBody().length()>1000){
