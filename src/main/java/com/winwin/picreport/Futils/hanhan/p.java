@@ -186,6 +186,13 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
 }
 
 
+    public static String trim(String str2Trim){
+        if(null==str2Trim){
+            return "is fuck nullPoint";
+        }else{
+            return str2Trim.trim();
+        }
+    }
 
 
     /**
