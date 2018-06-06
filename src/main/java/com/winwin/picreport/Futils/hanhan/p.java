@@ -170,6 +170,15 @@ public strictfp class p {
     private List lin=new LinkedList();
     private List arl=new ArrayList();
     private Map<String,Object>map=new HashMap<>();
+
+
+
+
+    //抛出异常并记录异常到list
+    public static void throwEAddToList(String strException,List<String> msgExceptions){
+        msgExceptions.add(strException);
+        throw new RuntimeException(strException);
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public static List<?extends Object> removeNull(List<?extends Object> list) {
     if(notEmpty(list)){
@@ -3436,4 +3445,6 @@ class Usr {
         sb.append('}');
         return sb.toString();
     }
+
+
 }
