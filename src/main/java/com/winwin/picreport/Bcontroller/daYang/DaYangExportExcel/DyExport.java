@@ -58,6 +58,10 @@ public class DyExport {
     public ResponseEntity<byte[]> 打样产品导出(@Param("param")String param) throws Exception {
 //        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
 
+        p.p("-----------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
+        p.p(param);
+        p.p("-------------------------------------------------------");
+
         ExportXlsParam ep = null;
         try {
             ep = JSON.parseObject(param,ExportXlsParam.class);
@@ -66,6 +70,9 @@ public class DyExport {
             return null;
         }
 
+        if(p.empty(ep)){
+            return null;
+        }
 
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
