@@ -9,8 +9,6 @@
     </resultMap>
 
 
-
-
     <!--添加查询模块给所有返回信息
     //    //销售价格列表
 //    List<UpDefMy>upDefMyListSale=new ArrayList<>();
@@ -19,102 +17,100 @@
     -->
 
 
-<!--    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
-        <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
-        <id column="QTY" jdbcType="NUMERIC" property="qty" />
-        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
-        <result column="UP" jdbcType="NUMERIC" property="up" />
-        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
-        <result column="name" jdbcType="VARCHAR" property="curName" />
-        <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
-        <result column="price_id" jdbcType="VARCHAR" property="priceId" />
-        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
-       &lt;!&ndash; <result column="ut" jdbcType="VARCHAR" property="unit" />&ndash;&gt;
-    </resultMap>-->
-   <!-- <sql id="PrdtSampBase_Column_List">
-        id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
-        cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
-        insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem,
-        unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
-    </sql>-->
+    <!--    <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
+            <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
+            <id column="QTY" jdbcType="NUMERIC" property="qty" />
+            <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
+            <result column="UP" jdbcType="NUMERIC" property="up" />
+            <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+            <result column="name" jdbcType="VARCHAR" property="curName" />
+            <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
+            <result column="price_id" jdbcType="VARCHAR" property="priceId" />
+            <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
+           &lt;!&ndash; <result column="ut" jdbcType="VARCHAR" property="unit" />&ndash;&gt;
+        </resultMap>-->
+    <!-- <sql id="PrdtSampBase_Column_List">
+         id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no,
+         cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach,
+         insertdate, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem,
+         unit, businessDesc, financeDesc, startSellCount, modelCost, estimatePrice, littleOrderPrice
+     </sql>-->
     <!-- 产品打样列表多条件查询的条件-->
-
 
 
     <sql id="productProofWithManyCondition">
 
 
-
         (
 
-                insertDate
-                BETWEEN
-                <choose>
-                    <when test="insertdateStr != null and insertdateStr != ''">
-                        #{insertdateStr}
-                    </when>
-                    <otherwise>
-                        '1970-01-01'
-                    </otherwise>
-                </choose>
-                AND
-                <choose>
-                    <when test="insertdateStrEnd != null and insertdateStrEnd != ''">
-                        #{insertdateStrEnd}
-                    </when>
-                    <otherwise>
-                        '9999-01-01'
-                    </otherwise>
-                </choose>
+        insertDate
+        BETWEEN
+        <choose>
+            <when test="insertdateStr != null and insertdateStr != ''">
+                #{insertdateStr}
+            </when>
+            <otherwise>
+                '1970-01-01'
+            </otherwise>
+        </choose>
+        AND
+        <choose>
+            <when test="insertdateStrEnd != null and insertdateStrEnd != ''">
+                #{insertdateStrEnd}
+            </when>
+            <otherwise>
+                '9999-01-01'
+            </otherwise>
+        </choose>
         )
 
         AND
-                        --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
-                        isnull(idx_Name,'') LIKE
-                        <choose>
-                            <when test="idxName != null and idxName != ''">
-                                ('%' + (#{idxName}) + '%')
-                            </when>
-                            <otherwise>
-                                isnull(idx_Name,'')
-                            </otherwise>
-                        </choose>
+        --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
+        isnull(idx_Name,'') LIKE
+        <choose>
+            <when test="idxName != null and idxName != ''">
+                ('%' + (#{idxName}) + '%')
+            </when>
+            <otherwise>
+                isnull(idx_Name,'')
+            </otherwise>
+        </choose>
         AND
-            ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
-                  isnull(fen_lei_name,'') LIKE
-                        <choose>
-                            <when test=" fenLeiName != null and fenLeiName != '' ">
-                                ('%'+( #{fenLeiName})+ '%')
-                            </when>
-                            <otherwise>
-                                isnull(fen_lei_name,'')
-                            </otherwise>
-                        </choose>
+        ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
+        isnull(fen_lei_name,'') LIKE
+        <choose>
+            <when test=" fenLeiName != null and fenLeiName != '' ">
+                ('%'+( #{fenLeiName})+ '%')
+            </when>
+            <otherwise>
+                isnull(fen_lei_name,'')
+            </otherwise>
+        </choose>
         AND
         --产品编码
-                    isnull(prd_Code,'') LIKE
-                    <choose>
-                        <when test=" prdCode != null and prdCode != '' ">
-                            ('%'+( #{prdCode}) +'%')
-                        </when>
-                        <otherwise>
-                            isnull(prd_Code,'')
-                        </otherwise>
-                    </choose>
+        isnull(prd_Code,'') LIKE
+        <choose>
+            <when test=" prdCode != null and prdCode != '' ">
+                ('%'+( #{prdCode}) +'%')
+            </when>
+            <otherwise>
+                isnull(prd_Code,'')
+            </otherwise>
+        </choose>
 
         AND
-                    --产品负责人,模糊查询
-                    isnull(sal_name,'') LIKE
-                    <choose>
-                        <when test="salName != null and salName != '' ">
-                            ('%' +( #{salName}) + '%')
-                        </when>
-                        <otherwise>
-                            isnull(sal_name,'')
-                        </otherwise>
-                    </choose>
+        --产品负责人,模糊查询
+        isnull(sal_name,'') LIKE
+        <choose>
+            <when test="salName != null and salName != '' ">
+                ('%' +( #{salName}) + '%')
+            </when>
+            <otherwise>
+                isnull(sal_name,'')
+            </otherwise>
+        </choose>
         AND
-        --是否已经打样确认，1是确认   0是未确认   ""确认+未确认
+        --是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         isnull(isConfirm,9)=
         <choose>
             <when test=" isconfirm != null">
@@ -160,36 +156,31 @@
     <!-- 修改个人信息用的sql -->
     <update id="updateUserInfo" parameterType="com.winwin.picreport.Edto.LoginInfo">
         UPDATE USERS
-            SET
-                <if test="newUserEamil != null and newUserEamil !='' and newUserEamil != 'undefined' " >
-                   userEmail=#{newUserEamil},
-                </if>
-                <if test="newUserPswd != null and newUserPswd !='' and newUserPswd != 'undefined' " >
-                  userPswd=#{newUserPswd},
-                </if>
-                <if test="newPhoneNo != null and newPhoneNo !='' and newPhoneNo != 'undefined' " >
-                    phone_no=#{newPhoneNo},
-                </if>
-                <if test="newUserName != 'undefined' and newUserName != null and newUserName !='' ">
-                    user_name=#{newUserName},  ---注意,这里有undifined的时候,会正题插不进去,因为这一行不要了,上面一行多了个逗号跟where搞在一起了
-                </if>
-                timetoken=timetoken   ---这个主要是解决最后一个if是null的时候报错的问题
-            where
-            ---下一句话的意思是: 至少有一个不是space或者null
-            (isnull(userEmail,'')!='' or   isnull(phone_no,'')!='' or  isnull(user_name,'')!='')
-            and isnull(tenantid,'')=#{tenantId}
-            and
-            (
-                isnull(userEmail,'')=#{userEmail}
-                or isnull(phone_no,'')=#{phoneNo}
-                or isnull(user_name,'')=#{userName}
-            )
+        SET
+        <if test="newUserEamil != null and newUserEamil !='' and newUserEamil != 'undefined' ">
+            userEmail=#{newUserEamil},
+        </if>
+        <if test="newUserPswd != null and newUserPswd !='' and newUserPswd != 'undefined' ">
+            userPswd=#{newUserPswd},
+        </if>
+        <if test="newPhoneNo != null and newPhoneNo !='' and newPhoneNo != 'undefined' ">
+            phone_no=#{newPhoneNo},
+        </if>
+        <if test="newUserName != 'undefined' and newUserName != null and newUserName !='' ">
+            user_name=#{newUserName}, ---注意,这里有undifined的时候,会正题插不进去,因为这一行不要了,上面一行多了个逗号跟where搞在一起了
+        </if>
+        timetoken=timetoken ---这个主要是解决最后一个if是null的时候报错的问题
+        where
+        ---下一句话的意思是: 至少有一个不是space或者null
+        (isnull(userEmail,'')!='' or isnull(phone_no,'')!='' or isnull(user_name,'')!='')
+        and isnull(tenantid,'')=#{tenantId}
+        and
+        (
+        isnull(userEmail,'')=#{userEmail}
+        or isnull(phone_no,'')=#{phoneNo}
+        or isnull(user_name,'')=#{userName}
+        )
     </update>
-
-
-
-
-
 
 
     <!-- 产品打样列表多条件查询-->
@@ -197,20 +188,20 @@
         SELECT
         TOP
         (#{meiYeXianShiShu})
-        <include refid="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List" />
+        <include refid="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List"/>
         FROM
         PRDT_SAMP
         WHERE
         id NOT IN
         (
-            select top
-            (
-                (#{meiYeXianShiShu})*((#{dangQianYe})-1)
-            )id from PRDT_SAMP
-            WHERE
-             <!-- 产品打样列表多条件查询的条件-->
-              <include refid="productProofWithManyCondition"/>
-              ORDER BY insertdate DESC
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )id from PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        ORDER BY insertdate DESC
         )
         AND
         <!-- 产品打样列表多条件查询的条件-->
@@ -223,17 +214,16 @@
 
     <select id="getCountOfDuoTiaoJianChaXunZongJiLuShu" resultType="java.lang.Integer">
         SELECT count(id)
-        FROM  PRDT_SAMP
+        FROM PRDT_SAMP
         WHERE
         <!-- 产品打样列表多条件查询的条件-->
         <include refid="productProofWithManyCondition"/>
     </select>
 
 
-
     <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
-       Select
-       top 20
+        Select
+        top 20
         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
@@ -246,13 +236,13 @@
         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
         from up_def a
-       LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN prdt d ON d.prd_no=a.prd_no
         LEFT JOIN cur_id b ON a.cur_id=b.cur_id
-       where
-       a.prd_no=#{prdNo,jdbcType=VARCHAR}
+        where
+        a.prd_no=#{prdNo,jdbcType=VARCHAR}
         AND
         a.OLEFIELD like '%SamplesSys%'
-       AND
+        AND
         a.price_id=
         <choose>
             <when test="priceId != null and priceId != ''">
@@ -265,7 +255,6 @@
         ORDER BY
         a.s_dd DESC
     </select>
-
 
 
     <select id="getUpDefMy20180512Buy" resultMap="UpDefMyBaseResultMap">
@@ -340,16 +329,16 @@
         a.s_dd DESC
     </select>
     <resultMap id="UpDefMyBaseResultMap" type="com.winwin.picreport.Edto.UpDefMy01">
-        <id column="CUR_ID" jdbcType="VARCHAR" property="curId" />
-        <id column="QTY" jdbcType="NUMERIC" property="qty" />
-        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd" />
-        <result column="UP" jdbcType="NUMERIC" property="up" />
-        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
-        <result column="name" jdbcType="VARCHAR" property="curName" />
-        <result column="bil_type" jdbcType="VARCHAR" property="bilType" />
-        <result column="price_id" jdbcType="VARCHAR" property="priceId" />
-        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs" />
-        <result column="hj_no" jdbcType="VARCHAR" property="unit" />
+        <id column="CUR_ID" jdbcType="VARCHAR" property="curId"/>
+        <id column="QTY" jdbcType="NUMERIC" property="qty"/>
+        <id column="S_DD" jdbcType="TIMESTAMP" property="sDd"/>
+        <result column="UP" jdbcType="NUMERIC" property="up"/>
+        <result column="UNIT" jdbcType="VARCHAR" property="unit"/>
+        <result column="name" jdbcType="VARCHAR" property="curName"/>
+        <result column="bil_type" jdbcType="VARCHAR" property="bilType"/>
+        <result column="price_id" jdbcType="VARCHAR" property="priceId"/>
+        <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs"/>
+        <result column="hj_no" jdbcType="VARCHAR" property="unit"/>
         <!-- <result column="ut" jdbcType="VARCHAR" property="unit" />-->
     </resultMap>
 
@@ -405,12 +394,9 @@
         @Param("olefield")String olefield);-->
 
 
-
-
-
     <select id="getUpDefMy20180512Saleone" resultMap="UpDefMyBaseResultMap">
         Select
-        top 1   ----其实本来也只有一个
+        top 1 ----其实本来也只有一个
         a.s_dd --as sDd,---价格创建日期
         ,a.up --as up ,--价格
         ,a.qty --as qty ,--数量
@@ -423,7 +409,7 @@
         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
         from up_def a
-        LEFT JOIN  prdt d ON d.prd_no=a.prd_no
+        LEFT JOIN prdt d ON d.prd_no=a.prd_no
         LEFT JOIN cur_id b ON a.cur_id=b.cur_id
         where
         a.prd_no=#{prdNo,jdbcType=VARCHAR}
@@ -433,11 +419,11 @@
         a.price_id=#{priceId}
 
         <if test="CurId != null and CurId != ''">
-         AND a.cur_id = #{CurId} ---此时是本币
+            AND a.cur_id = #{CurId} ---此时是本币
         </if>
         <if test="CurId != null and CurId == ''">
             AND a.cur_id != 'RMB'
-     </if>
+        </if>
         AND
         a.bil_type=#{bilType}
         ORDER BY
@@ -445,62 +431,60 @@
     </select>
 
 
-
-
     <select id="getPrdtSamp001" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
-                select
-                    isnull(a.id,'') as id,
-                    isnull(a.prd_code,'') as prdCode,
-                   isnull(a.idx_name,'') as idxName,
-                   isnull(a.idx_no,'') as idxNo,
-                   isnull(a.fen_lei_no,'') as fenLeiNo,
-                  isnull(a.fen_lei_name,'') as  fenLeiName,
-                    isnull(a.mark_name,'') as markName,
-                    isnull(a.mark_no,'') as markNo,
-                    isnull(a.colour,'')as colour,
-                    isnull(a.size,'') as size,
-                    isnull(a.sal_name,'') as salName,
-                   isnull(a.sal_No,'') as salNo,
-                    isnull(a.cus_no,'') as cusNo,
-                    isnull(a.cus_name,'') as cusName,
-                    isnull(a.isfenjie,'') as isfenjie,
-                   isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
-                   isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
-                    isnull(a.samp_requ,'') as sampRequ,
-                    isnull(a.samp_desc,'') as sampDesc,
-                     isnull(a.thum,'') as thum,
-                     isnull(a.attach,'') as attach,
-                     isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
-                     isnull(a.confirmman,'') as confirmman,
-                  isnull(a.confirmtimestr,'') as confirmtimestr,
-                   isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
-                    isnull(a.category,'')as category,
-                    isnull(a.teamname,'') as teamname,
-                   isnull(a.confirmrem,'')as confirmrem,
-                  isnull(a.unit,'') as unit,
-                    isnull(a.businessdesc,'')as businessdesc,
-                     isnull(a.financedesc,'') as financedesc ,
-                     isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
-                    isnull(convert(varchar(36),a.modelcost),'')as modelcost,
-                     isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
-                     isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
-                    isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
-                     isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
-                    isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
-                     isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
-                     isnull(a.buyerdesc,'')as buyerdesc,
-                    isnull(a.prd_No,'') as prdNo,
-                    isnull(a.salemandesc,'')salemandesc,
-                     isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
-                    isnull(a.cus_No_Give,'') as   cusNoGive,
-                    isnull(a.cus_Name_Give,'') as cusNameGive,
-                    isnull(a.user_Name,'') as userName,
-                    isnull(a.tenant_Id,'') as  tenantId,
-                     isnull(a.main_Unit,'') as mainUnit
-                from prdt_samp a WHERE a.id IN
-                <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
+        select
+        isnull(a.id,'') as id,
+        isnull(a.prd_code,'') as prdCode,
+        isnull(a.idx_name,'') as idxName,
+        isnull(a.idx_no,'') as idxNo,
+        isnull(a.fen_lei_no,'') as fenLeiNo,
+        isnull(a.fen_lei_name,'') as fenLeiName,
+        isnull(a.mark_name,'') as markName,
+        isnull(a.mark_no,'') as markNo,
+        isnull(a.colour,'')as colour,
+        isnull(a.size,'') as size,
+        isnull(a.sal_name,'') as salName,
+        isnull(a.sal_No,'') as salNo,
+        isnull(a.cus_no,'') as cusNo,
+        isnull(a.cus_name,'') as cusName,
+        isnull(a.isfenjie,'') as isfenjie,
+        isnull(convert(varchar(36),a.samp_make,120),'') as sampMake,
+        isnull(convert(varchar(36),a.samp_send,120),'') as sampSend,
+        isnull(a.samp_requ,'') as sampRequ,
+        isnull(a.samp_desc,'') as sampDesc,
+        isnull(a.thum,'') as thum,
+        isnull(a.attach,'') as attach,
+        isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
+        isnull(a.confirmman,'') as confirmman,
+        isnull(a.confirmtimestr,'') as confirmtimestr,
+        isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
+        isnull(a.category,'')as category,
+        isnull(a.teamname,'') as teamname,
+        isnull(a.confirmrem,'')as confirmrem,
+        isnull(a.unit,'') as unit,
+        isnull(a.businessdesc,'')as businessdesc,
+        isnull(a.financedesc,'') as financedesc ,
+        isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
+        isnull(convert(varchar(36),a.modelcost),'')as modelcost,
+        isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
+        isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
+        isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
+        isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
+        isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
+        isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
+        isnull(a.buyerdesc,'')as buyerdesc,
+        isnull(a.prd_No,'') as prdNo,
+        isnull(a.salemandesc,'')salemandesc,
+        isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
+        isnull(a.cus_No_Give,'') as cusNoGive,
+        isnull(a.cus_Name_Give,'') as cusNameGive,
+        isnull(a.user_Name,'') as userName,
+        isnull(a.tenant_Id,'') as tenantId,
+        isnull(a.main_Unit,'') as mainUnit
+        from prdt_samp a WHERE a.id IN
+        <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
 
@@ -561,120 +545,126 @@
         LEFT JOIN PRDT p    ON   a.PRD_NO=p.PRD_NO
         LEFT JOIN UP_DEF u  ON   (a.prd_no=u.prd_no and u.bil_type=#{bilType} and u.cur_id=#{curId} and u.price_id=#{priceId})
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
-        where id = #{id}
+       where     id = #{id}
         order by u.s_dd desc
     </select>
 
+    <select id="getIdUseConfirmTime" resultType="java.lang.String">
+         SELECT top 500 id FROM prdt_samp  --  限制最多导出500行
+          <where>
+              id=id
+              <if test="startConfirmTime != null and startConfirmTime != ''">
+                  <![CDATA[ AND  confirmtimestr >= #{startConfirmTime}  ]]>
+              </if>
+              <if test="endConfirmTime != null and endConfirmTime != ''">
+                  <![CDATA[ AND  confirmtimestr <= #{endConfirmTime}  ]]>
+              </if>
+          </where>
 
-
+    </select>
 
 
 </mapper>
 
 
+        <!--
 
+                (
+                insertDate
+                BETWEEN
+        <choose>
+        <when test="insertdateStr != null and insertdateStr != ''">
+            #{insertdateStr}
+        </when>
+        <otherwise>
+            '1970-01-01'
+        </otherwise>
+        </choose>
+                AND
+        <choose>
+        <when test="insertdateStrEnd != null and insertdateStrEnd != ''">
+            #{insertdateStrEnd}
+        </when>
+        <otherwise>
+            '9999-01-01'
+        </otherwise>
+        </choose>
+                )
+                AND
+                (
+                confirmTimeStr
+                BETWEEN
+        <choose>
+        <when test="confirmtimestr != null and confirmtimestr != ''">
+            #{confirmtimestr}
+        </when>
+        <otherwise>
+            '1970-01-01'
+        </otherwise>
+        </choose>
+                AND
+        <choose>
+        <when test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+            #{confirmtimestrEnd}
+        </when>
+        <otherwise>
+            '9999-01-01'
+        </otherwise>
+        </choose>
+                )
+                AND
+                &#45;&#45;产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
+                isnull(idx_Name,'') LIKE
+        <choose>
+        <when test="idxName != null and idxName != ''">
+            ('%' + (#{idxName}) + '%')
+        </when>
+        <otherwise>
+            isnull(idx_Name,'')
+        </otherwise>
+        </choose>
+                AND
+                -&#45;&#45;产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
+                isnull(fen_lei_name,'') LIKE
+        <choose>
+        <when test=" fenLeiName != null and fenLeiName != '' ">
+            ('%'+( #{fenLeiName})+ '%')
+        </when>
+        <otherwise>
+            isnull(fen_lei_name,'')
+        </otherwise>
+        </choose>
+                AND
+                &#45;&#45;产品编码
+                isnull(prd_Code,'') LIKE
+        <choose>
+        <when test=" prdCode != null and prdCode != '' ">
+            ('%'+( #{prdCode}) +'%')
+        </when>
+        <otherwise>
+            isnull(prd_Code,'')
+        </otherwise>
+        </choose>
 
-
-
-
-<!--
-
-        (
-        insertDate
-        BETWEEN
-<choose>
-<when test="insertdateStr != null and insertdateStr != ''">
-    #{insertdateStr}
-</when>
-<otherwise>
-    '1970-01-01'
-</otherwise>
-</choose>
-        AND
-<choose>
-<when test="insertdateStrEnd != null and insertdateStrEnd != ''">
-    #{insertdateStrEnd}
-</when>
-<otherwise>
-    '9999-01-01'
-</otherwise>
-</choose>
-        )
-        AND
-        (
-        confirmTimeStr
-        BETWEEN
-<choose>
-<when test="confirmtimestr != null and confirmtimestr != ''">
-    #{confirmtimestr}
-</when>
-<otherwise>
-    '1970-01-01'
-</otherwise>
-</choose>
-        AND
-<choose>
-<when test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
-    #{confirmtimestrEnd}
-</when>
-<otherwise>
-    '9999-01-01'
-</otherwise>
-</choose>
-        )
-        AND
-        &#45;&#45;产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
-        isnull(idx_Name,'') LIKE
-<choose>
-<when test="idxName != null and idxName != ''">
-    ('%' + (#{idxName}) + '%')
-</when>
-<otherwise>
-    isnull(idx_Name,'')
-</otherwise>
-</choose>
-        AND
-        -&#45;&#45;产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
-        isnull(fen_lei_name,'') LIKE
-<choose>
-<when test=" fenLeiName != null and fenLeiName != '' ">
-    ('%'+( #{fenLeiName})+ '%')
-</when>
-<otherwise>
-    isnull(fen_lei_name,'')
-</otherwise>
-</choose>
-        AND
-        &#45;&#45;产品编码
-        isnull(prd_Code,'') LIKE
-<choose>
-<when test=" prdCode != null and prdCode != '' ">
-    ('%'+( #{prdCode}) +'%')
-</when>
-<otherwise>
-    isnull(prd_Code,'')
-</otherwise>
-</choose>
-
-        AND
-        &#45;&#45;产品负责人,模糊查询
-        isnull(sal_name,'') LIKE
-<choose>
-<when test="salName != null and salName != '' ">
-    ('%' +( #{salName}) + '%')
-</when>
-<otherwise>
-    isnull(sal_name,'')
-</otherwise>
-</choose>
-        AND
-        &#45;&#45;是否已经打样确认，1是确认   0是未确认   ""确认+未确认
-        isnull(isConfirm,9)=
-<choose>
-<when test=" isconfirm != null">
-    #{isconfirm}
-</when>
-<otherwise>
-    isnull(isConfirm,9)
-</otherwise>
-</choose>-->
+                AND
+                &#45;&#45;产品负责人,模糊查询
+                isnull(sal_name,'') LIKE
+        <choose>
+        <when test="salName != null and salName != '' ">
+            ('%' +( #{salName}) + '%')
+        </when>
+        <otherwise>
+            isnull(sal_name,'')
+        </otherwise>
+        </choose>
+                AND
+                &#45;&#45;是否已经打样确认，1是确认   0是未确认   ""确认+未确认
+                isnull(isConfirm,9)=
+        <choose>
+        <when test=" isconfirm != null">
+            #{isconfirm}
+        </when>
+        <otherwise>
+            isnull(isConfirm,9)
+        </otherwise>
+        </choose>-->

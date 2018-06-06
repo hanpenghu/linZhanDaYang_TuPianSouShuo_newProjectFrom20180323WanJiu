@@ -354,6 +354,5 @@ public interface A001TongYongMapper {
    DaoChu getPrdtSamp002(@Param("bilType")String bilType,@Param("curId")String curId,@Param("priceId")String priceId,@Param("id")String id);
 
 
-
-
+    List<String> getIdUseConfirmTime(@Param("startConfirmTime") String startConfirmTime,@Param("endConfirmTime")String endConfirmTime);
 }

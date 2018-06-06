@@ -58,7 +58,7 @@ public class DyExport {
     public ResponseEntity<byte[]> 打样产品导出(@Param("param")String param) throws Exception {
 //        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
 
-        p.p("-----------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
+        p.p("----1-------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
         p.p(param);
         p.p("-------------------------------------------------------");
 
@@ -74,10 +74,35 @@ public class DyExport {
             return null;
         }
 
+        List<String>idsFromConfirmTime=null;
+        //起止时间有一个非空才取id//注意,sql限制最多取出500个
+        if(p.notEmpty(ep.getStartConfirmTime())||p.notEmpty(ep.getEndConfirmTime())){
+            //通过确认时间过得id
+            idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime(ep.getStartConfirmTime(),ep.getEndConfirmTime());
+            if(p.notEmpty(idsFromConfirmTime)){
+                l.info("--2----qizhi shijian de dao de id bu wei null----------");
+            }
+        }else{
+            l.info("---2 or---------qizhi shijina doushi null  buyong qizhi shijian-------------");
+        }
+
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
                 List<String> ids = ep.getIds();
+                if(p.notEmpty(ids)){
+                    l.info("----3---qianduan chuan guo lai de ids buwei kong----------------");
+                }
+                if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
+                    //此时如果ids是空的,要创建一个  为了添加确认时间加进来的id
+                    if(ids==null){ids=new LinkedList<String>();}
+                    ids.addAll(idsFromConfirmTime);
+                }
+
+
                 if(p.empty(ids))return null;
+                if(p.notEmpty(ids)){
+                    l.info("-----4------zuizhong de dao de ids bu wei null--------------");
+                }
                 p.removeNull(ids);
                 List<String> 前端穿过来要显示的fields = ep.getFields();
 
