@@ -84,7 +84,7 @@ public class DyExport {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
-    
+
 
 
     //完善ids,主要是从传入时间也得到的ids放进来
@@ -128,7 +128,6 @@ public class DyExport {
             l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化", e);
             return null;
         }
-
         if (p.empty(ep)) {
             return null;
         }
@@ -238,8 +237,7 @@ public class DyExport {
 //                    cell.setCellValue(""); // 设置内容 8
                 p.p2(daoChu.getThum());
                 try {
-                    this.
-                            a设置照片(daoChu.getThum(), sheet1, row, wb, 列计数器, i行计数器);
+                    this.a设置照片(daoChu.getThum(), sheet1, row, wb, 列计数器, i行计数器);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
