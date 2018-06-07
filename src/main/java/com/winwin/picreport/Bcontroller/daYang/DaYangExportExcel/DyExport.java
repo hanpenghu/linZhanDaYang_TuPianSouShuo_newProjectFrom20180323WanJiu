@@ -222,13 +222,13 @@ public class DyExport {
                 cell.setCellValue(daoChu.getPrdCode()); // 设置内容  3
             }
             if ("产品大中类（中文）".equals(s)) {
-                cell.setCellValue(""); // 设置内容  4
+                cell.setCellValue(daoChu.getIdxName()); // 设置内容  4
             }
             if ("产品大中类（英文）".equals(s)) {
                 cell.setCellValue(""); // 设置内容  5
             }
             if ("产品子中类（中文）".equals(s)) {
-                cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
+                cell.setCellValue(daoChu.getFenLeiName()); // 设置内容 6
             }
             if ("产品子中类（英文）".equals(s)) {
                 cell.setCellValue(""); // 设置内容 7
