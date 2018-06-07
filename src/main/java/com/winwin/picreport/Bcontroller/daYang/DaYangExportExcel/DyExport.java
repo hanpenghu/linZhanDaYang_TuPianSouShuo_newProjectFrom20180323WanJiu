@@ -1,4 +1,5 @@
 package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
+
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.linklistT;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
@@ -50,95 +52,94 @@ public class DyExport {
      * 0009c584-ff12-4c86-9392-8f5319df12cf  thum有东西
      * <p>
      * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
-     *
+     * <p>
      * 这种方式并不完美,完美的方式是返回一个url给前端下载,
      */
 
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
-    public ResponseEntity<byte[]> 打样产品导出(@Param("param")String param) throws Exception {
+    public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
 //        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
-
         p.p("----1-------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
         p.p(param);
         p.p("-------------------------------------------------------");
-
         ExportXlsParam ep = null;
-        try {
-            ep = JSON.parseObject(param,ExportXlsParam.class);
-        } catch (Exception e) {
-            l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化",e);
-            return null;
-        }
-
-        if(p.empty(ep)){
-            return null;
-        }
-
-        List<String>idsFromConfirmTime=null;
-        //起止时间有一个非空才取id//注意,sql限制最多取出500个
-        if(p.notEmpty(ep.getStartConfirmTime())||p.notEmpty(ep.getEndConfirmTime())){
-            //通过确认时间过得id
-            idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime(ep.getStartConfirmTime(),ep.getEndConfirmTime());
-            if(p.notEmpty(idsFromConfirmTime)){
-                l.info("--2----qizhi shijian de dao de id bu wei null----------");
-            }
-        }else{
-            l.info("---2 or---------qizhi shijina doushi null  buyong qizhi shijian-------------");
-        }
-
+        ep = this.formatJsonFromFront(ep, param);
+        if (null == ep) {return null;}
+        List<String> idsFromConfirmTime = null;
+        this.idsFromConfirmTime(ep, idsFromConfirmTime);
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
-                List<String> ids = ep.getIds();
-                if(p.notEmpty(ids)){
-                    l.info("----3---qianduan chuan guo lai de ids buwei kong----------------");
-                }
-                if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
-                    //此时如果ids是空的,要创建一个  为了添加确认时间加进来的id
-                    if(ids==null){ids=new LinkedList<String>();}
-                    ids.addAll(idsFromConfirmTime);
-                }
-
-
-                if(p.empty(ids))return null;
-                if(p.notEmpty(ids)){
-                    l.info("-----4------zuizhong de dao de ids bu wei null--------------");
-                }
-                p.removeNull(ids);
-                List<String> 前端穿过来要显示的fields = ep.getFields();
-
-                if(p.notEmpty(前端穿过来要显示的fields)){
-                    this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
-                }else{
-                    //前端如果没有传过来要显示哪些字段,这里就会使用完整的信息
-                }
-//        List<String> fields =new LinkedList<String>();
-//        fields.add("salName");fields.add("thum");
-                //根据前端传过来要显示的字段,干掉我们不需要的字段
-
-//        List<String> fields = null;
-//        List<String> ids = new linklistT<String>().a("0009c584-ff12-4c86-9392-8f5319df12cf").g();
-        List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids,前端穿过来要显示的fields);
-//        p.p2(daoChus);
+        List<String> ids = ep.getIds();
+        //将确认时间得到的id放入  全局id集合
+        this.perfectIds(ids,idsFromConfirmTime); if(null==ids)return null;
+        List<String> 前端穿过来要显示的fields = ep.getFields();
+        if (p.notEmpty(前端穿过来要显示的fields)) {this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);}
+        List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids, 前端穿过来要显示的fields);
         //把字段写入excel
-        String excel路径 = this.a写入excel(daoChus,list导出头信息);
-
+        String excel路径 = this.a写入excel(daoChus, list导出头信息);
         File file = new File(excel路径);
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("UTF-8"),"iso-8859-1"));
+        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("UTF-8"), "iso-8859-1"));
         //application/octet-stream ： 二进制流数据（最常见的文件下载）。
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
-//        return null;
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
+
+
+
+
+    //完善ids,主要是从传入时间也得到的ids放进来
+    private void perfectIds(List<String> ids,List<String> idsFromConfirmTime){
+        if(p.notEmpty(ids)){
+            l.info("----3---qianduan chuan guo lai de ids buwei kong----------------");
+        }
+        if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
+            //此时如果ids是空的,要创建一个  为了添加确认时间加进来的id
+            if(ids==null){ids=new LinkedList<String>();}
+            ids.addAll(idsFromConfirmTime);
+        }
+        if(p.notEmpty(ids)){
+            l.info("-----4------zuizhong de dao de ids bu wei null--------------");
+        }
+        p.removeNull(ids);
     }
 
 
 
 
 
+    private void idsFromConfirmTime(ExportXlsParam ep, List<String> idsFromConfirmTime) {
+        //起止时间有一个非空才取id//注意,sql限制最多取出500个
+        if (p.notEmpty(ep.getStartConfirmTime()) || p.notEmpty(ep.getEndConfirmTime())) {
+            //通过确认时间过得id
+            idsFromConfirmTime = cnst.a001TongYongMapper.getIdUseConfirmTime(ep.getStartConfirmTime(), ep.getEndConfirmTime());
+            if (p.notEmpty(idsFromConfirmTime)) {
+                l.info("--2----qizhi shijian de dao de id bu wei null----------");
+            }
+        } else {
+            l.info("---2 or---------qizhi shijina doushi null  buyong qizhi shijian-------------");
+        }
+    }
 
-//    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
-    @Scheduled(cron="0 0 23 * * ?")//每天23点执行
-    public void a定时清空excel临时目录的内容(){
+
+    private ExportXlsParam formatJsonFromFront(ExportXlsParam ep, String param) {
+        try {
+            ep = JSON.parseObject(param, ExportXlsParam.class);
+        } catch (Exception e) {
+            l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化", e);
+            return null;
+        }
+
+        if (p.empty(ep)) {
+            return null;
+        }
+        return ep;
+    }
+
+
+    //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
+    @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
+    public void a定时清空excel临时目录的内容() {
         try {
             new File(f创建存储excel的临时目录不带杠()).delete();
         } catch (Exception e) {
@@ -147,7 +148,7 @@ public class DyExport {
     }
 
 
-    private  String a写入excel(List<DaoChu> daoChus,List<String>list导出头信息) {
+    private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
         String excelName = "SampExport" + p.timeAndRandom0_999NoHead_1() + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
@@ -159,7 +160,7 @@ public class DyExport {
             HSSFSheet sheet1 = wb.createSheet("sheet1");
             HSSFCellStyle cellStyle = wb.createCellStyle();  //创建设置EXCEL表格样式对象 cellStyle
             cellStyle.setWrapText(true);//设置自动换行
-            this.a写行列(daoChus,sheet1,cellStyle,wb,list导出头信息);
+            this.a写行列(daoChus, sheet1, cellStyle, wb, list导出头信息);
             //此时文件不存在会自动创建
             fileOut = new FileOutputStream(excelPath);
             // 输出文件
@@ -175,125 +176,128 @@ public class DyExport {
         return excelPath;
     }
 
-    private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1,HSSFCellStyle cellStyle,HSSFWorkbook wb,List<String>list导出头信息) {
-        a写行头(sheet1.createRow(0),sheet1,cellStyle,list导出头信息);//第0行写成行头
+    private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
+        a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
-        int i行计数器=1;//
-        if(p.notEmpty(daoChus)){
-            for(DaoChu daoChu:daoChus){
+        int i行计数器 = 1;//
+        if (p.notEmpty(daoChus)) {
+            for (DaoChu daoChu : daoChus) {
                 if (p.notEmpty(daoChu)) {
                     HSSFRow row = sheet1.createRow(i行计数器);
                     row.setHeightInPoints(40);
-                    a写入内容行(daoChu,row,sheet1,cellStyle,i行计数器,wb,list导出头信息);
-                    i行计数器=i行计数器+1;
-                }else {l.error("------a写行列-----daoChu-是null------------------");}
+                    a写入内容行(daoChu, row, sheet1, cellStyle, i行计数器, wb, list导出头信息);
+                    i行计数器 = i行计数器 + 1;
+                } else {
+                    l.error("------a写行列-----daoChu-是null------------------");
+                }
             }
-        }else{l.error("------a写行列-----daoChus-是null------------------");}
+        } else {
+            l.error("------a写行列-----daoChus-是null------------------");
+        }
     }
 
 
-
-
-
-
-
-    private void a写入内容行(DaoChu daoChu,HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle,int i行计数器,HSSFWorkbook wb,List<String>list导出头信息) {
+    private void a写入内容行(DaoChu daoChu, HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, int i行计数器, HSSFWorkbook wb, List<String> list导出头信息) {
 
 //        p.p("---------------------------daoChu.getMainUnit()------------------------");
 //        p.p(daoChu.getMainUnit());
 //        p.p("-------------------------------------------------------");
 
-        int 列计数器=0;
-            for(String s:list导出头信息){
-                sheet1.setColumnWidth(i行计数器, 20 * 256);
-                Cell cell = row.createCell(列计数器);
-                cell.setCellStyle(cellStyle);
-                if("Win Win Merchandiser WinWin 负责业务员".equals(s)){
-                    cell.setCellValue(daoChu.getSalName()); // 设置内容 0
-                }
-                if("Inquiry Source 帽厂/NE".equals(s)){
-                    cell.setCellValue(daoChu.getCusName()); // 设置内容  1
-                }
+        int 列计数器 = 0;
+        for (String s : list导出头信息) {
+            sheet1.setColumnWidth(i行计数器, 20 * 256);
+            Cell cell = row.createCell(列计数器);
+            cell.setCellStyle(cellStyle);
+            if ("Win Win Merchandiser WinWin 负责业务员".equals(s)) {
+                cell.setCellValue(daoChu.getSalName()); // 设置内容 0
+            }
+            if ("Inquiry Source 帽厂/NE".equals(s)) {
+                cell.setCellValue(daoChu.getCusName()); // 设置内容  1
+            }
                 /*NE CODE
                 NE编码*/
-                if("NE CODE NE编码".equals(s)){
-                    cell.setCellValue(daoChu.getNmEng()); // 设置内容  2
-                }
-
-                if("Win Win Model# WinWin编号".equals(s)){
-                    cell.setCellValue(daoChu.getPrdCode()); // 设置内容  3
-                }
-                if("产品大中类（中文）".equals(s)){
-                    cell.setCellValue(""); // 设置内容  4
-                }
-                if("产品大中类（英文）".equals(s)){
-                    cell.setCellValue(""); // 设置内容  5
-                }
-                if("产品子中类（中文）".equals(s)){
-                    cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
-                }
-                if("产品子中类（英文）".equals(s)){
-                    cell.setCellValue(""); // 设置内容 7
-                }
-                if("Product Photo 打样产品照片或图籍".equals(s)){//设置照片
-//                    cell.setCellValue(""); // 设置内容 8
-                    p.p2(daoChu.getThum());
-                    try {this.
-                            a设置照片(daoChu.getThum(),sheet1,row,wb,列计数器,i行计数器);} catch (Exception e) {e.printStackTrace();}
-                }
-                if("Category Name".equals(s)){
-                    cell.setCellValue(daoChu.getCategory()); // 设置内容 9
-                }
-                if("Team Name".equals(s)){
-                    cell.setCellValue(daoChu.getTeamname()); // 设置内容 10
-                }
-                if("颜色".equals(s)){
-                    cell.setCellValue(daoChu.getColour()); // 设置内容11
-                }
-                if("尺寸".equals(s)){
-                    cell.setCellValue(daoChu.getSize()); // 设置内容12
-                }
-                if("单位".equals(s)){                          ///////////////////////////////
-                    cell.setCellValue(daoChu.getMainUnit()); // 设置内容13
-                }
-                if("Price 单价美元".equals(s)){
-                    cell.setCellValue(daoChu.getNoTransUpSaleWaiBi()); // 设置内容--14
-                }
-                if("Price 单价(Lisa填写)".equals(s)){
-                    cell.setCellValue(daoChu.getNoTransUpSaleBenBi()); // 设置内容--15
-                }
-                if("含运费价格 美元".equals(s)){
-                    cell.setCellValue(daoChu.getHaveTransUpSaleWaiBi()); // 设置内容--  16
-                }
-                if("含运费价格".equals(s)){
-                    cell.setCellValue(daoChu.getHaveTransUpSaleBenBi()); // 设置内容--17
-                }
-                if("MOQ 起订量要求 (Lisa填写)".equals(s)){
-                    cell.setCellValue(daoChu.getFinancestartsellcount()); // 设置内容--18
-                }
-                if("财务小单费".equals(s)){
-                    cell.setCellValue(daoChu.getFinancelittleorderprice()); // 设置内容--19
-                }
-                if("Sample Approved Date 样品确认日期".equals(s)){
-                    cell.setCellValue(daoChu.getConfirmtimestr()); // 设置内容--20
-                }
-                if("NE Approval Person NE 确认人员".equals(s)){
-                    cell.setCellValue(daoChu.getConfirmman()); // 设置内容--21
-                }
-                if("Description 样品要求".equals(s)){
-                    cell.setCellValue(daoChu.getSampRequ()); // 设置内容--22
-                }
-                if("Sample Date 打样日期".equals(s)){
-                    cell.setCellValue(daoChu.getSampMake()); // 设置内容23
-                }
-                if("样品卡寄出日期".equals(s)){
-                    cell.setCellValue(daoChu.getSampSend()); // 设置内容24
-                }
-                列计数器=列计数器+1;
+            if ("NE CODE NE编码".equals(s)) {
+                cell.setCellValue(daoChu.getNmEng()); // 设置内容  2
             }
+
+            if ("Win Win Model# WinWin编号".equals(s)) {
+                cell.setCellValue(daoChu.getPrdCode()); // 设置内容  3
+            }
+            if ("产品大中类（中文）".equals(s)) {
+                cell.setCellValue(""); // 设置内容  4
+            }
+            if ("产品大中类（英文）".equals(s)) {
+                cell.setCellValue(""); // 设置内容  5
+            }
+            if ("产品子中类（中文）".equals(s)) {
+                cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
+            }
+            if ("产品子中类（英文）".equals(s)) {
+                cell.setCellValue(""); // 设置内容 7
+            }
+            if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
+//                    cell.setCellValue(""); // 设置内容 8
+                p.p2(daoChu.getThum());
+                try {
+                    this.
+                            a设置照片(daoChu.getThum(), sheet1, row, wb, 列计数器, i行计数器);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if ("Category Name".equals(s)) {
+                cell.setCellValue(daoChu.getCategory()); // 设置内容 9
+            }
+            if ("Team Name".equals(s)) {
+                cell.setCellValue(daoChu.getTeamname()); // 设置内容 10
+            }
+            if ("颜色".equals(s)) {
+                cell.setCellValue(daoChu.getColour()); // 设置内容11
+            }
+            if ("尺寸".equals(s)) {
+                cell.setCellValue(daoChu.getSize()); // 设置内容12
+            }
+            if ("单位".equals(s)) {                          ///////////////////////////////
+                cell.setCellValue(daoChu.getMainUnit()); // 设置内容13
+            }
+            if ("Price 单价美元".equals(s)) {
+                cell.setCellValue(daoChu.getNoTransUpSaleWaiBi()); // 设置内容--14
+            }
+            if ("Price 单价(Lisa填写)".equals(s)) {
+                cell.setCellValue(daoChu.getNoTransUpSaleBenBi()); // 设置内容--15
+            }
+            if ("含运费价格 美元".equals(s)) {
+                cell.setCellValue(daoChu.getHaveTransUpSaleWaiBi()); // 设置内容--  16
+            }
+            if ("含运费价格".equals(s)) {
+                cell.setCellValue(daoChu.getHaveTransUpSaleBenBi()); // 设置内容--17
+            }
+            if ("MOQ 起订量要求 (Lisa填写)".equals(s)) {
+                cell.setCellValue(daoChu.getFinancestartsellcount()); // 设置内容--18
+            }
+            if ("财务小单费".equals(s)) {
+                cell.setCellValue(daoChu.getFinancelittleorderprice()); // 设置内容--19
+            }
+            if ("Sample Approved Date 样品确认日期".equals(s)) {
+                cell.setCellValue(daoChu.getConfirmtimestr()); // 设置内容--20
+            }
+            if ("NE Approval Person NE 确认人员".equals(s)) {
+                cell.setCellValue(daoChu.getConfirmman()); // 设置内容--21
+            }
+            if ("Description 样品要求".equals(s)) {
+                cell.setCellValue(daoChu.getSampRequ()); // 设置内容--22
+            }
+            if ("Sample Date 打样日期".equals(s)) {
+                cell.setCellValue(daoChu.getSampMake()); // 设置内容23
+            }
+            if ("样品卡寄出日期".equals(s)) {
+                cell.setCellValue(daoChu.getSampSend()); // 设置内容24
+            }
+            列计数器 = 列计数器 + 1;
+        }
     }
 
-    private void a设置照片(String thum, HSSFSheet sheet1,HSSFRow row,HSSFWorkbook wb,int a图所在列,int a行计数器) {
+    private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) {
 
         BufferedImage bufferImg = null;
         try {
@@ -303,127 +307,125 @@ public class DyExport {
 
             int height = bufferImg.getHeight();
             int width = bufferImg.getWidth();
-            sheet1.setColumnWidth(a行计数器,width);
+            sheet1.setColumnWidth(a行计数器, width);
             row.setHeightInPoints(height);
-            ImageIO.write(bufferImg, "jpg",byteArrayOut);
+            ImageIO.write(bufferImg, "jpg", byteArrayOut);
             //创建一个图片
             HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
 
             //制造图片的位置参数
             HSSFClientAnchor anchor = new HSSFClientAnchor
-                    (0, 0, 0, 0,(short) a图所在列, a行计数器, (short)(a图所在列+1), a行计数器+1);
+                    (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
             //插入图片
             patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 
             bufferImg.flush();
             byteArrayOut.flush();
             byteArrayOut.close();
-        } catch (Exception e) {e.printStackTrace();}finally{}
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
     }
 
 
-    private void a写行头(HSSFRow row,HSSFSheet sheet1,HSSFCellStyle cellStyle,List<String> list导出头信息) {
-        int k计数器=0;
-        for(String s:list导出头信息){
+    private void a写行头(HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, List<String> list导出头信息) {
+        int k计数器 = 0;
+        for (String s : list导出头信息) {
             sheet1.setColumnWidth(k计数器, 20 * 256);
             Cell cell = row.createCell(k计数器);
             cell.setCellStyle(cellStyle);
             cell.setCellValue(s); // 设置内容
-            k计数器=k计数器+1;
+            k计数器 = k计数器 + 1;
         }
 
 
     }
 
 
-
-    private   void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList,List<String> a前端传过来需要显示的fields){
-        if(!a前端传过来需要显示的fields.contains("salName")){
+    private void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList, List<String> a前端传过来需要显示的fields) {
+        if (!a前端传过来需要显示的fields.contains("salName")) {
             daoChuExcelHeadList.remove("Win Win Merchandiser WinWin 负责业务员");
         }
-        if(!a前端传过来需要显示的fields.contains("cusName")){
+        if (!a前端传过来需要显示的fields.contains("cusName")) {
             daoChuExcelHeadList.remove("Inquiry Source 帽厂/NE");
         }
-        if(!a前端传过来需要显示的fields.contains("cust.nm_eng")){
+        if (!a前端传过来需要显示的fields.contains("cust.nm_eng")) {
             daoChuExcelHeadList.remove("NE CODE NE编码");
         }
-        if(!a前端传过来需要显示的fields.contains("prdCode")){
+        if (!a前端传过来需要显示的fields.contains("prdCode")) {
             daoChuExcelHeadList.remove("Win Win Model# WinWin编号");
         }
-        if(!a前端传过来需要显示的fields.contains("idxName")){
+        if (!a前端传过来需要显示的fields.contains("idxName")) {
             daoChuExcelHeadList.remove("产品大中类（中文）");
         }
-        if(!a前端传过来需要显示的fields.contains("idxNameE")){
+        if (!a前端传过来需要显示的fields.contains("idxNameE")) {
             daoChuExcelHeadList.remove("产品大中类（英文）");
         }
 
-        if(!a前端传过来需要显示的fields.contains("fenLeiName")){
+        if (!a前端传过来需要显示的fields.contains("fenLeiName")) {
             daoChuExcelHeadList.remove("产品子中类（中文）");
         }
-        if(!a前端传过来需要显示的fields.contains("fenLeiNameE")){
+        if (!a前端传过来需要显示的fields.contains("fenLeiNameE")) {
             daoChuExcelHeadList.remove("产品子中类（英文）");
         }
 
-        if(!a前端传过来需要显示的fields.contains("thum")){
+        if (!a前端传过来需要显示的fields.contains("thum")) {
             daoChuExcelHeadList.remove("Product Photo 打样产品照片或图籍");
         }
-        if(!a前端传过来需要显示的fields.contains("category")){
+        if (!a前端传过来需要显示的fields.contains("category")) {
             daoChuExcelHeadList.remove("Category Name");
         }
-        if(!a前端传过来需要显示的fields.contains("teamname")){
+        if (!a前端传过来需要显示的fields.contains("teamname")) {
             daoChuExcelHeadList.remove("Team Name");
         }
-        if(!a前端传过来需要显示的fields.contains("colour")){
+        if (!a前端传过来需要显示的fields.contains("colour")) {
             daoChuExcelHeadList.remove("颜色");
         }
-        if(!a前端传过来需要显示的fields.contains("size")){
+        if (!a前端传过来需要显示的fields.contains("size")) {
             daoChuExcelHeadList.remove("尺寸");
         }
-        if(!a前端传过来需要显示的fields.contains("mainUnit")){
+        if (!a前端传过来需要显示的fields.contains("mainUnit")) {
             daoChuExcelHeadList.remove("单位");
         }
-        if(!a前端传过来需要显示的fields.contains("noTransUpSaleWaiBi")){
+        if (!a前端传过来需要显示的fields.contains("noTransUpSaleWaiBi")) {
             daoChuExcelHeadList.remove("Price 单价美元");
         }
-        if(!a前端传过来需要显示的fields.contains("noTransUpSaleBenBi")){
+        if (!a前端传过来需要显示的fields.contains("noTransUpSaleBenBi")) {
             daoChuExcelHeadList.remove("Price 单价(Lisa填写)");
         }
-        if(!a前端传过来需要显示的fields.contains("haveTransUpSaleWaiBi")){
+        if (!a前端传过来需要显示的fields.contains("haveTransUpSaleWaiBi")) {
             daoChuExcelHeadList.remove("含运费价格 美元");
         }
-        if(!a前端传过来需要显示的fields.contains("haveTransUpSaleBenBi")){
+        if (!a前端传过来需要显示的fields.contains("haveTransUpSaleBenBi")) {
             daoChuExcelHeadList.remove("含运费价格");
         }
-        if(!a前端传过来需要显示的fields.contains("financestartsellcount")){
+        if (!a前端传过来需要显示的fields.contains("financestartsellcount")) {
             daoChuExcelHeadList.remove("MOQ 起订量要求 (Lisa填写)");
         }
-        if(!a前端传过来需要显示的fields.contains("financelittleorderprice")){
+        if (!a前端传过来需要显示的fields.contains("financelittleorderprice")) {
             daoChuExcelHeadList.remove("财务小单费");
         }
-        if(!a前端传过来需要显示的fields.contains("confirmtimestr")){
+        if (!a前端传过来需要显示的fields.contains("confirmtimestr")) {
             daoChuExcelHeadList.remove("Sample Approved Date 样品确认日期");
         }
-        if(!a前端传过来需要显示的fields.contains("confirmman")){
+        if (!a前端传过来需要显示的fields.contains("confirmman")) {
             daoChuExcelHeadList.remove("NE Approval Person NE 确认人员");
         }
-        if(!a前端传过来需要显示的fields.contains("sampRequ")){
+        if (!a前端传过来需要显示的fields.contains("sampRequ")) {
             daoChuExcelHeadList.remove("Description 样品要求");
         }
-        if(!a前端传过来需要显示的fields.contains("sampMake")){
+        if (!a前端传过来需要显示的fields.contains("sampMake")) {
             daoChuExcelHeadList.remove("Sample Date 打样日期");
         }
-        if(!a前端传过来需要显示的fields.contains("sampSend")){
+        if (!a前端传过来需要显示的fields.contains("sampSend")) {
             daoChuExcelHeadList.remove("样品卡寄出日期");
         }
     }
 
 
-
-
-
-
-    private List<String> f得到完整导出头信息(){
-        List<String> daoChuExcelHeadList=
+    private List<String> f得到完整导出头信息() {
+        List<String> daoChuExcelHeadList =
                 new linklistT<String>()
                         .a("Win Win Merchandiser WinWin 负责业务员")//salName   0
                         .a("Inquiry Source 帽厂/NE")//cusName    1
@@ -455,27 +457,18 @@ public class DyExport {
     }
 
 
-
-
-
-
-
-
-    private  String f创建存储excel的临时目录不带杠() {
+    private String f创建存储excel的临时目录不带杠() {
         String s = p.strCutNoHead(cnst.daYangSuoLueTuAndFuJianZongPath, "./");
         String s1 = p.strCutEndNothave(s, "/");
 //        p.p("-------------------------s1------------------------------");
 //        p.p(s1);
 //        p.p("-------------------------------------------------------");
-        File file = new File(new File(s1).getAbsolutePath()+File.separator+"saveExcelTemp");
+        File file = new File(new File(s1).getAbsolutePath() + File.separator + "saveExcelTemp");
         if (p.notExists(file)) {
             file.mkdir();
         }
         return file.getAbsolutePath();
     }
-
-
-
 
 
     //对于销售定价,每次找到up_def中最近s_dd的一个
@@ -487,7 +480,9 @@ public class DyExport {
             DaoChu daoChu1 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.benBi, Cnst.salPriceId, id);
 
             p.p("---------------------------daoChu1.getMainUnit()----------------------------");
-            if (null!=daoChu1) {p.p(daoChu1.getMainUnit());}
+            if (null != daoChu1) {
+                p.p(daoChu1.getMainUnit());
+            }
             p.p("-------------------------------------------------------");
             //haveTransUpSaleWaiBi
             DaoChu daoChu2 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.USD, Cnst.salPriceId, id);
