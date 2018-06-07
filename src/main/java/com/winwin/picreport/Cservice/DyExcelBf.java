@@ -26,7 +26,7 @@ public class DyExcelBf {
 
 
     public void f(MultipartFile excel, HttpServletRequest request,List<String> msgs) throws IOException {
-        File file = this.将excel保存在本地的excelTemp文件夹(msgs, excel);
+        File excelFile = this.f将excel保存在本地的excelTemp文件夹(msgs, excel);
 
 
 
@@ -34,7 +34,7 @@ public class DyExcelBf {
 
 
 
-        file.delete();
+        excelFile.delete();
     }
 
 
@@ -52,20 +52,19 @@ public class DyExcelBf {
 
 
 
-    private File 将excel保存在本地的excelTemp文件夹(List<String> msgs, MultipartFile excel) throws IOException {
-        File file = new File("excelTemp"+p.uuid().replace("-",""));
-        file.mkdir();
-        if(!file.exists()){
+    private File f将excel保存在本地的excelTemp文件夹(List<String> msgs, MultipartFile excel) throws IOException {
+        File dir = new File("excel2Erp");
+        if(!dir.exists()){dir.mkdir();}
+        if(!dir.exists()){
             commonsThrow(msgs,"创建存储excel的临时文件夹失败");
         }
-        String absolutePath = file.getAbsolutePath();//无杠
-
-        String s = absolutePath +File.separator+ excel.getOriginalFilename();
-        File file1 = new File(s);
-        boolean b = file1.createNewFile();
+        String tmepDirAbsolutePath = dir.getAbsolutePath();//无杠
+        String s = tmepDirAbsolutePath +File.separator+p.uuid()+excel.getOriginalFilename();
+        File excelFile = new File(s);
+        boolean b = excelFile.createNewFile();
         if(!b)commonsThrow(msgs,"excel保存到本地失败");
-        excel.transferTo(file1);
-        return file1;
+        excel.transferTo(excelFile);
+        return excelFile;
     }
 
 

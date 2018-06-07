@@ -24,6 +24,7 @@ public class DyExcel {
 
     @Autowired
     private Cnst cnst;
+
     /**
      * 上传一个包含信息的excel到数据库
      * 这个一次只能穿一个附件
@@ -53,52 +54,53 @@ public class DyExcel {
     public @ResponseBody
     Msg dataSaveByExcel(@RequestParam(value = p.excel, required = false)
                                 MultipartFile excel, HttpServletRequest request) {
-        List<String>msgs=new LinkedList<String>();
+        List<String> msgs = new LinkedList<String>();
+
         try {
             this.throwE(excel,request,msgs);
-            cnst.dyExcelBf.f(excel,request,msgs);
+            cnst.dyExcelBf.f(excel, request, msgs);
         } catch (Exception e) {
-            return exceptionReturn(msgs,e);
+            return exceptionReturn(msgs, e);
         }
         return Msg.gmg().setMsg("《成功》").setStatus("1");
     }
 
 
-
-
-
-    private void  throwE(MultipartFile excel, HttpServletRequest request,List<String>msgs){
+    private void throwE(MultipartFile excel, HttpServletRequest request, List<String> msgs) {
         String user = request.getParameter("user");
-        if(p.empty(user)){
-            String s="前端穿过来的用户信息是空的";
-            this.commonsThrow(msgs,s);
+        if (p.empty(user)) {
+            String s = "前端穿过来的用户信息是空的";
+            this.commonsThrow(msgs, s);
         }
         try {
             JSON.parseObject(user);
         } catch (Exception e) {
-            String s="前端管过来的用户信息不是json";
-            this.commonsThrow(msgs,s);
+            String s = "前端管过来的用户信息不是json";
+            this.commonsThrow(msgs, s);
         }
-        if(p.empty(excel)){
-            this.commonsThrow(msgs,"前端没有将excel传过来");
+        if (p.empty(excel)) {
+            this.commonsThrow(msgs, "前端没有将excel传过来");
         }
-        if(p.bdy("xls",excel.getOriginalFilename())&&p.bdy("xlsx",excel.getOriginalFilename())){
-            this.commonsThrow(msgs,"您传过来的不是excel");
+        if (p.bdy("xls", excel.getOriginalFilename()) && p.bdy("xlsx", excel.getOriginalFilename())) {
+            this.commonsThrow(msgs, "您传过来的不是excel");
         }
     }
 
-    private Msg exceptionReturn(List<String>msgs,Exception e){
-        if(msgs.contains(e.getMessage())){
+    private Msg exceptionReturn(List<String> msgs, Exception e) {
+        if (msgs.contains(e.getMessage())) {
             return Msg.gmg().setMsg(e.getMessage()).setStatus("0");
-        }else{
+        } else {
             return Msg.gmg().setMsg("《未知异常》").setStatus("0");
         }
     }
 
-    private void commonsThrow(List<String>msgs,String message){
+    private void commonsThrow(List<String> msgs, String message) {
         l.error(message);
         msgs.add(message);
         p.throwE(message);
     }
-    private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
+
+
+
+    private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 }

@@ -54,6 +54,12 @@ public class DyExport {
      * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
      * <p>
      * 这种方式并不完美,完美的方式是返回一个url给前端下载,
+     *
+     * 注意,这个方法还存在单位 mainUnit的问题,  因为我们的单位在界面是保存在up_def
+     * 的hj_no中  ,  比如   主:pcs  副:pcs    这种
+     * ,但是我现在取出的是  prdt中的ut主单位,   这就有点问题了,因为当时定价的单位是保存在up_def的hj_no的,虽然也检查了
+     * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
+     *
      */
 
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
@@ -506,7 +512,7 @@ public class DyExport {
     }
 
 
-    
+
 
 
 
