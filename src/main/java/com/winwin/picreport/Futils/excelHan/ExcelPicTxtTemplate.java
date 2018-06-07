@@ -11,6 +11,11 @@ public class ExcelPicTxtTemplate {
     //该行的所有图片
     private List<ExcelPicTemplate> txtRowPicDataList=new LinkedList<>();//存图片
 
+
+
+
+
+
     public List<ExcelTxtTemplate> getTxtRowList() {
         return txtRowList;
     }

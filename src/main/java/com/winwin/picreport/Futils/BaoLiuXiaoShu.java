@@ -1,4 +1,6 @@
 package com.winwin.picreport.Futils;
+import com.winwin.picreport.Futils.hanhan.p;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -23,16 +25,15 @@ public class BaoLiuXiaoShu {
     public static String m3SiSheWuRuBianStr(Double f,int xiaoShuDianHouDeWeiShu) {
         return String.format("%." + xiaoShuDianHouDeWeiShu + "f", f);
     }
+
+
+
+
+
     public void m4() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(3);
         System.out.println(nf.format(f));
     }
-    public static void main(String[] args) {
-        BaoLiuXiaoShu f = new BaoLiuXiaoShu();
-        f.m1(111231.5585,3);
-        f.m2();
-//       System.out.println(f.m3SiSheWuRuBianStr(111231.5585,3)); ;
-        f.m4();
-    }
+
 }

@@ -5,6 +5,8 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
+import com.winwin.picreport.Futils.AmtAndAmtnAndTaxChongXinSuan;
+import com.winwin.picreport.Futils.BaoLiuXiaoShu;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
@@ -51,6 +53,19 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         List<Msg> listmsg = new ArrayList<>();
 //    long time01=new Date().getTime();
         try {
+
+            if(p.empty(shouDingDanFromExcels)){
+                String s="前端传过来的参数对象为null";
+                listmsg.addAll (new MessageGenerate().generateMessage(s));
+                throw new RuntimeException(s);
+            }
+
+            if(p.notEmpty(shouDingDanFromExcels.get(0).getSaphh())){
+                String s="请不要把sap订单当做标准订单导入";
+                listmsg.addAll (new MessageGenerate().generateMessage(s));
+                throw new RuntimeException(s);
+            }
+
 
             //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //检查shouDingDanFromExcels里面的osno订单号是否统一 一样,不一样不行
@@ -165,6 +180,18 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 
     ////////////////////////////////////////////////////////////////////////////////////////
     public void 按订单号分类后向Service传入数据(List<List<ShouDingDanFromExcel>> list1, List<Msg> listmsg) {
+        //客户代号
+        String cusNo = list1.get(0).get(0).getCusNo();
+        //找到税率
+        Double taxRto=cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
+
+
+        if(taxRto==null||taxRto==0){
+            String s="该客户《"+cusNo+"》对应的税率在erp《cust》表是空";
+            listmsg.addAll(new MessageGenerate().generateMessage(s));
+            throw new RuntimeException(s);
+        }
+
         for (List<ShouDingDanFromExcel> list3 : list1) {
 
             //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
@@ -178,7 +205,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
                 //for一次就是处理同一批号osNo一次
                 Map<String, List> listMap =
                         this.合并同一订单号下面货号相同的qty_amtn_tax_amt
-                                (list3, listmsg);
+                                (list3, listmsg,taxRto);
 
                 /**
                  *插入数据到数据库
@@ -192,14 +219,73 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         }
     }
 
+
+
+
+
     //////////////////////////由于这个单子不合并了,所以这里删除了合并的代码,但是继续沿用这个方法而已/////////////////////////////////////////////////////////
-    public Map<String, List> 合并同一订单号下面货号相同的qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3, List<Msg> listmsg) {
+    public Map<String, List> 合并同一订单号下面货号相同的qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3, List<Msg> listmsg,Double taxRto) {
         Map<String, List> map = new HashMap();
+
+
+        //计算各种税额
+        for(ShouDingDanFromExcel s:list3){
+            double qty= 0;//数量
+            try {
+                qty = Double.valueOf(s.getQty());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                listmsg.addAll(new MessageGenerate().generateMessage("有数量为0"));
+                p.throwE("有数量为0");
+            }
+            double amtn= 0;//未税金额
+            try {amtn = Double.valueOf(s.getAmtn());} catch (NumberFormatException e) {}
+            double tax= 0;//税额
+            try {tax = Double.valueOf(s.getTax());} catch (NumberFormatException e) {}
+            double amt= 0;//金额合并
+            try {amt = Double.valueOf(s.getAmt());} catch (NumberFormatException e) {}
+            /**
+             * 2018_6_7   weekday(4)   16:42:20    by winston
+             *订单导入税率这样处理：
+             * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
+             * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
+             * */
+            s.setTaxRto(String.valueOf(taxRto*0.01));
+
+            ///////////////////2018_6_7///////////16:42:20  ////////////////////////////////////////////////////////////
+            AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,s,s.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            s.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn,2));
+            s.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax,2));
+            s.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt,2));
+        }
+
         //老郑让这个玩意不用合并了,所以,放入同一个东西
         map.put("samePrdNoMeraged", list3);
         map.put("samePrdNoList", null);//不用了
         return map;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /////////////////////////////////////////////////////////////////////////////
     public void 去除多余的SuccessMsg(List<Msg> listmsg, String msg) {

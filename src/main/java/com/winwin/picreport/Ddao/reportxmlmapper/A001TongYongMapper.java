@@ -355,4 +355,7 @@ public interface A001TongYongMapper {
 
 
     List<String> getIdUseConfirmTime(@Param("startConfirmTime") String startConfirmTime,@Param("endConfirmTime")String endConfirmTime);
+
+    @Select({"select rto_tax from cust where cus_no=#{cusNo}"})
+    Double getTaxRtoFromCust(@Param("cusNo")String cusNo);
 }

@@ -8,21 +8,28 @@ import com.winwin.picreport.Futils.hanhan.p;
 import java.util.List;
 
 public class AmtAndAmtnAndTaxChongXinSuan {
+    //amtn 未税金额  amt金额  tax税额
     //只要数量和单价不为0就行,其他的就能自动计算
-    public static void f(Double amt,Double amtn,Double tax,Double qty,ShouDingDanFromExcel shouDingDanFromExcel){
+    public static void f(Double amt,Double amtn,Double tax,Double qty,ShouDingDanFromExcel shouDingDanFromExcel,String taxRtos,List<Msg> listmsg){
         if(amt==0){
             try {
-                amt=Double.parseDouble(shouDingDanFromExcel.getUp())*qty;
+                amt=Double.parseDouble(shouDingDanFromExcel.getUp())*qty;//数量不是数字的在前面已经判断过了
             } catch (NumberFormatException e) {
-                amt=0D;
+                listmsg.addAll(new MessageGenerate().generateMessage("有单价不是数字"));
+                throw new RuntimeException(e);
             }
         }
+        double taxRto=Double.valueOf(taxRtos);//税率,已经是0.16之类的做好的
+        double taxRtoAdd1=taxRto+1;
         if(amtn==0){
-            amtn=amt-amt/1.17*0.17;
+//            amtn=amt-amt/1.17*0.17;
+            amtn=amt-amt/taxRtoAdd1*taxRto;//taxRto是税率
             if(amtn<0){amtn=0D;}
         }
         if(tax==0){
-            tax=amt/1.17*0.17;
+//            tax=amt/1.17*0.17;
+            tax=amt/taxRtoAdd1*taxRto;
+
         }
     }
 
