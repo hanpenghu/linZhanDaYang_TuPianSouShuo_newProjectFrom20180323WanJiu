@@ -58,7 +58,7 @@ public class DyExport {
 
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
     public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
-//        String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
+        //String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
         p.p("----1-------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
         p.p(param);
         p.p("-------------------------------------------------------");
@@ -84,8 +84,7 @@ public class DyExport {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
-
-
+    
 
 
     //完善ids,主要是从传入时间也得到的ids放进来
