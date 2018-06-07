@@ -309,7 +309,6 @@ public class DyExport {
             ImageIO.write(bufferImg, "jpg", byteArrayOut);
             //创建一个图片
             HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
-
             //制造图片的位置参数
             HSSFClientAnchor anchor = new HSSFClientAnchor
                     (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
