@@ -11,13 +11,19 @@ public class AmtAndAmtnAndTaxChongXinSuan {
     //amtn 未税金额  amt金额  tax税额
     //只要数量和单价不为0就行,其他的就能自动计算
     public static void f(Double amt,Double amtn,Double tax,Double qty,ShouDingDanFromExcel shouDingDanFromExcel,String taxRtos,List<Msg> listmsg){
+        double up=0;//单价
+        try {up = Double.valueOf(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {
+            e.printStackTrace();
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入,,有单价不为数字"));
+            p.throwE("无法导入 有单价不为数字");
+        }
+        if(up==0){
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
+            p.throwE("无法导入 有单价为0");
+        }
+
         if(amt==0){
-            try {
-                amt=Double.parseDouble(shouDingDanFromExcel.getUp())*qty;//数量不是数字的在前面已经判断过了
-            } catch (NumberFormatException e) {
-                listmsg.addAll(new MessageGenerate().generateMessage("有单价不是数字"));
-                throw new RuntimeException(e);
-            }
+                amt=up*qty;//数量不是数字的在前面已经判断过了
         }
         double taxRto=Double.valueOf(taxRtos);//税率,已经是0.16之类的做好的
         double taxRtoAdd1=taxRto+1;

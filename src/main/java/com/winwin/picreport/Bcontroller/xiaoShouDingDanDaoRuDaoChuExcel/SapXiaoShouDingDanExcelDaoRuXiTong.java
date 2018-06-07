@@ -70,8 +70,9 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             throw new RuntimeException(s);
         }
 
+        ////根据saphh来判断是否导错了,  sap里面saphh必须不为空
         if(p.empty(shouDingDanFromExcels.get(0).getSaphh())){
-            String s="请不要把标准订单当做sap订单导入";
+            String s="请不要把标准订单当做sap订单导入《sap行号居然为空》";
             listmsg.addAll (new MessageGenerate().generateMessage(s));
             throw new RuntimeException(s);
         }
@@ -291,6 +292,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 double amtn=0;//未税金额
                 double tax=0;//税额
                 double amt=0;//金额合并
+
 //                double danJia=0;//当时想错了,单价不能合并,有 数量 有单价 有 就能计算其他的金额,
                 for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
                     try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有qty数量不是数字  "+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
@@ -299,6 +301,17 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                     try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
 //                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
+
+
+                if(0==qty){
+                    listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
+                    p.throwE("无法导入 有数量为0");
+                }
+
+
+
+
+
                 if(list0.size()>0) {
                     //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
                     ShouDingDanFromExcel shouDingDanFromExcel=new ShouDingDanFromExcel();

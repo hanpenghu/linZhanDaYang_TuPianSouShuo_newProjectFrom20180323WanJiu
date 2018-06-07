@@ -60,8 +60,9 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
                 throw new RuntimeException(s);
             }
 
+            //根据saphh来判断是否导错了,  sap里面saphh必须不为空
             if(p.notEmpty(shouDingDanFromExcels.get(0).getSaphh())){
-                String s="请不要把sap订单当做标准订单导入";
+                String s="请不要把sap订单当做标准订单导入《sap行号居然不为空》";
                 listmsg.addAll (new MessageGenerate().generateMessage(s));
                 throw new RuntimeException(s);
             }
@@ -231,19 +232,35 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         //计算各种税额
         for(ShouDingDanFromExcel s:list3){
             double qty= 0;//数量
+            double amtn= 0;//未税金额
+            double tax= 0;//税额
+            double amt= 0;//金额合并
+            double up=0;//单价
             try {
                 qty = Double.valueOf(s.getQty());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                listmsg.addAll(new MessageGenerate().generateMessage("有数量为0"));
-                p.throwE("有数量为0");
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量不是数字"));
+                p.throwE("无法导入 有数量不是数字");
             }
-            double amtn= 0;//未税金额
+            if(0==qty){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
+                p.throwE("无法导入 有数量为0");
+            }
+            try {up = Double.valueOf(s.getUp());} catch (NumberFormatException e) {
+                e.printStackTrace();
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价不为数字"));
+                p.throwE("无法导入 有单价不为数字");
+            }
+            if(up==0){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
+                p.throwE("无法导入 有单价为0");
+            }
+
             try {amtn = Double.valueOf(s.getAmtn());} catch (NumberFormatException e) {}
-            double tax= 0;//税额
             try {tax = Double.valueOf(s.getTax());} catch (NumberFormatException e) {}
-            double amt= 0;//金额合并
             try {amt = Double.valueOf(s.getAmt());} catch (NumberFormatException e) {}
+
             /**
              * 2018_6_7   weekday(4)   16:42:20    by winston
              *订单导入税率这样处理：
