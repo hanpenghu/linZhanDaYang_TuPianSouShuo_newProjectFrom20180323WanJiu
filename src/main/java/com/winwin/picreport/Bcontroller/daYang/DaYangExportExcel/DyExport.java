@@ -87,6 +87,9 @@ public class DyExport {
 
 
 
+
+
+
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids,List<String> idsFromConfirmTime){
         if(p.notEmpty(ids)){
@@ -107,6 +110,8 @@ public class DyExport {
 
 
 
+
+
     private void idsFromConfirmTime(ExportXlsParam ep, List<String> idsFromConfirmTime) {
         //起止时间有一个非空才取id//注意,sql限制最多取出500个
         if (p.notEmpty(ep.getStartConfirmTime()) || p.notEmpty(ep.getEndConfirmTime())) {
@@ -119,6 +124,9 @@ public class DyExport {
             l.info("---2 or---------qizhi shijina doushi null  buyong qizhi shijian-------------");
         }
     }
+
+
+
 
 
     private ExportXlsParam formatJsonFromFront(ExportXlsParam ep, String param) {
@@ -135,6 +143,9 @@ public class DyExport {
     }
 
 
+
+
+
     //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
     @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
     public void a定时清空excel临时目录的内容() {
@@ -144,6 +155,8 @@ public class DyExport {
             e.printStackTrace();
         }
     }
+
+
 
 
     private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
@@ -174,6 +187,11 @@ public class DyExport {
         return excelPath;
     }
 
+
+
+
+
+
     private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
         a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
@@ -193,6 +211,12 @@ public class DyExport {
             l.error("------a写行列-----daoChus-是null------------------");
         }
     }
+
+
+
+
+
+
 
 
     private void a写入内容行(DaoChu daoChu, HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, int i行计数器, HSSFWorkbook wb, List<String> list导出头信息) {
@@ -294,6 +318,12 @@ public class DyExport {
         }
     }
 
+
+
+
+
+
+
     private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) {
 
         BufferedImage bufferImg = null;
@@ -325,6 +355,11 @@ public class DyExport {
     }
 
 
+
+
+
+
+
     private void a写行头(HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, List<String> list导出头信息) {
         int k计数器 = 0;
         for (String s : list导出头信息) {
@@ -334,9 +369,10 @@ public class DyExport {
             cell.setCellValue(s); // 设置内容
             k计数器 = k计数器 + 1;
         }
-
-
     }
+
+
+
 
 
     private void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList, List<String> a前端传过来需要显示的fields) {
@@ -448,23 +484,31 @@ public class DyExport {
                         .a("Description 样品要求")//sampRequ---22
                         .a("Sample Date 打样日期")//sampMake--23
                         .a("样品卡寄出日期").g();//sampSend--24
-
         return daoChuExcelHeadList;
     }
+
+
+
+
 
 
     private String f创建存储excel的临时目录不带杠() {
         String s = p.strCutNoHead(cnst.daYangSuoLueTuAndFuJianZongPath, "./");
         String s1 = p.strCutEndNothave(s, "/");
-//        p.p("-------------------------s1------------------------------");
-//        p.p(s1);
-//        p.p("-------------------------------------------------------");
+        //        p.p("-------------------------s1------------------------------");
+        //        p.p(s1);
+        //        p.p("-------------------------------------------------------");
         File file = new File(new File(s1).getAbsolutePath() + File.separator + "saveExcelTemp");
         if (p.notExists(file)) {
             file.mkdir();
         }
         return file.getAbsolutePath();
     }
+
+
+    
+
+
 
 
     //对于销售定价,每次找到up_def中最近s_dd的一个
