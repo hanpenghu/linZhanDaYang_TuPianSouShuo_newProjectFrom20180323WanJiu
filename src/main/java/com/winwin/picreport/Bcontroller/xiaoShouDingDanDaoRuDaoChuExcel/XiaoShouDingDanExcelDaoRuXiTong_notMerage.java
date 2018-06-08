@@ -231,11 +231,52 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 
         //计算各种税额
         for(ShouDingDanFromExcel s:list3){
+
+
+            //判断excel中税率和系统厂商cust中的税率是否一致
+            if(p.notEmpty(s.getTaxRto())){
+                Double d=0D;
+                try {
+                    d=Double.valueOf(s.getTaxRto());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    String ss="无法导入,,税率taxRto不为空且不为数字,如果不需要税率请设置为空";
+                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
+                    p.throwE(ss);
+                }finally{}
+                if(d<0.00001){
+                    String ss="无法导入,税率不能为0";
+                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
+                    p.throwE(ss);
+                }
+
+
+                if(Math.abs(d*0.01-taxRto)>0.00001){//意思是相差太大
+                    String ss="无法导入,excel中的税率和系统厂商对应的税率不一致";
+                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
+                    p.throwE(ss);
+                }
+
+
+            }
+
+
+
             double qty= 0;//数量
             double amtn= 0;//未税金额
             double tax= 0;//税额
             double amt= 0;//金额合并
             double up=0;//单价
+
+
+
+
+
+
+
+
+
+
             try {
                 qty = Double.valueOf(s.getQty());
             } catch (NumberFormatException e) {
@@ -261,6 +302,13 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             try {tax = Double.valueOf(s.getTax());} catch (NumberFormatException e) {}
             try {amt = Double.valueOf(s.getAmt());} catch (NumberFormatException e) {}
 
+
+
+
+
+
+
+
             /**
              * 2018_6_7   weekday(4)   16:42:20    by winston
              *订单导入税率这样处理：
@@ -270,7 +318,41 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             s.setTaxRto(String.valueOf(taxRto*0.01));
 
             ///////////////////2018_6_7///////////16:42:20  ////////////////////////////////////////////////////////////
-            AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,s,s.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
+//            AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,s,s.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
+
+
+
+
+            try {up = Double.valueOf(s.getUp());} catch (NumberFormatException e) {
+                e.printStackTrace();
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,,有单价不为数字"));
+                p.throwE("无法导入 有单价不为数字");
+            }
+            if(up==0){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
+                p.throwE("无法导入 有单价为0");
+            }
+
+            if(amt==0){
+                amt=up*qty;//数量不是数字的在前面已经判断过了
+            }
+            ///税率,
+            double taxRtoAdd1=taxRto+1;
+            if(amtn==0){
+//            amtn=amt-amt/1.17*0.17;
+                amtn=amt-amt/taxRtoAdd1*taxRto;//taxRto是税率
+                if(amtn<0){amtn=0D;}
+            }
+            if(tax==0){
+//            tax=amt/1.17*0.17;
+                tax=amt/taxRtoAdd1*taxRto;
+
+            }
+
+
+
+
+
             ///////////////////////////////////////////////////////////////////////////////////////////
 
             s.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn,2));

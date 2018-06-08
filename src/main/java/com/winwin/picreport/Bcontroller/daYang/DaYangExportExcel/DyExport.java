@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -65,14 +66,15 @@ public class DyExport {
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
     public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
         //String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
-        p.p("----1-------------dayang chanpin daochu excel gang jin ru jieKou dyExportExcel de canshu param ruxia--------------------------------------");
+        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
         p.p(param);
         p.p("-------------------------------------------------------");
-        ExportXlsParam ep = null;
-        ep = this.formatJsonFromFront(ep, param);
+        ExportXlsParam ep=this.formatJsonFromFront(param);
         if (null == ep) {return null;}
-        List<String> idsFromConfirmTime = null;
-        this.idsFromConfirmTime(ep, idsFromConfirmTime);
+        List<String> idsFromConfirmTime=this.idsFromConfirmTime(ep);
+        p.p("--------------------this.idsFromConfirmTime(ep, idsFromConfirmTime);-----------------------------------");
+        p.p(idsFromConfirmTime);
+        p.p("-------------------------------------------------------");
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
@@ -80,9 +82,11 @@ public class DyExport {
         if(null==ids){ids=new LinkedList<String>();}
         //将确认时间得到的id放入  全局id集合
         this.perfectIds(ids,idsFromConfirmTime);
+        if(p.empty(ids)){p.p("#######得到时间获得的ids之后 ids是null或者空######");return null;}
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);}
         List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids, 前端穿过来要显示的fields);
+        if(p.empty(daoChus)){p.p("====daoChus是null=========");return null;}
         //把字段写入excel
         String excel路径 = this.a写入excel(daoChus, list导出头信息);
         File file = new File(excel路径);
@@ -94,30 +98,20 @@ public class DyExport {
     }
 
 
-    public static void main(String[]args)throws Exception{
-        String s="{\n" +
-                "\"ids\":[],\n" +
-                "\"fields\":[\"salName\",\"thum\",\"prdCode\"]  ,  \"startConfirmTime\": \"2015-06-03\" , \n" +
-                "\"endConfirmTime\":\" 2018-06-07\"\n" +
-                "}\n";
-
-        p.p("-------------------------------------------------------");
-        p.p(URLEncoder.encode(s,"UTF-8"));
-        p.p("-------------------------------------------------------");
-    }
-
 
 
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids,List<String> idsFromConfirmTime){
+        p.p("--perfectIds()----idsFromConfirmTime="+idsFromConfirmTime+"----------------");
+        p.p("---perfectIds()---ids="+ids+"----------------");
         if(p.notEmpty(ids)){
-            l.info("----3---qianduan chuan guo lai de ids buwei kong----------------");
+            l.error("----3---前端穿过来的ids不为空----------------");
         }
         if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
             ids.addAll(idsFromConfirmTime);
         }
         if(p.notEmpty(ids)){
-            l.info("-----4------zuizhong de dao de ids bu wei null--------------");
+            l.error("-----4------最终得到的ids不为空--------------");
         }
         p.removeNull(ids);
     }
@@ -128,24 +122,35 @@ public class DyExport {
 
 
 
-    private void idsFromConfirmTime(ExportXlsParam ep, List<String> idsFromConfirmTime) {
+    private List<String> idsFromConfirmTime(ExportXlsParam ep) {
+        p.p("---------idsFromConfirmTime--------------ExportXlsParam--------------------------------");
+        p.p(ep);
+        p.p("-------------------------------------------------------");
+        List<String>idsFromConfirmTime=null;
         //起止时间有一个非空才取id//注意,sql限制最多取出500个
         if (p.notEmpty(ep.getStartConfirmTime()) || p.notEmpty(ep.getEndConfirmTime())) {
             //通过确认时间过得id
             idsFromConfirmTime = cnst.a001TongYongMapper.getIdUseConfirmTime(ep.getStartConfirmTime(), ep.getEndConfirmTime());
             if (p.notEmpty(idsFromConfirmTime)) {
-                l.info("--2----qizhi shijian de dao de id bu wei null----------");
+                l.error("--2----起止时间得到的ids不为空----------");
+            }else{
+                l.error("--2----起止时间得到的ids为null---idsFromConfirmTime="+idsFromConfirmTime+"-------");
             }
         } else {
-            l.info("---2 or---------qizhi shijina doushi null  buyong qizhi shijian-------------");
+            l.error("---2 or---------起止时间都是空的-------------");
         }
+        p.p("--idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+        p.p(idsFromConfirmTime);
+        p.p("-------------------------------------------------------");
+        return idsFromConfirmTime;
     }
 
 
 
 
 
-    private ExportXlsParam formatJsonFromFront(ExportXlsParam ep, String param) {
+    private ExportXlsParam formatJsonFromFront(String param) {
+        ExportXlsParam ep=null;
         try {
             ep = JSON.parseObject(param, ExportXlsParam.class);
         } catch (Exception e) {
@@ -217,7 +222,7 @@ public class DyExport {
                 if (p.notEmpty(daoChu)) {
                     HSSFRow row = sheet1.createRow(i行计数器);
                     row.setHeightInPoints(40);
-                    a写入内容行(daoChu, row, sheet1, cellStyle, i行计数器, wb, list导出头信息);
+                    this.a写入内容行(daoChu, row, sheet1, cellStyle, i行计数器, wb, list导出头信息);
                     i行计数器 = i行计数器 + 1;
                 } else {
                     l.error("------a写行列-----daoChu-是null------------------");
@@ -262,13 +267,13 @@ public class DyExport {
                 cell.setCellValue(daoChu.getPrdCode()); // 设置内容  3
             }
             if ("产品大中类（中文）".equals(s)) {
-                cell.setCellValue(daoChu.getIdxName()); // 设置内容  4
+                cell.setCellValue(daoChu.getFenLeiName()); // 设置内容  4
             }
             if ("产品大中类（英文）".equals(s)) {
                 cell.setCellValue(""); // 设置内容  5
             }
             if ("产品子中类（中文）".equals(s)) {
-                cell.setCellValue(daoChu.getFenLeiName()); // 设置内容 6
+                cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
             }
             if ("产品子中类（英文）".equals(s)) {
                 cell.setCellValue(""); // 设置内容 7
@@ -530,6 +535,9 @@ public class DyExport {
     //对于销售定价,每次找到up_def中最近s_dd的一个
     private List<DaoChu> a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(List<String> ids, List<String> fields) {
         List<DaoChu> daoChuList = new LinkedList<DaoChu>();
+        p.p("------------a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径   的ids-------------------------------------------");
+        p.p(ids);
+        p.p("-------------------------------------------------------");
         for (String id : ids) {
             DaoChu daoChu = new DaoChu();
             //得到 haveTransUpSaleBenBi

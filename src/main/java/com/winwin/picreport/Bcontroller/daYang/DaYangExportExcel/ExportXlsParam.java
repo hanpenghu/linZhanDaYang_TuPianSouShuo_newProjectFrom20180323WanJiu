@@ -56,6 +56,8 @@ public class ExportXlsParam {
         return "ExportXlsParam{" +
                 "ids=" + ids +
                 ", fields=" + fields +
+                ", startConfirmTime='" + startConfirmTime + '\'' +
+                ", endConfirmTime='" + endConfirmTime + '\'' +
                 '}';
     }
 }
