@@ -76,8 +76,10 @@ public class DyExport {
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
+        //为了装入 idsFromConfirmTime
+        if(null==ids){ids=new LinkedList<String>();}
         //将确认时间得到的id放入  全局id集合
-        this.perfectIds(ids,idsFromConfirmTime); if(null==ids)return null;
+        this.perfectIds(ids,idsFromConfirmTime);
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);}
         List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids, 前端穿过来要显示的fields);
@@ -92,7 +94,17 @@ public class DyExport {
     }
 
 
+    public static void main(String[]args)throws Exception{
+        String s="{\n" +
+                "\"ids\":[],\n" +
+                "\"fields\":[\"salName\",\"thum\",\"prdCode\"]  ,  \"startConfirmTime\": \"2015-06-03\" , \n" +
+                "\"endConfirmTime\":\" 2018-06-07\"\n" +
+                "}\n";
 
+        p.p("-------------------------------------------------------");
+        p.p(URLEncoder.encode(s,"UTF-8"));
+        p.p("-------------------------------------------------------");
+    }
 
 
 
@@ -102,8 +114,6 @@ public class DyExport {
             l.info("----3---qianduan chuan guo lai de ids buwei kong----------------");
         }
         if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
-            //此时如果ids是空的,要创建一个  为了添加确认时间加进来的id
-            if(ids==null){ids=new LinkedList<String>();}
             ids.addAll(idsFromConfirmTime);
         }
         if(p.notEmpty(ids)){
