@@ -193,6 +193,11 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             throw new RuntimeException(s);
         }
 
+        if(taxRto>1){
+            taxRto=taxRto/100;
+        }
+
+
         for (List<ShouDingDanFromExcel> list3 : list1) {
 
             //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
@@ -243,7 +248,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
                     String ss="无法导入,,税率taxRto不为空且不为数字,如果不需要税率请设置为空";
                     listmsg.addAll(new MessageGenerate().generateMessage(ss));
                     p.throwE(ss);
-                }finally{}
+                }
                 if(d<0.00001){
                     String ss="无法导入,税率不能为0";
                     listmsg.addAll(new MessageGenerate().generateMessage(ss));
@@ -315,7 +320,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
              * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
              * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
              * */
-            s.setTaxRto(String.valueOf(taxRto*0.01));
+            s.setTaxRto(String.valueOf(taxRto));
 
             ///////////////////2018_6_7///////////16:42:20  ////////////////////////////////////////////////////////////
 //            AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,s,s.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
@@ -341,12 +346,13 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             if(amtn==0){
 //            amtn=amt-amt/1.17*0.17;
                 amtn=amt-amt/taxRtoAdd1*taxRto;//taxRto是税率
+                p.p("---amtn-------"+amtn+"-------------");
                 if(amtn<0){amtn=0D;}
             }
             if(tax==0){
 //            tax=amt/1.17*0.17;
                 tax=amt/taxRtoAdd1*taxRto;
-
+                p.p("---tax-------"+tax+"-------------");
             }
 
 

@@ -219,6 +219,11 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
             throw new RuntimeException(s);
         }
 
+        if(taxRto>1){
+            taxRto=taxRto/100;
+        }
+
+
         for(List<ShouDingDanFromExcel> list3:list1){
 //            try {
                 //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
@@ -270,23 +275,23 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         //循环所有去重后的货号+成分代码的集合,因为去重后导入主表的就只有去重后这么多了
         for(String prdNoAndCfdm:prdNoAndCfdmSet){
             //循环所有同一单号下的订单,对当前货号+成分代码下的订单合并
-            List<ShouDingDanFromExcel>list0=new ArrayList<>();
-            for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
-                if(prdNoAndCfdm.equals(
-                        shouDingDanFromExcel.getPrdNo().trim()
-                        +shouDingDanFromExcel.getCfdm().trim()
-                        +shouDingDanFromExcel.getRemBody().trim()
-                )){
-                    list0.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
-                }
-            }
+            List<ShouDingDanFromExcel> list0需要合并的对象集合 =new ArrayList<>();
+                    for(ShouDingDanFromExcel shouDingDanFromExcel:list3){//list3是所有徐勇传过来的excel
+                        if(prdNoAndCfdm.equals(
+                                shouDingDanFromExcel.getPrdNo().trim()
+                                +shouDingDanFromExcel.getCfdm().trim()
+                                +shouDingDanFromExcel.getRemBody().trim()
+                        )){
+                            list0需要合并的对象集合.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
+                        }
+                    }
                 ///list0存的其实是当前 (货号+成分代码)相同 下的所有excel数据,需要合并,但是没有合并
             //这个算法的精妙之处在于,循环(货号+成分代码),然后一边用samePrdNoList收集没有合并的excel,一边合并list0中的数据放入list,最后
             //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
 
             //收集同一货号+成分代码下的list,这个是收集未合并的,将来用于放入sapso
 
-            samePrdNoList.add(list0);//用于放入sapso的
+            samePrdNoList.add(list0需要合并的对象集合);//用于放入sapso的
 
                 double qty=0;//数量
                 double amtn=0;//未税金额
@@ -294,11 +299,12 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                 double amt=0;//金额合并
 
 //                double danJia=0;//当时想错了,单价不能合并,有 数量 有单价 有 就能计算其他的金额,
-                for(ShouDingDanFromExcel shouDingDanFromExcel:list0){
+                for(ShouDingDanFromExcel shouDingDanFromExcel: list0需要合并的对象集合){
                     try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有qty数量不是数字  "+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amtn未税金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有tax税额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+//由于都用价格和数量和税率计算,下面三个就不用加了
+                    //                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amtn未税金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+//                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有tax税额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
+//                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
 //                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
 
@@ -312,11 +318,11 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
 
 
-                if(list0.size()>0) {
+                if(list0需要合并的对象集合.size()>0) {
                     //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
                     ShouDingDanFromExcel shouDingDanFromExcel=new ShouDingDanFromExcel();
 
-                    ShouDingDanFromExcel shouDingDanFromExcel1 = list0.get(0);
+                    ShouDingDanFromExcel shouDingDanFromExcel1 = list0需要合并的对象集合.get(0);
 
                     BeanUtils.copyProperties(shouDingDanFromExcel1,shouDingDanFromExcel);
 
@@ -336,11 +342,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                             p.throwE(ss);
                         }
 
-                        if(d>1){
-                            String ss="税率不能大于1,请除以100";
-                            listmsg.addAll(new MessageGenerate().generateMessage(ss));
-                            p.throwE(ss);
-                        }
+
 
                         if(Math.abs(d*0.01-taxRto)>0.00001){//相差太大,应该几乎相等的
                             String ss="无法导入,excel中的税率和系统厂商对应的税率不一致";
@@ -386,7 +388,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                      * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
                      * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
                      * */
-                    shouDingDanFromExcel.setTaxRto(String.valueOf(taxRto*0.01));
+                    shouDingDanFromExcel.setTaxRto(String.valueOf(taxRto));
 
                     ////////////////////2017-11-23郑总让加/////////////////////////////////////////////////////////////////////////
 //                    AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,shouDingDanFromExcel,shouDingDanFromExcel.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
@@ -408,17 +410,18 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                     if(amt==0){
                         amt=up*qty;//数量不是数字的在前面已经判断过了
                     }
-                    ///税率,
+                    ///税率是taxRto
                     double taxRtoAdd1=taxRto+1;
                     if(amtn==0){
 //            amtn=amt-amt/1.17*0.17;
                         amtn=amt-amt/taxRtoAdd1*taxRto;//taxRto是税率//这种计算可以避免除以0
+                        p.p("---amtn-------"+amtn+"------ -------");
                         if(amtn<0){amtn=0D;}
                     }
                     if(tax==0){
 //            tax=amt/1.17*0.17;
                         tax=amt/taxRtoAdd1*taxRto;
-
+                        p.p("---tax-------"+tax+"-------------");
                     }
 
 
