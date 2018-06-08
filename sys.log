@@ -1,18 +1,12 @@
-2018-06-06 13:49:28,703 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:37,292 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:48,663 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:48,837 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:49,038 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:49,189 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:49,356 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:49,513 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:49:49,675 ERROR (AllExceptionHandler.java:17)- Method [main] was discovered in the .class file but cannot be resolved in the class object
-2018-06-06 13:51:34,265 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_51_34.159-779.xls' does not exist
-2018-06-06 13:52:12,551 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_52_12.546-382.xls' does not exist
-2018-06-06 13:52:33,400 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_52_33.394-178.xls' does not exist
-2018-06-06 13:54:38,030 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_54_38.024-66.xls' does not exist
-2018-06-06 13:56:13,331 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_56_13.326-667.xls' does not exist
-2018-06-06 13:56:52,586 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_56_52.581-827.xls' does not exist
-2018-06-06 13:59:49,428 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-13_59_49.422-273.xls' does not exist
-2018-06-06 14:05:15,533 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-14_05_15.529-849.xls' does not exist
-2018-06-06 14:09:57,913 ERROR (AllExceptionHandler.java:17)- File 'E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\daYangSuoLueTuAndFuJianZongPath\saveExcelTemp\SampExport18-06-06-14_09_57.910-451.xls' does not exist
+2018-06-08 17:37:10,955 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:141)- _________________sap销售订单导入时间_________________
+1
+____________________________________________
+
+2018-06-08 17:40:06,052 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:141)- _________________sap销售订单导入时间_________________
+1
+____________________________________________
+
+2018-06-08 17:46:33,804 ERROR (SapXiaoShouDingDanExcelDaoRuXiTong.java:141)- _________________sap销售订单导入时间_________________
+1
+____________________________________________
+

@@ -213,7 +213,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
         String cusNo = list1.get(0).get(0).getCusNo();
         //找到税率
         Double taxRto=cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
-        if(taxRto==null||taxRto==0){
+        if(taxRto==null){
             String s="该客户《"+cusNo+"》对应的税率在erp《cust》表是空";
             listmsg.addAll(new MessageGenerate().generateMessage(s));
             throw new RuntimeException(s);
@@ -285,6 +285,7 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                             list0需要合并的对象集合.add(shouDingDanFromExcel);//找到同一个货号+成分代码下的所有excel项
                         }
                     }
+
                 ///list0存的其实是当前 (货号+成分代码)相同 下的所有excel数据,需要合并,但是没有合并
             //这个算法的精妙之处在于,循环(货号+成分代码),然后一边用samePrdNoList收集没有合并的excel,一边合并list0中的数据放入list,最后
             //samePrdNoList进入主表//list进入sapso记录所有没有合并之前的数据
@@ -300,23 +301,18 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
 
 //                double danJia=0;//当时想错了,单价不能合并,有 数量 有单价 有 就能计算其他的金额,
                 for(ShouDingDanFromExcel shouDingDanFromExcel: list0需要合并的对象集合){
+
                     try {qty+=Double.parseDouble(shouDingDanFromExcel.getQty().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有qty数量不是数字  "+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
-//由于都用价格和数量和税率计算,下面三个就不用加了
+                    if(0==qty){
+                        listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
+                        p.throwE("无法导入 有数量为0");
+                    }
+                    //由于都用价格和数量和税率计算,下面三个就不用加了
                     //                    try {amtn+=Double.parseDouble(shouDingDanFromExcel.getAmtn().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amtn未税金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
 //                    try {tax+=Double.parseDouble(shouDingDanFromExcel.getTax().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有tax税额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
 //                    try {amt+=Double.parseDouble(shouDingDanFromExcel.getAmt().trim());} catch (NumberFormatException e) {listmsg.addAll(new MessageGenerate().generateMessage("有amt金额不是数字"+shouDingDanFromExcel.getOsNo()+"   "+shouDingDanFromExcel.getPrdNo()+"    "+shouDingDanFromExcel.getCfdm()+""));throw new RuntimeException(e);}
 //                    try {danJia+=Double.parseDouble(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {e.printStackTrace();}
                 }
-
-
-                if(0==qty){
-                    listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
-                    p.throwE("无法导入 有数量为0");
-                }
-
-
-
-
 
                 if(list0需要合并的对象集合.size()>0) {
                     //我们只要取到第一个就行了,因为list0里面放入的都是一样的,需要合并的,上面已经把该合并的合并了,下面只要找到其中一个,把合并后的设置进去就好了
@@ -336,11 +332,6 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                             listmsg.addAll(new MessageGenerate().generateMessage("无法导入,税率taxRto不为空且不为数字,如果不需要税率请设置为空"));
                             p.throwE("无法导入 税率taxRto不为空且不为数字");
                         }finally{}
-                        if(d<0.00001){
-                            String ss="无法导入,税率不能为0,请设置为空后使用erp厂商税率";
-                            listmsg.addAll(new MessageGenerate().generateMessage(ss));
-                            p.throwE(ss);
-                        }
 
 
 
@@ -354,20 +345,8 @@ shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromE
                     }
 
 
-
-
                     double up=0;//单价
-                    try {
-                        qty = Double.valueOf(shouDingDanFromExcel.getQty());
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                        listmsg.addAll(new MessageGenerate().generateMessage("无法导入, 有数量不是数字"));
-                        p.throwE("无法导入 有数量不是数字");
-                    }
-                    if(0==qty){
-                        listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
-                        p.throwE("无法导入 有数量为0");
-                    }
+
                     try {up = Double.valueOf(shouDingDanFromExcel.getUp());} catch (NumberFormatException e) {
                         e.printStackTrace();
                         listmsg.addAll(new MessageGenerate().generateMessage("无法导入, 有单价不为数字"));

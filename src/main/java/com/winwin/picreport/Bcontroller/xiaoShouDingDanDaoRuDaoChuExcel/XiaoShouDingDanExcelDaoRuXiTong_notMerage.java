@@ -187,7 +187,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         Double taxRto=cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
 
 
-        if(taxRto==null||taxRto==0){
+        if(taxRto==null){
             String s="该客户《"+cusNo+"》对应的税率在erp《cust》表是空";
             listmsg.addAll(new MessageGenerate().generateMessage(s));
             throw new RuntimeException(s);
@@ -249,11 +249,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
                     listmsg.addAll(new MessageGenerate().generateMessage(ss));
                     p.throwE(ss);
                 }
-                if(d<0.00001){
-                    String ss="无法导入,税率不能为0";
-                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
-                    p.throwE(ss);
-                }
+
 
 
                 if(Math.abs(d*0.01-taxRto)>0.00001){//意思是相差太大
