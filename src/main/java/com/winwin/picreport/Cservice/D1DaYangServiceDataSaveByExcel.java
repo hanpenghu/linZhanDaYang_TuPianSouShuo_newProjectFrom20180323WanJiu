@@ -129,7 +129,7 @@ public class D1DaYangServiceDataSaveByExcel {
 
 
         /**
-         *提取数据到db,对应的图片到缩略图文件夹
+         *保存数据到db并保存图片到文件夹
          * */
 
         for(int i=0;i<list.size();i++){
@@ -139,17 +139,10 @@ public class D1DaYangServiceDataSaveByExcel {
 ////////////////////////货号流水模块//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
            //如果没有货号,就流水一个
             if(NotEmpty.empty(ps.getPrdNo())){
-//                try {
+
                     PrdtSamp0 p0=new PrdtSamp0();
-//                    p0.setPrdCode(ps.getPrdCode());
+                    //                    p0.setPrdCode(ps.getPrdCode());
                     BeanUtils.copyProperties(ps,p0);
-
-                    p.p("---------------1111111111--------------------");
-                    p.p(p0.getPrdCode());
-                    p.p(p0.getPrdNo());
-                    p.p(p0);
-                    p.p("---------------1111111111--------------------");
-
                     //给当前的prdtSamp流水一个货号
                     cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
 
@@ -163,35 +156,9 @@ public class D1DaYangServiceDataSaveByExcel {
                                 .sad(p0.getFenLeiName())
                                 .sad("》不存在,请手动录入该中类！所有数据未导入！").gad();
                         Msg msg = Msg.gmg().setStatus(msgCnst.failSaveStatus.getValue()).setMsg(s).setChMsg(s).setOtherMsg(s);
-                        p.p("-------------------------------------------------------");
-                        p.p(s);
-                        p.p("-------------------------------------------------------");
                         throw new RuntimeException(JSON.toJSONString(msg));
                     }
-
-
-                    p.p("---------------22222222222222--------------------");
-                    p.p(p0.getPrdCode());
-                    p.p(p0.getPrdNo());
-                    p.p(p0);
-                    p.p("---------------22222222222222--------------------");
-
                     ps.setPrdNo(p0.getPrdNo());
-
-                    p.p("---------------33333333333--------------------");
-                    p.p(ps.getPrdCode());
-                    p.p(ps.getPrdNo());
-                    p.p(ps);
-                    p.p("---------------33333333333--------------------");
-//                } catch (Exception e) {
-//                    throw new RuntimeException(p.gp().sad(p.dexhx)
-//                            .sad("excel打样的时候,生成流水号的时候产生异常,导致一条数据也没有打样成功")
-//                            .sad(p.dexhx)
-//                            .sad("excel da yang de shi hou ,sheng cheng liu ")
-//                            .sad("shui hao de shi hou chan sheng mistake ,")
-//                            .sad(p.dexhx)
-//                            .gad());
-//                }
             }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //定义imageurl,准备放入数据库

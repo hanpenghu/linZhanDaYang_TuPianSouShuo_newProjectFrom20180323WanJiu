@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
-public class DaYangBaoCunShuJuCongExcel {
+public class DaYangUseExcel {
     @Autowired
     private Cnst cnst;
 
@@ -61,17 +61,12 @@ public class DaYangBaoCunShuJuCongExcel {
         try {
             return cnst.d1DaYangServiceDataSaveByExcel.dataSaveByExcel(excel,r);
         } catch (Exception e) {
-//            e.printStackTrace();
             try {
-                p.p("-------------------------------------------------------");
-                p.p(e.getMessage());
-                p.p("-------------------------------------------------------");
                 return mg.gm(JSON.parseObject(e.getMessage(),Msg.class));
             } catch (Exception e1) {
                 e1.printStackTrace();
-
                 return mg.gm(Msg.gmg()
-                        .setStatus(msgCnst.failSaveStatus.getValue())
+                        .setStatus(msgCnst.failSaveStatus.getValue())//50失败
                         .setMsg(msgCnst.failSave.getValue()));
             }
         }
