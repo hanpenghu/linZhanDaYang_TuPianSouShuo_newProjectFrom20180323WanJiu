@@ -36,6 +36,20 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
     @Autowired
     private Cnst cnst;
 
+
+
+/*    select amt,amtn,tax,tax_rto,up,qty,prd_no,*from tf_pos where os_no='EBNEK18004JY2056X'
+    select*from tf_pos_z where os_no='EBNEK18004JY2056X'
+    select*from mf_pos where os_no='EBNEK18004JY2056X'
+    select * from sapso where osno='EBNEK18004JY2056X'
+
+
+
+
+    delete from tf_pos where os_no='EBNEK18004JY2056X'
+    delete from tf_pos_z where os_no='EBNEK18004JY2056X'
+    delete from mf_pos where os_no='EBNEK18004JY2056X'
+    delete  from sapso where osno='EBNEK18004JY2056X'*/
     /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO//注释掉暂时不用
     @RequestMapping(value = InterFaceCnst.upLoadExcelDontMerageOfSaleOrder,
@@ -80,7 +94,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         for (List<ShouDingDanFromExcel> list3同一单号集合 : list1) {
             this.f单号是否在erp已经存在(listmsg, list3同一单号集合);
             //for一次就是处理同一批号osNo一次//其实这个普通订单已经取消合并,但是这个方法是复制sap合并的
-            Map<String, List> listMap = this.f计算qty_amtn_tax_amt(list3同一单号集合, listmsg, 来自erp的税率);
+            Map<String, List> listMap = this.f计算amtn_tax_amt(list3同一单号集合, listmsg, 来自erp的税率);
             /**
              *插入数据到数据库
              * */
@@ -90,7 +104,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 
 
     //////////////////////////由于这个单子不合并了,所以这里删除了合并的代码,但是继续沿用这个方法而已/////////////////////////////////////////////////////////
-    public Map<String, List> f计算qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3同一单号集合, List<Msg> listmsg, Double taxRto) {
+    public Map<String, List> f计算amtn_tax_amt(List<ShouDingDanFromExcel> list3同一单号集合, List<Msg> listmsg, Double taxRto) {
         Map<String, List> map = new HashMap();
         //计算各种税额
         for (ShouDingDanFromExcel s : list3同一单号集合) {

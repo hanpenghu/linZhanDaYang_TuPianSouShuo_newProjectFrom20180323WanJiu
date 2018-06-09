@@ -30,6 +30,18 @@ import java.util.*;
 @CrossOrigin
 @RestController
 @RequestMapping("/a")
+/*    select amt,amtn,tax,tax_rto,up,qty,prd_no,*from tf_pos where os_no='EBNEK18004JY2056X'
+    select*from tf_pos_z where os_no='EBNEK18004JY2056X'
+    select*from mf_pos where os_no='EBNEK18004JY2056X'
+    select * from sapso where osno='EBNEK18004JY2056X'
+
+
+
+
+    delete from tf_pos where os_no='EBNEK18004JY2056X'
+    delete from tf_pos_z where os_no='EBNEK18004JY2056X'
+    delete from mf_pos where os_no='EBNEK18004JY2056X'
+    delete  from sapso where osno='EBNEK18004JY2056X'*/
 /**
  *导入excel
  * */
