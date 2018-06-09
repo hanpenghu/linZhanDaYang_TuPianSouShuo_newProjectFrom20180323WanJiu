@@ -85,6 +85,7 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
 
         Double taxRto = f通过厂商得到小于1的税率(l根据osno分类后的集合, msgs);
 
+        //其实这个集合长度是1  因为我们限制了用户同一次插入的excel单号必须一样
         for (List<ShouDingDanFromExcel> l某一相同osno的集合 : l根据osno分类后的集合) {
 
             this.f数据库是否已经有重复数据(l某一相同osno的集合, msgs);
