@@ -1,11 +1,9 @@
 package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
 
-import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
-import com.winwin.picreport.Futils.AmtAndAmtnAndTaxChongXinSuan;
 import com.winwin.picreport.Futils.BaoLiuXiaoShu;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -44,83 +42,244 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
             method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
-    List<Msg>
-    shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels) {
-
+    List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels) {
         this.打印当前对象(shouDingDanFromExcels);
-
-
         List<Msg> listmsg = new ArrayList<>();
-//    long time01=new Date().getTime();
         try {
-
-            if(p.empty(shouDingDanFromExcels)){
-                String s="前端传过来的参数对象为null";
-                listmsg.addAll (new MessageGenerate().generateMessage(s));
-                throw new RuntimeException(s);
-            }
-
-            //根据saphh来判断是否导错了,  sap里面saphh必须不为空
-            if(p.notEmpty(shouDingDanFromExcels.get(0).getSaphh())){
-                String s="请不要把sap订单当做标准订单导入《sap行号居然不为空》";
-                listmsg.addAll (new MessageGenerate().generateMessage(s));
-                throw new RuntimeException(s);
-            }
-
-
-            //////////////////////////同一个excel中订单号检查必须一样的模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //检查shouDingDanFromExcels里面的osno订单号是否统一 一样,不一样不行
-            //根据osNo订单号去重复//这里单单是为了看是否是统一单号
-            TreeSet<ShouDingDanFromExcel> set1 = new TreeSet<ShouDingDanFromExcel>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
-            set1.addAll(shouDingDanFromExcels);
-            int size = set1.size();
-//        p.p(p.gp().sad(p.dexhx).sad("去重复后的长度是:").sad(p.strValeOfNullSpace(size)).sad(p.dexhx).gad());
-            if (size == 1) {
-                //此时证明里面全部是一个相同单号,去重复后,变成一条记录在set中,此时什么都不用做,继续下一步
-//            p.p(p.gp().sad(p.dexhx).sad("所有单号一样,可以继续下一步").sad(p.dexhx).gad());
-            } else {
-                String s = "excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！";
-                //此时证明有2个以上不同单号,需要提示 客户,同一个excel中必须只能有一个osno
-                listmsg.addAll(new MessageGenerate().generateMessage(s));
-                throw new RuntimeException(s);
-
-            }
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+            this.f前端穿过来的数据是否非法(shouDingDanFromExcels, listmsg);
+            this.f检查excel里面订单号是否都一样(shouDingDanFromExcels, listmsg);
             Msg msg = new Msg();
             if (this.判断前端传过来的数据是否有问题(shouDingDanFromExcels)) {
-                //guo lv suo you bu chong fu de osNo//分离出所有不相同的订单号
                 Set<String> set = this.分类去重复订单号到Set集合(shouDingDanFromExcels);
+
                 List<List<ShouDingDanFromExcel>> list1 = this.按订单号分类后的2个集合放入一个集合(set, shouDingDanFromExcels);
+
                 //按批号分批插入数据库,一个批号下的不成功都不成功在service成实现，listmsg暗传输msg错误信息
                 this.按订单号分类后向Service传入数据(list1, listmsg);
-                msg.setMsg("数据插入成功");
+                msg.setMsg("数据插入成功").setStatus("1");
             } else {
-                msg.setMsg("第一条数据就没有OsNo(订单号),拒绝所有操作,检查您的数据信息再次插入");
+                msg.setMsg("第一条数据就没有OsNo(订单号),拒绝所有操作,检查您的数据信息再次插入").setStatus("0");
             }
             //把当前的msg放入将要返回给前端的集合
             listmsg.add(msg);
-            //如果msg列表中有2个及2个以上,说明数据没有完全插入成功,就把那个数据插入成功的message删掉
-            if (listmsg.size() > 1) {
-                this.去除多余的SuccessMsg(listmsg, "数据插入成功");
-                this.quChuKongDeMsg(listmsg);//如果Msg中的字段msg是"",那么久去除这一条数据
-            }
-
+            this.listmsg去重复(listmsg);
         } catch (Exception e) {
-            if (p.empty(listmsg)) {//此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
-                //有异常的话肯定不能导入excel的
-                listmsg = new ArrayList<>();//清空listmsg
-                listmsg.add(Msg.gmg().setMsg("excel没有插入成功,请仔细检查你的数据"));
-                e.printStackTrace();
-            }
-
-            l.error(e.getMessage(), e);
+            this.f最终异常(listmsg, e);
         }
 
         ////////////////////////////////////////////////////////////////////////
         return listmsg;
 ////////////////////////////////
+    }
+
+
+    //////////////////////////////其实这个方法已经多余了,因为后期一个excel里面的单号限制了必须相同//////////////////////////////////////////////////////////
+    public void 按订单号分类后向Service传入数据(List<List<ShouDingDanFromExcel>> list1, List<Msg> listmsg) {
+        //list1的长度其实是1了,后期限制了多单号同一个excel上传
+        double 来自erp的税率 = f得到税率并判断是否合法(list1, listmsg);
+        for (List<ShouDingDanFromExcel> list3同一单号集合 : list1) {
+            this.f单号是否在erp已经存在(listmsg, list3同一单号集合);
+            //for一次就是处理同一批号osNo一次//其实这个普通订单已经取消合并,但是这个方法是复制sap合并的
+            Map<String, List> listMap = this.f计算qty_amtn_tax_amt(list3同一单号集合, listmsg, 来自erp的税率);
+            /**
+             *插入数据到数据库
+             * */
+            this.cnst.commonDaoRuDBZhiQianZhengLi.saveYiPiDingDanHaoXiangTongDe(listMap, listmsg, "notSap");
+        }
+    }
+
+
+    //////////////////////////由于这个单子不合并了,所以这里删除了合并的代码,但是继续沿用这个方法而已/////////////////////////////////////////////////////////
+    public Map<String, List> f计算qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3同一单号集合, List<Msg> listmsg, Double taxRto) {
+        Map<String, List> map = new HashMap();
+        //计算各种税额
+        for (ShouDingDanFromExcel s : list3同一单号集合) {
+            this.f判断excel中税率是否合法(s, listmsg, taxRto);
+            double qty = 0;//数量
+            double amtn = 0;//未税金额
+            double tax = 0;//税额
+            double amt = 0;//金额合并
+            double up = 0;//单价
+            qty = this.f计算qty并验证是否非法(s, listmsg);
+            up = this.f计算up并验证是否非法(s, listmsg);
+            /**
+             * 2018_6_7   weekday(4)   16:42:20    by winston
+             *订单导入税率这样处理：
+             * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
+             * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
+             * */
+            s.setTaxRto(String.valueOf(taxRto));
+            amt = up * qty;//数量不是数字的在前面已经判断过了
+            ///税率,
+            double taxRtoAdd1 = taxRto + 1;
+            //            amtn=amt-amt/1.17*0.17;
+            amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+            //            tax=amt/1.17*0.17;
+            tax = amt / taxRtoAdd1 * taxRto;
+            s.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn, 2));
+            s.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax, 2));
+            s.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt, 2));
+        }
+
+        //老郑让这个玩意不用合并了,所以,放入同一个东西
+        map.put("samePrdNoMeraged", list3同一单号集合);
+        map.put("samePrdNoList", null);//不用了
+        return map;
+    }
+
+    private double f计算up并验证是否非法(ShouDingDanFromExcel s, List<Msg> listmsg) {
+        double up = 0;
+        try {
+            up = Double.valueOf(s.getUp());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价不为数字"));
+            p.throwE("无法导入 有单价不为数字");
+        }
+        if (up == 0) {
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
+            p.throwE("无法导入 有单价为0");
+        }
+        return up;
+    }
+
+    private double f计算qty并验证是否非法(ShouDingDanFromExcel s, List<Msg> listmsg) {
+        double qty = 0;
+        try {
+            qty = Double.valueOf(s.getQty());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量不是数字"));
+            p.throwE("无法导入 有数量不是数字");
+        }
+        if (0 == qty) {
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
+            p.throwE("无法导入 有数量为0");
+        }
+        return qty;
+    }
+
+    private void f判断excel中税率是否合法(ShouDingDanFromExcel s, List<Msg> listmsg, Double taxRto) {
+        //判断excel中税率和系统厂商cust中的税率是否一致
+        if (p.notEmpty(s.getTaxRto())) {
+            Double d = 0D;
+            try {
+                d = Double.valueOf(s.getTaxRto());
+            } catch (Exception e) {
+                e.printStackTrace();
+                String ss = "无法导入,,税率taxRto不为空且不为数字,如果不需要税率请设置为空";
+                listmsg.addAll(new MessageGenerate().generateMessage(ss));
+                p.throwE(ss);
+            }
+
+
+            if (Math.abs(d * 0.01 - taxRto) > 0.00001) {//意思是相差太大
+                String ss = "无法导入,excel中的税率和系统厂商对应的税率不一致";
+                listmsg.addAll(new MessageGenerate().generateMessage(ss));
+                p.throwE(ss);
+            }
+
+
+        }
+    }
+
+
+    private void f单号是否在erp已经存在(List<Msg> listmsg, List<ShouDingDanFromExcel> list3同一单号集合) {
+        //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
+        MfPosExample mfPosExample = new MfPosExample();
+        mfPosExample.createCriteria().andOsNoEqualTo(list3同一单号集合.get(0).getOsNo());
+        long l = cnst.mfPosMapper.countByExample(mfPosExample);
+        /**
+         *判断excel的单号在数据库是否存在,存在就不插入
+         * */
+        if (l != 0) {//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
+            listmsg.addAll(new MessageGenerate().generateMessage("erp已经存在该单号"));
+            return;//此时停止循环所有单号
+        }
+    }
+
+
+    private double f得到税率并判断是否合法(List<List<ShouDingDanFromExcel>> list1, List<Msg> listmsg) {
+        //客户代号
+        String cusNo = list1.get(0).get(0).getCusNo();
+        //找到税率
+        Double taxRto = cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
+
+        if (taxRto == null) {
+            String s = "该客户《" + cusNo + "》对应的税率在erp《cust》表是空";
+            listmsg.addAll(new MessageGenerate().generateMessage(s));
+            throw new RuntimeException(s);
+        }
+
+        if (taxRto > 1) {
+            taxRto = taxRto / 100;
+        }
+        return taxRto;
+    }
+
+
+    private Set<String> 分类去重复订单号到Set集合(List<ShouDingDanFromExcel> ss) {
+        Set<String> set = new HashSet();
+        for (ShouDingDanFromExcel s : ss) {
+            set.add(s.getOsNo().trim());
+        }
+        return set;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    private List<List<ShouDingDanFromExcel>> 按订单号分类后的2个集合放入一个集合(Set<String> set, List<ShouDingDanFromExcel> shouDingDanFromExcels) {
+        List<List<ShouDingDanFromExcel>> list1 = new ArrayList();
+        //把所有的记录根据单号分成2大类
+        for (String str : set) {
+            List<ShouDingDanFromExcel> list2 = new ArrayList();
+            for (ShouDingDanFromExcel ss : shouDingDanFromExcels) {
+                if (str.equals(ss.getOsNo().trim())) {
+                    list2.add(ss);
+                }
+            }
+            list1.add(list2);
+        }
+        return list1;
+    }
+
+
+    private void f最终异常(List<Msg> listmsg, Exception e) {
+        //此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
+        if (p.empty(listmsg)) {
+            //有异常的话肯定不能导入excel的
+            listmsg = new ArrayList<>();//清空listmsg
+            listmsg.add(Msg.gmg().setMsg("excel没有插入成功,请仔细检查你的数据").setStatus("0"));
+            e.printStackTrace();
+        }
+        l.error(e.getMessage(), e);
+    }
+
+    private void listmsg去重复(List<Msg> listmsg) {
+        if (listmsg.size() > 1) {
+            this.去除多余的SuccessMsg(listmsg, "数据插入成功");
+            this.quChuKongDeMsg(listmsg);//如果Msg中的字段msg是"",那么久去除这一条数据
+        }
+    }
+
+    private void f检查excel里面订单号是否都一样(List<ShouDingDanFromExcel> shouDingDanFromExcels, List<Msg> listmsg) {
+        TreeSet<ShouDingDanFromExcel> set去重 = new TreeSet<ShouDingDanFromExcel>(Comparator.comparing(ShouDingDanFromExcel::getOsNo));
+        set去重.addAll(shouDingDanFromExcels);
+        if (set去重.size() != 1) {
+            String s = "excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！";
+            commonThrow(listmsg, s);
+        }
+    }
+
+    private void f前端穿过来的数据是否非法(List<ShouDingDanFromExcel> ss, List<Msg> listmsg) {
+        if (p.empty(ss)) {
+            String s = "前端传过来的参数对象为null";
+            commonThrow(listmsg, s);
+        }
+        //根据saphh来判断是否导错了,  sap里面saphh必须不为空
+        if (p.notEmpty(ss.get(0).getSaphh())) {
+            String s = "请不要把sap订单当做标准订单导入《sap行号居然不为空》";
+            commonThrow(listmsg, s);
+        }
     }
 
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
@@ -152,244 +311,10 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         boolean e = !a || !c || !b || !d;
         return e;
     }
-/////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Set<String> 分类去重复订单号到Set集合(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
-        Set<String> set = new HashSet();
-
-        for (ShouDingDanFromExcel shouDingDanFromExcel : shouDingDanFromExcels) {
-            set.add(shouDingDanFromExcel.getOsNo().trim());
-        }
-        return set;
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    public List<List<ShouDingDanFromExcel>> 按订单号分类后的2个集合放入一个集合(Set<String> set, List<ShouDingDanFromExcel> shouDingDanFromExcels) {
-        List<List<ShouDingDanFromExcel>> list1 = new ArrayList();
-        //把所有的记录根据单号分成2大类
-        for (String str : set) {
-            List<ShouDingDanFromExcel> list2 = new ArrayList();
-            for (ShouDingDanFromExcel ss : shouDingDanFromExcels) {
-                if (str.equals(ss.getOsNo().trim())) {
-                    list2.add(ss);
-                }
-            }
-            list1.add(list2);
-        }
-        return list1;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    public void 按订单号分类后向Service传入数据(List<List<ShouDingDanFromExcel>> list1, List<Msg> listmsg) {
-        //客户代号
-        String cusNo = list1.get(0).get(0).getCusNo();
-        //找到税率
-        Double taxRto=cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
-
-
-        if(taxRto==null){
-            String s="该客户《"+cusNo+"》对应的税率在erp《cust》表是空";
-            listmsg.addAll(new MessageGenerate().generateMessage(s));
-            throw new RuntimeException(s);
-        }
-
-        if(taxRto>1){
-            taxRto=taxRto/100;
-        }
-
-
-        for (List<ShouDingDanFromExcel> list3 : list1) {
-
-            //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
-            MfPosExample mfPosExample = new MfPosExample();
-            mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
-            long l = cnst.mfPosMapper.countByExample(mfPosExample);
-            /**
-             *判断excel的单号在数据库是否存在,存在就不插入
-             * */
-            if (l == 0) {//此时数据库没有这个单号,我们开始进行接下来的save//如果有的话就不要再save了
-                //for一次就是处理同一批号osNo一次
-                Map<String, List> listMap =
-                        this.合并同一订单号下面货号相同的qty_amtn_tax_amt
-                                (list3, listmsg,taxRto);
-
-                /**
-                 *插入数据到数据库
-                 * */
-                this.cnst.commonDaoRuDBZhiQianZhengLi.saveYiPiDingDanHaoXiangTongDe(listMap, listmsg, "notSap");
-            } else {
-//                    listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入,重复的单号为“"+list3.get(0).getOsNo()+"”"));
-                listmsg.addAll(new MessageGenerate().generateMessage("重复数据,未能成功插入"));
-                return;//此时停止循环所有单号
-            }
-        }
-    }
-
-
-
-
-
-    //////////////////////////由于这个单子不合并了,所以这里删除了合并的代码,但是继续沿用这个方法而已/////////////////////////////////////////////////////////
-    public Map<String, List> 合并同一订单号下面货号相同的qty_amtn_tax_amt(List<ShouDingDanFromExcel> list3, List<Msg> listmsg,Double taxRto) {
-        Map<String, List> map = new HashMap();
-
-
-        //计算各种税额
-        for(ShouDingDanFromExcel s:list3){
-
-
-            //判断excel中税率和系统厂商cust中的税率是否一致
-            if(p.notEmpty(s.getTaxRto())){
-                Double d=0D;
-                try {
-                    d=Double.valueOf(s.getTaxRto());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    String ss="无法导入,,税率taxRto不为空且不为数字,如果不需要税率请设置为空";
-                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
-                    p.throwE(ss);
-                }
-
-
-
-                if(Math.abs(d*0.01-taxRto)>0.00001){//意思是相差太大
-                    String ss="无法导入,excel中的税率和系统厂商对应的税率不一致";
-                    listmsg.addAll(new MessageGenerate().generateMessage(ss));
-                    p.throwE(ss);
-                }
-
-
-            }
-
-
-
-            double qty= 0;//数量
-            double amtn= 0;//未税金额
-            double tax= 0;//税额
-            double amt= 0;//金额合并
-            double up=0;//单价
-
-
-
-
-
-
-
-
-
-
-            try {
-                qty = Double.valueOf(s.getQty());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量不是数字"));
-                p.throwE("无法导入 有数量不是数字");
-            }
-            if(0==qty){
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量为0"));
-                p.throwE("无法导入 有数量为0");
-            }
-            try {up = Double.valueOf(s.getUp());} catch (NumberFormatException e) {
-                e.printStackTrace();
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价不为数字"));
-                p.throwE("无法导入 有单价不为数字");
-            }
-            if(up==0){
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
-                p.throwE("无法导入 有单价为0");
-            }
-
-            try {amtn = Double.valueOf(s.getAmtn());} catch (NumberFormatException e) {}
-            try {tax = Double.valueOf(s.getTax());} catch (NumberFormatException e) {}
-            try {amt = Double.valueOf(s.getAmt());} catch (NumberFormatException e) {}
-
-
-
-
-
-
-
-
-            /**
-             * 2018_6_7   weekday(4)   16:42:20    by winston
-             *订单导入税率这样处理：
-             * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
-             * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
-             * */
-            s.setTaxRto(String.valueOf(taxRto));
-
-            ///////////////////2018_6_7///////////16:42:20  ////////////////////////////////////////////////////////////
-//            AmtAndAmtnAndTaxChongXinSuan.f(amt,amtn,tax,qty,s,s.getTaxRto(),listmsg);//在类内部进行判断计算各种金额
-
-
-
-
-            try {up = Double.valueOf(s.getUp());} catch (NumberFormatException e) {
-                e.printStackTrace();
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,,有单价不为数字"));
-                p.throwE("无法导入 有单价不为数字");
-            }
-            if(up==0){
-                listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有单价为0"));
-                p.throwE("无法导入 有单价为0");
-            }
-
-            if(amt==0){
-                amt=up*qty;//数量不是数字的在前面已经判断过了
-            }
-            ///税率,
-            double taxRtoAdd1=taxRto+1;
-            if(amtn==0){
-//            amtn=amt-amt/1.17*0.17;
-                amtn=amt-amt/taxRtoAdd1*taxRto;//taxRto是税率
-                p.p("---amtn-------"+amtn+"-------------");
-                if(amtn<0){amtn=0D;}
-            }
-            if(tax==0){
-//            tax=amt/1.17*0.17;
-                tax=amt/taxRtoAdd1*taxRto;
-                p.p("---tax-------"+tax+"-------------");
-            }
-
-
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////////////
-
-            s.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn,2));
-            s.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax,2));
-            s.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt,2));
-        }
-
-        //老郑让这个玩意不用合并了,所以,放入同一个东西
-        map.put("samePrdNoMeraged", list3);
-        map.put("samePrdNoList", null);//不用了
-        return map;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////
-    public void 去除多余的SuccessMsg(List<Msg> listmsg, String msg) {
+    private void 去除多余的SuccessMsg(List<Msg> listmsg, String msg) {
 //        try {
         if (listmsg.size() > 1) {
             for (int i = 0; i < listmsg.size(); i++) {
@@ -403,7 +328,7 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
 //////////////////////////////////////////////////////////////////
 
 
-    public void 打印当前对象(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
+    private void 打印当前对象(List<ShouDingDanFromExcel> shouDingDanFromExcels) {
         try {
             if (p.notEmpty(shouDingDanFromExcels)) {
                 if (shouDingDanFromExcels.size() < 50) {
@@ -416,6 +341,10 @@ public class XiaoShouDingDanExcelDaoRuXiTong_notMerage {
         }
     }
 
+    private void commonThrow(List<Msg> msgs, String msgStr) {
+        msgs.addAll(new MessageGenerate().generateMessage(msgStr));
+        throw new RuntimeException(msgStr);
+    }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 }
