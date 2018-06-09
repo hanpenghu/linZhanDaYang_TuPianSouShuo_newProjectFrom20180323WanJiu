@@ -74,14 +74,7 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
     }
 
 
-    private void controller最终异常(List<Msg> msgs, Exception e) {
-        if (p.empty(msgs)) {//此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
-            //有异常的话肯定不能导入excel的
-            msgs = new ArrayList<>();//清空listmsg
-            msgs.add(Msg.gmg().setMsg("excel没有插入成功,请仔细检查你的数据").setStatus("0"));
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * 数据库插入数据
@@ -103,30 +96,6 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
             cnst.commonDaoRuDBZhiQianZhengLi.saveYiPiDingDanHaoXiangTongDe(listMap合并和未合并, msgs, sap);
 
         }
-    }
-
-    private void f数据库是否已经有重复数据(List<ShouDingDanFromExcel> list3, List<Msg> msgs) {
-        //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
-        MfPosExample mfPosExample = new MfPosExample();
-        mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
-        long l = cnst.mfPosMapper.countByExample(mfPosExample);
-        if (l != 0) {
-            this.commonThrow(msgs, "重复数据,未能成功插入001---单号" + list3.get(0).getOsNo() + "已经存在于mfPos");
-        }
-    }
-
-    private Double f通过厂商得到小于1的税率(List<List<ShouDingDanFromExcel>> list1, List<Msg> msgs) {
-        //客户代号
-        String cusNo = list1.get(0).get(0).getCusNo();
-        //找到税率
-        Double taxRto = cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
-        if (taxRto == null) {
-            commonThrow(msgs, "该客户《" + cusNo + "》对应的税率在erp《cust》表是空");
-        }
-        if (taxRto > 1) {
-            taxRto = taxRto / 100;
-        }
-        return taxRto;
     }
 
     /**
@@ -190,6 +159,37 @@ public class SapXiaoShouDingDanExcelDaoRuXiTong {
 
 
 
+    private void controller最终异常(List<Msg> msgs, Exception e) {
+        if (p.empty(msgs)) {//此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
+            //有异常的话肯定不能导入excel的
+            msgs = new ArrayList<>();//清空listmsg
+            msgs.add(Msg.gmg().setMsg("excel没有插入成功,请仔细检查你的数据").setStatus("0"));
+            e.printStackTrace();
+        }
+    }
+    private void f数据库是否已经有重复数据(List<ShouDingDanFromExcel> list3, List<Msg> msgs) {
+        //首先进行osNo判断,如果在mf_pos中已经有这个osNo,我们就不再进行下面的save步骤
+        MfPosExample mfPosExample = new MfPosExample();
+        mfPosExample.createCriteria().andOsNoEqualTo(list3.get(0).getOsNo());
+        long l = cnst.mfPosMapper.countByExample(mfPosExample);
+        if (l != 0) {
+            this.commonThrow(msgs, "重复数据,未能成功插入001---单号" + list3.get(0).getOsNo() + "已经存在于mfPos");
+        }
+    }
+
+    private Double f通过厂商得到小于1的税率(List<List<ShouDingDanFromExcel>> list1, List<Msg> msgs) {
+        //客户代号
+        String cusNo = list1.get(0).get(0).getCusNo();
+        //找到税率
+        Double taxRto = cnst.a001TongYongMapper.getTaxRtoFromCust(cusNo);
+        if (taxRto == null) {
+            commonThrow(msgs, "该客户《" + cusNo + "》对应的税率在erp《cust》表是空");
+        }
+        if (taxRto > 1) {
+            taxRto = taxRto / 100;
+        }
+        return taxRto;
+    }
 
 
     private double f合并qty并判断最终qty是否非法(List<ShouDingDanFromExcel> list0需要合并的对象集合, List<Msg> listmsg) {
