@@ -28,6 +28,9 @@ public class DyExcelBf {
     public void f(MultipartFile excel, HttpServletRequest request,List<String> msgs) throws IOException {
         File excelFile = this.f将excel保存在本地的excelTemp文件夹(msgs, excel);
 
+        p.p("-------------------------------------------------------");
+        p.p(excelFile.getAbsolutePath());
+        p.p("-------------------------------------------------------");
 
 
 
