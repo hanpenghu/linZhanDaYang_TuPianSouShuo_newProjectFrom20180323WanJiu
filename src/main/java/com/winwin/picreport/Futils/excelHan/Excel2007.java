@@ -1,4 +1,5 @@
 package com.winwin.picreport.Futils.excelHan;
+import com.alibaba.fastjson.JSON;
 import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
@@ -12,16 +13,17 @@ import java.util.*;
  * 1  sheet必须只有一个,即sheet的索引只有0
  * 2  必须有表头,就是第一行是表头,计算是从第二行(索引是1)算有效数据的
  * 3  以每一行为一个单位,就是说把Excel的一行看成一条将要入数据库的一条数据来看待
+ *
+ * //当没有一行的时候,List<ExcelPicTxtTemplate>为[]
+ //当没有一行文字只有图片的时候 List<ExcelPicTxtTemplate>为[]也为空
+
+ //该行的所有图片//当没有图片的时候List<ExcelPicTemplate>为空[]
  * */
 public class Excel2007 {
 
-  /*  public static void main(String[]args) throws IOException {
-        File file=new File("E:/1/000/云平台问题/A片标批量上传打样模板.xlsx");
-//        List<ExcelPicTemplate> excelPic = Excel2007.getExcelPic(file);
-//        System.out.println(excelPic);
-//        List<List<ExcelTxtTemplate>> excelTxt = Excel2007.getExcelTxt(file);
-//        System.out.println(excelTxt);
-        List<ExcelPicTxtTemplate> excelPicTxt = Excel2007.getExcelPicTxt(file);
+/*    public static void main(String[]args) throws IOException {
+        File file=new File("E:/打样上传模板20180310.xlsx");
+        List<ExcelPicTxtTemplate> excelPicTxt = Excel2007.g().getExcelPicTxt(file);
         System.out.println(excelPicTxt);
 
     }*/
@@ -34,45 +36,46 @@ public class Excel2007 {
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //得到所有行的文本和图片的list
-    public static List<ExcelPicTxtTemplate> getExcelPicTxt(File excelFile)
-            throws IOException {
+    public  List<ExcelPicTxtTemplate> getExcelPicTxt(File excelFile) throws IOException {
         //得到所有的文本行
-        List<List<ExcelTxtTemplate>> excelTxt = Excel2007.getExcelTxt(excelFile);
+        List<List<ExcelTxtTemplate>> excelTxt = this.getExcelTxt(excelFile);
         //得到所有的带属性的图片
-        List<ExcelPicTemplate> excelPic = Excel2007.getExcelPic(excelFile);
+        List<ExcelPicTemplate> excelPic = this.getExcelPic(excelFile);
         List<ExcelPicTxtTemplate> list=new LinkedList<>();
         for(List<ExcelTxtTemplate> list1:excelTxt){
             //注意一个list1代表excel中的一行数据
             ExcelPicTxtTemplate eptt=new ExcelPicTxtTemplate();
             eptt.setTxtRowList(list1);
-            ExcelTxtTemplate excelTxtTemplate = list1.get(0);
-            int txtSheetNum = excelTxtTemplate.getTxtSheetNum();
-            int txtRowNum = excelTxtTemplate.getTxtRowNum();
-            List<ExcelPicTemplate> txtRowPicDataList=new LinkedList<>();
-            for(ExcelPicTemplate ept:excelPic){
-                int picRowNum = ept.getPicRowNum();
-                int picSheetNum = ept.getPicSheetNum();
-                if(txtSheetNum==picSheetNum&&txtRowNum==picRowNum){
-                    txtRowPicDataList.add(ept);
-                }
-            }
+            List<ExcelPicTemplate> txtRowPicDataList= this.packagePic(list1,excelPic);
             eptt.setTxtRowPicDataList(txtRowPicDataList);
             list.add(eptt);
         }
         return list;
     }
 
+    private List<ExcelPicTemplate> packagePic(List<ExcelTxtTemplate> list1, List<ExcelPicTemplate> excelPic) {
+        ExcelTxtTemplate excelTxtTemplate = list1.get(0);
+        int txtSheetNum = excelTxtTemplate.getTxtSheetNum();
+        int txtRowNum = excelTxtTemplate.getTxtRowNum();
+        List<ExcelPicTemplate> txtRowPicDataList=new LinkedList<>();
+        for(ExcelPicTemplate ept:excelPic){
+            int picRowNum = ept.getPicRowNum();
+            int picSheetNum = ept.getPicSheetNum();
+            if(txtSheetNum==picSheetNum&&txtRowNum==picRowNum){
+                txtRowPicDataList.add(ept);
+            }
+        }
+        return txtRowPicDataList;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //注意内层的List<ExcelTxtTemplate>代表了一行,外层的List<List<ExcelTxtTemplate>>代表所有行,就是整个sheet内容
     //其实是从索引为1的行开始存入,因为第一行为表头
-    public static List<List<ExcelTxtTemplate>>
-        getExcelTxt(File excelFile)
-                throws IOException {
+    public  List<List<ExcelTxtTemplate>> getExcelTxt(File excelFile) throws IOException {
         // 创建流
         InputStream input = new FileInputStream(excelFile);
         // 获取文件后缀名(不带点)
-        String fileExt =  excelFile.getName()
-                .substring(excelFile.getName().lastIndexOf(".") + 1);
+        String fileExt =  excelFile.getName().substring(excelFile.getName().lastIndexOf(".") + 1);
         if ("xlsx".equals(fileExt)) {
             //继续,不做任何处理
             System.out.println("-------文件名字是："+excelFile.getName()+"---------");
@@ -198,7 +201,7 @@ public class Excel2007 {
     //注意写死了sheet索引是0,只支持只有一个sheet的excel
     //注意row行从0开始索引
     //注意column列也是从0开始索引
-    public static List<ExcelPicTemplate>
+    public  List<ExcelPicTemplate>
         getExcelPic(File excelFile)
             throws IOException {
         // 创建流

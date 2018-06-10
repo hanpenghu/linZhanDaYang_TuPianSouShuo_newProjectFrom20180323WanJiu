@@ -80,11 +80,11 @@ public class DyExcelBf {
 
 
 
-    private  String type="品牌";
-    private  String cus="客户";
-    private  String prdCategory="产品分类"	;
-    private  String prdName="产品名称";
-    private  String prd="产品负责人";
+    private  String 品牌="品牌";
+    private  String 客户="客户";
+    private  String 产品分类="产品分类";
+    private  String 产品名称="产品名称";
+    private  String 产品负责人="产品负责人";
     private  String 图片="图片";
     private  String	编号="编号";
     private  String 颜色="颜色";
