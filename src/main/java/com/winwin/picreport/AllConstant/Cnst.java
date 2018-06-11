@@ -87,9 +87,7 @@ public class Cnst {
 
     //这个路径是springbootjar运行后深入到缩略图文件夹中的路径最后带个/
     public  String getSpringbootJarSuoLueTuFilePath(){
-       return  p.gp().sad(Cnst.getProjectPath())
-                .sad(daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr))
-                .sad(suoLueTuWenJianJia).gad();
+       return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
 
 

@@ -19,7 +19,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/d")
+//@RequestMapping("/d")
 public class DyExcel {
 
     @Autowired
@@ -45,7 +45,7 @@ public class DyExcel {
      * value  具体的excel
      */
 
-    //        /d/dataSaveByExcel
+    //        dataSaveByExcel001
     @RequestMapping(
             value = "dataSaveByExcel001",
             method = RequestMethod.POST, //客户端请求的类型
@@ -89,8 +89,8 @@ public class DyExcel {
         if (p.empty(excel)) {
             this.commonsThrow(msgs, "前端没有将excel传过来");
         }
-        if (p.bdy("xls", excel.getOriginalFilename()) && p.bdy("xlsx", excel.getOriginalFilename())) {
-            this.commonsThrow(msgs, "您传过来的不是excel");
+        if(!excel.getOriginalFilename().contains("xlsx")){
+            this.commonsThrow(msgs, "您传过来的不是大于等于2007版的excel");
         }
     }
 

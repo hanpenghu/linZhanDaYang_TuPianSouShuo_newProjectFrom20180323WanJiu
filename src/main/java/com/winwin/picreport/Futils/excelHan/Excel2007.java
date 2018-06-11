@@ -78,9 +78,7 @@ public class Excel2007 {
         String fileExt =  excelFile.getName().substring(excelFile.getName().lastIndexOf(".") + 1);
         if ("xlsx".equals(fileExt)) {
             //继续,不做任何处理
-            System.out.println("-------文件名字是："+excelFile.getName()+"---------");
         }else{
-            System.out.println("------你的Excel不是2007以上版本或者根本不是excel-----");
             throw new RuntimeException("你的xlsx不是2007以上版本或者根本不是excel");
         }
         // 创建Workbook,就是整个excel
@@ -105,7 +103,6 @@ public class Excel2007 {
                 break;
             }
         }
-        System.out.println("------总列数是: "+zongLieShu+"-----------------");
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 得到总行数//包括表头的,从0开始的索引
         int rowNum = sheet.getLastRowNum();
@@ -129,7 +126,6 @@ public class Excel2007 {
                 break;
             }
         }
-        System.out.println("---该sheet有文字的行数是:"+rowNum+"----");
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //创建存储文本及其属性的list//存储所有列
         List<List<ExcelTxtTemplate>> txtss=new LinkedList<>();
@@ -211,9 +207,7 @@ public class Excel2007 {
                 .substring(excelFile.getName().lastIndexOf(".") + 1);
         if ("xlsx".equals(fileExt)) {
             //继续,不做任何处理
-            System.out.println("-------文件名字是："+fileExt+"---------");
         }else{
-            System.out.println("------你的Excel不是2007以上版本或者根本不是excel-----");
             throw new RuntimeException("你的xlsx不是2007以上版本或者根本不是excel");
         }
         // 创建Workbook,就是整个excel
@@ -275,7 +269,6 @@ public class Excel2007 {
                 }
             }else{
                 //如果不是图片就抛出异常
-                System.out.println("------这个图像不是图片,继续寻找下一个-------");
             }
 
         }

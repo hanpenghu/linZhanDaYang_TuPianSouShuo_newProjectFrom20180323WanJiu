@@ -22,7 +22,7 @@ public class GPrdNo {
      * */
 
 
-    @Transactional
+//    @Transactional
     public void prdtSampObjGetPrdNo(PrdtSamp0 prdtSamp){
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
@@ -55,7 +55,7 @@ public class GPrdNo {
 
 
 
-    @Transactional
+//    @Transactional
     public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp0 prdtSamp){
 //        synchronized (this) {
             //得到中类代号,fenLeiNo是最小范围的
