@@ -51,7 +51,6 @@ public class DyExcel {
             produces = MediaType.APPLICATION_JSON_VALUE)//返回的类型
     public @ResponseBody Msg dataSaveByExcel(@RequestParam(value = p.excel, required = false) MultipartFile excel, HttpServletRequest request) {
         List<String> msgs = new LinkedList<String>();
-
         try {
             this.throwE(excel,request,msgs);
             cnst.dyExcelBf.f(excel, request, msgs);
@@ -92,9 +91,9 @@ public class DyExcel {
 
     private Msg exceptionReturn(List<String> msgs, Exception e) {
         if (msgs.contains(e.getMessage())) {
-            return Msg.gmg().setMsg(e.getMessage()).setStatus("0");
+            return Msg.gmg().setMsg(e.getMessage()).setStatus("0").setOtherMsg(e.getMessage());
         } else {
-            return Msg.gmg().setMsg("《未知异常》").setStatus("0");
+            return Msg.gmg().setMsg("《未知异常》").setStatus("0").setOtherMsg(e.getMessage());
         }
     }
 
