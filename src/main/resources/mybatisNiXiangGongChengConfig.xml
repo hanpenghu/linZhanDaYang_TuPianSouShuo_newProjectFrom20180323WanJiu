@@ -46,6 +46,8 @@
             <property name="forceBigDecimals" value="true" />
         </javaTypeResolver>
 
+
+
         <!-- targetProject:生成PO类的位置，重要！！ -->
         <javaModelGenerator targetPackage="com.winwin.picreport.Edto"
             targetProject=".\src\main\java">
@@ -59,18 +61,13 @@
         
         
         <!-- targetProject:mapper映射文件生成的位置，重要！！ -->
-        <sqlMapGenerator targetPackage="resources.mybatis.xmlmapper"
-            targetProject=".\src\main">
+        <sqlMapGenerator targetPackage="mybatis.xmlmapper"
+            targetProject=".\src\main\resources">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
         
         
-        <!-- targetPackage：mapper接口生成的位置，重要！！ -->
-        <javaClientGenerator type="XMLMAPPER"
-            targetPackage="com.winwin.picreport.Ddao.reportxmlmapper"
-            targetProject=".\src\main\java">
-            <property name="enableSubPackages" value="false" />
-        </javaClientGenerator>
+
         
         
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
