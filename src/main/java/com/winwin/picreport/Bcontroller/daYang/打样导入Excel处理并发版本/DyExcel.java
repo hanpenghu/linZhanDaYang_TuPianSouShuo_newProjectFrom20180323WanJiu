@@ -46,14 +46,10 @@ public class DyExcel {
      */
 
     //        dataSaveByExcel001
-    @RequestMapping(
-            value = "dataSaveByExcel001",
-            method = RequestMethod.POST, //客户端请求的类型
+    @RequestMapping(value = "dataSaveByExcel001", method = RequestMethod.POST, //客户端请求的类型
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,//接受的类型
             produces = MediaType.APPLICATION_JSON_VALUE)//返回的类型
-    public @ResponseBody
-    Msg dataSaveByExcel(@RequestParam(value = p.excel, required = false)
-                                MultipartFile excel, HttpServletRequest request) {
+    public @ResponseBody Msg dataSaveByExcel(@RequestParam(value = p.excel, required = false) MultipartFile excel, HttpServletRequest request) {
         List<String> msgs = new LinkedList<String>();
 
         try {
