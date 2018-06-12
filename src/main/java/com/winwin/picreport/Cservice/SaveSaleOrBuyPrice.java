@@ -48,7 +48,6 @@ public class SaveSaleOrBuyPrice {
         if (p.empty(up.getCurId())) {p.throwEAddToList("curId 币别代号没有传过来", msgs);}
         String prdNo=this.f货号流水模块_把流水后的货号放入PrdtSamp(up, msgs);
         this.f插入主副单位到prdt表中(up,prdNo);
-//////////////////////////////////////////////////////////////////////////////////////////////
         this.f主对象设置货号并保存数据(up,prdNo,msgs);
     }
 
