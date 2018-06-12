@@ -128,6 +128,8 @@ public class D1DaYangS {
 
             prdtSampList.add(prdtSampX);
         }
+
+
         fenYe.setPrdtSampList(prdtSampList);
         if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",dingJiaType)) {
             //手动建立连接
@@ -181,7 +183,7 @@ public class D1DaYangS {
         String prdtSampUuid = prdtSampX.getId();
 
 
-
+         //插入修改记录
         List<AlterPriceRecToFront> saleAlterRecList= cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,"sale");
         
         

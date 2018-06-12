@@ -422,7 +422,7 @@
             AND a.cur_id = #{CurId} ---此时是本币
         </if>
         <if test="CurId != null and CurId == ''">
-            AND a.cur_id != 'RMB'
+            AND a.cur_id != 'RMB'  --  此时是外币
         </if>
         AND
         a.bil_type=#{bilType}

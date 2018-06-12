@@ -330,7 +330,8 @@ public interface A001TongYongMapper {
    int updateUtToPrdtUsePrdNo(@Param("prdtNo") String prdtNo,@Param("mainUnit")  String mainUnit);
 
 
-   @Select({"select olefield from up_def  where olefield like '%SamplesSys%'  and prd_no =#{prdNo} and price_id=#{priceId} group by olefield"})
+//   @Select({"select top 80 olefield from up_def  where olefield like '%SamplesSys%'  and prd_no =#{prdNo} and price_id=#{priceId} group by olefield"})
+   @Select({"select a.olefield from (select top 80 olefield from up_def  where olefield like '%SamplesSys%'  and prd_no =#{prdNo} and price_id=#{priceId} order by s_dd desc) a group by a.olefield"})
    List<String> getOlefieldUsePrdNo(@Param("prdNo") String prdNo,@Param("priceId") String priceId);
 
    @Update({"update prdt_samp set prd_no=#{prdNo} where id=#{uuid}"})

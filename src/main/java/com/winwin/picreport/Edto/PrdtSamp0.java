@@ -19,6 +19,7 @@ public class PrdtSamp0 extends PrdtSamp{
      需要调整为(1和2同事满足)展示1.已经进行过采购定价、2.还未进行销售定价，的数据进行展示
 
      * */
+    //销售的
     private List<UpDefMy01>upDefMyList=new ArrayList<>();
 
 

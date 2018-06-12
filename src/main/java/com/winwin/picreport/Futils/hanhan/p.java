@@ -2709,6 +2709,10 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         return s101;
     }
 
+
+
+
+
     /**
      * 16到18位
      *180408170814386251

@@ -42,7 +42,7 @@ public class SaveSaleOrBuyPrice {
         up.setQty(p.sm(p.empty(up.getQty()),p.b(p.n0),up.getQty()));
         up.setCurId(p.sm(p.empty(up.getCurId()),p.space,up.getCurId()));
         //前端传过来的备注
-        up.setRem( up.getRemFront());
+        up.setRem(up.getRemFront());
         //单位
         this.f前端传过来的主副单位确定(up);
         if (p.empty(up.getCurId())) {p.throwEAddToList("curId 币别代号没有传过来", msgs);}
@@ -125,7 +125,6 @@ public class SaveSaleOrBuyPrice {
             //1代表不含运费//2代表销售含运费
             upDef.setBilType(Cnst.saleBilTypeHaveTrans);
             upDef.setUp(up.getHaveTransUpSale());
-            upDef.setCusNo(null == upDef.getCusNo()?p.space:upDef.getCusNo());
             //往价格表up_def插入采购价格
             int insert = cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
             p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~13~~~~~~~~~~~~~~~~");
@@ -143,7 +142,6 @@ public class SaveSaleOrBuyPrice {
             upDef.setBilType(Cnst.saleBilTypeNoTrans);
             upDef.setUp(up.getNoTransUpSale());
             p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            upDef.setCusNo(null == upDef.getCusNo()?p.space:upDef.getCusNo());
             //往价格表up_def插入采购价格
             int insert = cnst.upDefMapper.insert(upDef);
             if (insert == 0) {
@@ -293,7 +291,7 @@ public class SaveSaleOrBuyPrice {
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-        upDef.setCusNo(up.getCusNo());
+        upDef.setCusNo("");//销售没有厂商或客户
         upDef.setUsr(up.getUsr());
         upDef.setChkMan(up.getUsr());
         /////////////////////////////////////////////////////////////////////////////////////

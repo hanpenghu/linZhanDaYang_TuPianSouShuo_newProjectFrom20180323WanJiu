@@ -22,83 +22,82 @@ public class GetPriceModelUpdef20180512 {
 
     public void getPriceModel(PrdtSamp0 prdtSampX){
         String prdNo=prdtSampX.getPrdNo();
+        this.f销售价格封装(prdtSampX,prdNo);
+        //以上是销售价格模块的select,
+        this.f采购价格封装(prdtSampX,prdNo);
+
+    }
+
+
+
+    private void f销售价格封装(PrdtSamp0 prdtSampX, String prdNo) {
         //销售价格模块select开始
         List<UpDefMy01> listUpdefMy01SaleToFront=new LinkedList<UpDefMy01>();
 
 //        select olefield from up_def  where olefield like '%SamplesSys%'  and prd_no ='10100003'
 
-       List<String>dingJiaGuanLianList= cnst.a001TongYongMapper.getOlefieldUsePrdNo(prdNo,Cnst.salPriceId);
-
-
-
+        List<String>dingJiaGuanLianList= cnst.a001TongYongMapper.getOlefieldUsePrdNo(prdNo,Cnst.salPriceId);
 
         if(p.notEmpty(dingJiaGuanLianList)){
             for(String dingJiaGuanLian:dingJiaGuanLianList){
                 if(p.notEmpty(dingJiaGuanLian)){
                     //找出相同条件下同一个hjNo  like 'SamplesSys' 的所有字段
 
-                    UpDefMy01 up0 = cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId
+                    //得到不含运费本币
+                    UpDefMy01 uf01销售不含运费本币 = cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId
                             ,Cnst.saleBilTypeNoTrans, Cnst.benBi,dingJiaGuanLian);
 
 
                     //得到含运费本币getUpDefMy20180512Saleone
 
-                    UpDefMy01 up1= cnst.a001TongYongMapper
+                    UpDefMy01 uf01销售含运费本币= cnst.a001TongYongMapper
                             .getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId,
                                     Cnst.saleBilTypeHaveTrans, Cnst.benBi,dingJiaGuanLian);
 
 
                     //得到不含运费外币
-                    UpDefMy01 up2= cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId,
+                    UpDefMy01 uf01销售不含运费外币= cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId,
                             Cnst.saleBilTypeNoTrans,Cnst.waiBi,dingJiaGuanLian);
 
 
                     //得到含运费外币
-                    UpDefMy01 up3= cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId,
+                    UpDefMy01 uf01销售含运费外币= cnst.a001TongYongMapper.getUpDefMy20180512Saleone(prdNo, Cnst.salPriceId,
                             Cnst.saleBilTypeHaveTrans,Cnst.waiBi,dingJiaGuanLian);
                     UpDefMy01 up=new UpDefMy01();
-                    if(p.notEmpty(up0)){
-                        BeanUtils.copyProperties(up0,up);
-                        setUpOfSale(up,up0,up1,up2,up3);
+                    if(p.notEmpty(uf01销售不含运费本币)){
+                        BeanUtils.copyProperties(uf01销售不含运费本币,up);
+                        setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
 
                     }
-                    if(p.notEmpty(up1)){
-                        BeanUtils.copyProperties(up1,up);
-                        setUpOfSale(up,up0,up1,up2,up3);
+                    if(p.notEmpty(uf01销售含运费本币)){
+                        BeanUtils.copyProperties(uf01销售含运费本币,up);
+                        setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
 
                     }
-                    if(p.notEmpty(up2)){
-                        BeanUtils.copyProperties(up2,up);
-                        setUpOfSale(up,up0,up1,up2,up3);
+                    if(p.notEmpty(uf01销售不含运费外币)){
+                        BeanUtils.copyProperties(uf01销售不含运费外币,up);
+                        setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
 
                     }
-                    if(p.notEmpty(up3)){
-                        BeanUtils.copyProperties(up3,up);
-                        setUpOfSale(up,up0,up1,up2,up3);
+                    if(p.notEmpty(uf01销售含运费外币)){
+                        BeanUtils.copyProperties(uf01销售含运费外币,up);
+                        setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
 
                     }
-
                     //直接使用当前的u组合成价格模块
                     listUpdefMy01SaleToFront.add(up);
                 }
 
             }
         }
-
-
         this.sortBySdd(listUpdefMy01SaleToFront);
         //塞入将要传给前端的对象
         prdtSampX.setUpDefMyList(listUpdefMy01SaleToFront);
+    }
 
 
-
-
-
-
-
-
-        //以上是销售价格模块的select,
-        // 下面是采购价格模块的select//采购价格没有币别
+    private void f采购价格封装(PrdtSamp0 prdtSampX,String prdNo) {
+        // 下面是采购价格模块的select//采购价格只有人民币
         //得到不含运费采购
         List<UpDefMy01> listUpdefMy01BuyToFront=new LinkedList<UpDefMy01>();
 
@@ -113,6 +112,7 @@ public class GetPriceModelUpdef20180512 {
                             cnst.a001TongYongMapper
                                     .getUpDefMy20180512BuyOne
                                             (prdNo,Cnst.buyPriceId,Cnst.buyBilTypeNoTrans,dingJiaGuanLian);//这个其实变成采购的了//2采购
+
                     UpDefMy01 u1=cnst.a001TongYongMapper.getUpDefMy20180512BuyOne(prdNo,Cnst.buyPriceId,Cnst.buyBilTypeHaveTrans,dingJiaGuanLian);
 
                     if(p.notEmpty(u0)){
@@ -129,16 +129,9 @@ public class GetPriceModelUpdef20180512 {
                 }
             }
         }
-
-
-
         prdtSampX.setUpDefMyListBuy(listUpdefMy01BuyToFront);
+
     }
-
-
-
-
-
 
 
     private void setUpOfBuy(UpDefMy01 u,UpDefMy01 u0,UpDefMy01 u1){
