@@ -1,5 +1,4 @@
 package com.winwin.picreport.Cservice;
-
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
@@ -10,10 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 注意:如果是我们打样系统流水的货号在进入
@@ -42,144 +38,149 @@ public class SaveSaleOrBuyPrice {
     }
 
     public void saveSaleOrBuyPrice(UpDefMy01 up, List<String> msgs) {
-        String usr = up.getUsr();
-        String cusNo = up.getCusNo();
-        if (null == cusNo) {//联合主键之一,不能为null
-            cusNo = p.space;
-        }
-        String chkMan = usr;
-        //得到打样唯一标识
-        String uuid = up.getUuid();
-        //先拿出来需要的全局数据
-        BigDecimal qty = up.getQty();
-        if (null == qty) {
-            qty = new BigDecimal(0);
-        }
-        //得到币别代号//RMB
-        String curId = up.getCurId();
-        if (null == curId) {
-            curId = p.space;
-        }
-        //得到币别名字//人民币
-        String curName = up.getCurName();
+        up.setCusNo(p.sm(p.empty(up.getCusNo()),p.space,up.getCusNo()));
+        up.setQty(p.sm(p.empty(up.getQty()),p.b(p.n0),up.getQty()));
+        up.setCurId(p.sm(p.empty(up.getCurId()),p.space,up.getCurId()));
         //前端传过来的备注
-        String remFront = up.getRemFront();
-        //固定的备注   //"打样系统"//后来改为前端传过来的备注,因为分不清是那个,所以做如下判断
-        String rem = p.empty(up.getRem()) ? remFront : up.getRem();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        up.setRem( up.getRemFront());
         //单位
-        String unit = up.getUnit();//放入up_def中的OLEFIELD字段中
-        //注意:后来加了主单位和副单位,
-        //进入up_def之后都存在了OLEFIELD字段中,取出来的时候也取这个
-        //但是老郑还要求了,单位分主副进入prdt中
-        //prdt中ut字段是主单位,ut1是副单位
-        String unitZhu = up.getUnitZhu();//放入prdt中的ut//当对应prdno的这条记录的ut是空的时候
-        String unitFu = up.getUnitFu();//放入prdt中的ut1//当对应prdno的这条记录的ut1是空的时候
-        if (p.notEmpty(unitZhu)) {
-            unit = Cnst.zhu + unitZhu;
-        } else if (p.notEmpty(unitFu)) {
-            unit = Cnst.fu + unitFu;
-        } else {
-            unit = "前端空的";
-        }
-        //注意:上面 unit是为了将来插入up_def用的
-        //unitZhu和unitFu是为了将来给没有单位的prdt中的ut和ut1字段准备的
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.f前端传过来的主副单位确定(up);
+        if (p.empty(up.getCurId())) {p.throwEAddToList("curId 币别代号没有传过来", msgs);}
+        String prdNo=this.f货号流水模块_把流水后的货号放入PrdtSamp(up, msgs);
+        this.f插入主副单位到prdt表中(up,prdNo);
+//////////////////////////////////////////////////////////////////////////////////////////////
+        this.f主对象设置货号并保存数据(up,prdNo,msgs);
+    }
 
-
-        p.p("~~~~~~~~~~~~~~~~~~~~~~~~采购或者销售保存单位unit=" + unit + "~~这个在取出的时候实际上是来自prdt,而这里的实际没有保存~~~~~~~~~~~~~~~~~~~~~~");
-        //采购带运费
-        BigDecimal haveTransUpBuy = up.getHaveTransUpBuy();
-        //采购无运费
-        BigDecimal noTransUpBuy = up.getNoTransUpBuy();
-
-        //销售有运费
-        BigDecimal haveTransUpSale = up.getHaveTransUpSale();
-        //销售无运费
-        BigDecimal noTransUpSale = up.getNoTransUpSale();
-
-        //处理一下unit,因为unit必须存入一个1或者2
-
-
-        if (p.empty(curId)) {
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.p("币别代号没有传过来");
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.throwEAddToList("curId 币别代号没有传过来", msgs);
-        }
-        //把上面的东西放在一个map里面好处理
-        Map<String, Object> gmp = p.gp()
-                .smp("uuid", uuid)
-                .smp("qty", qty)
-                .smp("curId", curId)
-                .smp("curName", curName)
-                .smp("remFront", remFront)
-                .smp("rem", rem)
-                .smp("unit", unit)//因为数据库up_def中的unit只能是1或者2这类短的//这个unit负责放入up_def中的OLEFIELD字段以供将来取出来用
-                .smp("unitZhu", unitZhu)//主单位//将来为了检查对应的prdt中prdno的对应的那条记录的ut是否是null,是null的用这个更新
-                .smp("unitFu", unitFu)//副单位//将来为了检查对应的prdt中prdno的对应的那条记录的ut1是否是null,是null的用这个更新
-                .smp("haveTransUpBuy", haveTransUpBuy)
-                .smp("noTransUpBuy", noTransUpBuy)
-                .smp("haveTransUpSale", haveTransUpSale)
-                .smp("noTransUpSale", noTransUpSale)
-                .smp("usr", usr)
-                .smp("chkMan", usr)
-                .smp("cusNo", cusNo)
-                .smp("dingJiaGuanLian", up.getDingJiaGuanLian())
-                .gmp();
-//////////////////////////货号流水模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //获得uuid对应的prdt_no
-        String prdNo = cnst.manyTabSerch.selectPrdNoFromPrdtSamp(uuid);
-
+    private void f主对象设置货号并保存数据(UpDefMy01 up, String prdNo, List<String> msgs) {
         if (p.empty(prdNo)) {
-
-
-            PrdtSamp prdtSamp = cnst.prdtSampMapper
-                    .selectByPrimaryKey(uuid);
-            PrdtSamp0 prdtSamp0 = new PrdtSamp0();
-            BeanUtils.copyProperties(prdtSamp, prdtSamp0);
-
-
-            //2018_5_14   weekday(1)   17:23:11
-            prdNo = cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp0.getPrdCode());
-            if (p.empty(prdNo)) {//注意这边没有分类,无法帮  他流水,需要客户自己去prdt表注册商品的到品号
-                p.p("-------------------------------------------------------");
-                p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
-                p.p("-------------------------------------------------------");
-                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
+            //空的单号,必须告诉前端终止
+            p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！《后台流水后货号依然为空》", msgs);
+        } else {
+            up.setPrdNo(prdNo);
+            if (up.getHaveTransUpBuy() == null && up.getNoTransUpBuy() == null) {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST3~~~~~~~~~~~~~~~~~~~~~~~~");
+                //按销售保存
+                this.saveAsSaler(up, msgs);
             } else {
-                //此时prdt表中有货号,把这个货号放入打样表中
-                cnst.a001TongYongMapper.updatePrdNoByUuid(uuid, prdNo);
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST4~~~~~~~~~~~~~~~~~~~~~~~~");
+                //现在是采购的,按采购保存
+                this.saveAsBuyer(up, msgs);
             }
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                //给prdtSamp流水prdtNo//下面是prdno流水模块//注意prdt表中如果对应的code没有录入,是不行的
-//                cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        } else {
-//                //此时货号不是空的//曾经出现过PrdtSamp表有货号但是在prdt里面不存在,此时就要再prdt里插入该货号
-//                //这种情况是老郑认为删除打样流水到prdt里的货号导致的
-//                PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(uuid);
-//                PrdtSamp0 prdtSamp0=new PrdtSamp0();
-//                BeanUtils.copyProperties(prdtSamp,prdtSamp0);
-//                //此时prdNo已经存在存在prdt_Samp,那么我们看看这个prdNo在prdt表是否存在//不存在就插入一个,
-//                //此时不存在  曾经是老郑认为删除打样流水货号导致的
-//                //注意我们插入到prdt的记录会带rem字段是SamplesSys的标记,在mapper的sql中可以看到
-//                cnst.gPrdNo.reSetPrdNo(prdtSamp0);
         }
-/////////////prdt表单位对比插入模块/////////////////////////////////////////////////////////////////////////////////
+    }
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //采购的价格入库
+    private void saveAsBuyer(UpDefMy01 up, List<String> msgs) {
+        UpDef upDef = new UpDef();
+        this.f采购给UpDef赋值(up,upDef);
+        /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //采购含运费入库
+        if (p.notEmpty(up.getHaveTransUpBuy())) {
+            //1代表不含运费//其他代表是含运费的
+            upDef.setBilType(Cnst.buyBilTypeHaveTrans);
+            upDef.setUp(up.getHaveTransUpBuy());
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST5~~~~~~~~~~~~~~~~~~~~~~~~");
+            int insert = cnst.upDefMapper.insert(upDef);
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST6~~~~~~~~~~~~~~~~~~~~~~~~");
+            if (insert == 0) {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST7~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.throwEAddToList("保存采购价格含运费的失败", msgs);
+            }
+        }
+        //采购不含运费入库
+        if (p.notEmpty(up.getNoTransUpBuy())) {
+            //1代表不含运费//其他代表是含运费的
+            upDef.setBilType(Cnst.buyBilTypeNoTrans);
+            upDef.setUp(up.getNoTransUpBuy());
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST9~~~~~~~~~~~~~~~~~~~~~~~~");
+            //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+            int insert = cnst.upDefMapper.insert(upDef);
+            if (insert == 0) {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~10~~~~~~~~~~~~~~~~~");
+                p.throwEAddToList("保存采购价格不含运费的失败", msgs);
+            } else {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~11~~~~~~~~~~~~~~~~~~~~~~");
+
+            }
+        }
+    }
+
+
+    /**
+     * ***************************************************************************************
+     */
+
+    //销售的价格入库
+    private void saveAsSaler(UpDefMy01 up, List<String> msgs) {
+        UpDef upDef = new UpDef();
+        this.f销售给upDef赋值(up,upDef);
+
+        //销售含运费入库
+        if (p.notEmpty(up.getHaveTransUpSale())) {
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
+            //1代表不含运费//2代表销售含运费
+            upDef.setBilType(Cnst.saleBilTypeHaveTrans);
+            upDef.setUp(up.getHaveTransUpSale());
+            upDef.setCusNo(null == upDef.getCusNo()?p.space:upDef.getCusNo());
+            //往价格表up_def插入采购价格
+            int insert = cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~13~~~~~~~~~~~~~~~~");
+            if (insert == 0) {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST14~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.throwEAddToList("保存销售价格含运费的失败", msgs);
+            } else {
+
+            }
+        }
+        //销售不含运费入库
+        if (p.notEmpty(up.getNoTransUpSale())) {
+            p.p("~~~~~~~~~~~~~~~~~~~~~~16~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+            //1代表不含运费//其他代表是含运费的
+            upDef.setBilType(Cnst.saleBilTypeNoTrans);
+            upDef.setUp(up.getNoTransUpSale());
+            p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+            upDef.setCusNo(null == upDef.getCusNo()?p.space:upDef.getCusNo());
+            //往价格表up_def插入采购价格
+            int insert = cnst.upDefMapper.insert(upDef);
+            if (insert == 0) {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~18~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+                p.throwEAddToList("保存销售价格不含运费的失败", msgs);
+            } else {
+                p.p("~~~~~~~~~~~~~~~~~~~~~~19~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void f插入主副单位到prdt表中(UpDefMy01 up,String prdNo) {
         /**
          *插入主单位到prdt中,条件是prdt中prdno对应ut主单位字段是空的并且前端
          * 传过来的unitZhu不是空的
          * */
         //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
         String ut = cnst.manyTabSerch.selectUtFromPrdt(prdNo);
-        if (p.empty(ut) && p.notEmpty(unitZhu)) {
+        if (p.empty(ut) && p.notEmpty(up.getUnitZhu())) {
             p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt(主单位空)startInsert").sad(p.dexhx).gad());
             //如果是空的,证明prdt表中没有该ut,需要插入该unit
-            Integer tt = cnst.manyTabSerch.insertUnitToUtOfPrdt(unitZhu, prdNo);
+            Integer tt = cnst.manyTabSerch.insertUnitToUtOfPrdt(up.getUnitZhu(), prdNo);
             if (p.notEmpty(tt) && tt > 0) {
                 p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位成功").sad(p.dexhx).gad());
             } else {
@@ -192,140 +193,100 @@ public class SaveSaleOrBuyPrice {
          * */
         //找到该prdNo对应的ut1(就是存的副单位)//如果是空的并且前端传过来的副单位不是空的,就给他插入当前前端传过来的单位
         String ut1 = cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
-        if (p.empty(ut1) && p.notEmpty(unitFu)) {
+        if (p.empty(ut1) && p.notEmpty(up.getUnitFu())) {
             p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt1(副单位空)startInsert").sad(p.dexhx).gad());
             //如果是空的,证明prdt表中没有该ut,需要插入该unit
-            Integer tt1 = cnst.manyTabSerch.insertUnitToUt1OfPrdt(unitFu, prdNo);
+            Integer tt1 = cnst.manyTabSerch.insertUnitToUt1OfPrdt(up.getUnitFu(), prdNo);
             if (p.notEmpty(tt1) && tt1 > 0) {
                 p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位成功").sad(p.dexhx).gad());
             } else {
                 p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
             }
         }
-//////////////////////////////////////////////////////////////////////////////////////////////
-        p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST1~~prdNo=~~" + prdNo + "~~~~~~~~~~~~~~~~~~~~");
+    }
+
+
+
+
+
+
+
+
+
+    private String  f货号流水模块_把流水后的货号放入PrdtSamp(UpDefMy01 up, List<String> msgs) {
+        //获得uuid对应的prdt_no
+        String prdNo = cnst.manyTabSerch.selectPrdNoFromPrdtSamp(up.getUuid());
         if (p.empty(prdNo)) {
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST2~~~~~~~~~~~~~~~~~~~~~~~~");
-            //空的单号,必须告诉前端终止
-            p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！《后台流水后货号依然为空》", msgs);
-        } else {
-            gmp.put("prdNo", prdNo);
-
-            //判断是采购的还是销售的
-            //采购的都是0,证明现在是销售的
-            if (haveTransUpBuy == null && noTransUpBuy == null) {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST3~~~~~~~~~~~~~~~~~~~~~~~~");
-                //按销售保存
-                this.saveAsSaler(gmp, msgs);
+            PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(up.getUuid());
+            PrdtSamp0 prdtSamp0 = new PrdtSamp0();
+            BeanUtils.copyProperties(prdtSamp, prdtSamp0);
+            //2018_5_14   weekday(1)   17:23:11
+            prdNo = cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp0.getPrdCode());
+            if (p.empty(prdNo)) {//注意这边没有分类,无法帮  他流水,需要客户自己去prdt表注册商品的到品号
+                p.p("-------------------------------------------------------");
+                p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
+                p.p("-------------------------------------------------------");
+                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
             } else {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST4~~~~~~~~~~~~~~~~~~~~~~~~");
-                //现在是采购的,按采购保存
-                this.saveAsBuyer(gmp, msgs);
-
+                //此时prdt表中有货号,把这个货号放入打样表中
+                cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(), prdNo);
             }
 
         }
+        return prdNo;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //采购的价格入库
-    private void saveAsBuyer(Map<String, Object> gmp, List<String> msgs) {
-        String unit = (String) gmp.get("unit");
-        UpDef upDef = new UpDef();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private void f采购给UpDef赋值(UpDefMy01 up, UpDef upDef) {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
         //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
         //单位(unit为空)上面已经处理了再插入prdt单位的情况
 //        upDef.setOlefield(unit);
-        upDef.setOlefield((String) gmp.get("dingJiaGuanLian"));
+        upDef.setOlefield(up.getDingJiaGuanLian());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //我们将来取自己添加的价格的标识
 //        upDef.setHjNo(Cnst.SamplesSys);
-        upDef.setHjNo(unit);
+        upDef.setHjNo(up.getUnit());
         upDef.setsDd(cnst.getDbDate());
-        upDef.setQty((BigDecimal) gmp.get("qty"));
+        upDef.setQty(up.getQty());
         //这个默认字符串"打样系统"
-        upDef.setRem((String) gmp.get("rem"));
+        upDef.setRem(up.getRem());
         //得到币别
-        upDef.setCurId((String) gmp.get("curId"));
+        upDef.setCurId(up.getCurId());
         //得到单位//updef的unit字段里面1指的是主单位,2指的是副单位而已
         upDef.setUnit("1");
         upDef.setPriceId(Cnst.buyPriceId);
         /////////////////////////////////////////////////////////////////////////////////////
-        upDef.setCusNo((String) gmp.get("cusNo"));
-        upDef.setUsr((String) gmp.get("usr"));
-        upDef.setChkMan((String) gmp.get("chkMan"));
+        upDef.setCusNo(up.getCusNo());
+        upDef.setUsr(up.getUsr());
+        upDef.setChkMan(up.getUsr());
         /////////////////////////////////////////////////////////////////////////////////////
         upDef.setPrdMark(p.space);
-        upDef.setPrdNo((String) gmp.get("prdNo"));
+        upDef.setPrdNo(up.getPrdNo());
         upDef.setBzKnd(p.space);
         upDef.setKnd(p.space);
         upDef.setSupPrdNo(p.space);
         upDef.setCusAre(p.space);
-        /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //采购含运费入库
-        if (p.notEmpty(gmp.get("haveTransUpBuy"))) {
-            //1代表不含运费//其他代表是含运费的
-            upDef.setBilType(Cnst.buyBilTypeHaveTrans);
-            upDef.setUp((BigDecimal) gmp.get("haveTransUpBuy"));
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST5~~~~~~~~~~~~~~~~~~~~~~~~");
-            //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-            int insert = cnst.upDefMapper.insert(upDef);
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST6~~~~~~~~~~~~~~~~~~~~~~~~");
-            if (insert == 0) {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST7~~~~~~~~~~~~~~~~~~~~~~~~");
-                p.throwEAddToList("保存采购价格含运费的失败", msgs);
-            } else {
-
-            }
-        }
-        //采购不含运费入库
-        if (p.notEmpty(gmp.get("noTransUpBuy"))) {
-            //1代表不含运费//其他代表是含运费的
-            upDef.setBilType(Cnst.buyBilTypeNoTrans);
-            upDef.setUp((BigDecimal) gmp.get("noTransUpBuy"));
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST9~~~~~~~~~~~~~~~~~~~~~~~~");
-            //往价格表up_def插入采购价格。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-            int insert = cnst.upDefMapper.insert(upDef);
-            if (insert == 0) {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~10~~~~~~~~~~~~~~~~~");
-
-                p.throwEAddToList("保存采购价格不含运费的失败", msgs);
-            } else {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~11~~~~~~~~~~~~~~~~~~~~~~");
-
-            }
-        }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     }
 
-    /**
-     * ***************************************************************************************
-     */
 
-    //销售的价格入库
-    private void saveAsSaler(Map<String, Object> gmp, List<String> msgs) {
-        String unit = (String) gmp.get("unit");
-        UpDef upDef = new UpDef();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void f销售给upDef赋值(UpDefMy01 up, UpDef upDef) {
         //插入单位, 这个是2018_1_18   weekday(4)   14:17:58郑总说的,把打样的单位
         //暂时放到OLEFIELD字段中,取的时候也取这个,不再取PRDT中的,但是PRDT中的prdno对应的记录如果没有
         //单位(unit为空)上面已经处理了再插入prdt单位的情况
-//        upDef.setOlefield(unit);
+        //        upDef.setOlefield(unit);
         //改成界面四条数据进价格表的唯一标识符,SamplesSys+36位唯一标识
-        upDef.setOlefield((String) gmp.get("dingJiaGuanLian"));
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//        upDef.setHjNo(Cnst.SamplesSys);
-        upDef.setHjNo(unit);
+        upDef.setOlefield(up.getDingJiaGuanLian());
+        //        upDef.setHjNo(Cnst.SamplesSys);
+        upDef.setHjNo(up.getUnit());
         upDef.setsDd(cnst.getDbDate());
-        upDef.setQty((BigDecimal) gmp.get("qty"));
+        upDef.setQty(up.getQty());
         //这个默认字符串"打样系统"//已经改为前端穿过来的
-        upDef.setRem((String) gmp.get("rem"));
+        upDef.setRem(up.getRem());
         //得到币别
-        upDef.setCurId((String) gmp.get("curId"));
+        upDef.setCurId(up.getCurId());
         //得到单位//updef的unit字段里面1指的是主单位,2指的是副单位而已
         upDef.setUnit("1");
         //1代表销售,2代表采购
@@ -333,59 +294,35 @@ public class SaveSaleOrBuyPrice {
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-        upDef.setCusNo((String) gmp.get("cusNo"));
-        upDef.setUsr((String) gmp.get("usr"));
-        upDef.setChkMan((String) gmp.get("chkMan"));
+        upDef.setCusNo(up.getCusNo());
+        upDef.setUsr(up.getUsr());
+        upDef.setChkMan(up.getUsr());
         /////////////////////////////////////////////////////////////////////////////////////
         upDef.setPrdMark(p.space);
-        upDef.setPrdNo((String) gmp.get("prdNo"));
+        upDef.setPrdNo(up.getPrdNo());
         upDef.setBzKnd(p.space);
         upDef.setKnd(p.space);
         upDef.setSupPrdNo(p.space);
         upDef.setCusAre(p.space);
-        //销售含运费入库
-        if (p.notEmpty(gmp.get("haveTransUpSale"))) {
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~~~~~~~12~~~~~~~~~~");
-            //1代表不含运费//2代表销售含运费
-            upDef.setBilType(Cnst.saleBilTypeHaveTrans);
-            upDef.setUp((BigDecimal) gmp.get("haveTransUpSale"));
-            if (null == upDef.getCusNo()) {
-                upDef.setCusNo(p.space);
-            }
-            //往价格表up_def插入采购价格
-            int insert = cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST~~~~~~~~13~~~~~~~~~~~~~~~~");
-            if (insert == 0) {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~~~TEST14~~~~~~~~~~~~~~~~~~~~~~~~");
-                p.throwEAddToList("保存销售价格含运费的失败", msgs);
-            } else {
-
-            }
-        }
-        //销售不含运费入库
-        if (p.notEmpty(gmp.get("noTransUpSale"))) {
-            p.p("~~~~~~~~~~~~~~~~~~~~~~16~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            //1代表不含运费//其他代表是含运费的
-            upDef.setBilType(Cnst.saleBilTypeNoTrans);
-            upDef.setUp((BigDecimal) gmp.get("noTransUpSale"));
-            p.p("~~~~~~~~~~~~~~~~~~~~~~17~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            if (null == upDef.getCusNo()) {
-                upDef.setCusNo(p.space);
-            }
-            //往价格表up_def插入采购价格
-            int insert = cnst.upDefMapper.insert(upDef);//。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
-            if (insert == 0) {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~18~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-                p.throwEAddToList("保存销售价格不含运费的失败", msgs);
-            } else {
-                p.p("~~~~~~~~~~~~~~~~~~~~~~19~~TEST~~~~~~~~~~~~~~~~~~~~~~~~");
-            }
-        }
-
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    private void f前端传过来的主副单位确定(UpDefMy01 up) {
+        String unit="";
+        //注意:后来加了主单位和副单位,
+        //进入up_def之后都存在了OLEFIELD字段中,取出来的时候也取这个
+        //但是老郑还要求了,单位分主副进入prdt中
+        //prdt中ut字段是主单位,ut1是副单位
+        if (p.notEmpty(up.getUnitZhu())) {
+            unit = Cnst.zhu + up.getUnitZhu();
+        } else if (p.notEmpty(up.getUnitFu())) {
+            unit = Cnst.fu + up.getUnitFu();
+        } else {
+            unit = "前端空的";
+        }
+        up.setUnit(unit);
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

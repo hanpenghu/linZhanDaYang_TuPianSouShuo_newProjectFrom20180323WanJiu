@@ -130,7 +130,7 @@ public class DingJiaBaoCun {
             "haveTransUpBuy":"13.5","curId":"USD","curName":"美元","remFront":"客户备注2",
             "qty":"100","unitZhu":"kg","unitFu":""}]*/
 
-
+//    select top 100 price_id,bil_type,up,cur_id,hj_no,olefield,rem,chk_man,usr,prd_no,qty,s_dd,sys_date,'', * from up_def
 /*
 [{"uuid":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","noTransUpSale":"14",
             "haveTransUpSale":"14.5","curId":"RMB","curName":"人民币","remFront":"客户备注3",

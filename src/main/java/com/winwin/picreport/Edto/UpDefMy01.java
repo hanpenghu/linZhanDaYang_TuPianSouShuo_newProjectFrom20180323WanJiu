@@ -35,6 +35,21 @@ public class UpDefMy01 extends UpDefMy {
     //含运费单价销售价格外币//up_def中bil_type!=01
     BigDecimal haveTransUpSaleWaiBi;//
 
+    //货号,后台数据流转用
+    String prdNo;
+
+
+    public String getPrdNo() {
+        return prdNo;
+    }
+
+    public void setPrdNo(String prdNo) {
+        this.prdNo = prdNo;
+    }
+
+
+
+
     public BigDecimal getNoTransUpSaleWaiBi() {
         return noTransUpSaleWaiBi;
     }
