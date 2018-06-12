@@ -62,6 +62,7 @@ public class DyExcelBf {
             List<ExcelTxtTemplate> list该行文本集 = e.getTxtRowList();
             List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
             this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器);
+            //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
             this.f给pp装上货号(pp,msgs);
            this.if数据库PrdCode重复(pp,msgs);
             prdtSamps将要入数据库.add(pp);
