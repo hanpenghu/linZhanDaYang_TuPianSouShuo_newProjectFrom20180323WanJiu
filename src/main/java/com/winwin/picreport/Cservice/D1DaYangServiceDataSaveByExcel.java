@@ -189,8 +189,16 @@ public class D1DaYangServiceDataSaveByExcel {
                         .sad(uuid).sad(Cnst.ganTanHao)
                         .sad(ps.getPrdCode())
                         .sad(Cnst.dian)
-                        .sad(Cnst.pngWuDian).gad();
-                IOUtils.write(pictureData.getData(),new FileOutputStream(fp));
+                        .sad("jpeg").gad();
+                p.p("--------------------pictureData.getData().length-----------------------------------");
+                p.p(pictureData.getData().length);
+                l1.error("-------pictureData.getData().length---------------"+pictureData.getData().length+"----------------------");
+                p.p("-------------------------------------------------------");
+//                byte[] data = pictureData.getData();
+                p.writeByteToFile(pictureData.getData(), new File(fp));
+//                IOUtils.write(pictureData.getData(), fileOutputStream);
+//                fileOutputStream.flush();
+//                fileOutputStream.close();
                 if(hanhanFileUtil.exists(fp)){
                     //此时保存成功,不用管,顺便把缩略图的url半成品生成,将来放入数据库
                     imageurl=p.gp().sad(cnst.suoLueTuWenJianJia)
@@ -445,7 +453,7 @@ public class D1DaYangServiceDataSaveByExcel {
 
 
 
-
+private  org.apache.log4j.Logger l1 = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

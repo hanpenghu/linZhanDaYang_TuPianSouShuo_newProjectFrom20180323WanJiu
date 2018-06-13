@@ -1,13 +1,24 @@
 package com.winwin.picreport.Futils.excelHan;
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
+import org.freehep.graphicsio.emf.EMFInputStream;
+import org.freehep.graphicsio.emf.EMFRenderer;
+import org.freehep.graphicsio.emf.gdi.BitmapInfoHeader;
 import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
-
+//import org.freehep.graphicsio.emf.EMFInputStream;
+//import org.freehep.graphicsio.emf.EMFRenderer;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
+
 /**
  *注意整个工具的核心框架是 excel的要求:
  * 1  sheet必须只有一个,即sheet的索引只有0
@@ -20,13 +31,31 @@ import java.util.*;
  //该行的所有图片//当没有图片的时候List<ExcelPicTemplate>为空[]
  * */
 public class Excel2007 {
+    private final static String emf="image/x-emf";
+    public static void main(String[]args) throws IOException {
 
- /*   public static void main(String[]args) throws IOException {
-        File file=new File("E:/打样上传模板20180310.xlsx");
-        List<ExcelPicTxtTemplate> excelPicTxt = Excel2007.g().getExcelPicTxt(file);
-        System.out.println(excelPicTxt);
 
-    }*/
+
+        Excel2007 g = Excel2007.g();
+        String s="E:\\image87.emf";
+     s="E:\\2.emf";
+        EMFInputStream inputStream = new EMFInputStream(new FileInputStream(s), EMFInputStream.DEFAULT_VERSION);
+        byte[] bytes = g.emfToPng(inputStream);
+        System.out.println(bytes);
+        p.writeByteToFile(bytes,new File("E:/12.jpg"));
+//        File file=new File("E:/打样上传模板20180310.xlsx");
+//        File file=new File(s);
+//        List<ExcelPicTxtTemplate> excelPicTxt = g.getExcelPicTxt(file);
+//        for(ExcelPicTxtTemplate e:excelPicTxt){
+//            PictureData pictureData = e.getTxtRowPicDataList().get(0).getPictureData();
+//            if(emf.equals(pictureData.getMimeType())){
+////                g.emfToPng(new ByteArrayInputStream(pictureData.getData()));
+//            }else{
+//                System.out.println(pictureData.getMimeType());
+//            }
+//        }
+
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -236,6 +265,7 @@ public class Excel2007 {
                     CTMarker ctMarker = anchor.getFrom();
                     //得到图片二进制数据
                     PictureData pictureData = pic.getPictureData();
+//                    System.out.println("-------图片类型-----pictureData.getMimeType()--------------"+pictureData.getMimeType()+"-------------------");
                     //得到图片所在行
                     int row = ctMarker.getRow();
                     //得到图片所在列
@@ -364,7 +394,67 @@ public class Excel2007 {
         return false;
     }
 
+    private byte[] emfToPng(InputStream is) {
+        byte[] by = null;
+        EMFInputStream emfis = null;
+        EMFRenderer emfRenderer = null;
+//创建储存图片二进制流的输出流
+        ByteArrayOutputStream baos = null;
+//创建ImageOutputStream流
+        ImageOutputStream imageOutputStream = null;
+        try {
+            System.out.println(is==null);
+            emfis = new EMFInputStream(is, EMFInputStream.DEFAULT_VERSION);
+            System.out.println(emfis==null);
 
+            System.out.println("--------我日1-----------");
+            final int width = (int) emfis.readHeader().getBounds().getWidth();
+            final int height = (int) emfis.readHeader().getBounds().getHeight();
+            System.out.println(width+"："+height);
+
+            final BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+            Graphics2D g2 = (Graphics2D) result.createGraphics();
+//            BitmapInfoHeader headerInfo = new BitmapInfoHeader(emfis);
+//
+//            System.out.println("&&&&&&&headerInfo.getHeight()&&&&&&&&&&&&《"+headerInfo.getHeight()+"》&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+//            System.out.println("&&&&&&&&&&&headerInfo.getWidth()&&&《"+headerInfo.getWidth()+"》&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+            emfRenderer = new EMFRenderer(emfis);
+            emfRenderer.paint(g2);
+            System.out.println("--------我日2-----------");
+//创建储存图片二进制流的输出流
+            baos = new ByteArrayOutputStream();
+//创建ImageOutputStream流
+            imageOutputStream = ImageIO.createImageOutputStream(baos);
+//将二进制数据写进ByteArrayOutputStream
+            ImageIO.write(result, "png", imageOutputStream);
+//inputStream = new ByteArrayInputStream(baos.toByteArray());
+            by = baos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (imageOutputStream != null) {
+                    imageOutputStream.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
+                if (emfRenderer != null) {
+                    emfRenderer.closeFigure();
+                }
+                if (emfis != null) {
+                    emfis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return by;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

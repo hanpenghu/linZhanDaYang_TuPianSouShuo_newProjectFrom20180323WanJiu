@@ -171,7 +171,18 @@ public strictfp class p {
     private List arl=new ArrayList();
     private Map<String,Object>map=new HashMap<>();
 
-
+    /**
+     *写字节到文件
+     * */
+    public static void writeByteToFile(byte[] bs,File file) throws IOException {
+        //建立输出字节流
+        FileOutputStream fos = new FileOutputStream(file);
+        //用FileOutputStream 的write方法写入字节数组
+        fos.write(bs);
+        fos.flush();
+        //为了节省IO流的开销，需要关闭
+        fos.close();
+    }
 
 
     //抛出异常并记录异常到list

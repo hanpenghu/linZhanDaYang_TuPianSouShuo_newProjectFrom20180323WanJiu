@@ -16,6 +16,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.poi.ss.usermodel.PictureData;
+import org.freehep.graphicsio.emf.EMFInputStream;
+import org.freehep.graphicsio.emf.EMFRenderer;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/5/17.
@@ -201,15 +205,23 @@ public class DyExcelBf {
             if(null!=pictureData){
                 thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+Cnst.dian+Cnst.pngWuDian;
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
-                IOUtils.write(pictureData.getData(),fileOutputStream);
-                fileOutputStream.flush();fileOutputStream.close();
+                byte[] data = null;
+                if(p.dy(pictureData.getMimeType(),emf)){
+                    System.out.println("------------我日-------------------");
+                    data= this.emfToPng(new ByteArrayInputStream(data));
+                    System.out.println("------------我日不成-------------------");
+                }else{
+                    data=pictureData.getData();
+                }
+                IOUtils.write(data,fileOutputStream);
+                if(p.notEmpty(fileOutputStream)){fileOutputStream.flush();fileOutputStream.close();}
             }
         }
         thum=cnst.suoLueTuWenJianJia+uuid+Cnst.dian+Cnst.pngWuDian;
         return thum;
     }
 
-
+    private final String emf="image/x-emf";
     private PrdtSampCreateUser f获得当前操作者(HttpServletRequest r,List<String> msgs) {
         String user = r.getParameter("user");
         if(p.empty(user)){
@@ -273,4 +285,58 @@ public class DyExcelBf {
     private  final String 产品要求="产品要求";
     private  final String 产品描述="产品描述";
     private  final String 主单位="主单位";
+
+
+
+    private byte[] emfToPng(InputStream is) {
+        byte[] by = null;
+        EMFInputStream emf = null;
+        EMFRenderer emfRenderer = null;
+//创建储存图片二进制流的输出流
+        ByteArrayOutputStream baos = null;
+//创建ImageOutputStream流
+        ImageOutputStream imageOutputStream = null;
+        try {
+            emf = new EMFInputStream(is, EMFInputStream.DEFAULT_VERSION);
+            emfRenderer = new EMFRenderer(emf);
+            System.out.println("--------我日1-----------");
+            final int width = (int) emf.readHeader().getBounds().getWidth();
+            final int height = (int) emf.readHeader().getBounds().getHeight();
+            final BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = (Graphics2D) result.createGraphics();
+            emfRenderer.paint(g2);
+            System.out.println("--------我日2-----------");
+//创建储存图片二进制流的输出流
+            baos = new ByteArrayOutputStream();
+//创建ImageOutputStream流
+            imageOutputStream = ImageIO.createImageOutputStream(baos);
+//将二进制数据写进ByteArrayOutputStream
+            ImageIO.write(result, "png", imageOutputStream);
+//inputStream = new ByteArrayInputStream(baos.toByteArray());
+            by = baos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (imageOutputStream != null) {
+                    imageOutputStream.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
+                if (emfRenderer != null) {
+                    emfRenderer.closeFigure();
+                }
+                if (emf != null) {
+                    emf.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return by;
+    }
 }

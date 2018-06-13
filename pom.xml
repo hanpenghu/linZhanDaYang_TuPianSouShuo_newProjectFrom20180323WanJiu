@@ -18,6 +18,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -65,6 +66,13 @@
 			<version>1.0.25</version>
 		</dependency>-->
 
+
+		<!-- https://mvnrepository.com/artifact/org.freehep/freehep-graphicsio-emf -->
+		<dependency>
+			<groupId>org.freehep</groupId>
+			<artifactId>freehep-graphicsio-emf</artifactId>
+			<version>2.4</version>
+		</dependency>
 
 
 		<dependency>
