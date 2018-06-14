@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang;
+package com.winwin.picreport.Bcontroller.daYang.savePrice.buy;
 
 
 import com.winwin.picreport.AllConstant.Cnst;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
+
 @CrossOrigin
 @RestController
 public class DingJiaBaoCun {
