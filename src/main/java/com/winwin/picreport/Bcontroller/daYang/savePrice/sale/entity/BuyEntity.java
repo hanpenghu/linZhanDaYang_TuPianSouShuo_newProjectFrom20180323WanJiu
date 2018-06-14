@@ -9,7 +9,7 @@ package com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity;
 
  "buy":[{"dingJiaGuanLian":"","curId":"RMB","bilType":"","priceId":"2"}],
 
- "sale":[{"dingJiaGuanLian":"","curId":"","bilType":"","priceId":"1",
+ "sale":[{"curId":"","bilType":"","priceId":"1",
 
  "up":"12.00","rem":"备注","qty":"1000","unit":"主:kg"}]
 

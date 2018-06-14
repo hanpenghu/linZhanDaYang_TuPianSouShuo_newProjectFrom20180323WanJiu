@@ -9,7 +9,7 @@ package com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity;
 
  "buy":[{"dingJiaGuanLian":"","curId":"RMB","bilType":"","priceId":"2"}],
 
- "sale":[{"dingJiaGuanLian":"","curId":"","bilType":"","priceId":"1",
+ "sale":[{"curId":"","bilType":"","priceId":"1",
 
  "up":"12.00","rem":"备注","qty":"1000","unit":"主:kg"}]
 
@@ -19,7 +19,7 @@ package com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity;
  *
  */
 public class SaleEntity {
-    private String dingJiaGuanLian;
+  //这里不需要前端传过来dingJiaGuanLian,因为这个时候还没有定价,所以没有产生dingJiaGuanLian字段olefield
     private String curId;
     private String bilType;//1是无运费,2是有运费
     private String priceId="1";//销售是1
@@ -28,13 +28,6 @@ public class SaleEntity {
     private String qty;
     private String unit;
 
-    public String getDingJiaGuanLian() {
-        return dingJiaGuanLian;
-    }
-
-    public void setDingJiaGuanLian(String dingJiaGuanLian) {
-        this.dingJiaGuanLian = dingJiaGuanLian;
-    }
 
     public String getCurId() {
         return curId;

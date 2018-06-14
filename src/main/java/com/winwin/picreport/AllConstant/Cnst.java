@@ -92,6 +92,9 @@ public class Cnst {
 
 
     @Autowired
+    public SalePriceSaveDao salePriceSaveDao;
+
+    @Autowired
     public DyExcelBf dyExcelBf;
 
     @Autowired

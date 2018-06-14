@@ -170,7 +170,19 @@ public strictfp class p {
     private List lin=new LinkedList();
     private List arl=new ArrayList();
     private Map<String,Object>map=new HashMap<>();
-
+    /**
+     *是否是BigDecimal
+     * */
+    public static boolean isBd(String str){
+        try {
+            new BigDecimal(str);
+            //不抛异常就是true
+            return true;
+        } catch (Exception e) {
+            //抛出异常就是false
+            return false;
+        }
+    }
     /**
      *写字节到文件
      * */
@@ -184,7 +196,12 @@ public strictfp class p {
         fos.close();
     }
 
-
+    //抛出异常并记录异常到list
+    public static void throwEAddToList(Exception e,String strException,List<String> msgExceptions){
+        msgExceptions.add(strException);
+        e.printStackTrace();
+        throw new RuntimeException(strException);
+    }
     //抛出异常并记录异常到list
     public static void throwEAddToList(String strException,List<String> msgExceptions){
         msgExceptions.add(strException);

@@ -28,13 +28,17 @@ public class SalePriceSave {
     @Autowired
     private Cnst cnst;
 
+    @Autowired
+    private SalePriceService salePriceService;
+
+
     //1成功  0失败
     @RequestMapping(value = "salePriceSave", method = RequestMethod.POST)
-    public @ResponseBody
-    Msg saveSalePrice(@RequestBody SaleSave saleSave) {
+    public @ResponseBody Msg saveSalePrice(@RequestBody SaleSave saleSave) {
         List<String> ms = new LinkedList<String>();
         try {
             this.f判断数据合法性(saleSave, ms);
+            salePriceService.f(saleSave,ms);
         } catch (Exception e) {
             return this.controllerIgllReturn(e,ms);
         }
@@ -108,9 +112,6 @@ public class SalePriceSave {
             p.throwEAddToList("前端传过来的销售定价数组List<SaleEntity>是空的", ms);
         }
         for (SaleEntity s : sales) {
-            if (p.empty(s.getDingJiaGuanLian())) {
-                p.throwEAddToList("前端传过来的销售定价数组里面有dingJiaGuanLian字段是空的", ms);
-            }
             if (p.empty(s.getCurId())) {
                 p.throwEAddToList("前端传过来的销售定价数组里面有币别字段curId是空的", ms);
             }
