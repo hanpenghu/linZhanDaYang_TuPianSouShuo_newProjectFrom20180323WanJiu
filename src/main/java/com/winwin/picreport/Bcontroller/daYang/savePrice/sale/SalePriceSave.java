@@ -36,14 +36,26 @@ public class SalePriceSave {
         try {
             this.f判断数据合法性(saleSave, ms);
         } catch (Exception e) {
-            if (ms.contains(e.getMessage())) {
-                return Msg.gmg().setStatus(n0).setMsg(e.getMessage()).setOtherMsg(已知异常);
-            } else {
-                return Msg.gmg().setStatus(n0).setMsg(未知异常);
-            }
+            return this.controllerIgllReturn(e,ms);
         }
         return Msg.gmg().setStatus(n1).setMsg(成功);
     }
+
+
+
+
+
+
+    private Msg controllerIgllReturn(Exception e, List<String> ms) {
+        if (ms.contains(e.getMessage())) {
+            e.printStackTrace();
+            return Msg.gmg().setStatus(n0).setMsg(e.getMessage()).setOtherMsg(已知异常);
+        } else {
+            e.printStackTrace();
+            return Msg.gmg().setStatus(n0).setMsg(未知异常).setOtherMsg(e.getMessage());
+        }
+    }
+
 
     private void f判断数据合法性(SaleSave saleSave, List<String> ms) {
         List<SaleEntity> sales = saleSave.getSale();
