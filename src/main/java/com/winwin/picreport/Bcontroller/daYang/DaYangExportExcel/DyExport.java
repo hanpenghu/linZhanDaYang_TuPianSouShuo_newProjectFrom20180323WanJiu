@@ -353,10 +353,12 @@ public class DyExport {
             //加载图片
             bufferImg = ImageIO.read(new File(thum));
 
-            int height = bufferImg.getHeight();
+            //图片行高不在这里设置,避免出现太高的情况
+            /*int height = bufferImg.getHeight();
             int width = bufferImg.getWidth();
             sheet1.setColumnWidth(a行计数器, width);
-            row.setHeightInPoints(height);
+            row.setHeightInPoints(height);*/
+
             ImageIO.write(bufferImg, "jpg", byteArrayOut);
             //创建一个图片
             HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
@@ -366,12 +368,13 @@ public class DyExport {
             //插入图片
             patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 
-            bufferImg.flush();
-            byteArrayOut.flush();
-            byteArrayOut.close();
+            if(p.notEmpty(bufferImg)){bufferImg.flush();}
+            if(p.notEmpty(byteArrayOut)){
+                byteArrayOut.flush();
+                byteArrayOut.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
         }
     }
 
