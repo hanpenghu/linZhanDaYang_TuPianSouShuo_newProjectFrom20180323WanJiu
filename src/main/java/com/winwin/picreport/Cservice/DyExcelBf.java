@@ -206,13 +206,14 @@ public class DyExcelBf {
                 thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+Cnst.dian+Cnst.pngWuDian;
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
                 byte[] data = null;
-                if(p.dy(pictureData.getMimeType(),emf)){
-                    System.out.println("------------我日-------------------");
-                    data= this.emfToPng(new ByteArrayInputStream(data));
-                    System.out.println("------------我日不成-------------------");
-                }else{
-                    data=pictureData.getData();
-                }
+//                if(p.dy(pictureData.getMimeType(),emf)){
+//                    System.out.println("------------我日-------------------");
+//                    data= this.emfToPng(new ByteArrayInputStream(data));
+//                    System.out.println("------------我日不成-------------------");
+//                }else{
+//                    data=pictureData.getData();
+//                }
+                data=pictureData.getData();
                 IOUtils.write(data,fileOutputStream);
                 if(p.notEmpty(fileOutputStream)){fileOutputStream.flush();fileOutputStream.close();}
             }

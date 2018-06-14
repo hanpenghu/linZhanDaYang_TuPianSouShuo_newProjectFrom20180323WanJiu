@@ -190,10 +190,10 @@ public class D1DaYangServiceDataSaveByExcel {
                         .sad(ps.getPrdCode())
                         .sad(Cnst.dian)
                         .sad("jpeg").gad();
-                p.p("--------------------pictureData.getData().length-----------------------------------");
-                p.p(pictureData.getData().length);
-                l1.error("-------pictureData.getData().length---------------"+pictureData.getData().length+"----------------------");
-                p.p("-------------------------------------------------------");
+//                p.p("--------------------pictureData.getData().length-----------------------------------");
+//                p.p(pictureData.getData().length);
+//                l1.error("-------pictureData.getData().length---------------"+pictureData.getData().length+"----------------------");
+//                p.p("-------------------------------------------------------");
 //                byte[] data = pictureData.getData();
                 p.writeByteToFile(pictureData.getData(), new File(fp));
 //                IOUtils.write(pictureData.getData(), fileOutputStream);
