@@ -1,3 +1,8 @@
-2018-06-10 18:21:18,860 ERROR (DyExcel.java:109)- 前端穿过来的用户信息是空的
-2018-06-10 21:13:09,804 ERROR (DyExcel.java:106)- 您传过来的不是excel
-2018-06-10 21:14:35,840 ERROR (DyExcel.java:109)- 您传过来的不是excel
+2018-06-15 10:08:20,752 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
+2018-06-15 10:08:20,803 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
+2018-06-15 10:08:58,010 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-06-15 10:09:01,011 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<yiJingCaiGouDingJiaDanWeiXiaoShouDingJia>---------------------
+2018-06-15 10:09:01,029 ERROR (D1DaYangS.java:87)- --《销售定价》页面显示用-------xiaoshou ding jia yemian xianshi yong--------------------------
+2018-06-15 10:09:05,154 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-06-15 10:11:24,559 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-06-15 10:11:26,709 ERROR (DangQianYeDataC.java:260)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------

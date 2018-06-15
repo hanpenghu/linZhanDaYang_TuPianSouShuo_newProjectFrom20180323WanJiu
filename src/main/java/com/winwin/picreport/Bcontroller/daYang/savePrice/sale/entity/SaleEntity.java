@@ -84,4 +84,17 @@ public class SaleEntity {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
+    @Override
+    public String toString() {
+        return "SaleEntity{" +
+                "curId='" + curId + '\'' +
+                ", bilType='" + bilType + '\'' +
+                ", priceId='" + priceId + '\'' +
+                ", up='" + up + '\'' +
+                ", rem='" + rem + '\'' +
+                ", qty='" + qty + '\'' +
+                ", unit='" + unit + '\'' +
+                '}';
+    }
 }

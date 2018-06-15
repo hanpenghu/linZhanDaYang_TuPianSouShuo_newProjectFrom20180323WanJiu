@@ -56,4 +56,15 @@ public class BuyEntity {
     public void setPriceId(String priceId) {
         this.priceId = priceId;
     }
+
+
+    @Override
+    public String toString() {
+        return "BuyEntity{" +
+                "dingJiaGuanLian='" + dingJiaGuanLian + '\'' +
+                ", curId='" + curId + '\'' +
+                ", bilType='" + bilType + '\'' +
+                ", priceId='" + priceId + '\'' +
+                '}';
+    }
 }

@@ -39,6 +39,7 @@ public class SalePriceService {
         for(SaleEntity s:sale){
             this.f单价和数量是否是数字(s,ms);
             UpDef upDef=new UpDef();
+            upDef.setPrdNo(prdNo);
             if(s.getQty()==null||"".equals(s.getQty())){
                 //可以不填写数量
                 upDef.setQty(null);
@@ -55,7 +56,8 @@ public class SalePriceService {
             upDef.setPriceId(Cnst.salPriceId);
             upDef.setUp(p.b(s.getUp()));
             upDef.setRem(s.getRem());
-            upDef.setUnit(s.getUnit());
+            upDef.setHjNo(s.getUnit());
+            upDef.setUnit("1");
             if(b是否有主单位){this.f插入主单位(prdNo,s.getUnit());}
             if(b是否有副单位){this.f插入副单位(prdNo,s.getUnit());}
 
@@ -145,9 +147,12 @@ public class SalePriceService {
                     .andCurIdEqualTo(b.getCurId())
                     .andBilTypeEqualTo(b.getBilType())
                     .andPriceIdEqualTo(Cnst.buyPriceId);
+//            p.p("----prdNo="+prdNo+"----b.getDingJiaGuanLian()="+b.getDingJiaGuanLian()+"----b.getCurId()="+b.getCurId()+"----b.getBilType()="+b.getBilType()+"------Cnst.buyPriceId="+Cnst.buyPriceId+"-------------------------------");
             int i = cnst.upDefMapper.updateByExampleSelective(upDef, upDefExample);
+//            p.p("-----cnst.upDefMapper.updateByExampleSelective(upDef, upDefExample)="+i+"----------------------");
             if(i!=1){
-                String sss="销售定价保存之前,其所关联的采购定价关联字段prm_no更新失败,《考虑联合前端联合主键传递有问题》";
+                String sss="采购定价该条数据不存在,销售定价保存之前,其所关联的采购定价关联字段prm_no更新失败,《考虑联合前端联合主键传递有问题或者原来数据中采购定价无运费的情况无法通过》";
+                sss="采购定价该条数据不存在";
                 p.throwEAddToList(sss,ms);
             }
         }
