@@ -4,6 +4,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.hanhan.p;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -253,10 +254,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     public @ResponseBody//注意:增加一个request获得参数,所有数据库定价类型分类的参数
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
-    FenYe dangqianyeData(@RequestBody FenYe fenYe, HttpServletRequest request) {
-
-        //这个参数只是决定后面那个界面再调数据
-        String  dingJiaType= request.getParameter("dingJiaType");
+    FenYe dangqianyeData(@RequestBody FenYe fenYe, @RequestParam(value="dingJiaType",required =false)String dingJiaType) {
         l.error("---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<"+dingJiaType+">---------------------");
 //        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
 //            //此时是要返回已经采购定价但未销售定价的数据
@@ -264,8 +262,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 //        }
         // /d/dangqianyeData?dingJiaType=yiJingCaiGouDingJiaDanWeiXiaoShouDingJia  此时证明你调的接口是为了在页面上的(销售定价的显示)
 
-        return cnst.fenLei
-                .dangqianyeData(fenYe,dingJiaType);//主要传过来当前页和每页显示数量
+        return cnst.fenLei.dangqianyeData(fenYe,dingJiaType);//主要传过来当前页和每页显示数量
     }
 
 
