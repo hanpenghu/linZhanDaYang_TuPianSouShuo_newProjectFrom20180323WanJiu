@@ -260,7 +260,7 @@ public class D1DaYangService {
 
 
         List<Object> prdtSampList=new ArrayList<>();
-        PrdtSamp0 p0 = cnst.fenLei.getP0(prdtSamp);
+        PrdtSamp0 p0 = cnst.fenLei.setCreateTimeAndPriceAndAlterRec(prdtSamp);
         prdtSampList.add(p0);
         return Msg.gmg().setData(Data.gD().setObjs(prdtSampList))
                 .setStatus(StatusCnst.prdtSampSaveOneDataSucc)

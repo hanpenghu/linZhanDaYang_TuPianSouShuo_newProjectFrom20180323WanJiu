@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang.删除一个附件;
+package com.winwin.picreport.Bcontroller.daYang.deleteOneAttach;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;

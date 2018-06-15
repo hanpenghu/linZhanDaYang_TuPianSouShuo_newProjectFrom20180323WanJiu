@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang.删除一个缩略图;
+package com.winwin.picreport.Bcontroller.daYang.deleteOneThum;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;

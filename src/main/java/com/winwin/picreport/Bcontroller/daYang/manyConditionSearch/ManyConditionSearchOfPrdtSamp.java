@@ -1,13 +1,10 @@
-package com.winwin.picreport.Bcontroller.daYang.产品打样多条件查询;
+package com.winwin.picreport.Bcontroller.daYang.manyConditionSearch;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
-import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.FenYe;
-import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
-import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
