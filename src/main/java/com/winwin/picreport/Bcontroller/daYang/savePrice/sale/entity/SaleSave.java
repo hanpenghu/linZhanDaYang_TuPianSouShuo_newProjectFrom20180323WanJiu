@@ -8,7 +8,7 @@ import java.util.List;
  *
 
 
- {"uuid":"",
+ {"uuid":"","user":"hanhan",
 
  "buy":[{"dingJiaGuanLian":"","curId":"RMB","bilType":"","priceId":"2"}],
 
@@ -22,9 +22,20 @@ import java.util.List;
  *
  */
 public class SaleSave {
+    //传入当前操作用户的登录名 userEmail
+    private String user;
     private String uuid;
     private List<BuyEntity> buy=new LinkedList<BuyEntity>();
     private List<SaleEntity> sale=new LinkedList<SaleEntity>();
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public String getUuid() {
         return uuid;

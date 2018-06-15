@@ -4,7 +4,6 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity.BuyEntity;
 import com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity.SaleEntity;
 import com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity.SaleSave;
-import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class SalePriceSave {
         List<String> ms = new LinkedList<String>();
         try {
             this.f判断数据合法性(saleSave, ms);
-            salePriceService.f(saleSave,ms);
+            this.salePriceService.f(saleSave,ms);
         } catch (Exception e) {
             return this.controllerIgllReturn(e,ms);
         }

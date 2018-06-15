@@ -1,5 +1,4 @@
 package com.winwin.picreport.Bcontroller.daYang.savePrice.sale;
-
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity.BuyEntity;
 import com.winwin.picreport.Bcontroller.daYang.savePrice.sale.entity.SaleEntity;
@@ -10,8 +9,6 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +18,6 @@ import java.util.List;
 
 @Service
 public class SalePriceService {
-    private String n0 = "0";//失败
-    private String n1 = "1";//成功
-    private String 未知异常 = "《未知异常》";
-    private String 已知异常 = "《已知异常》";
-    private String 成功 = "《成功》";
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
@@ -34,12 +26,14 @@ public class SalePriceService {
         //prm_no   varchar(20)      180614223502247-561这种17到19位以内
         String n销售采购关联prmNo= p.timeAndRandom0_999NoSymbolRemoveHead_();
         String prdNo=this.f得到货号(saleSave.getUuid(),ms);
+        boolean b是否有主单位 = this.prdt表中对应该单号是否有主单位(prdNo);
+        boolean b是否有副单位 = this.prdt表中对应该单号是否有副单位(prdNo);
         this.f更新采购的采购销售关联标记prmNo(ms,prdNo,saleSave.getBuy(),n销售采购关联prmNo);
-        this.f插入销售定价携带与采购的关联标记prmNo(ms,prdNo,saleSave.getSale(),n销售采购关联prmNo);
+        this.f插入销售定价携带与采购的关联标记prmNo(ms,prdNo,saleSave.getSale(),saleSave.getUser(),n销售采购关联prmNo,b是否有主单位,b是否有副单位);
     }
 
     @Transactional
-    private void f插入销售定价携带与采购的关联标记prmNo(List<String> ms, String prdNo, List<SaleEntity> sale, String n销售采购关联prmNo) {
+    private void f插入销售定价携带与采购的关联标记prmNo(List<String> ms, String prdNo, List<SaleEntity> sale, String user,String n销售采购关联prmNo,boolean b是否有主单位,boolean b是否有副单位) {
         String dingJiaGuanLian = Cnst.SamplesSys + p.timeAndRandom0_999NoSymbolRemoveHead_();
         Date date1到4条数据使用同一个插入时间=p.getDate();
         for(SaleEntity s:sale){
@@ -62,7 +56,12 @@ public class SalePriceService {
             upDef.setUp(p.b(s.getUp()));
             upDef.setRem(s.getRem());
             upDef.setUnit(s.getUnit());
+            if(b是否有主单位){this.f插入主单位(prdNo,s.getUnit());}
+            if(b是否有副单位){this.f插入副单位(prdNo,s.getUnit());}
+
             upDef.setsDd(date1到4条数据使用同一个插入时间);
+            upDef.setUsr(user);
+            upDef.setChkMan(user);
             this.f设置upDef必须字段为空(upDef);
             int i = cnst.upDefMapper.insertSelective(upDef);
             if(i!=1){
@@ -72,6 +71,46 @@ public class SalePriceService {
         }
 
     }
+
+
+    @Transactional
+    private boolean prdt表中对应该单号是否有主单位(String prdNo){
+        String ut = cnst.manyTabSerch.selectUtFromPrdt(prdNo);
+        if(p.notEmpty(ut)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Transactional
+    private boolean prdt表中对应该单号是否有副单位(String prdNo){
+        String ut1 = cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
+        if(p.notEmpty(ut1)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Transactional
+    private  void f插入主单位(String prdNo,String unit){
+        if (p.notEmpty(unit)&&unit.contains("主")) {
+            //如果是空的,证明prdt表中没有该ut,需要插入该unit
+            Integer tt = cnst.manyTabSerch.insertUnitToUtOfPrdt(unit, prdNo);
+        }
+    }
+
+    @Transactional
+    private void f插入副单位(String prdNo,String unit){
+        if (p.notEmpty(unit)&&unit.contains("副")) {
+            //如果是空的,证明prdt表中没有该ut,需要插入该unit
+            Integer tt1 = cnst.manyTabSerch.insertUnitToUt1OfPrdt(unit,prdNo);
+        }
+    }
+
+
+
 
     @Transactional
     private void f单价和数量是否是数字(SaleEntity s, List<String> ms) {
