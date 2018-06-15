@@ -359,4 +359,10 @@ public interface A001TongYongMapper {
 
     @Select({"select rto_tax from cust where cus_no=#{cusNo}"})
     Double getTaxRtoFromCust(@Param("cusNo")String cusNo);
+
+    @Select({"select prd_no from prdt_samp where id=#{id}"})
+    String getPrdNoFromPrdtSampUseId(@Param("id")String uuid);
+
+    @Select({"select a.olefield from (select top 80 olefield from up_def where prd_no=#{prdNo} and olefield like #{olefield} order by s_dd DESC) a group by a.olefield "})
+    List<String> selectTop80Olefiled(@Param("prdNo")String prdNo,@Param("olefield")String olefield);
 }

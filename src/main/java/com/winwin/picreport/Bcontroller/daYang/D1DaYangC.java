@@ -19,23 +19,12 @@ import java.util.*;
 public class D1DaYangC {
     @Autowired
     private Cnst cnst;
-
-
-
-    /**
-     ****************************************************************************************
-     * */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     /**
  *delete 一条数据库信息并delete对应的图片和附件资源
  * 支持一次多删除
  * */
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@RequestMapping(value = InterFaceCnst.deleteSomeRecode, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+@RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {
-    System.out.println(uuidList);
     return cnst.deleteSome.deleteSomeRecode(uuidList);
 }
 

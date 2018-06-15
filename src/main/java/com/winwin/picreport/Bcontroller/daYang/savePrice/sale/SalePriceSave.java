@@ -114,7 +114,7 @@ public class SalePriceSave {
         if(p.empty(upDefs)){
             p.throwEAddToList("前端穿过来的确定该条价格的联合主键有问题",ms);
         }
-        upDefs.get(0).getPrmNo()
+        upDefs.get(0).getPrmNo();
         if(upDefs.size()==1&&p.notEmpty(upDefs.get(0).getPrmNo())&& upDefs.get(0).getPrmNo().length()>16){
             //已经存在
             p.throwEAddToList("该采购定价已经关联过销售定价,如要从新销售定价,请再采购定价一次",ms);
