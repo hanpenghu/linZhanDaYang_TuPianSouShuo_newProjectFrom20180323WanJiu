@@ -4,7 +4,6 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.daYang.givePriceToFront.sale.entity.UpDefStr;
 import com.winwin.picreport.Bcontroller.daYang.givePriceToFront.sale.entity.UpdefBuyStr;
 import com.winwin.picreport.Bcontroller.daYang.givePriceToFront.sale.entity.UpdefSaleStr;
-import com.winwin.picreport.Ddao.reportxmlmapper.UpDefMapper;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefExample;
 import com.winwin.picreport.Futils.hanhan.p;
@@ -34,9 +33,9 @@ public class GiveSaleService {
 
     private List<UpDefStr> f通过货号拿到前80个采购定价(String prdNo,List<String> ms) {
         //先找到该货号对应的定价关联的前80个
-        List<String>n定价关联s去重复=cnst.a001TongYongMapper.selectTop80Olefiled(prdNo,"%"+Cnst.SamplesSys+"%");
+        List<String>n采购定价关联s去重复=cnst.a001TongYongMapper.selectTop80Olefiled(prdNo,"%"+Cnst.SamplesSys+"%",Cnst.buyPriceId);
         List<UpDefStr>upDefStrs总=new LinkedList<>();
-        for(String s:n定价关联s去重复){
+        for(String s:n采购定价关联s去重复){
             UpDefStr upDefStr总=new UpDefStr();
             UpdefBuyStr updefBuyStr分=this.f拿到该定价关联的采购对象(s,ms);
             upDefStr总.setUpdefBuyStr(updefBuyStr分);
