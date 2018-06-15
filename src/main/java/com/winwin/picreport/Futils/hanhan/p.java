@@ -170,6 +170,11 @@ public strictfp class p {
     private List lin=new LinkedList();
     private List arl=new ArrayList();
     private Map<String,Object>map=new HashMap<>();
+
+
+
+
+
     /**
      *是否是BigDecimal
      * */

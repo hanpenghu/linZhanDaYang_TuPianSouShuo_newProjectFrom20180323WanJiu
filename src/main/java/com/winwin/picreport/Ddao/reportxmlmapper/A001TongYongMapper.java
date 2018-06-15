@@ -365,4 +365,6 @@ public interface A001TongYongMapper {
 
     @Select({"select a.olefield from (select top 80 olefield from up_def where prd_no=#{prdNo} and olefield like #{olefield} and price_id=#{priceId} order by s_dd DESC) a group by a.olefield "})
     List<String> selectTop80Olefiled(@Param("prdNo")String prdNo,@Param("olefield")String olefield,@Param("priceId")String priceId);
+
+    List<String> selectTop80OlefiledAndNoIn(@Param("prdNo")String prdNo,@Param("olefield")String olefield,@Param("priceId")String priceId, @Param("dingJiaGuanLiansNotIn") List<String> dingJiaGuanLiansNotIn);
 }

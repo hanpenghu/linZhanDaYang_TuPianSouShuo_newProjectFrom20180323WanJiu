@@ -1,5 +1,7 @@
 package com.winwin.picreport.Bcontroller.daYang.givePriceToFront.sale.entity;
 
+import com.winwin.picreport.Futils.hanhan.p;
+
 /**
  * Created by Administrator on 2018/6/15.
  */
@@ -15,6 +17,16 @@ public class UpdefBuyStr {
     private String noTransUpWaiBi;
     //关联采购和销售的字段
     private String prmNo;
+    //定价时间
+    private String sDd;
+
+    public String getsDd() {
+        return sDd;
+    }
+
+    public void setsDd(String sDd) {
+        this.sDd = sDd;
+    }
 
     public String getRem() {
         return rem;
@@ -49,7 +61,7 @@ public class UpdefBuyStr {
     }
 
     public String getQty() {
-        return qty;
+        return p.getNum(3,3,qty);
     }
 
     public void setQty(String qty) {
@@ -57,7 +69,8 @@ public class UpdefBuyStr {
     }
 
     public String getHaveTransUpBenBi() {
-        return haveTransUpBenBi;
+
+        return p.getNum(3,3,haveTransUpBenBi);
     }
 
     public void setHaveTransUpBenBi(String haveTransUpBenBi) {
@@ -65,7 +78,7 @@ public class UpdefBuyStr {
     }
 
     public String getHaveTransUpWaiBi() {
-        return haveTransUpWaiBi;
+        return p.getNum(3,3,haveTransUpWaiBi);
     }
 
     public void setHaveTransUpWaiBi(String haveTransUpWaiBi) {
@@ -73,7 +86,7 @@ public class UpdefBuyStr {
     }
 
     public String getNoTransUpBenBi() {
-        return noTransUpBenBi;
+        return p.getNum(3,3,noTransUpBenBi);
     }
 
     public void setNoTransUpBenBi(String noTransUpBenBi) {
@@ -81,7 +94,7 @@ public class UpdefBuyStr {
     }
 
     public String getNoTransUpWaiBi() {
-        return noTransUpWaiBi;
+        return p.getNum(3,3,noTransUpWaiBi);
     }
 
     public void setNoTransUpWaiBi(String noTransUpWaiBi) {

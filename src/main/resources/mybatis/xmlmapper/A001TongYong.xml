@@ -564,6 +564,31 @@
     </select>
 
 
+
+    <select id="selectTop80OlefiledAndNoIn" resultType="java.lang.String">
+        select a.olefield from
+        (
+           select top 80 olefield from
+           up_def where
+           prd_no=#{prdNo}
+           and price_id=#{priceId}
+           and olefield like #{olefield}
+           and olefield not in
+            <foreach item="item" index="index" collection="dingJiaGuanLiansNotIn" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+           order by s_dd DESC
+        ) a
+
+        group by a.olefield
+    </select>
+
+
+
+
+
+
+
 </mapper>
 
 
