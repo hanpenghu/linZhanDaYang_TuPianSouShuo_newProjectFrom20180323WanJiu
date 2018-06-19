@@ -111,6 +111,11 @@ public class PrdtSamp {
     protected String mainUnit;
 
     //是否审核   0或者null或者''代表未提交,  1代表已经提交但未审核,  2代表已经审核过
+    //    有状态: 0、未提交,1、已经提交但是未审核等待审核,2、已经提交已审核
+    //-- ---2018_6_19   weekday(2)   12:08:01---  添加一个是否提交并审核字段该字段 is_check_out 有状态:
+    //            -- 0(或者null或者'')、未提交,
+    //            --  1、已经提交但是未审核等待审核,2、已经提交已审核  ---------- --
+    //            --    提交的前提是: 必须有： 供应商(cus_No_Give,cus_Name_Give),起订量(startsellcount),小单费(littleorderprice) 和 已经进行过采购定价
     protected String isCheckOut;
 
     //审核意见

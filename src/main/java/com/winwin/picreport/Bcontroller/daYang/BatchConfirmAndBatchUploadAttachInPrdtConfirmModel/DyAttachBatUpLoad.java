@@ -23,7 +23,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class DaYangAttachBatUpLoad {
+public class DyAttachBatUpLoad {
     @Autowired
     private Cnst cnst;
     /**
