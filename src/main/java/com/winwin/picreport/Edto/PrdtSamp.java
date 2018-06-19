@@ -4,105 +4,117 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class PrdtSamp {
-    private String id;
+    protected String id;//一条录入记录的唯一标识符号
+    protected String prdCode;//产品编码
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //下面2个用作产品名称,的name和no,   分类的再加两个
+    //原来徐勇的界面上改了框里面的东西,其他地方不用改,前端的分类框中填范围小的,前端的名称框放范围 大的
+    protected String idxName;//产品名称
 
-    private String prdCode;
+    protected String idxNo;//产品的no
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //下面2个用于界面上产品分类那一栏//注意,存的时候不存,只是返回的时候返回给前端
 
-    private String idxName;
+    protected String fenLeiNo;
 
-    private String idxNo;
+    protected String fenLeiName;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected String markName;//品牌
 
-    private String markName;
+    protected String markNo;//品牌编号
 
-    private String markNo;
+    protected String colour;//颜色
 
-    private String colour;
+    protected String size;//尺寸
+    //产品负责人
+    protected String salName;
+    //产品负责人编码
+    protected String salNo;
 
-    private String size;
+    protected String cusNo;//客户编号
 
-    private String salName;
+    protected String cusName;//客户名称
 
-    private String salNo;
+    protected String isfenjie;//是否分解//是否分解, y代表分解, n代表不分解
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    protected Date sampMake;//打样时间
 
-    private String cusNo;
+    protected Date sampSend;//----样品寄出时间
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //样品要求
+    protected String sampRequ;
+    //样品描述
+    protected String sampDesc;
+    //---缩略图名字包含的路径字符串,用;隔开,路径里面有!导致用户的缩略名字不能有!和;
+    protected String thum;
 
-    private String cusName;
+    //附件路径字符串,多个用;隔开,名字中的！做分隔符号
+    protected String attach;
+    ///////////////////////////////////////////////////////////////////////////
+    //该条记录插入时间,数据库自动会添加DEFAULT一个getdate()
+    protected Date insertdate;
 
-    private String isfenjie;
+    protected String confirmman;//确认人
 
-    private Date sampMake;
+    protected String confirmtimestr;//确认时间   直接带-的字符串
 
-    private Date sampSend;
+    protected Integer isconfirm;//是否确认，1代表已经确认  0代表未确认
 
-    private String sampRequ;
+    protected String category;//未知//老郑让弄得
 
-    private String sampDesc;
+    protected String teamname;//未知//老郑让弄得
 
-    private String thum;
+    protected String confirmrem;//确认备注
 
-    private String attach;
+    protected String unit;//单位
 
-    private Date insertdate;
+    protected String businessdesc;//业务描述
 
-    private String prdNo;
+    protected String financedesc;//财务描述
 
-    private String confirmman;
+    protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部
 
-    private String confirmtimestr;
+    protected BigDecimal modelcost;//模具费
 
-    private Integer isconfirm;
+    protected BigDecimal estimateprice;//预估价
 
-    private String category;
+    protected BigDecimal littleorderprice;//小单费
 
-    private String teamname;
+    protected String modelcostinvoiceno;//模具费用发票号
+    //财务起订量
+    protected BigDecimal financestartsellcount;
+    //财务模具费
+    protected BigDecimal financemodelcost;
+    //财务小单费
+    protected BigDecimal financelittleorderprice;
+    //采购描述
+    protected String buyerdesc;
+    //货号
+    protected String prdNo;
 
-    private String confirmrem;
+    //销售描述
+    protected String salemandesc;
+    //    /停用时间/
+    protected Date stopusedate;
+    //供应商编号
+    protected String cusNoGive;
 
-    private String unit;
+    //供应商名字
+    protected String cusNameGive;
 
-    private BigDecimal financestartsellcount;
+    //创建人的userName,实际上我传给徐勇的放在userEmail字段了
+    protected String userName;
+    //创建人所在的公司,
+    protected String tenantId;
+    //主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
+    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
+    protected String mainUnit;
 
-    private BigDecimal startsellcount;
+    //是否审核   0或者null或者''代表未提交,  1代表已经提交但未审核,  2代表已经审核过
+    protected String isCheckOut;
 
-    private String modelcostinvoiceno;
-
-    private BigDecimal modelcost;
-
-    private BigDecimal financemodelcost;
-
-    private BigDecimal estimateprice;
-
-    private BigDecimal littleorderprice;
-
-    private BigDecimal financelittleorderprice;
-
-    private String businessdesc;
-
-    private String financedesc;
-
-    private String salemandesc;
-
-    private String buyerdesc;
-
-    private Date stopusedate;
-
-    private String cusNoGive;
-
-    private String cusNameGive;
-
-    private String fenLeiNo;
-
-    private String fenLeiName;
-
-    private String userName;
-
-    private String tenantId;
-
-    private String mainUnit;
-
-    private String isCheckOut;
-
-    private String checkOutOpinion;
+    //审核意见
+    protected String checkOutOpinion;
 
     public String getId() {
         return id;
