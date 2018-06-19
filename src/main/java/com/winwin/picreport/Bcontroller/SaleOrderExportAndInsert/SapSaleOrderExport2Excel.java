@@ -1,11 +1,11 @@
-package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
+package com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert;
 
 import com.winwin.picreport.AllConstant.Cnst;
 //import com.winwin.picreport.Ddao.reportxmlmapper.ManyTabSerch;
 import com.winwin.picreport.Edto.ChaXunTiaoJian;
 import com.winwin.picreport.Edto.SalePrdDetailTab1;
 import com.winwin.picreport.Edto.Sapso;
-import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +19,24 @@ import java.util.*;
 /**
  *导出excel  销售订单
  * */
-public class SapXiaoShouDingDanDaoChuDaoExcel {
+public class SapSaleOrderExport2Excel {
     @Autowired
+
+
+
     private Cnst cnst;
 
-//     {"cus_no":[""],"startTimeStamp":"1506787200000","endTimeStamp":"1506873600000"}
+    //     {"cus_no":[""],"startTimeStamp":"1506787200000","endTimeStamp":"1506873600000"}
     @RequestMapping(value="salePrdDetailTab1",method = RequestMethod.POST,
             produces ={"application/json;charset=utf-8"})
-    public @ResponseBody List<SalePrdDetailTab1> salePrdDetailTab1
-        (@RequestBody ChaXunTiaoJian chaXunTiaoJian){
+    public @ResponseBody List<SalePrdDetailTab1> salePrdDetailTab1(@RequestBody ChaXunTiaoJian chaXunTiaoJian){
         //listAll用来储存所有没有匹配sapso表的原始数据
 
         List<String> cus_nos = chaXunTiaoJian.getCus_no();
-        if(cus_nos==null||cus_nos.size()==0){
-            cus_nos=new ArrayList<>();
-            cus_nos.add("");
-        }
+        p.sm(p.empty(cus_nos),new linklistT<String>().a("").g(),cus_nos);
 
         //得到客户条件的所有未拆行的数据
-        List<SalePrdDetailTab1> salePrdDetailTab1ListWeiChaiHang =
+        List<SalePrdDetailTab1> a得到客户条件未拆行数据 =
                 this.salePrdDetailTab1ListWeiChaiHang(cus_nos, chaXunTiaoJian);
 
 
@@ -46,14 +45,14 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
 
 //        //将来要根据客户订单号+货号来通过数量拆分行号saphh,拆行后的数据放到salePrdDetailTab1ListYiChaiHang
         List <SalePrdDetailTab1>salePrdDetailTab1ListYiChaiHang=new ArrayList<>();
-        if(p.empty(salePrdDetailTab1ListWeiChaiHang)){
+        if(p.empty(a得到客户条件未拆行数据)){
             return salePrdDetailTab1ListYiChaiHang;
         }//如果未拆行的list是空的,就暂停掉
 
 //
 //
 ////得到将来用于拆行的sapso
-//        List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(salePrdDetailTab1ListWeiChaiHang);
+//        List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(a得到客户条件未拆行数据);
 
         List<Sapso>listSapsoWeiChaiHang=this.listSapsoWeiChaiHang(cus_nos, chaXunTiaoJian);
 
@@ -63,7 +62,7 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                     .add(sapso.getDanHao_HuoHao_ChengFenDaiMa());
         }
 
-        for(SalePrdDetailTab1 salePrdDetailTab1:salePrdDetailTab1ListWeiChaiHang){
+        for(SalePrdDetailTab1 salePrdDetailTab1: a得到客户条件未拆行数据){
 
                 if(danHao_HuoHao_ChenFenDaiMaListOfSapsoWeiChaiHang
                         .contains(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa())){//是通过excel导入的
@@ -91,15 +90,6 @@ public class SapXiaoShouDingDanDaoChuDaoExcel {
                                 salePrdDetailTab1.setRealWidth(sapso.getRealwidth());
                                 salePrdDetailTab1.setRealLength(sapso.getReallength());
                                 salePrdDetailTab1.setAmt(String.valueOf(Double.parseDouble(salePrdDetailTab1.getQty())*Double.parseDouble(salePrdDetailTab1.getUp())));
-//                                salePrdDetailTab1.setEbNo
-//                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa()).get(0));
-
-//                                p.p("-------------------------------------------------------");
-//                                p.p(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh());
-//                                p.p("-------------------------------------------------------");
-//                                salePrdDetailTab1.setEbNo
-//                                        (cnst.manyTabSerch.selectEbNoFromSapso(salePrdDetailTab1.getDanHao_HuoHao_ChengFenDaiMa_saphh()).get(0));
-
                                 salePrdDetailTab1.setEbNo(sapso.getEbno());
                                 salePrdDetailTab1ListYiChaiHang.add(salePrdDetailTab1);
                                 break;

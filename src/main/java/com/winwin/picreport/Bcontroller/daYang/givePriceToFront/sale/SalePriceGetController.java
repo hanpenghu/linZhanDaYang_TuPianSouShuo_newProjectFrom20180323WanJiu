@@ -13,7 +13,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-public class SalePriceGet {
+public class SalePriceGetController {
 
     @Autowired
     private GiveSaleService giveSaleService;

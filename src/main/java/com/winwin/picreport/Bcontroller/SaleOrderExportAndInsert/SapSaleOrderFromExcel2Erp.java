@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel;
+package com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.MfPosExample;
@@ -45,7 +45,7 @@ import java.util.*;
 /**
  *导入excel
  * */
-public class SapXiaoShouDingDanExcelDaoRuXiTong {
+public class SapSaleOrderFromExcel2Erp {
     private org.apache.log4j.Logger l = pp.getLogger(this);
 
     @Autowired

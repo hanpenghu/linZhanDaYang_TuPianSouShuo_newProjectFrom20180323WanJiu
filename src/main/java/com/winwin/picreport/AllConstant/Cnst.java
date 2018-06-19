@@ -2,21 +2,18 @@ package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef20180512;
 import com.winwin.picreport.Acomponent.SapsoChongfu;
-import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
-import com.winwin.picreport.Bcontroller.xiaoShouDingDanDaoRuDaoChuExcel.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
+import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
+import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
 import com.winwin.picreport.Futils.GeneratePrdNo.GetMaxPrdNo;
 import com.winwin.picreport.Futils.SpringbootJarPath;
-import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Order(2)

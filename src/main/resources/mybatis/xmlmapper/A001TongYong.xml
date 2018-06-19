@@ -38,89 +38,124 @@
     <!-- 产品打样列表多条件查询的条件-->
 
 
+    <!--<sql id="productProofWithManyCondition">-->
+
+
+        <!--(-->
+
+        <!--insertDate-->
+        <!--BETWEEN-->
+        <!--<choose>-->
+            <!--<when test="insertdateStr != null and insertdateStr != ''">-->
+                <!--#{insertdateStr}-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--'1970-01-01'-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        <!--AND-->
+        <!--<choose>-->
+            <!--<when test="insertdateStrEnd != null and insertdateStrEnd != ''">-->
+                <!--#{insertdateStrEnd}-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--'9999-01-01'-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        <!--)-->
+
+        <!--AND-->
+        <!--&#45;&#45; 产品名称,大范围-->
+        <!--isnull(idx_Name,'') LIKE-->
+        <!--<choose>-->
+            <!--<when test="idxName != null and idxName != ''">-->
+                <!--('%' + (#{idxName}) + '%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--isnull(idx_Name,'')-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        <!--AND-->
+        <!-- -&#45;&#45;  产品分类 小范围-->
+        <!--isnull(fen_lei_name,'') LIKE-->
+        <!--<choose>-->
+            <!--<when test=" fenLeiName != null and fenLeiName != '' ">-->
+                <!--('%'+( #{fenLeiName})+ '%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--isnull(fen_lei_name,'')-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        <!--AND-->
+        <!--&#45;&#45;产品编码-->
+        <!--isnull(prd_Code,'') LIKE-->
+        <!--<choose>-->
+            <!--<when test=" prdCode != null and prdCode != '' ">-->
+                <!--('%'+( #{prdCode}) +'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--isnull(prd_Code,'')-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+
+        <!--AND-->
+        <!--&#45;&#45;产品负责人,模糊查询-->
+        <!--isnull(sal_name,'') LIKE-->
+        <!--<choose>-->
+            <!--<when test="salName != null and salName != '' ">-->
+                <!--('%' +( #{salName}) + '%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--isnull(sal_name,'')-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        <!--AND-->
+        <!--&#45;&#45;是否已经打样确认，1是确认 0是未确认 ""确认+未确认-->
+        <!--isnull(isConfirm,9)=-->
+        <!--<choose>-->
+            <!--<when test=" isconfirm != null">-->
+                <!--#{isconfirm}-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--isnull(isConfirm,9)-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+
+        <!--<if test="confirmtimestr != null and confirmtimestr != ''">-->
+            <!--<![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>-->
+        <!--</if>-->
+        <!--<if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">-->
+            <!--<![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>-->
+        <!--</if>-->
+    <!--</sql>-->
+
+
+
+
+
     <sql id="productProofWithManyCondition">
-
-
-        (
-
-        insertDate
-        BETWEEN
-        <choose>
-            <when test="insertdateStr != null and insertdateStr != ''">
-                #{insertdateStr}
-            </when>
-            <otherwise>
-                '1970-01-01'
-            </otherwise>
-        </choose>
-        AND
-        <choose>
-            <when test="insertdateStrEnd != null and insertdateStrEnd != ''">
-                #{insertdateStrEnd}
-            </when>
-            <otherwise>
-                '9999-01-01'
-            </otherwise>
-        </choose>
-        )
-
-        AND
-        --产品分类的name(小范围的,分类用最小分类),因为原来理解错了,所以现在反过来
-        isnull(idx_Name,'') LIKE
-        <choose>
-            <when test="idxName != null and idxName != ''">
-                ('%' + (#{idxName}) + '%')
-            </when>
-            <otherwise>
-                isnull(idx_Name,'')
-            </otherwise>
-        </choose>
-        AND
-        ---产品名称的name(大范围的,名称用的最大分类),因为原来理解错了,所以现在反过来
-        isnull(fen_lei_name,'') LIKE
-        <choose>
-            <when test=" fenLeiName != null and fenLeiName != '' ">
-                ('%'+( #{fenLeiName})+ '%')
-            </when>
-            <otherwise>
-                isnull(fen_lei_name,'')
-            </otherwise>
-        </choose>
-        AND
-        --产品编码
-        isnull(prd_Code,'') LIKE
-        <choose>
-            <when test=" prdCode != null and prdCode != '' ">
-                ('%'+( #{prdCode}) +'%')
-            </when>
-            <otherwise>
-                isnull(prd_Code,'')
-            </otherwise>
-        </choose>
-
-        AND
-        --产品负责人,模糊查询
-        isnull(sal_name,'') LIKE
-        <choose>
-            <when test="salName != null and salName != '' ">
-                ('%' +( #{salName}) + '%')
-            </when>
-            <otherwise>
-                isnull(sal_name,'')
-            </otherwise>
-        </choose>
-        AND
-        --是否已经打样确认，1是确认 0是未确认 ""确认+未确认
-        isnull(isConfirm,9)=
-        <choose>
-            <when test=" isconfirm != null">
-                #{isconfirm}
-            </when>
-            <otherwise>
-                isnull(isConfirm,9)
-            </otherwise>
-        </choose>
-
+        id=id
+        <if test=" insertdateStr != null and insertdateStr != '' ">
+            <![CDATA[  AND  insertDate >= #{insertdateStr}  ]]>
+        </if>
+        <if test=" insertdateStrEnd != null and insertdateStrEnd != '' ">
+            <![CDATA[  AND  insertDate <= #{insertdateStrEnd}  ]]>
+        </if>
+        <if test=" idxName != null and idxName != '' ">
+             AND  isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+        </if>
+        <if test=" fenLeiName != null and fenLeiName != '' ">
+            AND  isnull(fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+        </if>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+        </if>
+        <if test=" salName != null and salName != '' ">
+            AND  isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
+        </if>
+        <if test=" isconfirm != null and isconfirm != '' ">
+            AND  isnull(isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+        </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>
         </if>
@@ -128,6 +163,14 @@
             <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
         </if>
     </sql>
+
+
+
+
+
+
+
+
 
     <!--登录验证用的  得到修改跟人信息接口 -->
     <select id="selectUserEditInfo" resultType="com.winwin.picreport.Edto.LoginInfo">
