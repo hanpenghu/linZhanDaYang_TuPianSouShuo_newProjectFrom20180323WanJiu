@@ -616,13 +616,14 @@
            prd_no=#{prdNo}
            and price_id=#{priceId}
            and olefield like #{olefield}
-           and olefield not in
-            <foreach item="item" index="index" collection="dingJiaGuanLiansNotIn" open="(" separator="," close=")">
-                #{item}
-            </foreach>
+            <if test=" dingJiaGuanLiansNotIn !=null and dingJiaGuanLiansNotIn.size()>0 ">
+                and olefield not in
+                <foreach item="item" index="index" collection="dingJiaGuanLiansNotIn" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
            order by s_dd DESC
         ) a
-
         group by a.olefield
     </select>
 

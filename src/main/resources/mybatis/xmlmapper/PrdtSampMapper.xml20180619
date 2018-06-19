@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mybatis.xmlmapper.PrdtSampMapper">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper">
   <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.PrdtSamp">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="prd_code" jdbcType="VARCHAR" property="prdCode" />
@@ -22,6 +22,8 @@
     <result column="thum" jdbcType="VARCHAR" property="thum" />
     <result column="attach" jdbcType="VARCHAR" property="attach" />
     <result column="insertdate" jdbcType="TIMESTAMP" property="insertdate" />
+    <result column="cus_no_give" jdbcType="VARCHAR" property="cusNoGive" />
+    <result column="cus_name_give" jdbcType="VARCHAR" property="cusNameGive" />
     <result column="prd_no" jdbcType="VARCHAR" property="prdNo" />
     <result column="confirmMan" jdbcType="VARCHAR" property="confirmman" />
     <result column="confirmTimeStr" jdbcType="VARCHAR" property="confirmtimestr" />
@@ -43,15 +45,11 @@
     <result column="saleManDesc" jdbcType="VARCHAR" property="salemandesc" />
     <result column="buyerdesc" jdbcType="VARCHAR" property="buyerdesc" />
     <result column="stopUseDate" jdbcType="TIMESTAMP" property="stopusedate" />
-    <result column="cus_no_give" jdbcType="VARCHAR" property="cusNoGive" />
-    <result column="cus_name_give" jdbcType="VARCHAR" property="cusNameGive" />
     <result column="fen_lei_no" jdbcType="VARCHAR" property="fenLeiNo" />
     <result column="fen_lei_name" jdbcType="VARCHAR" property="fenLeiName" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
     <result column="main_unit" jdbcType="VARCHAR" property="mainUnit" />
-    <result column="is_check_out" jdbcType="VARCHAR" property="isCheckOut" />
-    <result column="check_out_opinion" jdbcType="VARCHAR" property="checkOutOpinion" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -114,11 +112,11 @@
   <sql id="Base_Column_List">
     id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, 
     cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, 
-    insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, 
-    unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, 
-    estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, 
-    saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, 
-    user_name, tenant_id, main_unit, is_check_out, check_out_opinion
+    insertdate, cus_no_give, cus_name_give, prd_no, confirmMan, confirmTimeStr, isConfirm, 
+    Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, 
+    modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, 
+    businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, fen_lei_no, fen_lei_name, 
+    user_name, tenant_id, main_unit
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -157,34 +155,34 @@
       sal_no, cus_no, cus_name, 
       isFenJie, samp_make, samp_send, 
       samp_requ, samp_desc, thum, 
-      attach, insertdate, prd_no, 
-      confirmMan, confirmTimeStr, isConfirm, 
-      Category, TeamName, confirmRem, 
-      unit, financeStartSellCount, startSellCount, 
+      attach, insertdate, cus_no_give, 
+      cus_name_give, prd_no, confirmMan, 
+      confirmTimeStr, isConfirm, Category, 
+      TeamName, confirmRem, unit, 
+      financeStartSellCount, startSellCount, 
       modelCostInvoiceNo, modelCost, financeModelCost, 
       estimatePrice, littleOrderPrice, financeLittleOrderPrice, 
       businessDesc, financeDesc, saleManDesc, 
-      buyerdesc, stopUseDate, cus_no_give, 
-      cus_name_give, fen_lei_no, fen_lei_name, 
-      user_name, tenant_id, main_unit, 
-      is_check_out, check_out_opinion)
+      buyerdesc, stopUseDate, fen_lei_no, 
+      fen_lei_name, user_name, tenant_id, 
+      main_unit)
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
       #{salNo,jdbcType=VARCHAR}, #{cusNo,jdbcType=VARCHAR}, #{cusName,jdbcType=VARCHAR}, 
       #{isfenjie,jdbcType=VARCHAR}, #{sampMake,jdbcType=TIMESTAMP}, #{sampSend,jdbcType=TIMESTAMP}, 
       #{sampRequ,jdbcType=VARCHAR}, #{sampDesc,jdbcType=VARCHAR}, #{thum,jdbcType=VARCHAR}, 
-      #{attach,jdbcType=VARCHAR}, #{insertdate,jdbcType=TIMESTAMP}, #{prdNo,jdbcType=VARCHAR}, 
-      #{confirmman,jdbcType=VARCHAR}, #{confirmtimestr,jdbcType=VARCHAR}, #{isconfirm,jdbcType=INTEGER}, 
-      #{category,jdbcType=VARCHAR}, #{teamname,jdbcType=VARCHAR}, #{confirmrem,jdbcType=VARCHAR}, 
-      #{unit,jdbcType=VARCHAR}, #{financestartsellcount,jdbcType=NUMERIC}, #{startsellcount,jdbcType=NUMERIC}, 
+      #{attach,jdbcType=VARCHAR}, #{insertdate,jdbcType=TIMESTAMP}, #{cusNoGive,jdbcType=VARCHAR}, 
+      #{cusNameGive,jdbcType=VARCHAR}, #{prdNo,jdbcType=VARCHAR}, #{confirmman,jdbcType=VARCHAR}, 
+      #{confirmtimestr,jdbcType=VARCHAR}, #{isconfirm,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, 
+      #{teamname,jdbcType=VARCHAR}, #{confirmrem,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{financestartsellcount,jdbcType=NUMERIC}, #{startsellcount,jdbcType=NUMERIC}, 
       #{modelcostinvoiceno,jdbcType=VARCHAR}, #{modelcost,jdbcType=NUMERIC}, #{financemodelcost,jdbcType=NUMERIC}, 
       #{estimateprice,jdbcType=NUMERIC}, #{littleorderprice,jdbcType=NUMERIC}, #{financelittleorderprice,jdbcType=NUMERIC}, 
       #{businessdesc,jdbcType=VARCHAR}, #{financedesc,jdbcType=VARCHAR}, #{salemandesc,jdbcType=VARCHAR}, 
-      #{buyerdesc,jdbcType=VARCHAR}, #{stopusedate,jdbcType=TIMESTAMP}, #{cusNoGive,jdbcType=VARCHAR}, 
-      #{cusNameGive,jdbcType=VARCHAR}, #{fenLeiNo,jdbcType=VARCHAR}, #{fenLeiName,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{mainUnit,jdbcType=VARCHAR}, 
-      #{isCheckOut,jdbcType=VARCHAR}, #{checkOutOpinion,jdbcType=VARCHAR})
+      #{buyerdesc,jdbcType=VARCHAR}, #{stopusedate,jdbcType=TIMESTAMP}, #{fenLeiNo,jdbcType=VARCHAR}, 
+      #{fenLeiName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{mainUnit,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -249,6 +247,12 @@
       <if test="insertdate != null">
         insertdate,
       </if>
+      <if test="cusNoGive != null">
+        cus_no_give,
+      </if>
+      <if test="cusNameGive != null">
+        cus_name_give,
+      </if>
       <if test="prdNo != null">
         prd_no,
       </if>
@@ -312,12 +316,6 @@
       <if test="stopusedate != null">
         stopUseDate,
       </if>
-      <if test="cusNoGive != null">
-        cus_no_give,
-      </if>
-      <if test="cusNameGive != null">
-        cus_name_give,
-      </if>
       <if test="fenLeiNo != null">
         fen_lei_no,
       </if>
@@ -332,12 +330,6 @@
       </if>
       <if test="mainUnit != null">
         main_unit,
-      </if>
-      <if test="isCheckOut != null">
-        is_check_out,
-      </if>
-      <if test="checkOutOpinion != null">
-        check_out_opinion,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -400,6 +392,12 @@
       </if>
       <if test="insertdate != null">
         #{insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cusNoGive != null">
+        #{cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNameGive != null">
+        #{cusNameGive,jdbcType=VARCHAR},
       </if>
       <if test="prdNo != null">
         #{prdNo,jdbcType=VARCHAR},
@@ -464,12 +462,6 @@
       <if test="stopusedate != null">
         #{stopusedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="cusNoGive != null">
-        #{cusNoGive,jdbcType=VARCHAR},
-      </if>
-      <if test="cusNameGive != null">
-        #{cusNameGive,jdbcType=VARCHAR},
-      </if>
       <if test="fenLeiNo != null">
         #{fenLeiNo,jdbcType=VARCHAR},
       </if>
@@ -484,12 +476,6 @@
       </if>
       <if test="mainUnit != null">
         #{mainUnit,jdbcType=VARCHAR},
-      </if>
-      <if test="isCheckOut != null">
-        #{isCheckOut,jdbcType=VARCHAR},
-      </if>
-      <if test="checkOutOpinion != null">
-        #{checkOutOpinion,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -562,6 +548,12 @@
       <if test="record.insertdate != null">
         insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.cusNoGive != null">
+        cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusNameGive != null">
+        cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR},
+      </if>
       <if test="record.prdNo != null">
         prd_no = #{record.prdNo,jdbcType=VARCHAR},
       </if>
@@ -625,12 +617,6 @@
       <if test="record.stopusedate != null">
         stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.cusNoGive != null">
-        cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cusNameGive != null">
-        cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR},
-      </if>
       <if test="record.fenLeiNo != null">
         fen_lei_no = #{record.fenLeiNo,jdbcType=VARCHAR},
       </if>
@@ -646,14 +632,8 @@
       <if test="record.mainUnit != null">
         main_unit = #{record.mainUnit,jdbcType=VARCHAR},
       </if>
-      <if test="record.isCheckOut != null">
-        is_check_out = #{record.isCheckOut,jdbcType=VARCHAR},
-      </if>
-      <if test="record.checkOutOpinion != null">
-        check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR},
-      </if>
-      <if test="record.checkOutOpinion == null">
-        check_out_opinion = check_out_opinion,
+      <if test="record.mainUnit == null">
+        main_unit = main_unit,
       </if>
     </set>
     <if test="_parameter != null">
@@ -682,6 +662,8 @@
       thum = #{record.thum,jdbcType=VARCHAR},
       attach = #{record.attach,jdbcType=VARCHAR},
       insertdate = #{record.insertdate,jdbcType=TIMESTAMP},
+      cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
+      cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR},
       prd_no = #{record.prdNo,jdbcType=VARCHAR},
       confirmMan = #{record.confirmman,jdbcType=VARCHAR},
       confirmTimeStr = #{record.confirmtimestr,jdbcType=VARCHAR},
@@ -703,15 +685,11 @@
       saleManDesc = #{record.salemandesc,jdbcType=VARCHAR},
       buyerdesc = #{record.buyerdesc,jdbcType=VARCHAR},
       stopUseDate = #{record.stopusedate,jdbcType=TIMESTAMP},
-      cus_no_give = #{record.cusNoGive,jdbcType=VARCHAR},
-      cus_name_give = #{record.cusNameGive,jdbcType=VARCHAR},
       fen_lei_no = #{record.fenLeiNo,jdbcType=VARCHAR},
       fen_lei_name = #{record.fenLeiName,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       tenant_id = #{record.tenantId,jdbcType=VARCHAR},
-      main_unit = #{record.mainUnit,jdbcType=VARCHAR},
-      is_check_out = #{record.isCheckOut,jdbcType=VARCHAR},
-      check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR}
+      main_unit = #{record.mainUnit,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -776,6 +754,12 @@
       <if test="insertdate != null">
         insertdate = #{insertdate,jdbcType=TIMESTAMP},
       </if>
+      <if test="cusNoGive != null">
+        cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNameGive != null">
+        cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
+      </if>
       <if test="prdNo != null">
         prd_no = #{prdNo,jdbcType=VARCHAR},
       </if>
@@ -839,12 +823,6 @@
       <if test="stopusedate != null">
         stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="cusNoGive != null">
-        cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
-      </if>
-      <if test="cusNameGive != null">
-        cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
-      </if>
       <if test="fenLeiNo != null">
         fen_lei_no = #{fenLeiNo,jdbcType=VARCHAR},
       </if>
@@ -860,14 +838,8 @@
       <if test="mainUnit != null">
         main_unit = #{mainUnit,jdbcType=VARCHAR},
       </if>
-      <if test="isCheckOut != null">
-        is_check_out = #{isCheckOut,jdbcType=VARCHAR},
-      </if>
-      <if test="checkOutOpinion != null">
-        check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR},
-      </if>
-      <if test="checkOutOpinion == null">
-        check_out_opinion = check_out_opinion,
+      <if test="mainUnit == null">
+        main_unit = main_unit,
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -893,6 +865,8 @@
       thum = #{thum,jdbcType=VARCHAR},
       attach = #{attach,jdbcType=VARCHAR},
       insertdate = #{insertdate,jdbcType=TIMESTAMP},
+      cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
+      cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
       prd_no = #{prdNo,jdbcType=VARCHAR},
       confirmMan = #{confirmman,jdbcType=VARCHAR},
       confirmTimeStr = #{confirmtimestr,jdbcType=VARCHAR},
@@ -914,15 +888,11 @@
       saleManDesc = #{salemandesc,jdbcType=VARCHAR},
       buyerdesc = #{buyerdesc,jdbcType=VARCHAR},
       stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
-      cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
-      cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
       fen_lei_no = #{fenLeiNo,jdbcType=VARCHAR},
       fen_lei_name = #{fenLeiName,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       tenant_id = #{tenantId,jdbcType=VARCHAR},
-      main_unit = #{mainUnit,jdbcType=VARCHAR},
-      is_check_out = #{isCheckOut,jdbcType=VARCHAR},
-      check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR}
+      main_unit = #{mainUnit,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

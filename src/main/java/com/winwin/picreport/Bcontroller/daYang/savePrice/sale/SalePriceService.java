@@ -33,7 +33,8 @@ public class SalePriceService {
     }
 
     @Transactional
-    private void f插入销售定价携带与采购的关联标记prmNo(List<String> ms, String prdNo, List<SaleEntity> sale, String user,String n销售采购关联prmNo,boolean b是否有主单位,boolean b是否有副单位) {
+    private void f插入销售定价携带与采购的关联标记prmNo(List<String> ms, String prdNo, List<SaleEntity> sale,
+                                        String user,String n销售采购关联prmNo,boolean b是否有主单位,boolean b是否有副单位) {
         String dingJiaGuanLian = Cnst.SamplesSys + p.timeAndRandom0_999NoSymbolRemoveHead_();
         Date date1到4条数据使用同一个插入时间=p.getDate();
         for(SaleEntity s:sale){

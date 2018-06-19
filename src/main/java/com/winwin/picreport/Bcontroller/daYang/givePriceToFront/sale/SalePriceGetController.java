@@ -17,7 +17,7 @@ public class SalePriceGetController {
 
     @Autowired
     private GiveSaleService giveSaleService;
-
+    //得到销售定价
     @RequestMapping(value="salePriceGet",method = RequestMethod.POST)
     public @ResponseBody Msg f(@Param("uuid")String uuid){
         List<String> ms=new LinkedList<String>();
