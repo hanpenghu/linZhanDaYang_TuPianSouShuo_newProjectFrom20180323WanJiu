@@ -73,7 +73,13 @@ public class PrdtSamp1 {
     private String isCheckOut;
 
 
+    public String getIsCheckOut() {
+        return isCheckOut;
+    }
 
+    public void setIsCheckOut(String isCheckOut) {
+        this.isCheckOut = isCheckOut;
+    }
 
     public Date getInsertdate() {
         return insertdate;

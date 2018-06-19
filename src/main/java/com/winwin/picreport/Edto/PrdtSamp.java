@@ -1,8 +1,6 @@
 package com.winwin.picreport.Edto;
-
 import java.math.BigDecimal;
 import java.util.Date;
-
 public class PrdtSamp {
     protected String id;//一条录入记录的唯一标识符号
     protected String prdCode;//产品编码
@@ -30,10 +28,22 @@ public class PrdtSamp {
     protected String salName;
     //产品负责人编码
     protected String salNo;
-
+    // cust表1是客户  2是厂商  3是客户/厂商   4  会员客户
     protected String cusNo;//客户编号
 
     protected String cusName;//客户名称
+
+    //供应商编号
+    protected String cusNoGive;
+
+    //供应商名字
+    protected String cusNameGive;
+
+
+
+
+
+
 
     protected String isfenjie;//是否分解//是否分解, y代表分解, n代表不分解
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,11 +106,7 @@ public class PrdtSamp {
     protected String salemandesc;
     //    /停用时间/
     protected Date stopusedate;
-    //供应商编号
-    protected String cusNoGive;
 
-    //供应商名字
-    protected String cusNameGive;
 
     //创建人的userName,实际上我传给徐勇的放在userEmail字段了
     protected String userName;

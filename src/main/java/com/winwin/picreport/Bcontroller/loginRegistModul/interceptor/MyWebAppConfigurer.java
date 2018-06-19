@@ -1,11 +1,7 @@
 package com.winwin.picreport.Bcontroller.loginRegistModul.interceptor;
-
-
 //import com.ipacedev.tcode.dao.mapperJava01ChanPinKu.A001TongYongMapper;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;

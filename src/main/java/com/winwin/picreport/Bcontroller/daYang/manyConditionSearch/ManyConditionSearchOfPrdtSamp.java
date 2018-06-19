@@ -25,8 +25,7 @@ public class ManyConditionSearchOfPrdtSamp {
      * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
      * */
     @RequestMapping(value= InterFaceCnst.chanPinBianMaJianDangTiaoJianChaXun, method = RequestMethod.POST)
-    public @ResponseBody
-    FenYe f(@RequestBody FenYe fenYe){
+    public @ResponseBody FenYe f(@RequestBody FenYe fenYe){
         if(fenYe==null){
             FenYe f=new FenYe();
             ArrayList<PrdtSamp0> prdtSamps = new ArrayList<>();

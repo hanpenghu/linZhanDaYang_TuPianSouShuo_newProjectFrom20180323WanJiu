@@ -162,6 +162,10 @@
         <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
             <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
         </if>
+        <if test=" isCheckOut != null and isCheckOut  != '' ">
+            <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
+        </if>
+
     </sql>
 
 
