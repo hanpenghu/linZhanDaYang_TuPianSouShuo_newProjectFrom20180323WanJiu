@@ -68,6 +68,13 @@ public class PrdtSamp1 {
     //0代表没有确认//1代表确认//用来生成动态sql加条件是否打样的
     private Integer isconfirm;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //0代表未提交的,  1代表已经提交未审核的,  2代表已经审核的
+    private String isCheckOut;
+
+
+
+
     public Date getInsertdate() {
         return insertdate;
     }

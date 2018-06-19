@@ -24,7 +24,9 @@ public class GiveSaleService {
     private Cnst  cnst;
 
     public List<UpDefStr> f(String uuid,List<String> ms) {
+
        String prdNo= cnst.a001TongYongMapper.getPrdNoFromPrdtSampUseId(uuid);
+
        if(p.empty(prdNo)){p.throwEAddToList("该条数据没有货号,无法得到对应的定价,请到erp录入货号",ms);}
        //排列组合后没有80个
         List<UpDefStr> upDefStrs = this.f通过货号拿到前80个采购定价对应的采购和销售(prdNo, ms);
@@ -216,7 +218,7 @@ public class GiveSaleService {
 
     private void f封装组合采购运费(List<String> ms, UpDef u, UpdefBuyStr updefBuyStr) {
         //有运费本币
-        if(p.notEmpty(u.getBilType())&&p.notEmpty(u.getCurId())){
+        if(u.getBilType()!=null&&p.notEmpty(u.getCurId())){
             if(Cnst.buyBilTypeHaveTrans.equals(u.getBilType())&&Cnst.benBi.equals(u.getCurId())){
                 if(p.notEmpty(u.getUp())){
                     updefBuyStr.setHaveTransUpBenBi(String.valueOf(u.getUp()));
@@ -224,7 +226,7 @@ public class GiveSaleService {
             }
         }
         //有运费美元
-        if(p.notEmpty(u.getBilType())&&p.notEmpty(u.getCurId())){
+        if(u.getBilType()!=null&&p.notEmpty(u.getCurId())){
             if(Cnst.buyBilTypeHaveTrans.equals(u.getBilType())&&Cnst.USD.equals(u.getCurId())){
                 if(p.notEmpty(u.getUp())){
                     updefBuyStr.setHaveTransUpWaiBi(String.valueOf(u.getUp()));
