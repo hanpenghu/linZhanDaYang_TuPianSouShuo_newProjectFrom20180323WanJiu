@@ -163,7 +163,7 @@
             <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
-            <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
+            <![CDATA[ AND isnull(is_Check_Out,'0') LIKE  #{ isCheckOut }  ]]>
         </if>
 
     </sql>
@@ -241,18 +241,18 @@
         WHERE
         id NOT IN
         (
-        select top
-        (
-        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
-        )id from PRDT_SAMP
-        WHERE
-        <!-- 产品打样列表多条件查询的条件-->
-        <include refid="productProofWithManyCondition"/>
-        ORDER BY insertdate DESC
+            select top
+                (
+                    (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+                )id from PRDT_SAMP
+            WHERE
+            <!-- 产品打样列表多条件查询的条件-->
+            <include refid="productProofWithManyCondition"/>
+            ORDER BY insertdate DESC
         )
-        AND
-        <!-- 产品打样列表多条件查询的条件-->
-        <include refid="productProofWithManyCondition"/>
+            AND
+            <!-- 产品打样列表多条件查询的条件-->
+            <include refid="productProofWithManyCondition"/>
         ORDER BY insertdate DESC
     </select>
 
@@ -596,16 +596,15 @@
         order by u.s_dd desc
     </select>
 
+
+
+
+
+
     <select id="getIdUseConfirmTime" resultType="java.lang.String">
          SELECT top 500 id FROM prdt_samp  --  限制最多导出500行
           <where>
-              id=id
-              <if test="startConfirmTime != null and startConfirmTime != ''">
-                  <![CDATA[ AND  confirmtimestr >= #{startConfirmTime}  ]]>
-              </if>
-              <if test="endConfirmTime != null and endConfirmTime != ''">
-                  <![CDATA[ AND  confirmtimestr <= #{endConfirmTime}  ]]>
-              </if>
+              <include refid="productProofWithManyCondition"/>
           </where>
 
     </select>
@@ -631,6 +630,31 @@
         group by a.olefield
     </select>
 
+
+    <update id="updateUpdef">
+        update up_def
+        <set>
+           <if test=" remFrontAfter !=null and remFrontAfter!='' and remFrontAfter != 'null' ">
+               rem =#{remFrontAfter},
+           </if>
+            <if test=" remFrontAfter == null or remFrontAfter == '' or remFrontAfter == 'null' ">
+                rem =rem,
+            </if>
+            <if test=" qtyAfter !=null and qtyAfter !='' and qtyAfter != 'null' ">
+                qty=#{qtyAfter},
+            </if>
+
+            <if test=" upAfter !=null and upAfter!='' and upAfter != 'null' ">
+                up=#{upAfter},
+            </if>
+
+            <if test=" unitAfter !=null and unitAfter!='' and unitAfter != 'null' ">
+                hj_no=#{unitAfter},
+            </if>
+
+        </set>
+           where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')
+    </update>
 
 
 

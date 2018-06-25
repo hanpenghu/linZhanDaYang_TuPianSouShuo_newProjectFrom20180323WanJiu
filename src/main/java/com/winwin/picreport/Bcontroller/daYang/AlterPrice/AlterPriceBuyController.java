@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang;
+package com.winwin.picreport.Bcontroller.daYang.AlterPrice;
 
 
 import com.alibaba.fastjson.JSON;
@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
 @CrossOrigin
-public class DingJiaXiuGai {
+public class AlterPriceBuyController {
     private  Logger logger = LogManager.getLogger(this.getClass().getName());
     @Autowired
     private  Cnst cnst;
@@ -128,23 +129,14 @@ public class DingJiaXiuGai {
     }
     }*/
 
-    @RequestMapping(value=Cnst.dingJiaXiuGai,method = RequestMethod.POST,
-            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody Msg dingJiaXiuGai(@RequestBody List<AlterPrice> alterPrices){
-
-        p.p("--------定价修改,前端传过来的东西-----------------------------------------------");
-        p.p(JSON.toJSONString(alterPrices));
-        p.p("-------------------------------------------------------");
+    @RequestMapping(value=Cnst.dingJiaXiuGai,method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody Msg dingJiaXiuGaiBuy(@RequestBody List<AlterPrice> alterPrices){
         //错误信息注册列表
-        List<Object> msgs= arraylist.b().a("定价修改失败").a("定价修改成功").g();
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if(p.empty(alterPrices)){
-            return Msg.gmg().setMsg("定价修改失败,前端传过来的是空数组或者null").setStatus("0");
-        }
-
-
+        List<String> msgs= new LinkedList<String>();
+        this.f打印刚传过来的对象(alterPrices);
+        this.isIgll(msgs,alterPrices);
         try {
-            return cnst.dingJiaXiuGaiService.dingJiaXiuGai(alterPrices);
+             cnst.dingJiaXiuGaiService.dingJiaXiuGai(alterPrices,msgs);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage(),e);
@@ -154,11 +146,23 @@ public class DingJiaXiuGai {
             }else{
                 return Msg.gmg().setMsg("未知异常导致定价修改失败").setChMsg("未知异常").setStatus("0");
             }
+        }
+        return Msg.gmg().setMsg("定价修改成功").setStatus("1");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
 
+    private void isIgll(List<String> msgs, List<AlterPrice> alterPrices) {
+        String s="定价修改失败,前端传过来的是空数组或者null";
+        if(p.empty(alterPrices)){
+            p.throwEAddToList(s,msgs);
         }
 
+    }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void f打印刚传过来的对象(List<AlterPrice> alterPrices) {
+        p.p("--------定价修改,前端传过来的东西-----------------------------------------------");
+        p.p(alterPrices);
+        p.p("-------------------------------------------------------");
     }
 
 //    public static void main(String[]args) throws ParseException {

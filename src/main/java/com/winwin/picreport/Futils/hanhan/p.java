@@ -2445,6 +2445,14 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     }
 
     /**
+     *简化成下面这种
+     * 180621202154373-767
+     * 17到19位
+     * */
+    public static String sj(){
+        return timeAndRandom0_999NoSymbolRemoveHead_();
+    }
+    /**
      *生成0到999之间的随机数
      * */
     public static int random0_999(){

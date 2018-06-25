@@ -2561,6 +2561,9 @@
       <if test="record.upDd != null">
         UP_DD = #{record.upDd,jdbcType=BINARY},
       </if>
+      <if test="record.rem == null">
+        REM = REM,
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -3697,6 +3700,9 @@
       </if>
       <if test="upDd != null">
         UP_DD = #{upDd,jdbcType=BINARY},
+      </if>
+      <if test="rem == null">
+        REM = REM,
       </if>
     </set>
     where CUS_NO = #{cusNo,jdbcType=VARCHAR}

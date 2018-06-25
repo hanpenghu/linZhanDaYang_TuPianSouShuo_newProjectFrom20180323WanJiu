@@ -99,8 +99,7 @@ public class ManyConditionSearchOfPrdtSamp {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<PrdtSamp0> prdtSampListOrg = cnst.a001TongYongMapper
-                .chanPinBianMaJianDangTiaoJianChaXun(p1);
+        List<PrdtSamp0> prdtSampListOrg = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
 
 
         List<PrdtSamp0> prdtSampList= new  ArrayList<>();

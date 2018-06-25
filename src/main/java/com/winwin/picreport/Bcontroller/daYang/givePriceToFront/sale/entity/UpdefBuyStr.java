@@ -6,6 +6,7 @@ import com.winwin.picreport.Futils.hanhan.p;
  * Created by Administrator on 2018/6/15.
  */
 public class UpdefBuyStr {
+    private String curIdWaiBi;
     private String rem;
     private String unitFu;
     private String unitZhu;
@@ -19,6 +20,15 @@ public class UpdefBuyStr {
     private String prmNo;
     //定价时间
     private String sDd;
+
+
+    public String getCurIdWaiBi() {
+        return curIdWaiBi;
+    }
+
+    public void setCurIdWaiBi(String curIdWaiBi) {
+        this.curIdWaiBi = curIdWaiBi;
+    }
 
     public String getsDd() {
         return sDd;

@@ -22,9 +22,18 @@ public class CheckOutOfSubmitController {
 
     @Autowired
     private CheckOutOfSubmitServices checkOutOfSubmitServices;
-
+    /**
+     * Created by Administrator on 2018/6/19.
+     * {"id":"0000436d-0797-4e7b-9d8d-3ff0a30ea5c0","cusNameGive":"高树（金坛）饰品有限公司"
+     * ,"cusNoGive":"F95","startsellcount":"211",
+     "sampSendStamp":"1546387200000","modelcost":null,"littleorderprice":"222"
+     ,"modelcostinvoiceno":"模具费用发票号","financedesc":"财务描述"}
+     *
+     *
+     */
 
     //审核之前的状态提交接口
+    //提交
     @RequestMapping(value = "checkOutOfSubMit", method = RequestMethod.POST)
     public Msg f(@RequestBody PrdtSamp0 prdtSamp0) {
         List<String> ms = new LinkedList<String>();

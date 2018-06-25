@@ -94,7 +94,7 @@ public class GiveSaleService {
             if(p.notEmpty(updefBuyStr分)){
                 //此时才能找到对应的销售定价
                 if(p.notEmpty(updefBuyStr分.getPrmNo())){
-                    UpdefSaleStr updefSaleStr分=this.f拿到该prmNo关联的销售定价对象(updefBuyStr分.getPrmNo(),ms);
+                    UpdefSaleStr updefSaleStr分=this.f拿到该prmNo关联的销售定价对象(updefBuyStr分,prdNo,ms);
                     upDefStr总.setUpdefSaleStr(updefSaleStr分);
                 }
             }
@@ -103,9 +103,9 @@ public class GiveSaleService {
         return upDefStrs总;
     }
 
-    private UpdefSaleStr f拿到该prmNo关联的销售定价对象(String prmNo, List<String> ms) {
+    private UpdefSaleStr f拿到该prmNo关联的销售定价对象(UpdefBuyStr updefBuyStr分,String prdNo,List<String> ms) {
             UpDefExample upDefExample=new UpDefExample();
-            upDefExample.createCriteria().andPrmNoEqualTo(prmNo).andPriceIdEqualTo(Cnst.salPriceId);
+            upDefExample.createCriteria().andPrmNoEqualTo(updefBuyStr分.getPrmNo()).andPriceIdEqualTo(Cnst.salPriceId).andPrdNoEqualTo(prdNo);
             //长度：1到4个
             List<UpDef> upDefs = cnst.upDefMapper.selectByExample(upDefExample);
             UpdefSaleStr updefSaleStr=new UpdefSaleStr();
@@ -156,6 +156,10 @@ public class GiveSaleService {
                 if(p.notEmpty(u.getUp())){
                     updefSaleStr.setHaveTransUpWaiBi(String.valueOf(u.getUp()));
                 }
+                //设置销售外币币别给前端
+                if(p.notEmpty(u.getCurId())&&p.empty(updefSaleStr.getCurIdWaiBi())){
+                    updefSaleStr.setCurIdWaiBi(u.getCurId());
+                }
             }
 
         }
@@ -174,7 +178,12 @@ public class GiveSaleService {
                 if(p.notEmpty(u.getUp())){
                     updefSaleStr.setNoTransUpWaiBi(String.valueOf(u.getUp()));
                 }
+                //设置销售外币币别给前端
+                if(p.notEmpty(u.getCurId())&&p.empty(updefSaleStr.getCurIdWaiBi())){
+                    updefSaleStr.setCurIdWaiBi(u.getCurId());
+                }
             }
+
         }
 
 
@@ -231,6 +240,11 @@ public class GiveSaleService {
                 if(p.notEmpty(u.getUp())){
                     updefBuyStr.setHaveTransUpWaiBi(String.valueOf(u.getUp()));
                 }
+                //设置采购外币币别给前端
+                if(p.notEmpty(u.getCurId())&&p.empty(updefBuyStr.getCurIdWaiBi())){
+                    updefBuyStr.setCurIdWaiBi(u.getCurId());
+                }
+
             }
 
         }
@@ -248,6 +262,10 @@ public class GiveSaleService {
             if(Cnst.buyBilTypeNoTrans.equals(u.getBilType())&&Cnst.USD.equals(u.getCurId())){
                 if(p.notEmpty(u.getUp())){
                     updefBuyStr.setNoTransUpWaiBi(String.valueOf(u.getUp()));
+                }
+                //设置采购外币币别给前端
+                if(p.notEmpty(u.getCurId())&&p.empty(updefBuyStr.getCurIdWaiBi())){
+                    updefBuyStr.setCurIdWaiBi(u.getCurId());
                 }
             }
         }

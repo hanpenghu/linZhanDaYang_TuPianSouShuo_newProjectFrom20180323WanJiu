@@ -40,7 +40,7 @@ public class D1DaYangS {
         List<String> idList = new ArrayList<String>();
         ////这种用于显示在: 页面的<销售定价>那一栏
         if (p.dy(已经采购定价但未销售定价标记, dingJiaType)) {
-            idList = this.f已经采购定价但未销售定价的idList(fenYe);
+            idList = this.f已经采购定价并且审核完成但未销售定价的idList(fenYe);
         } else {
             idList = cnst.manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
         }
@@ -112,7 +112,7 @@ public class D1DaYangS {
     }
 
 
-    private List<String> f已经采购定价但未销售定价的idList(FenYe fenYe) {
+    private List<String> f已经采购定价并且审核完成但未销售定价的idList(FenYe fenYe) {
         List<String> idList = new ArrayList<String>();
         //手动建立连接
         Connection con = null;
@@ -120,7 +120,7 @@ public class D1DaYangS {
         ResultSet rs = null;
         try {
             con = p.getCon(cnst.dataSource001IP, cnst.dataSource001PORT, p.dbTypeSqlserver, cnst.Database001Name, cnst.dBUserName, cnst.dBPWd);
-            String sql = "select top(?)        id        from        PRDT_SAMP  where id not in        (            select top                (                        (?)*((?)-1)                )            id from PRDT_SAMP             where prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )             ORDER BY insertDate DESC        )         and prd_no  in         (                select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no    not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)         )        ORDER BY insertDate DESC";
+            String sql = "select top(?)        id        from        PRDT_SAMP  where id not in        (            select top                (                        (?)*((?)-1)                )            id from PRDT_SAMP             where prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )   and is_check_out='2'          ORDER BY insertDate DESC        )         and prd_no  in         (                select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no    not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)         ) and is_check_out='2'       ORDER BY insertDate DESC";
             ps = con.prepareStatement(sql);
 
             ps.setInt(1, fenYe.getMeiYeXianShiShu());
@@ -312,3 +312,48 @@ public class D1DaYangS {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    select top(100)        id        from        PRDT_SAMP  where id not in
+//
+//(
+//        select top  ((100)*((100)-1))  id from PRDT_SAMP   where prd_no  in
+//
+//        (
+//        select a.prd_no from (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a
+//        where a.prd_no
+//        not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)
+//        )  and is_check_out='2'
+//
+//        ORDER BY insertDate DESC
+//
+//
+//        )         and prd_no  in
+//
+//        (
+//
+//        select a.prd_no from
+//
+//        (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a
+//
+//        where a.prd_no    not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)
+//
+//        )   and is_check_out='2'
+//
+//        ORDER BY insertDate DESC

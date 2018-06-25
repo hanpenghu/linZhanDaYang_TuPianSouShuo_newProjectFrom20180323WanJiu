@@ -178,17 +178,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
         //插入sunlike主表//其实是插入一个list里面做准备,搜集tfpos  tfposz 和mfpos数据开始
 
         for(int iii=0;iii<list3.size();iii++){
-            ShouDingDanFromExcel shouDingDanFromExcel=list3.get(iii);
-            AmtAndAmtnAndTaxChongXinSuan.g(shouDingDanFromExcel, listmsg);//在类内部进行判断计算各种金额
+            ShouDingDanFromExcel s=list3.get(iii);
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-//            p.p("-------------------------------------------------------");
-//            p.p("《"+shouDingDanFromExcel.getPrdName()+"："+shouDingDanFromExcel.getPrdNo()+"》");
-//            p.p("-------------------------------------------------------");
-            this.saveOneShouDingDanFromExcelToTable
-                    (shouDingDanFromExcel, listmsg,iii,mm,
-                            tfPosWithBLOBsList,tfPosZList,sapsoList);
-
-
+            this.saveOneShouDingDanFromExcelToTable(s, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList,sapsoList);
         }
 
 /////////////////////////////////////for循环结束///////////////////////////////////////////////////////////////////////////////////////
@@ -210,10 +202,6 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         cnst.manyTabSerch.updateMfPosNullToNothing001(mm);
         cnst.manyTabSerch.updateTfPosNullToNothing001(mm);
-
-
-
-
     }
 
 
@@ -222,53 +210,33 @@ public class CommonDaoRuDBZhiQianZhengLi {
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
 
-    public void saveOneShouDingDanFromExcelToTable
-            (ShouDingDanFromExcel s, List<Msg> listmsg,int iii,
-             MfPosWithBLOBs mm,List<TfPosWithBLOBs> tfPosWithBLOBsList
-                    ,List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
+    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii, MfPosWithBLOBs mm,List<TfPosWithBLOBs> tfPosWithBLOBsList,List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
         Msg msg = new Msg();
-
-//直接set进去
-//        this.通过对方品号获取prdNo(s,msg,listmsg);
-
-
+        //直接set进去
+        //        this.通过对方品号获取prdNo(s,msg,listmsg);
         //数据非法的时候这个方法会抛出异常//数据非法搜集器
         this.a判断数据是否非法并获取prd_no(msg,s, listmsg,iii+1);
-
-
-
-
-
-        MfPosWithBLOBs m = new MfPosWithBLOBs();
         TfPosWithBLOBs t = new TfPosWithBLOBs();
         TfPosZ tz = new TfPosZ();
         PrdtWithBLOBs pdt = new PrdtWithBLOBs();
-
         String osDd = s.getOsDd();
         String estDd = s.getEstDd();
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         if (p.empty(osDd)) {
-//            osDd="32503564800000";//2999-12-31
+            //            osDd="32503564800000";//2999-12-31
             osDd = null;
         }
         if (p.empty(estDd)) {
             estDd = null;//2999-12-31
-//            estDd="32503564800000";
+            //            estDd="32503564800000";
         }
         //////////////////////////////////////
+        mm.setTaxId(s.getTaxId());
         mm.setOsNo(s.getOsNo());
         mm.setRem(s.getRemhead());
         mm.setCurId(s.getCurId());
         mm.setExcRto(new BigDecimal(s.getExcRto()));
-
         mm.setSalNo(p.threeEyeCalculate(p.notEmpty(s.getSalNo()),s.getSalNo(),""));
-
-
         //下面2条是老郑在20170929让我加上的
         //是把界面选的存的代号sal_no，同时写进 mf_pos.usr , mf_pos.chk_man两个字段
         if (p.empty(mm.getSalNo())) {
@@ -278,37 +246,10 @@ public class CommonDaoRuDBZhiQianZhengLi {
             mm.setUsr(mm.getSalNo());
             mm.setChkMan(mm.getSalNo());
         }
-
-
         mm.setCusNo(s.getCusNo());
-        /**
-         * 2018_4_28   weekday(6)   17:25:41 老郑让加的,根据下面sql加的
-         * update a set a.tax_id=b.ID1_TAX from mf_pos a,cust b where a.cus_no=b.cus_no and ISNULL(a.TAX_ID,'')=''
-         *
-         *根据  mm的CusNo,找到
-         * */
-        try {
-            CustExample custExample=new CustExample();
-            custExample.createCriteria().andMCustNotEqualTo(p.threeEyeCalculate(mm.getCusNo()==null,"",mm.getCusNo()));
-            List<Cust> custs = cnst.custMapper.selectByExample(custExample);
-            if(p.notEmpty(custs)){
-                String id1Tax = custs.get(0).getId1Tax();
-                mm.setTaxId(p.threeEyeCalculate(id1Tax==null,"",id1Tax));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            l.error("新加功能异常");
-            p.p("-------------------------------------------------------");
-            p.p("新加功能异常");
-            p.p("-------------------------------------------------------");
-        }
-
-
-        mm.setTaxId(s.getTaxId());
         //老郑说了,这个客户单号也用osNo填充
         mm.setCusOsNo(s.getOsNo());
         mm.setOsId("SO");
-
         //后来加的4个,为了避免是null
         mm.setClsId("F");
         mm.setPayMth("1");
@@ -493,7 +434,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 ////////////////////////////////////////////////
 
         this.saveOneShouDingDanFromExcelToTableInsert
-                (m, t, tz, pdt, s, listmsg, iii,mm,
+                (t, tz, pdt, s, listmsg, iii,mm,
                 tfPosWithBLOBsList,tfPosZList,sapsoList);
 ///////////////////////////////////////////
     }
@@ -503,7 +444,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
 
     public void saveOneShouDingDanFromExcelToTableInsert
-    (MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
+    ( TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
      ShouDingDanFromExcel s, List<Msg> listmsg,int iii,MfPosWithBLOBs mm
             ,List<TfPosWithBLOBs> tfPosWithBLOBsList,
      List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
@@ -529,7 +470,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
             throw new RuntimeException(msg.getMsg());
         } else {
             //单独分出来是为了只在下面的几个插入使用事务
-            this.saveChuLePrdtDe(m, t, tz, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList,sapsoList);
+            this.saveChuLePrdtDe(t, tz, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList,sapsoList);
         }
 //    } catch (RuntimeException e) {
 //        e.printStackTrace();
@@ -545,7 +486,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
 
-    public void saveChuLePrdtDe(MfPosWithBLOBs m, TfPosWithBLOBs t, TfPosZ tz,
+    public void saveChuLePrdtDe(TfPosWithBLOBs t, TfPosZ tz,
                                 List<Msg> listmsg,int iii,MfPosWithBLOBs mm,
                                 List<TfPosWithBLOBs> tfPosWithBLOBsList,
                                 List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {

@@ -21,4 +21,39 @@ public class AlterPrice extends AlterPriceRec{
         this.dingJiaZhuJian = dingJiaZhuJian;
         return this;
     }
+
+
+    @Override
+    public String toString() {
+        return "AlterPrice{" +
+                "prdNo='" + prdNo + '\'' +
+                ", dingJiaGuanLian='" + dingJiaGuanLian + '\'' +
+                ", userName='" + userName + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", alterTime='" + alterTime + '\'' +
+                ", prdtCode='" + prdtCode + '\'' +
+                ", prdtSampUuid='" + prdtSampUuid + '\'' +
+                ", qtyBefore='" + qtyBefore + '\'' +
+                ", qtyAfter='" + qtyAfter + '\'' +
+                ", upBefore='" + upBefore + '\'' +
+                ", upAfter='" + upAfter + '\'' +
+                ", unitBefore='" + unitBefore + '\'' +
+                ", unitAfter='" + unitAfter + '\'' +
+                ", remFrontBefore='" + remFrontBefore + '\'' +
+                ", remFrontAfter='" + remFrontAfter + '\'' +
+                ", dingJiaZhuJian='" + dingJiaZhuJian + '\'' +
+                ", bilType='" + bilType + '\'' +
+                ", curIdBefore='" + curIdBefore + '\'' +
+                ", curIdAfter='" + curIdAfter + '\'' +
+                ", saleOrBuy='" + saleOrBuy + '\'' +
+                ", noTransUpMyBefore='" + noTransUpMyBefore + '\'' +
+                ", noTransUpMyAfter='" + noTransUpMyAfter + '\'' +
+                ", noTransUpOtherBefore='" + noTransUpOtherBefore + '\'' +
+                ", noTransUpOtherAfter='" + noTransUpOtherAfter + '\'' +
+                ", haveTransUpMyBefore='" + haveTransUpMyBefore + '\'' +
+                ", haveTransUpMyAfter='" + haveTransUpMyAfter + '\'' +
+                ", haveTransUpOtherBefore='" + haveTransUpOtherBefore + '\'' +
+                ", haveTransUpOtherAfter='" + haveTransUpOtherAfter + '\'' +
+                '}';
+    }
 }

@@ -4,6 +4,7 @@ import com.winwin.picreport.Acomponent.GetPriceModelUpdef20180512;
 import com.winwin.picreport.Acomponent.SapsoChongfu;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
+import com.winwin.picreport.Bcontroller.daYang.AlterPrice.DingJiaXiuGaiSaleService;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
@@ -19,6 +20,14 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
+
+    //下面三个是打样的审核流程
+    public static final String weiTiJiao="0";//原来是null的也是未提交的
+    public static final String yiTiJiao="1";
+    public static final String yiShenHe="2";
+
+
+
     public static final String SamplesSys="SamplesSys";//产品打样的时候我们插入系统表prdt和up_def(定价)的时候做的标记,该标记证明了是打样系统产生的记录
     public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1
@@ -73,8 +82,7 @@ public class Cnst {
     public static final String zhu="主:";
     public static final String fu="副:";
     public static final String curIdBefore="curIdBefore";
-
-
+    public static final String dingJiaXiuGaiSale="dingJiaXiuGaiSale";
 
 
     public static String getProjectPath(){
@@ -87,6 +95,9 @@ public class Cnst {
        return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
 
+
+    @Autowired
+    public DingJiaXiuGaiSaleService dingJiaXiuGaiSaleService;
 
     @Autowired
     public SalePriceSaveDao salePriceSaveDao;

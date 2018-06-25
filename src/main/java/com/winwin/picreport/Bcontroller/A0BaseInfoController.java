@@ -22,6 +22,13 @@ public class A0BaseInfoController {
          return keHus;
     }
 
+    // /base/allFactory
+    //所有厂商接口
+    @RequestMapping(value= InterFaceCnst.allFactory,method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody List<KeHu> getAll_obj_id_2_that_ChangShang(){
+        List<KeHu> keHus =cnst.manyTabSerch.getAll_obj_id_2_that_ChangShang();
+        return keHus;
+    }
 
 //所有仓库接口
     // /base/allWh
@@ -36,13 +43,7 @@ public class A0BaseInfoController {
 
 
 
-    // /base/allFactory
-    //所有厂商接口
-    @RequestMapping(value= InterFaceCnst.allFactory,method= RequestMethod.POST,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody List<KeHu> getAll_obj_id_2_that_ChangShang(){
-        List<KeHu> keHus =cnst.manyTabSerch.getAll_obj_id_2_that_ChangShang();
-        return keHus;
-    }
+
 
 //    @RequestMapping(value="allKeHutest",method= RequestMethod.GET,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody List<KeHu> getAllCustOf_obj_id_1_that_KeHuNotChangShangtest(){

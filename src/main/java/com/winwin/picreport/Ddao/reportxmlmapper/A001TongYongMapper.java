@@ -1,5 +1,6 @@
 package com.winwin.picreport.Ddao.reportxmlmapper;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
+import com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.ExportXlsParam;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPriceRecToFront;
 import com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu;
@@ -267,14 +268,14 @@ public interface A001TongYongMapper {
     @Select("select a.idx_up as fenLeiNo,b.name as fenLeiName from indx a,indx b " +
             " where a.idx_no=#{idxNo} and a.idx_up=b.idx_no")
     Map<String,String> getFenLeiNoFromIndx(@Param("idxNo") String idxNo);
-   //////////////价格修改模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   @Update({"update up_def set  " +
-           "cur_id =#{curIdAfter}," +
-           "qty=#{qtyAfter}, " +
-           "up=#{upAfter}," +
-           "hj_no=#{unitAfter}," +
-           "rem =#{remFrontAfter} " +
-           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')"})
+//   //////////////价格修改模块////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   @Update({"update up_def set  " +
+//           "cur_id =#{curIdAfter}," +
+//           "qty=#{qtyAfter}, " +
+//           "up=#{upAfter}," +
+//           "hj_no=#{unitAfter}," +
+//           "rem =#{remFrontAfter} " +
+//           "  where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')"})
    Integer updateUpdef(AlterPrice alterPrice);
 
 
@@ -355,8 +356,8 @@ public interface A001TongYongMapper {
    DaoChu getPrdtSamp002(@Param("bilType")String bilType,@Param("curId")String curId,@Param("priceId")String priceId,@Param("id")String id);
 
 
-    List<String> getIdUseConfirmTime(@Param("startConfirmTime") String startConfirmTime,@Param("endConfirmTime")String endConfirmTime);
-
+//    List<String> getIdUseConfirmTime(@Param("startConfirmTime") String startConfirmTime,@Param("endConfirmTime")String endConfirmTime);
+    List<String> getIdUseConfirmTime(ExportXlsParam ep);
     @Select({"select rto_tax from cust where cus_no=#{cusNo}"})
     Double getTaxRtoFromCust(@Param("cusNo")String cusNo);
 
@@ -370,5 +371,8 @@ public interface A001TongYongMapper {
                                             ,@Param("olefield")String olefield,
                                             @Param("priceId")String priceId,
                                             @Param("dingJiaGuanLiansNotIn") List<String> dingJiaGuanLiansNotIn);
+
+    @Select({"select count(*) from up_def where isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')=#{dingJiaZhuJian}"})
+    int isExsit(@Param("dingJiaZhuJian") String dingJiaZhuJian);
 
 }

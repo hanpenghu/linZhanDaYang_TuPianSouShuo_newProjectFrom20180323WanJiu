@@ -20,10 +20,7 @@ public class AlterPriceRec {
     protected String bilType;//运费类型(对于当次修改,运费类型是确定的没有before与after之分)  采购 1代表没有运费,空字符串代表有运费
     protected String curIdBefore;//币别修改前     RMB是人民币   USD是usDollor
     protected String curIdAfter;//币别修改后
-
-
     protected String saleOrBuy;//是销售的还是采购的模块修改的,需要前端传过来
-
     //不含运费单价本币 修改前
     protected String noTransUpMyBefore;
 //不含运费单价本币修改后
@@ -40,6 +37,17 @@ public class AlterPriceRec {
     protected String haveTransUpOtherBefore;
 //含运费单价外币修改后
     protected String haveTransUpOtherAfter;
+
+
+
+
+
+
+
+
+
+
+
 
     public String getPrdNo() {
         return prdNo;

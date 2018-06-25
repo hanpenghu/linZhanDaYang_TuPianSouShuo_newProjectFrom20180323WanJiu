@@ -2,6 +2,7 @@ package com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
+import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.BaoLiuXiaoShu;
@@ -52,21 +53,17 @@ public class SaleOrderFromExcel2Erp_notMerage {
     delete  from sapso where osno='EBNEK18004JY2056X'*/
     /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO//注释掉暂时不用
-    @RequestMapping(value = InterFaceCnst.upLoadExcelDontMerageOfSaleOrder,
-            method = RequestMethod.POST,
-            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody
-    List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> shouDingDanFromExcels) {
-        this.打印当前对象(shouDingDanFromExcels);
+    @RequestMapping(value = InterFaceCnst.upLoadExcelDontMerageOfSaleOrder, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> sss) {
+        this.打印当前对象(sss);
         List<Msg> listmsg = new ArrayList<>();
         try {
-            this.f前端穿过来的数据是否非法(shouDingDanFromExcels, listmsg);
-            this.f检查excel里面订单号是否都一样(shouDingDanFromExcels, listmsg);
+            this.f检查excel里面订单号是否都一样(sss,listmsg);
+            this.f前端穿过来的数据是否非法_扣税类别之类(sss,listmsg);
             Msg msg = new Msg();
-            if (this.判断前端传过来的数据是否有问题(shouDingDanFromExcels)) {
-                Set<String> set = this.分类去重复订单号到Set集合(shouDingDanFromExcels);
-
-                List<List<ShouDingDanFromExcel>> list1 = this.按订单号分类后的2个集合放入一个集合(set, shouDingDanFromExcels);
+            if (this.判断前端传过来的数据是否有问题(sss)) {
+                Set<String> set = this.分类去重复订单号到Set集合(sss);
+                List<List<ShouDingDanFromExcel>> list1 = this.按订单号分类后的2个集合放入一个集合(set,sss);
 
                 //按批号分批插入数据库,一个批号下的不成功都不成功在service成实现，listmsg暗传输msg错误信息
                 this.按订单号分类后向Service传入数据(list1, listmsg);
@@ -284,7 +281,7 @@ public class SaleOrderFromExcel2Erp_notMerage {
         }
     }
 
-    private void f前端穿过来的数据是否非法(List<ShouDingDanFromExcel> ss, List<Msg> listmsg) {
+    private void f前端穿过来的数据是否非法_扣税类别之类(List<ShouDingDanFromExcel> ss, List<Msg> listmsg) {
         if (p.empty(ss)) {
             String s = "前端传过来的参数对象为null";
             commonThrow(listmsg, s);
@@ -294,7 +291,32 @@ public class SaleOrderFromExcel2Erp_notMerage {
             String s = "请不要把sap订单当做标准订单导入《sap行号居然不为空》";
             commonThrow(listmsg, s);
         }
+        for(ShouDingDanFromExcel s:ss){
+            this.excel中扣税类别taxId和客户号cusNo不能同时空的(s,listmsg);
+            this.f检查扣税类别如果没有就从Cust取(s,listmsg);
+        }
+
     }
+
+    private void excel中扣税类别taxId和客户号cusNo不能同时空的(ShouDingDanFromExcel s, List<Msg> listmsg) {
+        if(p.empty(s.getCusNo())){
+            if(p.empty(s.getTaxId())){
+                commonThrow(listmsg,"扣税类别taxId和客户代码cusNo不能同时为空,否则无法找到有效的扣税类别");
+            }
+        }
+    }
+
+    private void f检查扣税类别如果没有就从Cust取(ShouDingDanFromExcel s,List<Msg> listmsg) {
+        if(p.empty(s.getTaxId())){
+            CustWithBLOBs c = cnst.custMapper.selectByPrimaryKey(s.getCusNo());
+            if(p.notEmpty(c.getId1Tax())){
+                s.setTaxId(c.getId1Tax());
+            }else{
+                commonThrow(listmsg,"excel中扣税类别是空的,根据excel中的客户代号cusNo也无法找到对应的扣税类别");
+            }
+        }
+    }
+
 
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 

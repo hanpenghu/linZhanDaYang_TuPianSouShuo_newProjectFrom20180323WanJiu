@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class DyExport {
     private Cnst cnst;
 
     /**
+     * param后面跟上一个URLEncode的json
+     * http://localhost:8070/dyExportExcel?param=%7B%22ids%22%3A%5B%220000e1a2-ec00-4b06-94da-db80628473eb%22%2C%2200013fb7-ba16-4ad2-9ca6-7257c660f9a3%22%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22prdCode%22%2C%22mainUnit%22%2C%22haveTransUpSaleBenBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22noTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%5D%2C%22confirmtimestr%22%3A%222018-06-11%22%2C%22confirmtimestrEnd%22%3A%222018-06-20%22%7D
      * 传参：
      * {"ids":["id1","id2","id3"],"fields":["field1","field2","field3"]}
      * 第一个list是确定下载那些行
@@ -55,23 +58,24 @@ public class DyExport {
      * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
      * <p>
      * 这种方式并不完美,完美的方式是返回一个url给前端下载,
-     *
+     * <p>
      * 注意,这个方法还存在单位 mainUnit的问题,  因为我们的单位在界面是保存在up_def
      * 的hj_no中  ,  比如   主:pcs  副:pcs    这种
      * ,但是我现在取出的是  prdt中的ut主单位,   这就有点问题了,因为当时定价的单位是保存在up_def的hj_no的,虽然也检查了
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
-     *
      */
 
     @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
     public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
-        //String ss="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}";
+        //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
         p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
         p.p(param);
         p.p("-------------------------------------------------------");
-        ExportXlsParam ep=this.formatJsonFromFront(param);
-        if (null == ep) {return null;}
-        List<String> idsFromConfirmTime=this.idsFromConfirmTime(ep);
+        ExportXlsParam ep = this.formatJsonFromFront(param);
+        if (null == ep) {
+            return null;
+        }
+        List<String> idsFromConfirmTime = this.idsFromConfirmTime(ep);
         p.p("--------------------this.idsFromConfirmTime(ep, idsFromConfirmTime);-----------------------------------");
         p.p(idsFromConfirmTime);
         p.p("-------------------------------------------------------");
@@ -79,14 +83,24 @@ public class DyExport {
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
         //为了装入 idsFromConfirmTime
-        if(null==ids){ids=new LinkedList<String>();}
+        if (null == ids) {
+            ids = new LinkedList<String>();
+        }
         //将确认时间得到的id放入  全局id集合
-        this.perfectIds(ids,idsFromConfirmTime);
-        if(p.empty(ids)){p.p("#######得到时间获得的ids之后 ids是null或者空######");return null;}
+        this.perfectIds(ids, idsFromConfirmTime);
+        if (p.empty(ids)) {
+            p.p("#######得到时间获得的ids之后 ids是null或者空######");
+            return null;
+        }
         List<String> 前端穿过来要显示的fields = ep.getFields();
-        if (p.notEmpty(前端穿过来要显示的fields)) {this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);}
+        if (p.notEmpty(前端穿过来要显示的fields)) {
+            this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
+        }
         List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids, 前端穿过来要显示的fields);
-        if(p.empty(daoChus)){p.p("====daoChus是null=========");return null;}
+        if (p.empty(daoChus)) {
+            p.p("====daoChus是null=========");
+            return null;
+        }
         //把字段写入excel
         String excel路径 = this.a写入excel(daoChus, list导出头信息);
         File file = new File(excel路径);
@@ -98,59 +112,66 @@ public class DyExport {
     }
 
 
-
-
     //完善ids,主要是从传入时间也得到的ids放进来
-    private void perfectIds(List<String> ids,List<String> idsFromConfirmTime){
-        p.p("--perfectIds()----idsFromConfirmTime="+idsFromConfirmTime+"----------------");
-        p.p("---perfectIds()---ids="+ids+"----------------");
-        if(p.notEmpty(ids)){
+    private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
+        p.p("--perfectIds()----idsFromConfirmTime=" + idsFromConfirmTime + "----------------");
+        p.p("---perfectIds()---ids=" + ids + "----------------");
+        if (p.notEmpty(ids)) {
             l.error("----3---前端穿过来的ids不为空----------------");
         }
-        if(ids!=null&&idsFromConfirmTime!=null&&idsFromConfirmTime.size()>0){
+        if (ids != null && idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
             ids.addAll(idsFromConfirmTime);
         }
-        if(p.notEmpty(ids)){
+        if (p.notEmpty(ids)) {
             l.error("-----4------最终得到的ids不为空--------------");
         }
         p.removeNull(ids);
     }
 
 
-
-
-
-
-
     private List<String> idsFromConfirmTime(ExportXlsParam ep) {
         p.p("---------idsFromConfirmTime--------------ExportXlsParam--------------------------------");
         p.p(ep);
         p.p("-------------------------------------------------------");
-        List<String>idsFromConfirmTime=null;
+        List<String> ids来自多条件查询 = null;
         //起止时间有一个非空才取id//注意,sql限制最多取出500个
-        if (p.notEmpty(ep.getStartConfirmTime()) || p.notEmpty(ep.getEndConfirmTime())) {
-            //通过确认时间过得id
-            idsFromConfirmTime = cnst.a001TongYongMapper.getIdUseConfirmTime(ep.getStartConfirmTime(), ep.getEndConfirmTime());
-            if (p.notEmpty(idsFromConfirmTime)) {
+        //通过确认时间过得id
+        if(this.f多条件查询成立条件(ep)){
+            ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
+            if (p.notEmpty(ids来自多条件查询)) {
                 l.error("--2----起止时间得到的ids不为空----------");
-            }else{
-                l.error("--2----起止时间得到的ids为null---idsFromConfirmTime="+idsFromConfirmTime+"-------");
+            } else {
+                l.error("--2----起止时间得到的ids为null---idsFromConfirmTime=" + ids来自多条件查询 + "-------");
             }
-        } else {
-            l.error("---2 or---------起止时间都是空的-------------");
+            p.p("--idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+            p.p(ids来自多条件查询);
+            p.p("-------------------------------------------------------");
         }
-        p.p("--idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-        p.p(idsFromConfirmTime);
-        p.p("-------------------------------------------------------");
-        return idsFromConfirmTime;
+        return ids来自多条件查询;
+    }
+
+    private boolean f多条件查询成立条件(ExportXlsParam ep) {
+        boolean b1=(p.notEmpty(ep.getConfirmtimestr()));
+        boolean b2=(p.notEmpty(ep.getConfirmtimestrEnd()));
+        boolean b3=(p.notEmpty(ep.getInsertdateStr()));
+        boolean b4=(p.notEmpty(ep.getInsertdateStrEnd()));
+        boolean b5=(p.notEmpty(ep.getIdxName()));
+        boolean b6=(p.notEmpty(ep.getFenLeiName()));
+        boolean b7=(p.notEmpty(ep.getPrdCode()));
+        boolean b8=(p.notEmpty(ep.getSalName()));
+        boolean b9=(p.notEmpty(ep.getIsconfirm()));
+        boolean b10=(p.notEmpty(ep.getIsCheckOut()));
+        boolean b=b1||b2||b3||b4||b5||b6||b7||b8||b9||b10;
+        if(b){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
-
-
-
     private ExportXlsParam formatJsonFromFront(String param) {
-        ExportXlsParam ep=null;
+        ExportXlsParam ep = null;
         try {
             ep = JSON.parseObject(param, ExportXlsParam.class);
         } catch (Exception e) {
@@ -164,9 +185,6 @@ public class DyExport {
     }
 
 
-
-
-
     //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
     @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
     public void a定时清空excel临时目录的内容() {
@@ -176,8 +194,6 @@ public class DyExport {
             e.printStackTrace();
         }
     }
-
-
 
 
     private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
@@ -209,10 +225,6 @@ public class DyExport {
     }
 
 
-
-
-
-
     private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
         a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
@@ -232,12 +244,6 @@ public class DyExport {
             l.error("------a写行列-----daoChus-是null------------------");
         }
     }
-
-
-
-
-
-
 
 
     private void a写入内容行(DaoChu daoChu, HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, int i行计数器, HSSFWorkbook wb, List<String> list导出头信息) {
@@ -340,11 +346,6 @@ public class DyExport {
     }
 
 
-
-
-
-
-
     private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) {
 
         BufferedImage bufferImg = null;
@@ -368,8 +369,10 @@ public class DyExport {
             //插入图片
             patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 
-            if(p.notEmpty(bufferImg)){bufferImg.flush();}
-            if(p.notEmpty(byteArrayOut)){
+            if (p.notEmpty(bufferImg)) {
+                bufferImg.flush();
+            }
+            if (p.notEmpty(byteArrayOut)) {
                 byteArrayOut.flush();
                 byteArrayOut.close();
             }
@@ -377,11 +380,6 @@ public class DyExport {
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
 
     private void a写行头(HSSFRow row, HSSFSheet sheet1, HSSFCellStyle cellStyle, List<String> list导出头信息) {
@@ -394,9 +392,6 @@ public class DyExport {
             k计数器 = k计数器 + 1;
         }
     }
-
-
-
 
 
     private void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList, List<String> a前端传过来需要显示的fields) {
@@ -480,39 +475,6 @@ public class DyExport {
     }
 
 
-    private List<String> f得到完整导出头信息() {
-        List<String> daoChuExcelHeadList =
-                new linklistT<String>()
-                        .a("Win Win Merchandiser WinWin 负责业务员")//salName   0
-                        .a("Inquiry Source 帽厂/NE")//cusName    1
-                        .a("NE CODE NE编码")//   2
-                        .a("Win Win Model# WinWin编号")//prdCode  3
-                        .a("产品大中类（中文）")//4
-                        .a("产品大中类（英文）")//5
-                        .a("产品子中类（中文）")//idxName    6
-                        .a("产品子中类（英文）")//7
-                        .a("Product Photo 打样产品照片或图籍")//  8
-                        .a("Category Name")//category   9
-                        .a("Team Name")//teamname  10
-                        .a("颜色")//colour  11
-                        .a("尺寸")//size  12
-                        .a("单位")//mainUnit  13
-                        .a("Price 单价美元")//noTransUpSaleWaiBi--  14
-                        .a("Price 单价(Lisa填写)")//noTransUpSaleBenBi--  15
-                        .a("含运费价格 美元")//haveTransUpSaleWaiBi--  16
-                        .a("含运费价格")//haveTransUpSaleBenBi--  17
-                        .a("MOQ 起订量要求 (Lisa填写)")//18
-                        .a("财务小单费")//financelittleorderprice--19
-                        .a("Sample Approved Date 样品确认日期")//confirmtimestr--20
-                        .a("NE Approval Person NE 确认人员")//confirmman--21
-                        .a("Description 样品要求")//sampRequ---22
-                        .a("Sample Date 打样日期")//sampMake--23
-                        .a("样品卡寄出日期").g();//sampSend--24
-        return daoChuExcelHeadList;
-    }
-
-
-
 
 
 
@@ -528,11 +490,6 @@ public class DyExport {
         }
         return file.getAbsolutePath();
     }
-
-
-
-
-
 
 
     //对于销售定价,每次找到up_def中最近s_dd的一个
@@ -622,6 +579,54 @@ public class DyExport {
 
 
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
+
+    private List<String> f得到完整导出头信息() {
+        List<String> daoChuExcelHeadList =
+                new linklistT<String>()
+                        .a("Win Win Merchandiser WinWin 负责业务员")//salName   0
+                        .a("Inquiry Source 帽厂/NE")//cusName    1
+                        .a("NE CODE NE编码")//   2
+                        .a("Win Win Model# WinWin编号")//prdCode  3
+                        .a("产品大中类（中文）")//4
+                        .a("产品大中类（英文）")//5
+                        .a("产品子中类（中文）")//idxName    6
+                        .a("产品子中类（英文）")//7
+                        .a("Product Photo 打样产品照片或图籍")//  8
+                        .a("Category Name")//category   9
+                        .a("Team Name")//teamname  10
+                        .a("颜色")//colour  11
+                        .a("尺寸")//size  12
+                        .a("单位")//mainUnit  13
+                        .a("Price 单价美元")//noTransUpSaleWaiBi--  14
+                        .a("Price 单价(Lisa填写)")//noTransUpSaleBenBi--  15
+                        .a("含运费价格 美元")//haveTransUpSaleWaiBi--  16
+                        .a("含运费价格")//haveTransUpSaleBenBi--  17
+                        .a("MOQ 起订量要求 (Lisa填写)")//18
+                        .a("财务小单费")//financelittleorderprice--19
+                        .a("Sample Approved Date 样品确认日期")//confirmtimestr--20
+                        .a("NE Approval Person NE 确认人员")//confirmman--21
+                        .a("Description 样品要求")//sampRequ---22
+                        .a("Sample Date 打样日期")//sampMake--23
+                        .a("样品卡寄出日期").g();//sampSend--24
+        return daoChuExcelHeadList;
+    }
+
+    public static void main(String[]args) throws UnsupportedEncodingException {
+        String s="%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+       s="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+
+       s=URLEncoder.encode(s,"UTF-8");
+        p.p("-------------------------------------------------------");
+        p.p(s);
+        s=URLDecoder.decode(s);
+        p.p(s);
+        p.p("-------------------------------------------------------");
+    }
+
+
+
+
+
 }
 
 

@@ -1,11 +1,10 @@
-package com.winwin.picreport.Cservice;
+package com.winwin.picreport.Bcontroller.daYang.AlterPrice;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPrice;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefExample;
-import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.stra;
 import org.apache.log4j.LogManager;
@@ -20,38 +19,33 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class DingJiaXiuGaiService {
+public class DingJiaXiuGaiSaleService {
 
     private Logger logger = LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
     @Transactional
-    public void dingJiaXiuGai(List<AlterPrice> alterPrices,List<String> msgs){
-
+    public void dingJiaXiuGai(AlterPriceObj alterPriceObj,List<String> msgs){
+        List<AlterPrice> alterPrices = alterPriceObj.getAlterPrices();
+        List<BuyPriceUnionId> 需要修改的采购UnionIds = alterPriceObj.getBuyPriceUnionIds();
+        this.f需要修改的采购UnionIds是否非法(需要修改的采购UnionIds,msgs);
         p.p("-------------------------alterPrices刚进来------------------------------");
         p.p(alterPrices);
         p.p("-------------------------------------------------------");
         try {
-            AlterPrice alterPriceMeraged= this.f创建修改记录对象(alterPrices);
+
+            String sale一批数据统一的定价关联=this.获得一批数据统一的定价关联(alterPrices);
+            AlterPrice alterPrice放入修改记录表= this.f创建修改记录对象(alterPrices);
             for(AlterPrice alterPrice:alterPrices){
-                //设置修改时间,将来插入修改记录表
-                alterPriceMeraged.setAlterTime(p.dtoStr(new Date(),p.d16));
-                String saleOrBuy= alterPrice.getSaleOrBuy();
-                this.isIgll(saleOrBuy,msgs);
-                this.设置修改对象币别(alterPriceMeraged,alterPrice);
-                //得到8种组合单价,只是为了修改记录用
-                //销售和采购的无运费都是1,不用分2种情况
-                this.f设置无运费本币修改之前之后价格(alterPriceMeraged,alterPrice);
-                //以下是有运费,以上是无运费
-                this.f设置有运费前后价格(alterPriceMeraged,alterPrice,saleOrBuy);
+               this.f修改记录表设置(alterPrice放入修改记录表,alterPrice,msgs);
                 //其中dingJiaGuanLian(oleField)+bilType+curIdBefore可以形成联合主键进行某条记录的修改
-                //设置定价主键,将来更新updef表 用
+                //设置定价主键,将来更新updef表 用,插入的时候用    “sale当没有任何记录需要插入的时候的定价关联'
                 alterPrice.setDingJiaZhuJian(this.f设置定价主键(alterPrice));
                 //修改价格主表up_def
-                this.f存在就修改不存在插入(alterPrice);
+                this.f存在就修改不存在插入upDef(sale一批数据统一的定价关联,alterPrice,需要修改的采购UnionIds,msgs);
             }
             //记录修改
-            Integer j=cnst.alterPriceRecMapper.insertSelective(alterPriceMeraged);
+            Integer j=cnst.alterPriceRecMapper.insertSelective(alterPrice放入修改记录表);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(JSON.toJSONString(alterPrices));
@@ -60,8 +54,46 @@ public class DingJiaXiuGaiService {
         }
     }
 
+
+
     @Transactional
-    private void f存在就修改不存在插入(AlterPrice alterPrice) {
+    private String 获得一批数据统一的定价关联(List<AlterPrice> alterPrices) {
+        String s=Cnst.SamplesSys+p.sj();
+        for(AlterPrice a:alterPrices){
+            UpDefExample uu=new UpDefExample();
+            uu.createCriteria().andOlefieldEqualTo(a.getDingJiaGuanLian()==null?"":a.getDingJiaGuanLian());
+            List<UpDef> upDefs = cnst.upDefMapper.selectByExample(uu);
+            if(p.notEmpty(upDefs)&&upDefs.size()>0){
+                s=a.getDingJiaGuanLian();
+                return s;
+            }
+        }
+
+        return s;
+    }
+
+    @Transactional
+    private void f修改记录表设置(AlterPrice alterPrice放入修改记录表, AlterPrice alterPrice, List<String> msgs) {
+        //设置修改时间,将来插入修改记录表
+        alterPrice放入修改记录表.setAlterTime(p.dtoStr(new Date(),p.d16));
+        String saleOrBuy= alterPrice.getSaleOrBuy();
+        this.isIgll(saleOrBuy,msgs);
+        this.设置修改对象币别(alterPrice放入修改记录表,alterPrice);
+        //得到8种组合单价,只是为了修改记录用
+        //销售和采购的无运费都是1,不用分2种情况
+        this.f设置无运费本币修改之前之后价格(alterPrice放入修改记录表,alterPrice);
+        //以下是有运费,以上是无运费
+        this.f设置有运费前后价格(alterPrice放入修改记录表,alterPrice,saleOrBuy);
+    }
+
+
+    @Transactional
+    private void f需要修改的采购UnionIds是否非法(List<BuyPriceUnionId> 需要修改的采购UnionIds,List<String> msgs) {
+        if(p.empty(需要修改的采购UnionIds))p.throwEAddToList("前端穿过来的采购定价的主键集合为空",msgs);
+    }
+
+    @Transactional
+    private void f存在就修改不存在插入upDef(String sale一批数据统一的定价关联,AlterPrice alterPrice,List<BuyPriceUnionId> 需要修改的采购UnionIds,List<String> msgs) {
         if(p.notEmpty(alterPrice.getUpAfter())){
             if(alterPrice.getUpAfter().contains(",")){
                 alterPrice.setUpAfter(alterPrice.getUpAfter().replace(",",""));
@@ -74,36 +106,41 @@ public class DingJiaXiuGaiService {
         }
         int k=cnst.a001TongYongMapper.isExsit(alterPrice.getDingJiaZhuJian());
         if(k>0){
-            //修改
+            //更新定价关联,因为一组数据,有的是存在的,有的是不存在的,不存在的插入新的定价关联,老的数据也要把定价关联更新过来
+            alterPrice.setDingJiaGuanLian(sale一批数据统一的定价关联);
+            //修改的话肯定是原来就是关联的,不用管prm_no
             Integer i=cnst.a001TongYongMapper.updateUpdef(alterPrice);
         }else{
             //不存在insert一条
-            this.f不存在插入一条(alterPrice);
+            this.f不存在插入一条(sale一批数据统一的定价关联,alterPrice,需要修改的采购UnionIds,msgs);
         }
 
     }
 
     @Transactional
-    private void f不存在插入一条(AlterPrice alterPrice) {
+    private void f不存在插入一条(String sale当没有任何记录需要插入的时候的定价关联,AlterPrice alterPrice,List<BuyPriceUnionId> 需要修改的采购UnionIds,List<String> msgs) {
+        //prm_no   varchar(20)      180614223502247-561这种17到19位以内
+        String prmNo销售采购关联主键=this.f获得采购销售关联主键prmNo并给采购的设置(需要修改的采购UnionIds,msgs);
         p.p("------------------不存在插入1-------------------------------------");
         if(p.isBd(alterPrice.getUpAfter())){
             p.p("------------------不存在插入2-------------------------------------");
             UpDef upDef=new UpDef();
-            if(p.dy(alterPrice.getSaleOrBuy(),"sale")){
-                upDef.setPriceId(Cnst.salPriceId);
-            }
-            if(p.dy(alterPrice.getSaleOrBuy(),"buy")){
-                upDef.setPriceId(Cnst.buyPriceId);
-            }
+//            if(p.dy(alterPrice.getSaleOrBuy(),"sale")){
+//                upDef.setPriceId(Cnst.salPriceId);
+//            }
+//            if(p.dy(alterPrice.getSaleOrBuy(),"buy")){
+//                upDef.setPriceId(Cnst.buyPriceId);
+//            }
+            upDef.setPriceId(Cnst.salPriceId);
             upDef.setBilType(alterPrice.getBilType());
             upDef.setCurId(alterPrice.getCurIdAfter());
-            upDef.setOlefield(alterPrice.getDingJiaGuanLian());
+            upDef.setOlefield(sale当没有任何记录需要插入的时候的定价关联);
             upDef.setPrdNo(alterPrice.getPrdNo());
             upDef.setChkMan(alterPrice.getUserName());
             upDef.setUsr(alterPrice.getUserName());
             upDef.setHjNo(alterPrice.getUnitAfter());
             upDef.setRem(alterPrice.getRemFrontAfter());
-
+            upDef.setPrmNo(prmNo销售采购关联主键);
             upDef.setUp(new BigDecimal(alterPrice.getUpAfter()));
             upDef.setsDd(new Date());
             if(p.isBd(alterPrice.getQtyAfter())){
@@ -122,11 +159,66 @@ public class DingJiaXiuGaiService {
                             p.p("------------------不存在插入6-------------------------------------");
                             this.f设置upDef必须字段为空(upDef);
                             cnst.upDefMapper.insertSelective(upDef);
-                        }
-                    }
-                }
-            }
+                        }else{p.throwEAddToList("设置销售类型失败",msgs);}
+                    }else{p.throwEAddToList("设置销售运费类型失败",msgs);}
+                }else{p.throwEAddToList("设置销售币别失败",msgs);}
+            }else{p.throwEAddToList("设置销售定价关联失败",msgs);}
 
+        }
+
+    }
+
+    @Transactional
+    private String f获得采购销售关联主键prmNo并给采购的设置(List<BuyPriceUnionId> 需要修改的采购UnionIds,List<String> msgs) {
+        String 采购销售关联主键prmNo="";//p.timeAndRandom0_999NoSymbolRemoveHead_()
+        BuyPriceUnionId b = 需要修改的采购UnionIds.get(0);
+        String prdNo=cnst.a001TongYongMapper.getPrdNoFromPrdtSampUseId(b.getUuid());
+        if(p.empty(prdNo)){p.throwEAddToList("该条记录没有货号prdNo",msgs);}
+
+        UpDefExample upDefExample=new UpDefExample();
+        upDefExample.createCriteria().andPrdNoEqualTo(prdNo)
+                .andCurIdEqualTo(b.getCurId()).andBilTypeEqualTo(b.getBilType())
+                .andPriceIdEqualTo(b.getPriceId()).andOlefieldEqualTo(b.getDingJiaGuanLian());
+        List<UpDef> upDefs = cnst.upDefMapper.selectByExample(upDefExample);
+        if(p.empty(upDefs)){p.throwEAddToList("前端传过来的采购联合主键不存在",msgs);}
+
+        采购销售关联主键prmNo= upDefs.get(0).getPrmNo();
+
+        if(p.empty(采购销售关联主键prmNo)){
+            采购销售关联主键prmNo=p.timeAndRandom0_999NoSymbolRemoveHead_();
+            this.f更新所有采购关联主键(需要修改的采购UnionIds,采购销售关联主键prmNo,prdNo);
+        }
+        if(p.notEmpty(采购销售关联主键prmNo)){
+            if(采购销售关联主键prmNo.contains("-")){
+                int length = 采购销售关联主键prmNo.substring(0, 采购销售关联主键prmNo.indexOf("-")).length();
+                if(length<15){
+                    //此时不是我们关联的
+                    采购销售关联主键prmNo=p.timeAndRandom0_999NoSymbolRemoveHead_();
+                    this.f更新所有采购关联主键(需要修改的采购UnionIds,采购销售关联主键prmNo,prdNo);
+                }
+            }else{
+                采购销售关联主键prmNo=p.timeAndRandom0_999NoSymbolRemoveHead_();
+                this.f更新所有采购关联主键(需要修改的采购UnionIds,采购销售关联主键prmNo,prdNo);
+            }
+        }
+
+        return 采购销售关联主键prmNo;
+    }
+
+
+
+
+
+    @Transactional
+    private void f更新所有采购关联主键(List<BuyPriceUnionId> 需要修改的采购UnionIds, String 采购销售关联主键prmNo,String prdNo) {
+        for(BuyPriceUnionId b:需要修改的采购UnionIds){
+            UpDefExample upDefExample=new UpDefExample();
+            upDefExample.createCriteria().andPrdNoEqualTo(prdNo)
+                    .andCurIdEqualTo(b.getCurId()).andBilTypeEqualTo(b.getBilType())
+                    .andPriceIdEqualTo(b.getPriceId()).andOlefieldEqualTo(b.getDingJiaGuanLian());
+            UpDef upDef =new UpDef();
+            upDef.setPrmNo(采购销售关联主键prmNo);
+            cnst.upDefMapper.updateByExampleSelective(upDef,upDefExample);
         }
 
     }

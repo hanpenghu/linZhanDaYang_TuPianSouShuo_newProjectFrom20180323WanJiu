@@ -203,4 +203,31 @@ public class UpDef extends UpDefKey {
     public void setAmtDisCnt(BigDecimal amtDisCnt) {
         this.amtDisCnt = amtDisCnt;
     }
+
+
+    @Override
+    public String toString() {
+        return "UpDef{" +
+                "up=" + up +
+                ", disCnt=" + disCnt +
+                ", fDd=" + fDd +
+                ", eDd=" + eDd +
+                ", unit='" + unit + '\'' +
+                ", qtyFree=" + qtyFree +
+                ", rem='" + rem + '\'' +
+                ", chkMan='" + chkMan + '\'' +
+                ", chkDate=" + chkDate +
+                ", usr='" + usr + '\'' +
+                ", sysDate=" + sysDate +
+                ", hjNo='" + hjNo + '\'' +
+                ", preItm=" + preItm +
+                ", rtoBjst=" + rtoBjst +
+                ", zdFlag='" + zdFlag + '\'' +
+                ", olefield='" + olefield + '\'' +
+                ", upNet=" + upNet +
+                ", flagRkDd='" + flagRkDd + '\'' +
+                ", prmNo='" + prmNo + '\'' +
+                ", amtDisCnt=" + amtDisCnt +
+                '}';
+    }
 }

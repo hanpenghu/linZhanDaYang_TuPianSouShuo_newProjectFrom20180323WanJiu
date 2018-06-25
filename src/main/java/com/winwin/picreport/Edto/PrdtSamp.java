@@ -82,7 +82,7 @@ public class PrdtSamp {
 
     protected String financedesc;//财务描述
 
-    protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部
+    protected BigDecimal startsellcount;//起订数量//json可以直接转换输出给外部//起订量
 
     protected BigDecimal modelcost;//模具费
 
@@ -126,6 +126,11 @@ public class PrdtSamp {
 
     //审核意见
     protected String checkOutOpinion;
+
+
+
+
+
 
     public String getId() {
         return id;
@@ -525,5 +530,62 @@ public class PrdtSamp {
 
     public void setCheckOutOpinion(String checkOutOpinion) {
         this.checkOutOpinion = checkOutOpinion == null ? null : checkOutOpinion.trim();
+    }
+
+
+    @Override
+    public String toString() {
+        return "PrdtSamp{" +
+                "id='" + id + '\'' +
+                ", prdCode='" + prdCode + '\'' +
+                ", idxName='" + idxName + '\'' +
+                ", idxNo='" + idxNo + '\'' +
+                ", fenLeiNo='" + fenLeiNo + '\'' +
+                ", fenLeiName='" + fenLeiName + '\'' +
+                ", markName='" + markName + '\'' +
+                ", markNo='" + markNo + '\'' +
+                ", colour='" + colour + '\'' +
+                ", size='" + size + '\'' +
+                ", salName='" + salName + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", cusNoGive='" + cusNoGive + '\'' +
+                ", cusNameGive='" + cusNameGive + '\'' +
+                ", isfenjie='" + isfenjie + '\'' +
+                ", sampMake=" + sampMake +
+                ", sampSend=" + sampSend +
+                ", sampRequ='" + sampRequ + '\'' +
+                ", sampDesc='" + sampDesc + '\'' +
+                ", thum='" + thum + '\'' +
+                ", attach='" + attach + '\'' +
+                ", insertdate=" + insertdate +
+                ", confirmman='" + confirmman + '\'' +
+                ", confirmtimestr='" + confirmtimestr + '\'' +
+                ", isconfirm=" + isconfirm +
+                ", category='" + category + '\'' +
+                ", teamname='" + teamname + '\'' +
+                ", confirmrem='" + confirmrem + '\'' +
+                ", unit='" + unit + '\'' +
+                ", businessdesc='" + businessdesc + '\'' +
+                ", financedesc='" + financedesc + '\'' +
+                ", startsellcount=" + startsellcount +
+                ", modelcost=" + modelcost +
+                ", estimateprice=" + estimateprice +
+                ", littleorderprice=" + littleorderprice +
+                ", modelcostinvoiceno='" + modelcostinvoiceno + '\'' +
+                ", financestartsellcount=" + financestartsellcount +
+                ", financemodelcost=" + financemodelcost +
+                ", financelittleorderprice=" + financelittleorderprice +
+                ", buyerdesc='" + buyerdesc + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", salemandesc='" + salemandesc + '\'' +
+                ", stopusedate=" + stopusedate +
+                ", userName='" + userName + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", mainUnit='" + mainUnit + '\'' +
+                ", isCheckOut='" + isCheckOut + '\'' +
+                ", checkOutOpinion='" + checkOutOpinion + '\'' +
+                '}';
     }
 }

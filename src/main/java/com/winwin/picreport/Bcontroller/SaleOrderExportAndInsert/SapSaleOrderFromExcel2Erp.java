@@ -1,6 +1,7 @@
 package com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert;
 
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
 import com.winwin.picreport.Futils.*;
@@ -53,14 +54,13 @@ public class SapSaleOrderFromExcel2Erp {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO
-    @RequestMapping(value = "shouDingDanExcelToTable",
-            method = RequestMethod.POST, produces = {p.charsetUtf8})
+    @RequestMapping(value = "shouDingDanExcelToTable", method = RequestMethod.POST, produces = {p.charsetUtf8})
     public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> ss) {
         this.f刚入接口打印(ss);
         Date date = p.getDate();
         List<Msg> listmsg = new ArrayList<>();
         try {
-            this.f非法判断(ss, listmsg);
+            this.f前端穿过来的数据是否非法_扣税类别之类(ss, listmsg);
             this.excel里面的单号必须都一样(ss, listmsg);
             Msg msg = new Msg();
             if (this.f判断前端传过来的数据是否有问题(ss)) {
@@ -290,7 +290,7 @@ public class SapSaleOrderFromExcel2Erp {
         }
     }
 
-    private void f非法判断(List<ShouDingDanFromExcel> ss, List<Msg> msgs) {
+    private void f前端穿过来的数据是否非法_扣税类别之类(List<ShouDingDanFromExcel> ss, List<Msg> msgs) {
         if (p.empty(ss)) {
             commonThrow(msgs, "前端传过来的参数对象为null");
         }
@@ -300,9 +300,37 @@ public class SapSaleOrderFromExcel2Erp {
             commonThrow(msgs, "请不要把标准订单当做sap订单导入《sap行号居然为空》");
         }
 
+        if (p.empty(ss)) {
+            String s = "前端传过来的参数对象为null";
+            commonThrow(msgs, s);
+        }
+
+        for(ShouDingDanFromExcel s:ss){
+            this.excel中扣税类别taxId和客户号cusNo不能同时空的(s,msgs);
+            this.f检查扣税类别如果没有就从Cust取(s,msgs);
+        }
+
+
     }
 
+    private void excel中扣税类别taxId和客户号cusNo不能同时空的(ShouDingDanFromExcel s, List<Msg> listmsg) {
+        if(p.empty(s.getCusNo())){
+            if(p.empty(s.getTaxId())){
+                commonThrow(listmsg,"扣税类别taxId和客户代码cusNo不能同时为空,否则无法找到有效的扣税类别");
+            }
+        }
+    }
 
+    private void f检查扣税类别如果没有就从Cust取(ShouDingDanFromExcel s,List<Msg> listmsg) {
+        if(p.empty(s.getTaxId())){
+            CustWithBLOBs c = cnst.custMapper.selectByPrimaryKey(s.getCusNo());
+            if(p.notEmpty(c.getId1Tax())){
+                s.setTaxId(c.getId1Tax());
+            }else{
+                commonThrow(listmsg,"excel中扣税类别是空的,根据excel中的客户代号cusNo也无法找到对应的扣税类别");
+            }
+        }
+    }
     private void commonThrow(List<Msg> msgs, String msgStr) {
         msgs.addAll(new MessageGenerate().generateMessage(msgStr));
         throw new RuntimeException(msgStr);

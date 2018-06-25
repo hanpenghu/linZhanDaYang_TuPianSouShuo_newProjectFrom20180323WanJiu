@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/1.
- * {['id1','id2','id3'],['field1','field2','field3']}
+ * {"ids"：['id1','id2','id3'],"fields":['field1','field2','field3']}
  */
 public class ExportXlsParam {
     //那些id对应的需要下载
@@ -12,26 +12,111 @@ public class ExportXlsParam {
     //那些字段需要插入excel
     private List<String>fields;
     //确认  起始时间
-    private String startConfirmTime;
+    private String confirmtimestr;
 
     //确认  结束时间
-    private String endConfirmTime;
+    private String confirmtimestrEnd;
+
+    //创建时间
+    private String insertdateStr;
+    private String insertdateStrEnd;
+    //产品名称
+    private String idxName;
+
+    //分类名称
+    private String fenLeiName;
 
 
-    public String getStartConfirmTime() {
-        return startConfirmTime;
+    //产品编码
+    private String prdCode;
+
+    //负责人
+
+    private String salName;
+    //是否确认  1是确认  0是未确认
+    private String isconfirm;
+    //0是未提交  1是已提交未审核,  2是已审核
+    private String isCheckOut;
+
+
+    public String getConfirmtimestr() {
+        return confirmtimestr;
     }
 
-    public void setStartConfirmTime(String startConfirmTime) {
-        this.startConfirmTime = startConfirmTime;
+    public void setConfirmtimestr(String confirmtimestr) {
+        this.confirmtimestr = confirmtimestr;
     }
 
-    public String getEndConfirmTime() {
-        return endConfirmTime;
+    public String getConfirmtimestrEnd() {
+        return confirmtimestrEnd;
     }
 
-    public void setEndConfirmTime(String endConfirmTime) {
-        this.endConfirmTime = endConfirmTime;
+    public void setConfirmtimestrEnd(String confirmtimestrEnd) {
+        this.confirmtimestrEnd = confirmtimestrEnd;
+    }
+
+    public String getInsertdateStr() {
+        return insertdateStr;
+    }
+
+    public void setInsertdateStr(String insertdateStr) {
+        this.insertdateStr = insertdateStr;
+    }
+
+    public String getInsertdateStrEnd() {
+        return insertdateStrEnd;
+    }
+
+    public void setInsertdateStrEnd(String insertdateStrEnd) {
+        this.insertdateStrEnd = insertdateStrEnd;
+    }
+
+    public String getIdxName() {
+        return idxName;
+    }
+
+    public void setIdxName(String idxName) {
+        this.idxName = idxName;
+    }
+
+    public String getFenLeiName() {
+        return fenLeiName;
+    }
+
+    public void setFenLeiName(String fenLeiName) {
+        this.fenLeiName = fenLeiName;
+    }
+
+    public String getPrdCode() {
+        return prdCode;
+    }
+
+    public void setPrdCode(String prdCode) {
+        this.prdCode = prdCode;
+    }
+
+    public String getSalName() {
+        return salName;
+    }
+
+    public void setSalName(String salName) {
+        this.salName = salName;
+    }
+
+    public String getIsconfirm() {
+        return isconfirm;
+    }
+
+    public void setIsconfirm(String isconfirm) {
+        this.isconfirm = isconfirm;
+    }
+
+    public String getIsCheckOut() {
+        return isCheckOut;
+    }
+
+    public void setIsCheckOut(String isCheckOut) {
+        this.isCheckOut = isCheckOut;
     }
 
     public List<String> getIds() {
@@ -51,13 +136,5 @@ public class ExportXlsParam {
     }
 
 
-    @Override
-    public String toString() {
-        return "ExportXlsParam{" +
-                "ids=" + ids +
-                ", fields=" + fields +
-                ", startConfirmTime='" + startConfirmTime + '\'' +
-                ", endConfirmTime='" + endConfirmTime + '\'' +
-                '}';
-    }
+
 }
