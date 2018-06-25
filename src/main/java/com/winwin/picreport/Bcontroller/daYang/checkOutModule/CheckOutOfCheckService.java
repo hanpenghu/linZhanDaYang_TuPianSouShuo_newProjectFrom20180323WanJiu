@@ -23,7 +23,7 @@ public class CheckOutOfCheckService {
                 checkOutEntity.setCheckOutOpinion("");
             }
             checkOutEntity.setCheckOutOpinion(checkOutEntity.getCheckOutOpinion()+"《审核未通过》");
-            prdtSamp= this.f审核通过or不通过得到不同更新实体(checkOutEntity,ms,null);
+            prdtSamp= this.f审核通过or不通过得到不同更新实体(checkOutEntity,ms,Cnst.weiTiJiao);
         }else if(p.dy("1",checkOutEntity.getIsCanPass())){
             if(null==checkOutEntity.getCheckOutOpinion()){
                 checkOutEntity.setCheckOutOpinion("");

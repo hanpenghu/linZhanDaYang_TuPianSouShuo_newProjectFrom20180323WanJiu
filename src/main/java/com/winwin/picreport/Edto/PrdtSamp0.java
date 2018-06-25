@@ -297,4 +297,74 @@ public class PrdtSamp0 extends PrdtSamp{
         this.buyAlterRecList = buyAlterRecList;
         return this;
     }
+
+
+    @Override
+    public String toString() {
+        return "PrdtSamp0{" +
+                "id='" + id + '\'' +
+                ", prdCode='" + prdCode + '\'' +
+                ", idxName='" + idxName + '\'' +
+                ", idxNo='" + idxNo + '\'' +
+                ", usr='" + usr + '\'' +
+                ", fenLeiNo='" + fenLeiNo + '\'' +
+                ", upDefMyList=" + upDefMyList +
+                ", fenLeiName='" + fenLeiName + '\'' +
+                ", upDefMyListBuy=" + upDefMyListBuy +
+                ", markName='" + markName + '\'' +
+                ", saleAlterRecList=" + saleAlterRecList +
+                ", markNo='" + markNo + '\'' +
+                ", colour='" + colour + '\'' +
+                ", size='" + size + '\'' +
+                ", buyAlterRecList=" + buyAlterRecList +
+                ", salName='" + salName + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", sampMakeStamp='" + sampMakeStamp + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", sampSendStamp='" + sampSendStamp + '\'' +
+                ", cusNoGive='" + cusNoGive + '\'' +
+                ", cusNameGive='" + cusNameGive + '\'' +
+                ", sampMakeStr='" + sampMakeStr + '\'' +
+                ", isfenjie='" + isfenjie + '\'' +
+                ", sampSendStr='" + sampSendStr + '\'' +
+                ", insertdateStr='" + insertdateStr + '\'' +
+                ", thumUrlList=" + thumUrlList +
+                ", sampMake=" + sampMake +
+                ", sampSend=" + sampSend +
+                ", attachUrlList=" + attachUrlList +
+                ", dirUrl='" + dirUrl + '\'' +
+                ", sampRequ='" + sampRequ + '\'' +
+                ", sampDesc='" + sampDesc + '\'' +
+                ", thum='" + thum + '\'' +
+                ", attach='" + attach + '\'' +
+                ", insertdate=" + insertdate +
+                ", confirmman='" + confirmman + '\'' +
+                ", confirmtimestr='" + confirmtimestr + '\'' +
+                ", isconfirm=" + isconfirm +
+                ", category='" + category + '\'' +
+                ", teamname='" + teamname + '\'' +
+                ", confirmrem='" + confirmrem + '\'' +
+                ", unit='" + unit + '\'' +
+                ", businessdesc='" + businessdesc + '\'' +
+                ", financedesc='" + financedesc + '\'' +
+                ", startsellcount=" + startsellcount +
+                ", modelcost=" + modelcost +
+                ", estimateprice=" + estimateprice +
+                ", littleorderprice=" + littleorderprice +
+                ", modelcostinvoiceno='" + modelcostinvoiceno + '\'' +
+                ", financestartsellcount=" + financestartsellcount +
+                ", financemodelcost=" + financemodelcost +
+                ", financelittleorderprice=" + financelittleorderprice +
+                ", buyerdesc='" + buyerdesc + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", salemandesc='" + salemandesc + '\'' +
+                ", stopusedate=" + stopusedate +
+                ", userName='" + userName + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", mainUnit='" + mainUnit + '\'' +
+                ", isCheckOut='" + isCheckOut + '\'' +
+                ", checkOutOpinion='" + checkOutOpinion + '\'' +
+                '}';
+    }
 }

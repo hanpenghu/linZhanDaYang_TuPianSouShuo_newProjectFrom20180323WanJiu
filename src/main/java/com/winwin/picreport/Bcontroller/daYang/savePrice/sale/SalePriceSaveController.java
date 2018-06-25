@@ -20,7 +20,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-public class SalePriceSave {
+public class SalePriceSaveController {
     private String n0 = "0";
     private String n1 = "1";
     private String 未知异常 = "《未知异常》";

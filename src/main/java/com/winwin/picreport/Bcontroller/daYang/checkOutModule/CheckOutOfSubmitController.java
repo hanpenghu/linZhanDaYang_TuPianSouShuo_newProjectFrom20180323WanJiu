@@ -36,8 +36,8 @@ public class CheckOutOfSubmitController {
 
     //审核之前的状态提交接口
     //提交
-    @RequestMapping(value = "checkOutOfSubMit", method = RequestMethod.POST)
-    public @ResponseBody  Msg f(@RequestBody PrdtSamp0 prdtSamp0) {
+    @RequestMapping(value = "checkOutOfSubMit", method = RequestMethod.POST ,produces = {"application/json;charset=UTF-8"})
+    public @ResponseBody  Msg  f(@RequestBody PrdtSamp0 prdtSamp0) {
         List<String> ms = new LinkedList<String>();
         try {
             this.isIgll(prdtSamp0, ms);
@@ -45,7 +45,7 @@ public class CheckOutOfSubmitController {
         } catch (Exception e) {
             return controllerIgllReturn(e, ms);
         }
-        return Msg.gmg().setStatus(n1).setMsg(成功);
+        return Msg.gmg().setStatus(Cnst.SUCCESS).setMsg(成功);
     }
 
     private void isIgll(PrdtSamp0 prdtSamp0, List<String> ms) {

@@ -20,7 +20,7 @@ public class UserAuth {
     public void addAuth(Msg msg) {
 //        String authJsonStr = "{\"logistics\":{\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}}}";
         //增加以图搜图权限后
-        String  authJsonStr="{\"logistics\":{\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}},\"ai\":{\"picture\":{\"page\":\"F\"},\"uploadImg\":{\"page\":\"F\"}}}";
+        String  authJsonStr="{\"logistics\":{\"productMsgExport\":{\"page\":\"F\"},\"pricingCheck\":{\"page\":\"F\"},\"salesorder\":{\"page\":\"F\"},\"salesorderForSAP\":{\"page\":\"F\"},\"salesDetail\":{\"page\":\"F\"},\"productCode\":{\"page\":\"F\"},\"purchasePricing\":{\"page\":\"F\"},\"salesPricing\":{\"page\":\"F\",\"part\":{\"purchasePrice\":\"F\",\"salesPrice\":\"F\"}},\"sampleConfirm\":{\"page\":\"F\"}},\"ai\":{\"picture\":{\"page\":\"F\"},\"uploadImg\":{\"page\":\"F\"}}}";
         String tenantId = msg.getTenantId();
         String user_Name = msg.getUserEmail();//前端限制必须填写,
 //        auth=a001TongYongMapper.getAuth(tenantId,user_Name);
@@ -47,7 +47,13 @@ public class UserAuth {
                     for (ModelUsers modelUsers : modelUserses) {
                         //得到当前的模块英文名,对应auth字符串
                         String modelName = modelUsers.getModel().getModelName();
-                        if (p.dy(modelName, "salesorder")) {
+                        if(p.dy(modelName, "productMsgExport")){
+                            authJsonStr = authJsonStr.replace("\"productMsgExport\":{\"page\":\"F\"}", "\"productMsgExport\":{\"page\":\""+modelUsers.getCanUse()+"\"}");
+
+                        }else if(p.dy(modelName, "pricingCheck")){
+                            authJsonStr = authJsonStr.replace("\"pricingCheck\":{\"page\":\"F\"}", "\"pricingCheck\":{\"page\":\""+modelUsers.getCanUse()+"\"}");
+
+                        }else if (p.dy(modelName, "salesorder")) {
                             //此时是  销售订单模块
                             authJsonStr = authJsonStr.replace("\"salesorder\":{\"page\":\"F\"}", 
                                     "\"salesorder\":{\"page\":\"" + modelUsers.getCanUse() + "\"}");
