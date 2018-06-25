@@ -21,13 +21,15 @@ import java.util.Date;
 @Component("cnst")
 public class Cnst {
 
-    //下面三个是打样的审核流程
-    public static final String weiTiJiao="0";//原来是null的也是未提交的
+    //下面3个是打样的审核流程
+    public static final String weiTiJiao="0";//已经保存但未提交
     public static final String yiTiJiao="1";
     public static final String yiShenHe="2";
 
 
 
+    public static final String SUCCESS="1";
+    public static final String FAIL="0";
     public static final String SamplesSys="SamplesSys";//产品打样的时候我们插入系统表prdt和up_def(定价)的时候做的标记,该标记证明了是打样系统产生的记录
     public static final String imgUrl="imgUrl";
     public static final String salPriceId="1";//销售的定价表中的priceId是1

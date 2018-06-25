@@ -163,7 +163,7 @@
             <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
-            <![CDATA[ AND isnull(is_Check_Out,'0') LIKE  #{ isCheckOut }  ]]>
+            <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
         </if>
 
     </sql>

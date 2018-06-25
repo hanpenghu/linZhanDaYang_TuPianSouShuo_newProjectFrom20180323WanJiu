@@ -3,6 +3,8 @@
 localhost：8070/chanPinBianMaJianDangTiaoJianChaXun
 
 
-0或者null或者""代表未提交(实际上只有null或者0,然后我多条件查询里用了isnull(is_check_out,'0'))
-1代表提交未审核,   2代表已经审核
+新建产品编码 is_check_out=null;
+保存后is_check_out=0;表示已经保存未提交
+提交后is_check_out=1代表提交未审核,
+审核后is_check_out=2代表已经审核
 

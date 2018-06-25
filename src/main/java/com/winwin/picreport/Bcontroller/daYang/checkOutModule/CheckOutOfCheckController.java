@@ -25,11 +25,11 @@ public class CheckOutOfCheckController {
 
     //将   已经提交的状态"1"  更新成已经审核的状态  "2"
     @RequestMapping(value="checkOutOfCheck",method= RequestMethod.POST)
-    public @ResponseBody  Msg f(@Param("uuid")String  uuid){
+    public @ResponseBody  Msg f(@RequestBody CheckOutEntity checkOutEntity){
         List<String> ms=new LinkedList<String>();
         try {
-            this.isIllgel(uuid,ms);
-            checkOutOfCheckService.f(ms,uuid,cnst);
+            this.isIllgel(checkOutEntity,ms);
+            checkOutOfCheckService.f(ms,checkOutEntity,cnst);
         } catch (Exception e) {
             return controllerIgllReturn(e, ms);
         }
@@ -42,10 +42,21 @@ public class CheckOutOfCheckController {
 
 
 
-    private void isIllgel(String uuid, List<String> ms) {
-            if(p.empty(uuid)){
-                p.throwEAddToList("前端传过来的打样id是空的" ,ms);
+    private void isIllgel(CheckOutEntity checkOutEntity, List<String> ms) {
+        if(p.empty(checkOutEntity)){
+            p.throwEAddToList("前端传过来的打样审核实体checkOutEntity是空的" ,ms);
+        }
+        if(p.empty(checkOutEntity.getUuid())){
+            p.throwEAddToList("前端传过来的打样id是空的" ,ms);
+        }
+        if(p.empty(checkOutEntity.getIsCanPass())){
+            p.throwEAddToList("前端传过来的打样审核是否能通过标记是空的" ,ms);
+        }
+        if(p.bdy("0",checkOutEntity.getIsCanPass())){
+            if(p.bdy("1",checkOutEntity.getIsCanPass())){
+                p.throwEAddToList("前端传过来的打样审核标记必须是字符串0或者字符串1" ,ms);
             }
+        }
     }
 
 

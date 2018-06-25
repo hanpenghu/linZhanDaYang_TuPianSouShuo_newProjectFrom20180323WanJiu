@@ -105,6 +105,7 @@ public class SaleOrderFromExcel2Erp_notMerage {
         Map<String, List> map = new HashMap();
         //计算各种税额
         for (ShouDingDanFromExcel s : list3同一单号集合) {
+
             this.f判断excel中税率是否合法(s, listmsg, taxRto);
             double qty = 0;//数量
             double amtn = 0;//未税金额
@@ -155,6 +156,12 @@ public class SaleOrderFromExcel2Erp_notMerage {
     }
 
     private double f计算qty并验证是否非法(ShouDingDanFromExcel s, List<Msg> listmsg) {
+        if(p.notEmpty(s.getQty())){
+            s.setQty(s.getQty().trim().replace(",",""));
+        }else{
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入 有数量不是数字"));
+            p.throwE("无法导入 有数量不是数字");
+        }
         double qty = 0;
         try {
             qty = Double.valueOf(s.getQty());

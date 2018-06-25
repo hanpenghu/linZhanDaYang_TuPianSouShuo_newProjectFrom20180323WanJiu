@@ -52,7 +52,7 @@ public class D1DaYangS {
         }
         fenYe.setPrdtSampList(prdtSampList);
         if (p.dy(已经采购定价但未销售定价标记, dingJiaType)) {
-            this.f设置fenYe的已经采购定价但未销售定价的总记录数(fenYe);
+            this.f设置fenYe的已经采购定价但未销售并且已经审核定价的总记录数(fenYe);
         } else {
             fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
             fenYe.setZongYeShu();
@@ -87,14 +87,14 @@ public class D1DaYangS {
     }
 
 
-    private void f设置fenYe的已经采购定价但未销售定价的总记录数(FenYe fenYe) {
+    private void f设置fenYe的已经采购定价但未销售并且已经审核定价的总记录数(FenYe fenYe) {
         //手动建立连接
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             con = p.getCon(cnst.dataSource001IP, cnst.dataSource001PORT, p.dbTypeSqlserver, cnst.Database001Name, cnst.dBUserName, cnst.dBPWd);
-            String sql = "Select count(id) from prdt_samp        where prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )";
+            String sql = "Select count(id) from prdt_samp        where    is_check_out='2' and prd_no  in             (                          select a.prd_no from                            (select prd_no from up_def where price_id='2' and olefield LIKE '%SamplesSys%' group by prd_no)a                            where a.prd_no                            not in(select prd_no from up_def where price_id='1' and olefield LIKE '%SamplesSys%' group by prd_no)             )";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             int countID = 0;

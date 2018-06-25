@@ -3,9 +3,7 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
 import com.winwin.picreport.AllConstant.StatusCnst;
-import com.winwin.picreport.Edto.PrdtSamp;
-import com.winwin.picreport.Edto.PrdtSamp0;
-import com.winwin.picreport.Edto.PrdtWithBLOBs;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -72,8 +70,15 @@ public class InfoEdit_ManyAttach {
                         "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
             }
 
+            List<Msg> igll = this.isIgll(prdtSampOb);
+            if(p.notEmpty(igll)){
+                if(p.dy("39",igll.get(0).getStatus())){
+                    return  igll;
+                }
+            }
 
-            //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
+
+        //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
             PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
 
             if(prdtSamp==null){
@@ -129,6 +134,7 @@ public class InfoEdit_ManyAttach {
 //        prdtSampOb.setAttach(attachmentUrl);//在这里不再更新附件,因为附件有多个,放在最后单独更新
             prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
             prdtSampOb.setIsconfirm(null);
+            prdtSampOb.setIsCheckOut(Cnst.weiTiJiao);
             //Selective是不更新null
             if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
                 return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),msgCnst.failSave.getValue(),msgCnst.failOfDbMistake.getValue(),Cnst.emptyStr,StatusCnst.dbMistakeCausePrdtSampFalse);
@@ -303,13 +309,98 @@ public class InfoEdit_ManyAttach {
 
     }
 
-    @Test
-    public void  f(){
-        String format1 = new SimpleDateFormat("yyyy-MM-dd").
-                format(new Date());
 
-        p.p(format1);
+
+    private List<Msg> isIgll(PrdtSamp0 prdtSamp0) {
+        if (p.empty(prdtSamp0)) {
+            return MessageGenerate.generateMessage("保存失败", "保存失败",
+                    "前端传过来的参数是空的", "", "39");
+        }
+        if(p.empty(prdtSamp0.getId())){
+
+            return MessageGenerate.generateMessage("保存失败", "保存失败",
+                    "前端传过来的id是空的", "", "39");
+        }
+        if(p.empty(prdtSamp0.getStartsellcount())){
+            return MessageGenerate.generateMessage("保存失败", "保存失败",
+                    "前端传过来的起订量startsellcount是空的", "", "39");
+        }
+        if(p.empty(prdtSamp0.getLittleorderprice())){
+            return MessageGenerate.generateMessage("保存失败", "保存失败",
+                    "前端传过来的小单费littleorderprice是空的", "", "39");
+        }
+        if (p.empty(prdtSamp0.getCusNoGive()) || p.empty(prdtSamp0.getCusNameGive())) {
+            if (this.供应商No在prdtSamp是空(prdtSamp0)||this.供应商Name在prdtSamp是空(prdtSamp0)){
+                return MessageGenerate.generateMessage("保存失败", "保存失败",
+                        "前端传过来的供应商no和name是空,数据库也是空", "", "39");
+            }
+        }
+
+        if(!this.isAllReadyHaveBuyPrice(prdtSamp0)){
+            return MessageGenerate.generateMessage("保存失败", "保存失败",
+                    "该商品还没有采购定价", "", "39");
+        }
+
+        return null;
+    }
+
+    //是否已经采购定价
+    private boolean isAllReadyHaveBuyPrice(PrdtSamp0 prdtSamp0) {
+        PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSamp0.getId());
+        UpDefExample upDefExample=new UpDefExample();
+        upDefExample.createCriteria().andPrdNoEqualTo(prdtSamp.getPrdNo()).andPriceIdEqualTo(Cnst.buyPriceId).andUpIsNotNull().andOlefieldLike("%"+Cnst.SamplesSys+"%");
+        long l = cnst.upDefMapper.countByExample(upDefExample);
+        if(l>0){
+            //已经进行过采购定价
+            return true;
+        }else{
+            return false;
+        }
 
     }
+
+
+    private boolean 供应商Name在prdtSamp是空(PrdtSamp0 prdtSamp0) {
+        PrdtSampExample prdtSampExample = new PrdtSampExample();
+        prdtSampExample.createCriteria().andCusNameGiveIsNull().andIdEqualTo(prdtSamp0.getId());
+        long l = cnst.prdtSampMapper.countByExample(prdtSampExample);
+        prdtSampExample.createCriteria().andCusNameGiveEqualTo("").andIdEqualTo(prdtSamp0.getId());
+        long ll = cnst.prdtSampMapper.countByExample(prdtSampExample);
+        if (l > 0 || ll > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean 供应商No在prdtSamp是空(PrdtSamp0 prdtSamp0) {
+        PrdtSampExample prdtSampExample = new PrdtSampExample();
+        prdtSampExample.createCriteria().andCusNoGiveIsNull().andIdEqualTo(prdtSamp0.getId());
+        long l = cnst.prdtSampMapper.countByExample(prdtSampExample);
+        prdtSampExample.createCriteria().andCusNoGiveEqualTo("").andIdEqualTo(prdtSamp0.getId());
+        long ll = cnst.prdtSampMapper.countByExample(prdtSampExample);
+        if (l > 0 || ll > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+//    @Test
+//    public void  f(){
+//        String format1 = new SimpleDateFormat("yyyy-MM-dd").
+//                format(new Date());
+//
+//        p.p(format1);
+//
+//    }
 
 }

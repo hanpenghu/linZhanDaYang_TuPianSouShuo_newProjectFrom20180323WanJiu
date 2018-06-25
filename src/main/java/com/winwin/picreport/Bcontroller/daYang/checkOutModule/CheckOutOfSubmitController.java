@@ -1,7 +1,9 @@
 package com.winwin.picreport.Bcontroller.daYang.checkOutModule;
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSampExample;
+import com.winwin.picreport.Edto.UpDefExample;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ public class CheckOutOfSubmitController {
     //审核之前的状态提交接口
     //提交
     @RequestMapping(value = "checkOutOfSubMit", method = RequestMethod.POST)
-    public Msg f(@RequestBody PrdtSamp0 prdtSamp0) {
+    public @ResponseBody  Msg f(@RequestBody PrdtSamp0 prdtSamp0) {
         List<String> ms = new LinkedList<String>();
         try {
             this.isIgll(prdtSamp0, ms);
@@ -65,9 +67,28 @@ public class CheckOutOfSubmitController {
             }
         }
 
+        if(!this.isAllReadyHaveBuyPrice(prdtSamp0, ms)){
+            p.throwEAddToList("该商品还没有采购定价", ms);
+        }
 
 
     }
+
+    //是否已经采购定价
+    private boolean isAllReadyHaveBuyPrice(PrdtSamp0 prdtSamp0, List<String> ms) {
+        PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSamp0.getId());
+        UpDefExample  upDefExample=new UpDefExample();
+        upDefExample.createCriteria().andPrdNoEqualTo(prdtSamp.getPrdNo()).andPriceIdEqualTo(Cnst.buyPriceId).andUpIsNotNull().andOlefieldLike("%"+Cnst.SamplesSys+"%");
+        long l = cnst.upDefMapper.countByExample(upDefExample);
+        if(l>0){
+            //已经进行过采购定价
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 
     private boolean 供应商Name在prdtSamp是空(PrdtSamp0 prdtSamp0) {
         PrdtSampExample prdtSampExample = new PrdtSampExample();
