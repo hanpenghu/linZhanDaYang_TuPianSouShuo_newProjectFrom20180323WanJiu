@@ -208,6 +208,9 @@ public class SapSaleOrderFromExcel2Erp {
     private double f合并qty并判断最终qty是否非法(List<ShouDingDanFromExcel> list0需要合并的对象集合, List<Msg> listmsg) {
         double qty = 0;
         for (ShouDingDanFromExcel ss : list0需要合并的对象集合) {
+            if(p.notEmpty(ss.getQty())){
+                ss.setQty(ss.getQty().trim().replace(逗号,空字符串));
+            }
             try {
                 qty += Double.parseDouble(ss.getQty().trim());
             } catch (NumberFormatException e) {
@@ -419,6 +422,12 @@ public class SapSaleOrderFromExcel2Erp {
         }
 
     }
+
+
+
+
+    private final String 逗号=",";
+    private final String 空字符串="";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
