@@ -230,7 +230,6 @@ public class D1DaYangService {
             prdtSamp.setInsertdate(new Date());//该条记录创建时间
             prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
             //获取prdNo//下面是void方法的暗地修改
-
             cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
 //            this.prdtSampObjGetPrdNo(prdtSamp);
             //如果时间没有,直接设置当前时间

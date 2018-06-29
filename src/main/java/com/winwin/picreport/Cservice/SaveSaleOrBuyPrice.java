@@ -215,15 +215,14 @@ public class SaveSaleOrBuyPrice {
         String prdNo = cnst.manyTabSerch.selectPrdNoFromPrdtSamp(up.getUuid());
         if (p.empty(prdNo)) {
             PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(up.getUuid());
-            PrdtSamp0 prdtSamp0 = new PrdtSamp0();
-            BeanUtils.copyProperties(prdtSamp, prdtSamp0);
             //2018_5_14   weekday(1)   17:23:11
-            prdNo = cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp0.getPrdCode());
+            prdNo = cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp.getPrdCode());
             if (p.empty(prdNo)) {//注意这边没有分类,无法帮  他流水,需要客户自己去prdt表注册商品的到品号
-                p.p("-------------------------------------------------------");
-                p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
-                p.p("-------------------------------------------------------");
-                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
+                this.f给pp装上货号(prdtSamp,msgs);
+//                p.p("-------------------------------------------------------");
+//                p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
+//                p.p("-------------------------------------------------------");
+//                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
             } else {
                 //此时prdt表中有货号,把这个货号放入打样表中
                 cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(), prdNo);
@@ -232,6 +231,25 @@ public class SaveSaleOrBuyPrice {
         }
         return prdNo;
     }
+
+
+    private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+        PrdtSamp0 p0=new PrdtSamp0();
+        BeanUtils.copyProperties(pp,p0);
+        //给当前的prdtSamp流水一个货号
+        try {
+            cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            p.throwEAddToList("流水货号异常！",msgs);
+        }
+        if(p.empty(p0.getPrdNo())){
+            String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
+            p.throwEAddToList(s,msgs);
+        }
+        pp.setPrdNo(p0.getPrdNo());
+    }
+
 
 
 
