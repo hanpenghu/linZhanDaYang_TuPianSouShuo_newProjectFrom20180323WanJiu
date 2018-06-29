@@ -225,9 +225,8 @@ public class SaveSaleOrBuyPrice {
 //                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
             } else {
                 //此时prdt表中有货号,把这个货号放入打样表中
-                cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(), prdNo);
+                cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(),prdNo);
             }
-
         }
         return prdNo;
     }
