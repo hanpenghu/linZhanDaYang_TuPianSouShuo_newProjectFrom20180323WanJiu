@@ -1,0 +1,59 @@
+[
+  {
+    "auth": {
+      "ai": {
+        "picture": {
+          "page": "F"
+        },
+        "uploadImg": {
+          "page": "F"
+        }
+      },
+      "logistics": {
+        "pricingCheck": {
+          "page": "F"
+        },
+        "productCode": {
+          "page": "F"
+        },
+        "productMsgExport": {
+          "page": "F"
+        },
+        "purchasePricing": {
+          "page": "F"
+        },
+        "salesDetail": {
+          "page": "F"
+        },
+        "salesPricing": {
+          "page": "F",
+          "part": {
+            "purchasePrice": "F",
+            "salesPrice": "F"
+          }
+        },
+        "salesorder": {
+          "page": "F"
+        },
+        "salesorderForSAP": {
+          "page": "F"
+        },
+        "sampleConfirm": {
+          "page": "F"
+        }
+      }
+    },
+    "chMsg": "您没有登录",
+    "msg": "fail",
+    "notExsitThisPrdtNoInPrdtTab": "",
+    "objs": [],
+    "otherMsg": "",
+    "status": "4",
+    "tenantId": "",
+    "tenantName": "",
+    "token": "",
+    "userEmail": "",
+    "weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao": "",
+    "xiaoHaoShiJian": ""
+  }
+]

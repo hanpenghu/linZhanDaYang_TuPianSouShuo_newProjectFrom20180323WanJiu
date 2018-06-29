@@ -375,4 +375,6 @@ public interface A001TongYongMapper {
     @Select({"select count(*) from up_def where isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')=#{dingJiaZhuJian}"})
     int isExsit(@Param("dingJiaZhuJian") String dingJiaZhuJian);
 
+    @Select({"select userPswd from users where user_name=#{userName}"})
+    List<String> selectSecretFromUserName(@Param("userName") String userName);
 }

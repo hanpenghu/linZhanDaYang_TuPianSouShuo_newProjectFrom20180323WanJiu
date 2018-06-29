@@ -56,16 +56,30 @@ public class DyExcel {
         } catch (Exception e) {
             return exceptionReturn(msgs, e);
         }
+        return rightReturn(msgs);
+    }
+
+
+    private Msg rightReturn(List<String> msgs){
+        String s = this.msgs包含重复数据提示(msgs);
+        if(null!= s){
+            return Msg.gmg().setMsg("导入《成功》,已经去掉"+s).setStatus("1");
+        }
         return Msg.gmg().setMsg("《成功》").setStatus("1");
     }
 
 
-
-
-
-
-
-
+    private String  msgs包含重复数据提示(List<String> msgs) {
+        if(p.notEmpty(msgs)){
+            for(String str:msgs){
+                if(str.contains(CC.重复编码数据_)){
+                    return str;
+                }
+            }
+        }
+        //不包含
+        return null;
+    }
 
 
     private void throwE(MultipartFile excel, HttpServletRequest request, List<String> msgs) {

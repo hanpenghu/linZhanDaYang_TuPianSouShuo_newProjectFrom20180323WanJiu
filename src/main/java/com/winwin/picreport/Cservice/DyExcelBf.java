@@ -2,15 +2,12 @@ package com.winwin.picreport.Cservice;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.AllConstant.Constant.msgCnst;
+import com.winwin.picreport.Bcontroller.daYang.prdtSampInsertExcelManyRequestVersion.CC;
 import com.winwin.picreport.Edto.*;
-import com.winwin.picreport.Futils.MsgGenerate.Msg;
-import com.winwin.picreport.Futils.MsgGenerate.mg;
 import com.winwin.picreport.Futils.excelHan.Excel2007;
 import com.winwin.picreport.Futils.excelHan.ExcelPicTemplate;
 import com.winwin.picreport.Futils.excelHan.ExcelPicTxtTemplate;
 import com.winwin.picreport.Futils.excelHan.ExcelTxtTemplate;
-import com.winwin.picreport.Futils.fileUtil.hanhanFileUtil;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.ExecutorType;
@@ -47,7 +44,6 @@ public class DyExcelBf {
     private Cnst cnst;
 
 
-
     public void f(MultipartFile excel, HttpServletRequest r,List<String> msgs) throws IOException {
         PrdtSampCreateUser usr= this.f获得当前操作者(r,msgs);
         File excelFile = this.f将excel保存在本地的excelTemp文件夹(msgs, excel);
@@ -56,7 +52,7 @@ public class DyExcelBf {
         List<PrdtSamp>prdtSamps将要入数据库=new LinkedList<PrdtSamp>();
         int 行计数器=0;
         for(ExcelPicTxtTemplate e:excel所有文字和图片集行List){
-            String uuid = p.uuid();
+            String uuid = p.sj();
             PrdtSamp pp=new PrdtSamp();
             pp.setId(uuid);
             pp.setInsertdate(cnst.getDbDate());
@@ -68,7 +64,10 @@ public class DyExcelBf {
             this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器);
             //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
             this.f给pp装上货号(pp,msgs);
-           this.if数据库PrdCode重复(pp,msgs);
+            if(this.if数据库PrdCode重复则不导入该条_其他继续导入(pp,msgs)){
+                //继续下一个,当前这个不要了
+                continue;
+            }
             prdtSamps将要入数据库.add(pp);
             行计数器=行计数器+1;
         }
@@ -77,11 +76,28 @@ public class DyExcelBf {
         excelFile.delete();
     }
 
+
+    private boolean if数据库PrdCode重复则不导入该条_其他继续导入(PrdtSamp pp, List<String> msgs) {
+        /**
+         *下面判断是否有重复数据在数据库,有的话就停止导入excel
+         * //这个判断重复的其实已经做了,但是后来老郑说只要prdtCode重复就 不能导入,
+         * */
+        PrdtSampExample pse=new PrdtSampExample();
+        pse.createCriteria().andPrdCodeEqualTo(pp.getPrdCode());
+        if(cnst.prdtSampMapper.countByExample(pse)>0){
+//            commonsThrow(msgs,重复编码数据+"《"+pp.getPrdCode()+"》");
+            msgs.add(CC.重复编码数据_+"《"+pp.getPrdCode()+"》");
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private void ifList里编码重复(List<PrdtSamp> prdtSamps将要入数据库, List<String> msgs) {
         Set<PrdtSamp> set=new TreeSet<PrdtSamp>(Comparator.comparing(PrdtSamp::getPrdCode));
         set.addAll(prdtSamps将要入数据库);
         if(prdtSamps将要入数据库.size()!=set.size()){
-            commonsThrow(msgs,"有编码重复,prdCode有重复");
+            this.commonsThrow(msgs,"excel里有编码重复,prdCode有重复");
         }
     }
 
@@ -110,17 +126,7 @@ public class DyExcelBf {
             session.close();
         }
     }
-    private void if数据库PrdCode重复(PrdtSamp pp, List<String> msgs) {
-        /**
-         *下面判断是否有重复数据在数据库,有的话就停止导入excel
-         * //这个判断重复的其实已经做了,但是后来老郑说只要prdtCode重复就 不能导入,
-         * */
-        PrdtSampExample pse=new PrdtSampExample();
-        pse.createCriteria().andPrdCodeEqualTo(pp.getPrdCode());
-        if(cnst.prdtSampMapper.countByExample(pse)>0){
-            commonsThrow(msgs,"重复数据《"+pp.getPrdCode()+"》");
-        }
-    }
+
     private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
@@ -198,12 +204,14 @@ public class DyExcelBf {
         }
     }
 
+    private final String 点=".";
+    private final String png="png";
     private String savePic(List<ExcelPicTemplate> list该行图片集,String uuid) throws IOException {
         String thum="";
         if(p.notEmpty(list该行图片集)){
             PictureData pictureData = list该行图片集.get(0).getPictureData();
             if(null!=pictureData){
-                thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+Cnst.dian+Cnst.pngWuDian;
+                thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+点+png;
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
                 byte[] data = null;
 //                if(p.dy(pictureData.getMimeType(),emf)){

@@ -321,25 +321,25 @@ public class InfoEdit_ManyAttach {
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的id是空的", "", "39");
         }
-        if(p.empty(prdtSamp0.getStartsellcount())){
+        /*if(p.empty(prdtSamp0.getStartsellcount())){
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的起订量startsellcount是空的", "", "39");
         }
         if(p.empty(prdtSamp0.getLittleorderprice())){
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的小单费littleorderprice是空的", "", "39");
-        }
-        if (p.empty(prdtSamp0.getCusNoGive()) || p.empty(prdtSamp0.getCusNameGive())) {
+        }*/
+        /*if (p.empty(prdtSamp0.getCusNoGive()) || p.empty(prdtSamp0.getCusNameGive())) {
             if (this.供应商No在prdtSamp是空(prdtSamp0)||this.供应商Name在prdtSamp是空(prdtSamp0)){
                 return MessageGenerate.generateMessage("保存失败", "保存失败",
                         "前端传过来的供应商no和name是空,数据库也是空", "", "39");
             }
-        }
+        }*/
 
-        if(!this.isAllReadyHaveBuyPrice(prdtSamp0)){
+        /*if(!this.isAllReadyHaveBuyPrice(prdtSamp0)){
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "该商品还没有采购定价", "", "39");
-        }
+        }*/
 
         return null;
     }

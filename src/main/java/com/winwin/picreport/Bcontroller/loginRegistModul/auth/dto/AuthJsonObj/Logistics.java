@@ -8,6 +8,25 @@ public class Logistics {
     private PurchasePricing purchasePricing=new PurchasePricing();
     private SalesPricing salesPricing=new SalesPricing();
     private SampleConfirm sampleConfirm=new SampleConfirm();
+    private ProductMsgExport productMsgExport=new ProductMsgExport();
+    private PricingCheck pricingCheck=new PricingCheck();
+
+
+    public ProductMsgExport getProductMsgExport() {
+        return productMsgExport;
+    }
+
+    public void setProductMsgExport(ProductMsgExport productMsgExport) {
+        this.productMsgExport = productMsgExport;
+    }
+
+    public PricingCheck getPricingCheck() {
+        return pricingCheck;
+    }
+
+    public void setPricingCheck(PricingCheck pricingCheck) {
+        this.pricingCheck = pricingCheck;
+    }
 
     public SalesOrder getSalesorder() {
         return salesorder;

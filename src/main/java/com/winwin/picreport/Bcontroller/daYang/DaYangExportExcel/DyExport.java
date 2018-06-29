@@ -197,7 +197,7 @@ public class DyExport {
 
 
     private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
-        String excelName = "SampExport" + p.timeAndRandom0_999NoHead_1() + ".xls";
+        String excelName = "SampExport" + p.sj() + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
         FileOutputStream fileOut = null;
@@ -394,6 +394,7 @@ public class DyExport {
     }
 
 
+
     private void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList, List<String> a前端传过来需要显示的fields) {
         if (!a前端传过来需要显示的fields.contains("salName")) {
             daoChuExcelHeadList.remove("Win Win Merchandiser WinWin 负责业务员");
@@ -580,6 +581,7 @@ public class DyExport {
 
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
+    @SuppressWarnings("unchecked")
     private List<String> f得到完整导出头信息() {
         List<String> daoChuExcelHeadList =
                 new linklistT<String>()

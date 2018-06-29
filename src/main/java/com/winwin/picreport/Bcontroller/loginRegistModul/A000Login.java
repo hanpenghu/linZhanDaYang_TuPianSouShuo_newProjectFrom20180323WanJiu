@@ -123,11 +123,11 @@ public class A000Login {
 
 
 
-//    //已经在拦截器排除了
-//    @RequestMapping(value="test99",method = RequestMethod.GET)
-//    public String  test(){
-//        return "~~~~~~~~~~~~~测试成功!!!~~~~~~~~~~~";
-//    }
+    //已经在拦截器排除了
+    @RequestMapping(value="test99",method = RequestMethod.GET)
+    public String  test(){
+        return "~~~~~~~~~~~~~测试成功!!!~~~~~~~~~~~";
+    }
 
 }
 

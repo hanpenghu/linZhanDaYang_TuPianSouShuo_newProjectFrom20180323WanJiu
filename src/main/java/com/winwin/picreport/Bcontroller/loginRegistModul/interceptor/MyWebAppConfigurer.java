@@ -17,7 +17,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new Interceptor001(cnst))
-                .addPathPatterns("*")
+                .addPathPatterns("/*")
                 .excludePathPatterns("/test99")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/regist")
@@ -26,8 +26,12 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/d/allfenleitest")
                 .excludePathPatterns("/base")
                 //程序员POSTMAN修改验证模块
-                .excludePathPatterns("/authUpdate");
-//        registry.addWebRequestInterceptor()
+                .excludePathPatterns("/authUpdate")
+                .excludePathPatterns("/userNameSecret")
+                .excludePathPatterns("/dyExportExcel")
+//                .excludePathPatterns("/daYangSuoLueTuAndFuJianZongPath")
+        ;
+//        registry.addWebRequestInterceptor();
         super.addInterceptors(registry);
     }
 
