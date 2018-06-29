@@ -25,15 +25,18 @@ public class DyDeleteOneImg {
         String urlInDb = 得到db存储的url(imgUrl);
         //该url在数据库中应该是唯一的//通过该url找到该url对应的所有的attch组成的字符串
         String thumStr=cnst.manyTabSerch.selectSuoLueTuUse_urlInDb(p.bfh+urlInDb+p.bfh);
-
-        thumStr=thumStr.replace(urlInDb,"");
-
-        int k= cnst.manyTabSerch.updateThum(p.bfh+urlInDb+p.bfh,thumStr);
-        if(k!=1)commonMsgthrow(msgList,"删除失败！有可能该url在数据库不唯一,检查数据库中来自老系统的url!");
-
+        if(thumStr.contains(urlInDb)){
+            thumStr=thumStr.replace(urlInDb,"");
+            int k= cnst.manyTabSerch.updateThum(p.bfh+urlInDb+p.bfh,thumStr);
+            if(k!=1)commonMsgthrow(msgList,"删除失败！有可能该url在数据库不唯一,检查数据库中来自老系统的url!");
+        }
         String 文件绝对路径 = getParentAbsolutPath() + 得到文件名字(imgUrl);
-
-        boolean delete = new File(文件绝对路径).delete();
+        File 要删除的thum=new File(文件绝对路径);
+        if(!要删除的thum.exists()){
+            //这里主要是解决原来2个人删除的时候的假象问题
+            p.throwEAddToList("该图片已经删除！",msgList);
+        }
+        boolean delete = 要删除的thum.delete();
         if(!delete) commonMsgthrow(msgList,"删除失败！图片无法删除或者根本不存在");
     }
 
