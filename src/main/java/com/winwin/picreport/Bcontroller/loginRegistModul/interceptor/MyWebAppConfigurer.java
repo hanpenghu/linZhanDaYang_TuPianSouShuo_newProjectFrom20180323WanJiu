@@ -29,6 +29,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/authUpdate")
                 .excludePathPatterns("/userNameSecret")
                 .excludePathPatterns("/dyExportExcel")
+                .excludePathPatterns("/userNameSecret")
 //                .excludePathPatterns("/daYangSuoLueTuAndFuJianZongPath")
         ;
 //        registry.addWebRequestInterceptor();
