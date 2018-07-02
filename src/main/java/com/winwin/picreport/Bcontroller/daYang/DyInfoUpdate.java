@@ -5,6 +5,7 @@ import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Futils.ListUtils.ListUtils;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +24,8 @@ public class DyInfoUpdate {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      *用这个进行  信息编辑
+     *
+     * //我这里原来是37成功,其他的是失败
      * */
     //    @Transactional
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSave_InfoEdit_ManyAttach,
@@ -30,7 +33,7 @@ public class DyInfoUpdate {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    Msg
+    List<Msg>
     infoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
                         @RequestParam(value = "attach1", required = false) MultipartFile attach1,
                         @RequestParam(value = "attach2", required = false) MultipartFile attach2,
@@ -45,6 +48,9 @@ public class DyInfoUpdate {
                         HttpServletRequest request) {
         List<String>ms=new LinkedList<String>();
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
+        p.p("-----------------prdtSamp1--------------------------------------");
+        p.p(prdtSamp1);
+        p.p("-------------------------------------------------------");
         List<MultipartFile> attachList =new LinkedList<MultipartFile>();new ListUtils<MultipartFile>().add(attach1,attachList).add(attach2,attachList).add(attach3,attachList).add(attach4,attachList).add(attach5,attachList).add(attach6,attachList).add(attach7,attachList).add(attach8,attachList).add(attach9,attachList).add(attach10,attachList);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~1~~~~~~~~~~~~~~~~~~~");
         System.out.println(attachList);
@@ -57,12 +63,18 @@ public class DyInfoUpdate {
             cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms);
         } catch (Exception e) {
             if(ms.contains(e.getMessage())){
-                return Msg.gmg().setStatus("0").setMsg("失败"+"《"+e.getMessage()+"》").setOtherMsg("《已知异常》");
+                String s="失败"+"《"+e.getMessage()+",请手动选择分类》";
+                if(e.getMessage().equals("流水货号异常!")){
+                    return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(s).setOtherMsg(s)).g();
+                }else{
+                    s="失败"+"《"+e.getMessage()+"》";
+                    return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(s).setOtherMsg(s)).g();
+                }
             }else{
-                return Msg.gmg().setStatus("0").setMsg("《未知异常》");
+                return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg("《未知异常》").setOtherMsg("《未知异常》")).g();
             }
         }
-        return Msg.gmg().setStatus("1").setMsg("成功");
+        return new linklistT<Msg>().a(Msg.gmg().setStatus("37").setMsg("成功").setOtherMsg("成功")).g();
     }
 
 

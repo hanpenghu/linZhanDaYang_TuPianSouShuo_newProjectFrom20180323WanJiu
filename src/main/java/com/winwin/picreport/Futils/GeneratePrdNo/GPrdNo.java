@@ -39,6 +39,9 @@ public class GPrdNo {
             if(p.empty(ut)){
                 String mainUnit = prdtSamp.getMainUnit();
                 //此时prdt表么没有ut单位,插入一个
+                if(mainUnit!=null&&mainUnit.contains("主:")){
+                    mainUnit=mainUnit.replace("主:","");
+                }
                 int i=cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo,mainUnit);
             }
 

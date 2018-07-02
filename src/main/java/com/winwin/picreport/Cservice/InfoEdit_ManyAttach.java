@@ -10,6 +10,7 @@ import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,18 +33,58 @@ public class InfoEdit_ManyAttach {
         String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
         String projectPath = SpringbootJarPath.JarLuJingGet();
         this.f图片名字不能有四种非法字符(thum, ms);
+        p.p("----------------------111---------------------------------");
         PrdtSamp0 prdtSampOb = null;
         if (prdtSamp1 != null && !"".equals(prdtSamp1)) {
             prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
         }
+        p.p("---------------------------222----------------------------");
         this.prdtSampOb是否非法(prdtSampOb,ms);
+        p.p("---------------------------333----------------------------");
         //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+        p.p("-----------------------prdtSamp--------------------------------");
+        p.p(prdtSamp);
+        p.p("-------------------------------------------------------");
         if (prdtSamp == null) {p.throwEAddToList("您穿过来的主键id在数据库冇存在",ms);}
+        p.p("---------------------------444--prdtSamp.getPrdNo()----"+prdtSamp.getPrdNo()+"----------------------");
+        if(p.empty(prdtSamp.getPrdNo())){this.f流水货号(prdtSampOb,ms);}
+        p.p("---------------------------555----------------------------");
         this.f保存单张图片(prdtSamp,thum,projectPath,uuid,prdtSampOb,ms);
         this.f保存多个附件(attachList,prdtSampOb,projectPath,ms);
     }
 
+    @Transactional
+    private void f流水货号(PrdtSamp prdtSamp,List<String>ms) {
+        p.p("-------------f给pp装上货号---111--------"+prdtSamp.getPrdNo()+"-------------------------------");
+        this.f给pp装上货号(prdtSamp,ms);
+        p.p("-----------------f给pp装上货号-----222------"+prdtSamp.getPrdNo()+"---------------------------------------");
+        if(p.notEmpty(prdtSamp.getPrdNo())){
+            cnst.a001TongYongMapper.updatePrdNoByUuid(prdtSamp.getId(),prdtSamp.getPrdNo());
+        }
+        p.p("-----------------f给pp装上货号-----333------"+prdtSamp.getPrdNo()+"---------------------------------------");
+    }
+
+    @Transactional
+    private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+        PrdtSamp0 p0=new PrdtSamp0();
+        BeanUtils.copyProperties(pp,p0);
+        //给当前的prdtSamp流水一个货号
+        try {
+            if(p.empty(p0.getFenLeiNo())){
+                p.throwEAddToList("中类编号fenLeiNo为空,无法流水",msgs);
+            }
+            cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            p.throwEAddToList("流水货号异常!",msgs);
+        }
+        if(p.empty(p0.getPrdNo())){
+            String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
+            p.throwEAddToList(s,msgs);
+        }
+        pp.setPrdNo(p0.getPrdNo());
+    }
     @Transactional
     public void f保存单张图片(PrdtSamp prdtSamp, MultipartFile thum, String projectPath, String uuid, PrdtSamp0 prdtSampOb, List<String> ms) throws IOException {
         String imageThumUrl = prdtSamp.getThum();
@@ -142,13 +183,16 @@ public class InfoEdit_ManyAttach {
     @Transactional
     public void f图片名字不能有四种非法字符(MultipartFile thum, List<String> ms) {
         boolean b1=thum != null;
-        boolean b2=thum.getOriginalFilename().contains(Cnst.ganTanHao);
-        boolean b3=thum.getOriginalFilename().contains(Cnst.fenHao);
-        boolean b4=thum.getOriginalFilename().contains("[");
-        boolean b5=thum.getOriginalFilename().contains("]");
-        if (b1 && (b2 || b3 || b4 || b5)) {
-            p.throwEAddToList("您的图片不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+        if(b1) {
+            boolean b2=thum.getOriginalFilename().contains(Cnst.ganTanHao);
+            boolean b3=thum.getOriginalFilename().contains(Cnst.fenHao);
+            boolean b4=thum.getOriginalFilename().contains("[");
+            boolean b5=thum.getOriginalFilename().contains("]");
+            if (b2 || b3 || b4 || b5) {
+                p.throwEAddToList("您的图片不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+            }
         }
+
     }
     @Transactional
     public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms) {
