@@ -30,7 +30,7 @@ public class DyInfoUpdate {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List<Msg>
+    Msg
     infoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
                         @RequestParam(value = "attach1", required = false) MultipartFile attach1,
                         @RequestParam(value = "attach2", required = false) MultipartFile attach2,
@@ -43,36 +43,27 @@ public class DyInfoUpdate {
                         @RequestParam(value = "attach9", required = false) MultipartFile attach9,
                         @RequestParam(value = "attach10", required = false) MultipartFile attach10,
                         HttpServletRequest request) {
+        List<String>ms=new LinkedList<String>();
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-        List<MultipartFile> attachList =new LinkedList<>();
-        new ListUtils<MultipartFile>()
-                .add(attach1,attachList)
-                .add(attach2,attachList)
-                .add(attach3,attachList)
-                .add(attach4,attachList)
-                .add(attach5,attachList)
-                .add(attach6,attachList)
-                .add(attach7,attachList)
-                .add(attach8,attachList)
-                .add(attach9,attachList)
-                .add(attach10,attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        List<MultipartFile> attachList =new LinkedList<MultipartFile>();new ListUtils<MultipartFile>().add(attach1,attachList).add(attach2,attachList).add(attach3,attachList).add(attach4,attachList).add(attach5,attachList).add(attach6,attachList).add(attach7,attachList).add(attach8,attachList).add(attach9,attachList).add(attach10,attachList);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~1~~~~~~~~~~~~~~~~~~~");
         System.out.println(attachList);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-
-
+        p.removeNull(attachList);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~~2~~~remvoeNull~~~~~~~~~~~~~~~");
+        System.out.println(attachList);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
-            return cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1);
+            cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms);
         } catch (Exception e) {
-            System.out.println("~~~~~~~~编辑info的时候,估计是保存图片除了问题,如果是IOexception," +
-                    "基本肯定是保存图片和附件有问题了导致正题不能编辑~~~~~~~~~~~~·");
-            e.printStackTrace();
+            if(ms.contains(e.getMessage())){
+                return Msg.gmg().setStatus("0").setMsg("失败"+"《"+e.getMessage()+"》").setOtherMsg("《已知异常》");
+            }else{
+                return Msg.gmg().setStatus("0").setMsg("《未知异常》");
+            }
         }
-        return MessageGenerate.generateMessage
-                ("保存失败", "保存失败",
-                        "数据库系统级别错误", Cnst.emptyStr, p.s38);
+        return Msg.gmg().setStatus("1").setMsg("成功");
     }
-
 
 
 

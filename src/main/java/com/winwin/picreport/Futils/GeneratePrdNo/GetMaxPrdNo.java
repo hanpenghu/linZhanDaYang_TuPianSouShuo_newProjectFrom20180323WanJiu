@@ -2,6 +2,7 @@ package com.winwin.picreport.Futils.GeneratePrdNo;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +62,7 @@ public class GetMaxPrdNo {
 
      private void diGuiSuoYouXiaJi(List<String>list,String idxNo){
          List<String>dangQianDeSuoYouXiaJi=cnst.a001TongYongMapper.selectAllXiaJi(idxNo);
-         if(NotEmpty.notEmpty(dangQianDeSuoYouXiaJi)){
+         if(p.notEmpty(dangQianDeSuoYouXiaJi)){
              for(String idxno:dangQianDeSuoYouXiaJi){
                  list.add(idxno);
              }

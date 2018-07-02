@@ -1,4 +1,5 @@
 package com.winwin.picreport.Cservice;
+
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.msgCnst;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -24,207 +26,143 @@ import java.util.UUID;
 public class InfoEdit_ManyAttach {
     @Autowired
     private Cnst cnst;
-
-//    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
-//    private String daYangSuoLueTuAndFuJianZongPath;
-//
-//    @Value("${suoLueTuWenJianJia}")
-//    private String suoLueTuWenJianJia;
-//
-//    @Value("${fuJianWenJianJia}")
-//    private String fuJianWenJianJia;
     @Transactional
-    public List<Msg> infoEditOfManyAttach(MultipartFile thum ,
-                                          List<MultipartFile> attachList,
-                                          String prdtSamp1) throws Exception {
+    public void infoEditOfManyAttach(MultipartFile thum, List<MultipartFile> attachList,String prdtSamp1, List<String> ms) throws Exception {
 //        synchronized (this) {
-            String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
-            String projectPath = SpringbootJarPath.JarLuJingGet();
-
-
-            if (thum != null &&
-                    (thum.getOriginalFilename().contains(Cnst.ganTanHao)
-                            || thum.getOriginalFilename().contains(Cnst.fenHao))) {
-                return MessageGenerate.generateMessage
-                        ("您的图片不能包含有!符号或者;符号",
-                        "您的图片不能包含有!符号或者;符号", Cnst.emptyStr,p.s34);
-            }
-
-
-            PrdtSamp0 prdtSampOb=null;
-//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-//            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
-//            p.p(prdtSamp1);
-//            p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");p.p("");
-//            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-            if(prdtSamp1!=null&&!p.space.equals(prdtSamp1)){
-                prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
-            }
-
-            if (p.notEmpty(prdtSampOb)) {
-                if (p.empty(prdtSampOb.getId())) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败", "前端没有传输过来唯一标志id", "", "40");
-                }
-            } else {
-                return MessageGenerate.generateMessage("保存失败", "保存失败",
-                        "前后端传输错误,prdtSamp这个参数后端接收不到", "", "39");
-            }
-
-            List<Msg> igll = this.isIgll(prdtSampOb);
-            if(p.notEmpty(igll)){
-                if(p.dy("39",igll.get(0).getStatus())){
-                    return  igll;
-                }
-            }
-
-
-        //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-            PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
-
-            if(prdtSamp==null){
-                return MessageGenerate.generateMessage("保存失败", "保存失败",
-                        "您穿过来的主键id在数据库冇存在", "", "46");
-            }
-
-            /**
-             *下面是将图片路径和其它信息更新到数据库
-             * */
-            //通过主键得到当前的缩略图路径字段thum
-            String imageThumUrl = prdtSamp.getThum();
-//        String attachmentUrl = prdtSamp.getAttach();
-
-            /**
-             *当thum不是空的时候,我们更新缩略图的存储(数据库更新地址,图库添加新图)
-             * */
-            if (thum != null) {
-                //将缩略图保存在指定的目录
-//                thum.transferTo(new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia, uuid + "!" + thum.getOriginalFilename()));
-                thum.transferTo(new File(p.gp().sad(projectPath)
-                        .sad(cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr))
-                        .sad(cnst.suoLueTuWenJianJia).gad()
-                        ,p.gp().sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).gad()));
-
-//                if (!new File(projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr) + cnst.suoLueTuWenJianJia, uuid + Cnst.ganTanHao + thum.getOriginalFilename()).exists()) {
-//                    return MessageGenerate.generateMessage("保存失败", "保存失败", "缩略图没有保存成功导致所有数据没保存！", "", "35");
-//                }
-
-                if (!new File(p.gp().sad(projectPath).sad(cnst.daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian,Cnst.emptyStr)).sad(cnst.suoLueTuWenJianJia).gad(),p.gp().sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).gad()).exists()) {
-                    return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),
-                            msgCnst.failSave.getValue(),
-                            msgCnst.picFailSaveOtherMsg.getValue()
-                            , Cnst.emptyStr, StatusCnst.thumSaveFalseThenAllDataSaveFalse);
-                }
-
-                if (imageThumUrl == null) {
-                    imageThumUrl = Cnst.emptyStr;
-                }//第一次没上传任何东西可能是空
-                //给缩略图添加一个新的路径进去,用;号隔开路径，
-                //            imageThumUrl=imageThumUrl+dirUrl+suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";//分号是分隔符
-                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-//                imageThumUrl = imageThumUrl + cnst.suoLueTuWenJianJia + uuid + "!" + thum.getOriginalFilename() + ";";
-                imageThumUrl=p.gp().sad(imageThumUrl).sad(cnst.suoLueTuWenJianJia)
-                        .sad(uuid).sad(Cnst.ganTanHao).sad(thum.getOriginalFilename()).sad(Cnst.fenHao).gad();
-            }
-            if (Cnst.emptyStr.equals(imageThumUrl)) {
-                imageThumUrl = null;//为了是null的时候不更新这个字段
-            }
-
-
-            prdtSampOb.setThum(imageThumUrl);
-//        prdtSampOb.setAttach(attachmentUrl);//在这里不再更新附件,因为附件有多个,放在最后单独更新
-            prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
-            prdtSampOb.setIsconfirm(null);
-            prdtSampOb.setIsCheckOut(Cnst.weiTiJiao);
-            //Selective是不更新null
-            if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb) == 0) {
-                return MessageGenerate.generateMessage(msgCnst.failSave.getValue(),msgCnst.failSave.getValue(),msgCnst.failOfDbMistake.getValue(),Cnst.emptyStr,StatusCnst.dbMistakeCausePrdtSampFalse);
-            }
-
-
-            /**
-             *下面是保存多个附件8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-             * */
-            for(MultipartFile attach:attachList){
-                PrdtSamp0 prdtSampO=new PrdtSamp0();
-                //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
-                PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
-                String attachmentUr = prdtsa.getAttach();
-                String uid = UUID.randomUUID().toString();
-                ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
-                if (attach != null && (attach.getOriginalFilename().contains(Cnst.ganTanHao) || attach.getOriginalFilename().contains(";"))) {
-                    return MessageGenerate.generateMessage("您的缩略图不能包含有!符号或者;符号", "您的缩略图不能包含有!符号或者;符号", "", "34");
-                }
-
-
-                String s1 = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.fuJianWenJianJia;
-                if (attach != null) {
-                    //将附件保存在指定的目录
-                    attach.transferTo(new File(s1, uid + Cnst.ganTanHao + attach.getOriginalFilename()));
-                    if (!new File(s1, uid + Cnst.ganTanHao+ attach.getOriginalFilename()).exists()) {
-                        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
-                    }
-                    if (attachmentUr == null) {
-                        attachmentUr = "";
-                    }//第一次没上传任何东西可能是空
-
-                    //给缩略图添加一个新的路径进去,用;号隔开路径
-                    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";//分号是分隔符
-                    //            attachmentUrl=attachmentUrl+dirUrl+fuJianWenJianJia+uuid+"!"+attach.getOriginalFilename()+";";
-                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                    attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
-                }
-                if (p.space.equals(attachmentUr)) {
-                    attachmentUr = null;//为了是null的时候不更新这个字段
-                }
-
-
-                prdtSampO.setId(prdtSampOb.getId());
-                //只更新附件
-                prdtSampO.setAttach(attachmentUr);//在这里不再更新附件,因为附件有多个,放在最后单独更新
-                prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
-                prdtSampO.setIsconfirm(null);//不更新这个
-                //Selective是不更新null
-                if (cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO) == 0) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败",
-                            "数据库系统级别错误,保存某个Attach的路径时候出错", "", "38");
-                }else{
-
-                }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //更新商品主库的停用时间
-                Date stopusedate = prdtSampO.getStopusedate();
-                String prdNo=cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
-                PrdtWithBLOBs prdt=new PrdtWithBLOBs();
-                prdt.setPrdNo(prdNo);
-                prdt.setNouseDd(stopusedate);
-                if(NotEmpty.empty(prdNo)){
-                    if(stopusedate==null){
-                        p.p("前端传过来的停用时间是null");
-                    }else{
-                        //selective的意思就是null的不更新
-                        Integer i = cnst.a001TongYongMapper.updatePrdtNouseDd(prdNo,p.dtoStr(stopusedate));
-
-                        if(null==i||0==i){
-                            p.p("货号不为空,但是保存停用时间失败！！更新条数为："+i+"！prdNo="+prdNo+"");
-                            throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "sunlike主表prdt停用时间更新失败", "sunlike主表prdt停用时间更新失败", "", "36").toString());
-                        }
-                    }
-
-                }else{
-                    System.out.println("prdNo是空的,无法更新停用时间");
-                }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-                if (attach!=null&&!new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
-                    throw new RuntimeException(MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36").toString());
-                }
-                ////////////////////////////////////////////////for结束/////////////////////////////////////////////////////
-            }
-
-            return MessageGenerate.generateMessage("保存成功", "保存成功",
-                    "编辑更新一条打样数据成功", "", "37");
+        String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
+        String projectPath = SpringbootJarPath.JarLuJingGet();
+        this.f图片名字不能有四种非法字符(thum, ms);
+        PrdtSamp0 prdtSampOb = null;
+        if (prdtSamp1 != null && !"".equals(prdtSamp1)) {
+            prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
         }
+        this.prdtSampOb是否非法(prdtSampOb,ms);
+        //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
+        PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+        if (prdtSamp == null) {p.throwEAddToList("您穿过来的主键id在数据库冇存在",ms);}
+        this.f保存单张图片(prdtSamp,thum,projectPath,uuid,prdtSampOb,ms);
+        this.f保存多个附件(attachList,prdtSampOb,projectPath,ms);
+    }
+
+    @Transactional
+    public void f保存单张图片(PrdtSamp prdtSamp, MultipartFile thum, String projectPath, String uuid, PrdtSamp0 prdtSampOb, List<String> ms) throws IOException {
+        String imageThumUrl = prdtSamp.getThum();
+        if (thum != null) {
+            String s = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename();
+            thum.transferTo(new File(s));
+            if (!new File(s).exists()) {p.throwEAddToList("缩略图没有保存成功导致所有数据没保存",ms);}
+            if (imageThumUrl == null) {imageThumUrl = "";}
+            imageThumUrl = imageThumUrl+cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
+        }
+        if ("".equals(imageThumUrl)) {
+            //为了是null的时候不更新这个字段
+            imageThumUrl = null;
+        }
+        prdtSampOb.setThum(imageThumUrl);
+//        prdtSampOb.setAttach(attachmentUrl);//在这里不再更新附件,因为附件有多个,放在最后单独更新
+        prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
+        prdtSampOb.setIsconfirm(null);
+        prdtSampOb.setIsCheckOut(Cnst.weiTiJiao);
+        //Selective是不更新null
+        cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
+    }
+
+
+    @Transactional
+    public void f保存多个附件(List<MultipartFile> attachList, PrdtSamp0 prdtSampOb, String projectPath, List<String> ms) throws IOException {
+        for (MultipartFile attach : attachList) {
+            PrdtSamp0 prdtSampO = new PrdtSamp0();
+            //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
+            PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+            String attachmentUr = prdtsa.getAttach();
+            String uid =p.sj();
+            ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
+            this.f附件不能包含四种符号(attach,ms);
+            String s1 = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.fuJianWenJianJia;
+            if (attach != null) {
+                String ss = uid + Cnst.ganTanHao + attach.getOriginalFilename();
+                //将附件保存在指定的目录
+                attach.transferTo(new File(s1, ss));
+                if (!new File(s1,ss).exists()) {p.throwEAddToList("附件没有保存成功导致所有数据没保存！",ms);}
+                if (attachmentUr == null) {attachmentUr = "";}//第一次没上传任何东西可能是空
+                attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
+            }
+            if ("".equals(attachmentUr)) {
+                //为了是null的时候不更新这个字段
+                attachmentUr = null;
+            }
+            prdtSampO.setId(prdtSampOb.getId());
+            //只更新附件
+            prdtSampO.setAttach(attachmentUr);//在这里不再更新附件,因为附件有多个,放在最后单独更新
+            prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
+            prdtSampO.setIsconfirm(null);//不更新这个
+            //Selective是不更新null
+            cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
+            //更新商品主库的停用时间
+            this.f更新商品主库的停用时间(prdtSampO);
+            if (attach != null && !new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
+                p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);
+            }
+        }
+    }
+
+
+    @Transactional
+    public void f更新商品主库的停用时间(PrdtSamp0 prdtSampO) {
+        Date stopusedate = prdtSampO.getStopusedate();
+        String prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
+        PrdtWithBLOBs prdt = new PrdtWithBLOBs();
+        prdt.setPrdNo(prdNo);
+        prdt.setNouseDd(stopusedate);
+        if (p.notEmpty(prdNo)) {
+            if (stopusedate == null) {
+                p.p("前端传过来的停用时间是null");
+            } else {
+                //selective的意思就是null的不更新
+                Integer i = cnst.a001TongYongMapper.updatePrdtNouseDd(prdNo, p.dtoStr(stopusedate));
+            }
+
+        } else {
+            System.out.println("prdNo是空的,无法更新prdt的停用时间");
+        }
+    }
+
+    @Transactional
+    public void f附件不能包含四种符号(MultipartFile attach,List<String>ms) {
+        boolean b1=attach != null;
+        boolean b2=attach.getOriginalFilename().contains(Cnst.ganTanHao);
+        boolean b3=attach.getOriginalFilename().contains(Cnst.fenHao);
+        boolean b4=attach.getOriginalFilename().contains("[");
+        boolean b5=attach.getOriginalFilename().contains("]");
+        if (b1 && (b2 || b3 || b4 || b5)) {
+            p.throwEAddToList("您的附件不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+        }
+    }
+
+    @Transactional
+    public void f图片名字不能有四种非法字符(MultipartFile thum, List<String> ms) {
+        boolean b1=thum != null;
+        boolean b2=thum.getOriginalFilename().contains(Cnst.ganTanHao);
+        boolean b3=thum.getOriginalFilename().contains(Cnst.fenHao);
+        boolean b4=thum.getOriginalFilename().contains("[");
+        boolean b5=thum.getOriginalFilename().contains("]");
+        if (b1 && (b2 || b3 || b4 || b5)) {
+            p.throwEAddToList("您的图片不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+        }
+    }
+    @Transactional
+    public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms) {
+        if (p.notEmpty(prdtSampOb)) {
+            if (p.empty(prdtSampOb.getId())) {
+                p.throwEAddToList("前端没有传输过来唯一标志id",ms);
+            }
+        } else {
+            p.throwEAddToList("前后端传输错误,prdtSamp这个参数后端接收不到",ms);
+        }
+
+    }
+
+
 
 
 //        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
@@ -287,19 +225,19 @@ public class InfoEdit_ManyAttach {
             prdtSamp.setAttach(null);
         }//
 
-        if(prdtSamp.getSampSend() != null){
+        if (prdtSamp.getSampSend() != null) {
             String format1 = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampSend());
 
-            if(p.isFirstDateBig_(p.hanhanBirthday_,format1)){
+            if (p.isFirstDateBig_(p.hanhanBirthday_, format1)) {
                 prdtSamp.setSampSend(null);
             }
 
         }
 
 
-        if(prdtSamp.getSampMake() != null){
+        if (prdtSamp.getSampMake() != null) {
             String format = new SimpleDateFormat("yyyy-MM-dd").format(prdtSamp.getSampMake());
-            if(p.isFirstDateBig_(p.hanhanBirthday_,format)){
+            if (p.isFirstDateBig_(p.hanhanBirthday_, format)) {
                 prdtSamp.setSampMake(null);
             }
         }
@@ -310,13 +248,12 @@ public class InfoEdit_ManyAttach {
     }
 
 
-
     private List<Msg> isIgll(PrdtSamp0 prdtSamp0) {
         if (p.empty(prdtSamp0)) {
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的参数是空的", "", "39");
         }
-        if(p.empty(prdtSamp0.getId())){
+        if (p.empty(prdtSamp0.getId())) {
 
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的id是空的", "", "39");
@@ -347,13 +284,13 @@ public class InfoEdit_ManyAttach {
     //是否已经采购定价
     private boolean isAllReadyHaveBuyPrice(PrdtSamp0 prdtSamp0) {
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSamp0.getId());
-        UpDefExample upDefExample=new UpDefExample();
-        upDefExample.createCriteria().andPrdNoEqualTo(prdtSamp.getPrdNo()).andPriceIdEqualTo(Cnst.buyPriceId).andUpIsNotNull().andOlefieldLike("%"+Cnst.SamplesSys+"%");
+        UpDefExample upDefExample = new UpDefExample();
+        upDefExample.createCriteria().andPrdNoEqualTo(prdtSamp.getPrdNo()).andPriceIdEqualTo(Cnst.buyPriceId).andUpIsNotNull().andOlefieldLike("%" + Cnst.SamplesSys + "%");
         long l = cnst.upDefMapper.countByExample(upDefExample);
-        if(l>0){
+        if (l > 0) {
             //已经进行过采购定价
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -387,13 +324,6 @@ public class InfoEdit_ManyAttach {
     }
 
 
-
-
-
-
-
-
-
 //    @Test
 //    public void  f(){
 //        String format1 = new SimpleDateFormat("yyyy-MM-dd").
@@ -403,4 +333,16 @@ public class InfoEdit_ManyAttach {
 //
 //    }
 
+
+
+
+
+    //    @Value("${daYangSuoLueTuAndFuJianZongPath}")//./1234567/
+//    private String daYangSuoLueTuAndFuJianZongPath;
+//
+//    @Value("${suoLueTuWenJianJia}")
+//    private String suoLueTuWenJianJia;
+//
+//    @Value("${fuJianWenJianJia}")
+//    private String fuJianWenJianJia;
 }
