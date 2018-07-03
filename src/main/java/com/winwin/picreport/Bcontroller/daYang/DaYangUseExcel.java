@@ -47,6 +47,8 @@ public class DaYangUseExcel {
      */
 
     //        /d/dataSaveByExcel
+
+    //这个作废了,用那个并发版本的   dataSaveByExcel001
     @RequestMapping(
             value = InterFaceCnst.dataSaveByExcel,
             method = RequestMethod.POST, //客户端请求的类型

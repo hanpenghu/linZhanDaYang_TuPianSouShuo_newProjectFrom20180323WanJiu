@@ -2584,8 +2584,7 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
      * 这种
      * */
     public static String  timeAndRandom0_999NoHead_1(){
-
-        return p.timeAndRandom0_999NoHead_().replace(":","_");
+        return p.timeAndRandom0_999NoHead_().replace(":","_").replace(".","_");
     }
 
 

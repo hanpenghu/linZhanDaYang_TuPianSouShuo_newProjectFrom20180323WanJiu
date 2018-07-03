@@ -190,6 +190,26 @@ public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidLis
     }
 
 
+    /**
+     *批量确认   /d/confirmTheOrderBatch
+     * */
+    @RequestMapping(value = "confirmTheOrderBatch",
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody Msg confirmTheOrderBatch(@RequestBody List<PrdtSamp> prdtSampList) {
+        List<String>ms=new LinkedList<String>();
+        try {
+            cnst.dco.confirmTheOrderBatch(prdtSampList,ms);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if(ms.contains(e.getMessage())){
+                return Msg.gmg().setMsg("失败  "+e.getMessage()).setStatus("0").setOtherMsg("已知异常");
+            }else{
+                return Msg.gmg().setMsg("失败,未知异常").setStatus("0");
+            }
+        }
+        return Msg.gmg().setMsg("成功").setStatus("1");
+
+    }
 
 
 

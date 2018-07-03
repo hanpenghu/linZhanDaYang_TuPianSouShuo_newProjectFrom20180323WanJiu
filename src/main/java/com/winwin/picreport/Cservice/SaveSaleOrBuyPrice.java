@@ -240,7 +240,12 @@ public class SaveSaleOrBuyPrice {
             cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
         } catch (Exception e) {
             e.printStackTrace();
-            p.throwEAddToList("流水货号异常！",msgs);
+            if(e.getMessage().contains("中类编号是空的")){
+                p.throwEAddToList("品号不存在，请修改产品分类保存重新产生品号",msgs);
+            }else{
+                p.throwEAddToList("流水货号异常！",msgs);
+            }
+
         }
         if(p.empty(p0.getPrdNo())){
             String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";

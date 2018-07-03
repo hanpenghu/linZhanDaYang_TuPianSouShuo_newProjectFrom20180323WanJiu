@@ -63,7 +63,7 @@ public class DyInfoUpdate {
             cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms);
         } catch (Exception e) {
             if(ms.contains(e.getMessage())){
-                String s="失败"+"《"+e.getMessage()+",请手动选择分类》";
+                String s="失败"+"《"+e.getMessage()+",请在产《品编码建档里》手动选择《分类》并点击《修改》 》";
                 if(e.getMessage().equals("流水货号异常!")){
                     return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(s).setOtherMsg(s)).g();
                 }else{

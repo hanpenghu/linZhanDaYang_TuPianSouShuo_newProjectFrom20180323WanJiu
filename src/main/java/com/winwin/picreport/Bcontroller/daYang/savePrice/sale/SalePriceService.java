@@ -164,7 +164,7 @@ public class SalePriceService {
     private String f得到货号(String uuid,List<String> ms) {
         String prdNo= cnst.salePriceSaveDao.getPrdNoFromPrdtSamp(uuid);
         if(p.empty(prdNo)){
-            p.throwEAddToList("当前商品没有货号,请到erp录入",ms);
+            p.throwEAddToList("品号不存在，请修改产品分类保存重新产生品号",ms);
         }
         return prdNo;
     }

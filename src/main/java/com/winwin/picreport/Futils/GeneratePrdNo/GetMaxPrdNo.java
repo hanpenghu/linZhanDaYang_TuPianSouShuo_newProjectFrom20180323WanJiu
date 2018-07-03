@@ -19,9 +19,15 @@ public class GetMaxPrdNo {
     private Cnst cnst;
 
     //找到idxNo的所有上下级 idxNp
-    public String  getAllUpAndDownIdxNo(String idxNo){
+    public synchronized String   getAllUpAndDownIdxNo(String idxNo){
         //在prdt里面找到相同的indx1的prdNo流水最大的那个
             String maxPrdNoSecond= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(idxNo);
+            if(p.empty(maxPrdNoSecond)){
+                //此时具有该中类no的商拼在prdt还没有一条,我们从1开始流水一条
+                //                return "1";
+                throw new RuntimeException("分类编号在prdt里没有任何记录,无法流水");
+
+            }
         maxPrdNoSecond = this.getMaxPrdNoSecond(maxPrdNoSecond);
         return maxPrdNoSecond;
     }

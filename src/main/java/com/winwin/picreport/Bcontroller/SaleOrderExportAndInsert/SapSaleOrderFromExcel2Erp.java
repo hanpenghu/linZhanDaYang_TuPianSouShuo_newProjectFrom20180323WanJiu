@@ -145,7 +145,7 @@ public class SapSaleOrderFromExcel2Erp {
             this.f设置_ss将来插入MfPos的对象_除了amt和amtn和qty和tax和rtoTax的属性(list0相同货号单号成分表身备注下需要合并的对象集合, ss将来插入MfPos的对象);
             //判断excel中税率和系统厂商cust中的税率是否一致
             this.f当excel税率不为空的时候判定税率是否跟erp中cust表的rtoTax相同以及是否非法(ss将来插入MfPos的对象, taxRto来自erp, listmsg);
-            ss将来插入MfPos的对象.setTaxRto(String.valueOf(taxRto来自erp));
+            ss将来插入MfPos的对象.setTaxRto(String.valueOf(taxRto来自erp<1?taxRto来自erp*100:taxRto来自erp));
             this.f判断excel中单价是否合法(ss将来插入MfPos的对象, up, listmsg);
             up = Double.valueOf(ss将来插入MfPos的对象.getUp());
             amt = up * qty;//数量不是数字的在前面已经判断过了

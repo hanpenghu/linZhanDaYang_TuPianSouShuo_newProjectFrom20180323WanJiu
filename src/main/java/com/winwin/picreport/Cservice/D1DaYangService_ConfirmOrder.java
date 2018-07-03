@@ -11,6 +11,7 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class D1DaYangService_ConfirmOrder {
                         "没有填写确认人","","48");
             }
             String confirmtimestr = prdtSamp.getConfirmtimestr();
-            if(!NotEmpty.notEmpty(confirmtimestr)){
+            if(p.empty(confirmtimestr)){
                 confirmtimestr=new SimpleDateFormat(p.d1).format(cnst.manyTabSerch.getDate());
             }
             String confirmrem = prdtSamp.getConfirmrem();
@@ -170,9 +171,53 @@ public class D1DaYangService_ConfirmOrder {
 
 
 
+    @Transactional
+    public void confirmTheOrderBatch(List<PrdtSamp> prdtSampList,List<String>ms) {
+        if(p.empty(prdtSampList)){
+            p.throwEAddToList("前端传过来的json数组是空的",ms);
+        }
+        for(PrdtSamp p:prdtSampList){
+            this.confirmTheOrderBatchOfOne(p,ms);
+        }
+    }
 
 
+    @Transactional
+    public void confirmTheOrderBatchOfOne(PrdtSamp prdtSamp,List<String>ms) {
+            if(prdtSamp==null){
+                p.throwEAddToList("前端传过来的json对象是null",ms);
+            }
+            String id = prdtSamp.getId();
+            if(p.empty(id)){
+                p.throwEAddToList("前端传过来的id是空字符串或者是null",ms);
+            }
+            Integer isconfirm = prdtSamp.getIsconfirm();
+            if(p.empty(isconfirm) && isconfirm!=1){
+                p.throwEAddToList("确认字段isConfirm不是1",ms);
+            }
+            String confirmman = prdtSamp.getConfirmman();
+            if(p.empty(confirmman)){
+                p.throwEAddToList("没有填写确认人",ms);
+            }
+            String confirmtimestr = prdtSamp.getConfirmtimestr();
+            if(p.empty(confirmtimestr)){
+                confirmtimestr=new SimpleDateFormat(p.d1).format(cnst.manyTabSerch.getDate());
+            }
+            String confirmrem = prdtSamp.getConfirmrem();
+            PrdtSamp f = new MakeColumnNull0False<PrdtSamp>().f(prdtSamp);
+            f.setId(id);
+            f.setIsconfirm(isconfirm);
+            f.setConfirmman(confirmman);
+            f.setConfirmtimestr(confirmtimestr);
+            f.setConfirmrem(confirmrem);
+            PrdtSampExample prdtSampExample=new PrdtSampExample();
+            prdtSampExample.createCriteria().andIdEqualTo(id);
+            int i = cnst.prdtSampMapper.updateByPrimaryKeySelective(f);
+            if(i!=1){
+                p.throwEAddToList("打样确认失败,属于库级别错误01",ms);
+            }
 
+    }
 
 
 
@@ -203,7 +248,6 @@ public class D1DaYangService_ConfirmOrder {
         fenYe.setZongYeShu();
         return fenYe;
     }
-
 
 
 }

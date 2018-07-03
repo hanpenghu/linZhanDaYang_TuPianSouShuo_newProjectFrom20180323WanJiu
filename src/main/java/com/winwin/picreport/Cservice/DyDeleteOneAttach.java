@@ -23,12 +23,12 @@ public class DyDeleteOneAttach {
     @Transactional
     public void f(String attachUrl,List<String> msgList){
         //得到  suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg;   这种
-        String urlInDb = 得到db存储的url(attachUrl);
+        String urlInDb = this.得到db存储的url(attachUrl);
         p.p("------------------------attachUrl-------------------------------");
         p.p(attachUrl);
         p.p("-------------------------------------------------------");
         //该url在数据库中应该是唯一的//通过该url找到该url对应的所有的attch组成的字符串
-        String urlInDb无中括号="";
+        String urlInDb无中括号=urlInDb;
         if(urlInDb.contains("[")){
             urlInDb无中括号=urlInDb.substring(0,urlInDb.indexOf("["));
         }
@@ -37,6 +37,10 @@ public class DyDeleteOneAttach {
         attachsStr=attachsStr.replace(urlInDb,"");
 
        int k= cnst.manyTabSerch.updateAttach(p.bfh+urlInDb无中括号+p.bfh,attachsStr);
+        p.p("-------------------------k----------urlInDb无中括号--------------------");
+        p.p(k);
+        p.p(urlInDb无中括号);
+        p.p("-------------------------------------------------------");
        if(k!=1)commonMsgthrow(msgList,"删除失败！有可能该url在数据库不唯一,检查数据库中来自老系统的url!");
 
         String 文件绝对路径 = getParentAbsolutPath() + 得到文件名字(attachUrl);

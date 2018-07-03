@@ -30,7 +30,7 @@ public class InfoEdit_ManyAttach {
     @Transactional
     public void infoEditOfManyAttach(MultipartFile thum, List<MultipartFile> attachList,String prdtSamp1, List<String> ms) throws Exception {
 //        synchronized (this) {
-        String uuid = UUID.randomUUID().toString();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
+        String uuid = p.timeAndRandom0_999NoHead_1();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
         String projectPath = SpringbootJarPath.JarLuJingGet();
         this.f图片名字不能有四种非法字符(thum, ms);
         p.p("----------------------111---------------------------------");
@@ -67,28 +67,48 @@ public class InfoEdit_ManyAttach {
 
     @Transactional
     private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+//        this.f根据name找no不推荐用(pp,msgs);
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
         //给当前的prdtSamp流水一个货号
         try {
-            if(p.empty(p0.getFenLeiNo())){
+            /*if(p.empty(p0.getFenLeiNo())){
                 p.throwEAddToList("中类编号fenLeiNo为空,无法流水",msgs);
-            }
+            }*/
+            p.p("----------流水货号开始---fenleino="+pp.getFenLeiNo()+"----------------------");
             cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+            p.p("----------流水货号结束---prdNo="+pp.getPrdNo()+"----------------------");
         } catch (Exception e) {
             e.printStackTrace();
-            p.throwEAddToList("流水货号异常!",msgs);
+            if(e.getMessage().contains("中类编号是空的")){
+                p.throwEAddToList("中类编号是空的,无法流水货号！",msgs);
+            }else{p.throwEAddToList("流水货号异常!",msgs);}
         }
+        p.p("==============="+p0.getPrdNo()+"================");
         if(p.empty(p0.getPrdNo())){
-            String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
+            String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类";
             p.throwEAddToList(s,msgs);
         }
         pp.setPrdNo(p0.getPrdNo());
     }
+
+
+    @Transactional
+    private void f根据name找no不推荐用(PrdtSamp pp,List<String>msgs) {
+        String fenLeiNo = cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
+        if(p.notEmpty(fenLeiNo)) {
+            pp.setFenLeiNo(fenLeiNo);
+        }else{
+            String s="产品编码为：《" +pp.getPrdCode() +"》对应的产品中类《" +pp.getFenLeiName()+"》不存在,请手动录入该中类！";
+            p.throwEAddToList(s,msgs);
+        }
+
+    }
+
     @Transactional
     public void f保存单张图片(PrdtSamp prdtSamp, MultipartFile thum, String projectPath, String uuid, PrdtSamp0 prdtSampOb, List<String> ms) throws IOException {
         String imageThumUrl = prdtSamp.getThum();
-        if (thum != null) {
+        if (thum != null&&thum.getSize()>0) {
             String s = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename();
             thum.transferTo(new File(s));
             if (!new File(s).exists()) {p.throwEAddToList("缩略图没有保存成功导致所有数据没保存",ms);}
@@ -256,12 +276,14 @@ public class InfoEdit_ManyAttach {
         if ("".equals(prdtSamp.getSampSendStamp())) {
             prdtSamp.setSampSendStamp(null);
         }//
-        if ("".equals(prdtSamp.getSampRequ())) {
+
+        //这2个空的就是空的
+     /*   if ("".equals(prdtSamp.getSampRequ())) {
             prdtSamp.setSampRequ(null);
         }//
         if ("".equals(prdtSamp.getSampDesc())) {
             prdtSamp.setSampDesc(null);
-        }//
+        }//*/
         if ("".equals(prdtSamp.getThum())) {
             prdtSamp.setThum(null);
         }//

@@ -87,7 +87,7 @@ public class SaleOrderFromExcel2Erp_notMerage {
     //////////////////////////////其实这个方法已经多余了,因为后期一个excel里面的单号限制了必须相同//////////////////////////////////////////////////////////
     public void 按订单号分类后向Service传入数据(List<List<ShouDingDanFromExcel>> list1, List<Msg> listmsg) {
         //list1的长度其实是1了,后期限制了多单号同一个excel上传
-        double 来自erp的税率 = f得到税率并判断是否合法(list1, listmsg);
+        double 来自erp的税率 = this.f得到税率并判断是否合法(list1, listmsg);
         for (List<ShouDingDanFromExcel> list3同一单号集合 : list1) {
             this.f单号是否在erp已经存在(listmsg, list3同一单号集合);
             //for一次就是处理同一批号osNo一次//其实这个普通订单已经取消合并,但是这个方法是复制sap合并的
@@ -120,7 +120,8 @@ public class SaleOrderFromExcel2Erp_notMerage {
              * 1.如果表格里有税额，就按表格里的税额，税率取这个客户cust.rto_tax
              * 2.如果表格里没有税额，原来计算税额按0.17现在按cust.rto_tax*0.01，税率取这个客户cust.rto_tax
              * */
-            s.setTaxRto(String.valueOf(taxRto));
+
+            s.setTaxRto(String.valueOf(taxRto<1?taxRto*100:taxRto));
             amt = up * qty;//数量不是数字的在前面已经判断过了
             ///税率,
             double taxRtoAdd1 = taxRto + 1;

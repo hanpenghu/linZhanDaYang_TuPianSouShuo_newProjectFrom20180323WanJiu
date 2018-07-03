@@ -36,7 +36,7 @@ import java.util.List;
  * 打样excel处理过并发的
  * 表头:
  * 品牌	客户	  产品分类	产品名称	  产品负责人  	图片  	编号  	颜色	  尺寸	打样时间	  Category	Team	产品要求 	产品描述 	主单位
-
+用excel打样并发版
  */
 @Service
 public class DyExcelBf {
@@ -128,6 +128,12 @@ public class DyExcelBf {
     }
 
     private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+        String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
+        if(p.notEmpty(fenLeiNo)) {
+            pp.setFenLeiNo(fenLeiNo);
+        }else{
+            commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,请确认你excle中的中类中类名称是否正确,流水货号失败");
+        }
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
         //给当前的prdtSamp流水一个货号
@@ -135,7 +141,18 @@ public class DyExcelBf {
             cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
         } catch (Exception e) {
             e.printStackTrace();
-            commonsThrow(msgs,"流水货号异常！");
+            if(e.getMessage().contains("中类编号是空的")){
+                p.p("-----------------------pp.getPrdCode()--------------------------------");
+                p.p(pp.getPrdCode());
+                p.p("-------------------------------------------------------");
+                commonsThrow(msgs,"该中类名称无法获取中类编号,请确认你excle中的中类中类名称是否正确,流水货号失败");
+            }else{
+                p.p("-----------------------pp.getPrdCode()--------------------------------");
+                p.p(pp.getPrdCode());
+                p.p("-------------------------------------------------------");
+                commonsThrow(msgs,"流水货号异常！");
+            }
+
         }
         if(p.empty(p0.getPrdNo())){
             String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
@@ -210,7 +227,7 @@ public class DyExcelBf {
         String thum="";
         if(p.notEmpty(list该行图片集)){
             PictureData pictureData = list该行图片集.get(0).getPictureData();
-            if(null!=pictureData){
+            if(null!=pictureData&&pictureData.getData().length>0){
                 thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+点+png;
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
                 byte[] data = null;
@@ -224,9 +241,9 @@ public class DyExcelBf {
                 data=pictureData.getData();
                 IOUtils.write(data,fileOutputStream);
                 if(p.notEmpty(fileOutputStream)){fileOutputStream.flush();fileOutputStream.close();}
+                thum=cnst.suoLueTuWenJianJia+uuid+Cnst.dian+Cnst.pngWuDian;
             }
         }
-        thum=cnst.suoLueTuWenJianJia+uuid+Cnst.dian+Cnst.pngWuDian;
         return thum;
     }
 

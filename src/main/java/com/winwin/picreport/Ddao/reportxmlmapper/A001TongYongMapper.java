@@ -327,7 +327,7 @@ public interface A001TongYongMapper {
    @Select({"select ut from prdt where prd_no=#{prdtNo}"})
     String selectUtByPrdNoFromPrdt(@Param("prdtNo") String prdtNo);
 
-   @Select({"update prdt set ut=#{mainUnit} where prd_no=#{prdtNo}"})
+   @Update({"update prdt set ut=#{mainUnit} where prd_no=#{prdtNo}"})
    int updateUtToPrdtUsePrdNo(@Param("prdtNo") String prdtNo,@Param("mainUnit")  String mainUnit);
 
 
