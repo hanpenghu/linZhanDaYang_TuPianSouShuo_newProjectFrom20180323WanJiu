@@ -30,7 +30,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/userNameSecret")
                 .excludePathPatterns("/dyExportExcel")
                 .excludePathPatterns("/userNameSecret")
-//                .excludePathPatterns("/daYangSuoLueTuAndFuJianZongPath")
+                .excludePathPatterns("/daYangSuoLueTuAndFuJianZongPath")
         ;
 //        registry.addWebRequestInterceptor();
         super.addInterceptors(registry);

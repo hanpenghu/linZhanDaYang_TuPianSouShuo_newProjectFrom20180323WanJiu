@@ -3485,6 +3485,66 @@ public class PrdtSampExample {
             addCriterion("check_out_opinion not between", value1, value2, "checkOutOpinion");
             return (Criteria) this;
         }
+
+        public Criteria andMiniOrderAmtIsNull() {
+            addCriterion("Mini_Order_Amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtIsNotNull() {
+            addCriterion("Mini_Order_Amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtEqualTo(BigDecimal value) {
+            addCriterion("Mini_Order_Amt =", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtNotEqualTo(BigDecimal value) {
+            addCriterion("Mini_Order_Amt <>", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtGreaterThan(BigDecimal value) {
+            addCriterion("Mini_Order_Amt >", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("Mini_Order_Amt >=", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtLessThan(BigDecimal value) {
+            addCriterion("Mini_Order_Amt <", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("Mini_Order_Amt <=", value, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtIn(List<BigDecimal> values) {
+            addCriterion("Mini_Order_Amt in", values, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtNotIn(List<BigDecimal> values) {
+            addCriterion("Mini_Order_Amt not in", values, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Mini_Order_Amt between", value1, value2, "miniOrderAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiniOrderAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Mini_Order_Amt not between", value1, value2, "miniOrderAmt");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

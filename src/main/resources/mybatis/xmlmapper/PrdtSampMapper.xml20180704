@@ -52,7 +52,6 @@
     <result column="main_unit" jdbcType="VARCHAR" property="mainUnit" />
     <result column="is_check_out" jdbcType="VARCHAR" property="isCheckOut" />
     <result column="check_out_opinion" jdbcType="VARCHAR" property="checkOutOpinion" />
-    <result column="Mini_Order_Amt" jdbcType="NUMERIC" property="miniOrderAmt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -119,7 +118,7 @@
     unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, 
     estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, 
     saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, 
-    user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt
+    user_name, tenant_id, main_unit, is_check_out, check_out_opinion
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -168,8 +167,7 @@
       buyerdesc, stopUseDate, cus_no_give, 
       cus_name_give, fen_lei_no, fen_lei_name, 
       user_name, tenant_id, main_unit, 
-      is_check_out, check_out_opinion, Mini_Order_Amt
-      )
+      is_check_out, check_out_opinion)
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -186,8 +184,7 @@
       #{buyerdesc,jdbcType=VARCHAR}, #{stopusedate,jdbcType=TIMESTAMP}, #{cusNoGive,jdbcType=VARCHAR}, 
       #{cusNameGive,jdbcType=VARCHAR}, #{fenLeiNo,jdbcType=VARCHAR}, #{fenLeiName,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{mainUnit,jdbcType=VARCHAR}, 
-      #{isCheckOut,jdbcType=VARCHAR}, #{checkOutOpinion,jdbcType=VARCHAR}, #{miniOrderAmt,jdbcType=NUMERIC}
-      )
+      #{isCheckOut,jdbcType=VARCHAR}, #{checkOutOpinion,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -342,9 +339,6 @@
       <if test="checkOutOpinion != null">
         check_out_opinion,
       </if>
-      <if test="miniOrderAmt != null">
-        Mini_Order_Amt,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -496,9 +490,6 @@
       </if>
       <if test="checkOutOpinion != null">
         #{checkOutOpinion,jdbcType=VARCHAR},
-      </if>
-      <if test="miniOrderAmt != null">
-        #{miniOrderAmt,jdbcType=NUMERIC},
       </if>
     </trim>
   </insert>
@@ -661,8 +652,8 @@
       <if test="record.checkOutOpinion != null">
         check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR},
       </if>
-      <if test="record.miniOrderAmt != null">
-        Mini_Order_Amt = #{record.miniOrderAmt,jdbcType=NUMERIC},
+      <if test="record.checkOutOpinion == null">
+        check_out_opinion = check_out_opinion,
       </if>
     </set>
     <if test="_parameter != null">
@@ -720,8 +711,7 @@
       tenant_id = #{record.tenantId,jdbcType=VARCHAR},
       main_unit = #{record.mainUnit,jdbcType=VARCHAR},
       is_check_out = #{record.isCheckOut,jdbcType=VARCHAR},
-      check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR},
-      Mini_Order_Amt = #{record.miniOrderAmt,jdbcType=NUMERIC}
+      check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -876,8 +866,8 @@
       <if test="checkOutOpinion != null">
         check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR},
       </if>
-      <if test="miniOrderAmt != null">
-        Mini_Order_Amt = #{miniOrderAmt,jdbcType=NUMERIC},
+      <if test="checkOutOpinion == null">
+        check_out_opinion = check_out_opinion,
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -932,8 +922,7 @@
       tenant_id = #{tenantId,jdbcType=VARCHAR},
       main_unit = #{mainUnit,jdbcType=VARCHAR},
       is_check_out = #{isCheckOut,jdbcType=VARCHAR},
-      check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR},
-      Mini_Order_Amt = #{miniOrderAmt,jdbcType=NUMERIC}
+      check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

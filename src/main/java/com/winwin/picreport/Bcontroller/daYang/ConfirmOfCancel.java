@@ -26,6 +26,9 @@ public class ConfirmOfCancel {
     public @ResponseBody  Msg f(@RequestBody List<String>idList){
         List<String>msg=new LinkedList<String>();
         try {
+            p.p("------------------------idList-------------------------------");
+            p.p(idList);
+            p.p("-------------------------------------------------------");
             this.isIllgel(idList,msg);
             this.f取消确认信息(idList,msg);
         } catch (Exception e) {
@@ -58,7 +61,7 @@ public class ConfirmOfCancel {
             p.throwEAddToList("前端穿过来的id数组是空的",msg);
         }
         for(String id:idList){
-            if(p.notEmpty(id)){
+            if(p.empty(id)){
                 p.throwEAddToList("前端穿过来的id有空的",msg);
             }
             PrdtSampExample pp=new PrdtSampExample();

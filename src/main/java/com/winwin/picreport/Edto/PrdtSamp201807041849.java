@@ -1,9 +1,7 @@
 package com.winwin.picreport.Edto;
-
 import java.math.BigDecimal;
 import java.util.Date;
-
-public class PrdtSamp {
+public class PrdtSamp201807041849 {
     protected String id;//一条录入记录的唯一标识符号
     protected String prdCode;//产品编码
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,8 +129,10 @@ public class PrdtSamp {
     //审核意见
     protected String checkOutOpinion;
 
-    //起订金额
-     protected BigDecimal miniOrderAmt;
+
+
+
+
 
     public String getId() {
         return id;
@@ -534,11 +534,60 @@ public class PrdtSamp {
         this.checkOutOpinion = checkOutOpinion == null ? null : checkOutOpinion.trim();
     }
 
-    public BigDecimal getMiniOrderAmt() {
-        return miniOrderAmt;
-    }
 
-    public void setMiniOrderAmt(BigDecimal miniOrderAmt) {
-        this.miniOrderAmt = miniOrderAmt;
+    @Override
+    public String toString() {
+        return "PrdtSamp{" +
+                "id='" + id + '\'' +
+                ", prdCode='" + prdCode + '\'' +
+                ", idxName='" + idxName + '\'' +
+                ", idxNo='" + idxNo + '\'' +
+                ", fenLeiNo='" + fenLeiNo + '\'' +
+                ", fenLeiName='" + fenLeiName + '\'' +
+                ", markName='" + markName + '\'' +
+                ", markNo='" + markNo + '\'' +
+                ", colour='" + colour + '\'' +
+                ", size='" + size + '\'' +
+                ", salName='" + salName + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", cusNoGive='" + cusNoGive + '\'' +
+                ", cusNameGive='" + cusNameGive + '\'' +
+                ", isfenjie='" + isfenjie + '\'' +
+                ", sampMake=" + sampMake +
+                ", sampSend=" + sampSend +
+                ", sampRequ='" + sampRequ + '\'' +
+                ", sampDesc='" + sampDesc + '\'' +
+                ", thum='" + thum + '\'' +
+                ", attach='" + attach + '\'' +
+                ", insertdate=" + insertdate +
+                ", confirmman='" + confirmman + '\'' +
+                ", confirmtimestr='" + confirmtimestr + '\'' +
+                ", isconfirm=" + isconfirm +
+                ", category='" + category + '\'' +
+                ", teamname='" + teamname + '\'' +
+                ", confirmrem='" + confirmrem + '\'' +
+                ", unit='" + unit + '\'' +
+                ", businessdesc='" + businessdesc + '\'' +
+                ", financedesc='" + financedesc + '\'' +
+                ", startsellcount=" + startsellcount +
+                ", modelcost=" + modelcost +
+                ", estimateprice=" + estimateprice +
+                ", littleorderprice=" + littleorderprice +
+                ", modelcostinvoiceno='" + modelcostinvoiceno + '\'' +
+                ", financestartsellcount=" + financestartsellcount +
+                ", financemodelcost=" + financemodelcost +
+                ", financelittleorderprice=" + financelittleorderprice +
+                ", buyerdesc='" + buyerdesc + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", salemandesc='" + salemandesc + '\'' +
+                ", stopusedate=" + stopusedate +
+                ", userName='" + userName + '\'' +
+                ", tenantId='" + tenantId + '\'' +
+                ", mainUnit='" + mainUnit + '\'' +
+                ", isCheckOut='" + isCheckOut + '\'' +
+                ", checkOutOpinion='" + checkOutOpinion + '\'' +
+                '}';
     }
 }

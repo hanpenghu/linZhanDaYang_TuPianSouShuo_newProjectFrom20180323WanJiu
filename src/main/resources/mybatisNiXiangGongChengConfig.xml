@@ -61,8 +61,8 @@
         
         
         <!-- targetProject:mapper映射文件生成的位置，重要！！ -->
-        <sqlMapGenerator targetPackage="mybatis.xmlmapper"
-            targetProject=".\src\main\resources">
+        <sqlMapGenerator targetPackage="resources.mybatis.xmlmapper"
+            targetProject=".\src\main">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
         
