@@ -129,10 +129,6 @@
         <!--</if>-->
     <!--</sql>-->
 
-
-
-
-
     <sql id="productProofWithManyCondition">
         id=id
         <if test=" insertdateStr != null and insertdateStr != '' ">
