@@ -58,9 +58,12 @@ public class CheckOutOfSubmitController {
         if(p.empty(prdtSamp0.getStartsellcount())){
             p.throwEAddToList("前端传过来的起订量startsellcount是空的",ms);
         }
+
         if(p.empty(prdtSamp0.getLittleorderprice())){
             p.throwEAddToList("前端传过来的小单费littleorderprice是空的",ms);
         }
+
+
         if (p.empty(prdtSamp0.getCusNoGive()) || p.empty(prdtSamp0.getCusNameGive())) {
             if (this.供应商No在prdtSamp是空(prdtSamp0)||this.供应商Name在prdtSamp是空(prdtSamp0)){
                 p.throwEAddToList("前端传过来的供应商no和name是空,数据库也是空", ms);

@@ -63,7 +63,7 @@ public class DyExcelBf {
             List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
             this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器);
             //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
-            this.f给pp装上货号(pp,msgs);
+            this.f给pp装上货号(pp,msgs,行计数器);
             if(this.if数据库PrdCode重复则不导入该条_其他继续导入(pp,msgs)){
                 //继续下一个,当前这个不要了
                 continue;
@@ -127,12 +127,15 @@ public class DyExcelBf {
         }
     }
 
-    private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+    private void f给pp装上货号(PrdtSamp pp,List<String>msgs,int 行计数器) {
         String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
+        if(p.empty(pp.getFenLeiName())){
+            p.throwEAddToList("excel中有中类名称是空的,在《"+行计数器+"》行附近,无法流水货号",msgs);
+        }
         if(p.notEmpty(fenLeiNo)) {
             pp.setFenLeiNo(fenLeiNo);
         }else{
-            commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,请确认你excle中的中类中类名称是否正确,流水货号失败");
+            commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,在《"+行计数器+"》行附近,请确认你excle中的中类中类名称是否正确,流水货号失败");
         }
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);

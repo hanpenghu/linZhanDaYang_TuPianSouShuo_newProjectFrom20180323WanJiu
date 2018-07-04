@@ -54,7 +54,7 @@ public class DyAttachBatUpLoad {
 
             String idListJson= request.getParameter("idListJson");
             //已知异常模块
-            throwE(msgList, multipartFileList,idListJson);
+            this.throwE(msgList, multipartFileList,idListJson);
 
             cnst.daYangBatUploadAttach.f(msgList,multipartFileList,idListJson);
 
