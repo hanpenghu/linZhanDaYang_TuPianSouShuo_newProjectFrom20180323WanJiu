@@ -41,7 +41,6 @@ public class D1DaYangService_ConfirmOrder {
             try {
                 String insertdateStr= new SimpleDateFormat(p.d2).format(insertdate);
                 prdtSampX.setInsertdateStr(insertdateStr);
-
             } catch (Exception e) {
                 System.out.println("有一个insertdate无法format成insertdateStr,，对应的id是："+id);
             }

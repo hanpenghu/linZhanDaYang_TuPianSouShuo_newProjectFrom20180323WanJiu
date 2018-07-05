@@ -135,7 +135,7 @@ public class DyExcelBf {
         if(p.notEmpty(fenLeiNo)) {
             pp.setFenLeiNo(fenLeiNo);
         }else{
-            commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,在《"+行计数器+"》行附近,请确认你excle中的中类中类名称是否正确,流水货号失败");
+            this.commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,在《"+行计数器+"》行附近,请确认你excle中的中类中类名称是否正确,流水货号失败");
         }
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
@@ -232,6 +232,13 @@ public class DyExcelBf {
             PictureData pictureData = list该行图片集.get(0).getPictureData();
             if(null!=pictureData&&pictureData.getData().length>0){
                 thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+点+png;
+
+                if(p.dy(pictureData.getMimeType(),emf)){
+                    System.out.println("------------emf保存到文件夹开始-------------------");
+                    thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+点+"emf";
+                    System.out.println("------------emf保存到文件夹结束-------------------");
+                }
+
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
                 byte[] data = null;
 //                if(p.dy(pictureData.getMimeType(),emf)){
@@ -244,7 +251,13 @@ public class DyExcelBf {
                 data=pictureData.getData();
                 IOUtils.write(data,fileOutputStream);
                 if(p.notEmpty(fileOutputStream)){fileOutputStream.flush();fileOutputStream.close();}
+                //下面是将要存数据库返回的路径
                 thum=cnst.suoLueTuWenJianJia+uuid+Cnst.dian+Cnst.pngWuDian;
+                if(p.dy(pictureData.getMimeType(),emf)){
+                    System.out.println("------------emf保存到数据库路径开始-------------------");
+                    thum=cnst.suoLueTuWenJianJia+uuid+Cnst.dian+"emf";
+                    System.out.println("------------emf保存到数据库路径结束-------------------");
+                }
             }
         }
         return thum;

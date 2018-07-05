@@ -167,12 +167,14 @@ public class Excel2007 {
             for(int j=0;j<zongLieShu;j++){
                 ExcelTxtTemplate ett=new ExcelTxtTemplate();
                 XSSFCell cell = row.getCell(j);
-                String txt ="";
+                String txt;
 
                 if (cell != null) {
                     // 判断当前Cell的Type
                     switch (cell.getCellType()) {
                         case Cell.CELL_TYPE_NUMERIC:// 如果当前Cell的Type为NUMERIC//如果case中没有break,那么下面继续执行case但是不再判断条件
+                            txt = String.valueOf(cell.getNumericCellValue());
+                            break;
                         case Cell.CELL_TYPE_FORMULA: {
                             // 判断当前的cell是否为Date
                             if (DateUtil.isCellDateFormatted(cell)) {
@@ -184,7 +186,7 @@ public class Excel2007 {
                                 txt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
                             } else {// 如果是纯数字
 
-                                // 取得当前Cell的数值
+                                // 取得当前Cell的数值//这里会被格式化数字  成为  1.3E7这种,不如走最上面那个case
                                 txt = String.valueOf(cell.getNumericCellValue());
                             }
                             break;
