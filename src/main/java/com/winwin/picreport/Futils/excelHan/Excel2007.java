@@ -15,6 +15,7 @@ import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -173,6 +174,7 @@ public class Excel2007 {
                     // 判断当前Cell的Type
                     switch (cell.getCellType()) {
                         case Cell.CELL_TYPE_NUMERIC:// 如果当前Cell的Type为NUMERIC//如果case中没有break,那么下面继续执行case但是不再判断条件
+                            System.out.println("!!!!!!!!!!!cell.getNumericCellValue()="+cell.getNumericCellValue()+"!!!!!!!!!!!!!!!!!!!!!!!");
                             txt = String.valueOf(cell.getNumericCellValue());
                             break;
                         case Cell.CELL_TYPE_FORMULA: {
@@ -201,7 +203,12 @@ public class Excel2007 {
                 } else {
                     txt = "";
                 }
-
+                //1.1853156E7
+                if(null!=txt&&txt.contains("E")&&txt.contains(".")){
+                    System.out.println("===========xxx1==============");
+                    txt=this.changeScienceNum2CommonNum(txt);
+                }
+                System.out.println("-----------txt是数字的时候txt="+txt+"----------------------");
                 ett.setTxt(txt);
                 ett.setTxtRowNum(i);
                 ett.setTxtColumnNum(j);
@@ -220,7 +227,39 @@ public class Excel2007 {
         return txtss;
     }
 
+    //将科学
+    private String changeScienceNum2CommonNum(String txt) {
+        if(this.isBigDecimal(txt.substring(0,txt.indexOf("E")))){
+            //得到.到E之间的位数
+            int k=txt.substring(txt.indexOf(".")+1,txt.indexOf("E")).length();
+            //得到E后面的数字
+            int j=Integer.valueOf(txt.substring(txt.indexOf("E")+1));
+            String  h="";//将来要拼接的一堆0
+            //如果.到E之间的位数小于  E后面的数字, 得到将来要补的0
+            if(k<j){
+                for(int i=0;i<j-k;i++){
+                     h=h+"0";
+                }
+            }
+            txt=txt.substring(0,txt.indexOf("E")).replace(".","")+h;
+            System.out.println("#################"+txt+"##############3");
+            return txt;
+        }else{
+            return txt;
+        }
 
+    }
+
+
+
+    private boolean isBigDecimal(String str){
+        try {
+            new BigDecimal(str);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
