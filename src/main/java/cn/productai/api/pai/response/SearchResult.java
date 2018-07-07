@@ -26,6 +26,9 @@ public class SearchResult {
         return simplePrdtSamp;
     }
 
+
+
+
     public SearchResult setSimplePrdtSamp(List<SimplePrdtSamp> simplePrdtSamp) {
         this.simplePrdtSamp = simplePrdtSamp;
         return this;

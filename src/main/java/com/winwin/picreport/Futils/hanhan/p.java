@@ -2149,7 +2149,8 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
     /**
      *springBoot  jarPath
      * 得到springboot  jar所在路径,最后带杠的
-     *
+     *E:/abc/2/kk/
+     * 这种
      * //注意这种路径只是得到springboot  的jar所在的路径
      * */
 

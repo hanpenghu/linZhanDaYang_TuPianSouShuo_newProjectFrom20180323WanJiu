@@ -42,7 +42,7 @@ import java.util.List;
 public class DyExcelBf {
     @Autowired
     private Cnst cnst;
-
+    private String excel中有中类名称是空的="excel中有中类名称是空的";
 
     public void f(MultipartFile excel, HttpServletRequest r,List<String> msgs) throws IOException {
         PrdtSampCreateUser usr= this.f获得当前操作者(r,msgs);
@@ -52,18 +52,21 @@ public class DyExcelBf {
         List<PrdtSamp>prdtSamps将要入数据库=new LinkedList<PrdtSamp>();
         int 行计数器=0;
         for(ExcelPicTxtTemplate e:excel所有文字和图片集行List){
-            String uuid = p.sj();
-            PrdtSamp pp=new PrdtSamp();
-            pp.setId(uuid);
-            pp.setInsertdate(cnst.getDbDate());
-            pp.setUserName(usr.getUserName());
-            pp.setTenantId(usr.getTenantId());
-            pp.setIsconfirm(0);
-            List<ExcelTxtTemplate> list该行文本集 = e.getTxtRowList();
-            List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
-            this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器);
-            //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
-            this.f给pp装上货号(pp,msgs,行计数器);
+            PrdtSamp pp= null;
+            try {
+                String uuid = p.sj();
+                pp = this.f设置pp(uuid,usr);
+                List<ExcelTxtTemplate> list该行文本集 = e.getTxtRowList();
+                List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
+                this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器+2);
+                //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
+                this.f给pp装上货号(pp,msgs,行计数器+2);
+            } catch (IOException e1) {
+                //有异常的跳过去,但是搜集异常到msgs,最终一起处理
+                e1.printStackTrace();
+                msgs.add(e1.getMessage());
+                continue;
+            }
             if(this.if数据库PrdCode重复则不导入该条_其他继续导入(pp,msgs)){
                 //继续下一个,当前这个不要了
                 continue;
@@ -74,6 +77,16 @@ public class DyExcelBf {
         this.ifList里编码重复(prdtSamps将要入数据库,msgs);
         this.saveData(prdtSamps将要入数据库,msgs);
         excelFile.delete();
+    }
+
+    private PrdtSamp f设置pp(String uuid, PrdtSampCreateUser usr) {
+        PrdtSamp pp=new PrdtSamp();
+        pp.setId(uuid);
+        pp.setInsertdate(cnst.getDbDate());
+        pp.setUserName(usr.getUserName());
+        pp.setTenantId(usr.getTenantId());
+        pp.setIsconfirm(0);
+        return pp;
     }
 
 
@@ -130,12 +143,12 @@ public class DyExcelBf {
     private void f给pp装上货号(PrdtSamp pp,List<String>msgs,int 行计数器) {
         String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
         if(p.empty(pp.getFenLeiName())){
-            p.throwEAddToList("excel中有中类名称是空的,在《"+行计数器+"》行附近,无法流水货号",msgs);
+            p.throwEAddToList(excel中有中类名称是空的+",在《"+行计数器+"》行附近,无法流水货号",msgs);
         }
         if(p.notEmpty(fenLeiNo)) {
             pp.setFenLeiNo(fenLeiNo);
         }else{
-            this.commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,在《"+行计数器+"》行附近,请确认你excle中的中类中类名称是否正确,流水货号失败");
+            this.commonsThrow(msgs,"该中类名称《"+pp.getFenLeiName()+"》无法获取中类编号,在《"+行计数器+"》行附近,请确认你excle中的中类中类名称是否正确,流水货号失败 ! ");
         }
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
@@ -148,18 +161,18 @@ public class DyExcelBf {
                 p.p("-----------------------pp.getPrdCode()--------------------------------");
                 p.p(pp.getPrdCode());
                 p.p("-------------------------------------------------------");
-                commonsThrow(msgs,"该中类名称无法获取中类编号,请确认你excle中的中类中类名称是否正确,流水货号失败");
+                this.commonsThrow(msgs,"该中类名称无法获取中类编号,请确认你excle中的中类中类名称是否正确,流水货号失败");
             }else{
                 p.p("-----------------------pp.getPrdCode()--------------------------------");
                 p.p(pp.getPrdCode());
                 p.p("-------------------------------------------------------");
-                commonsThrow(msgs,"流水货号异常！");
+                this.commonsThrow(msgs,"流水货号异常！");
             }
 
         }
         if(p.empty(p0.getPrdNo())){
             String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
-            commonsThrow(msgs,s);
+            this.commonsThrow(msgs,s);
         }
         pp.setPrdNo(p0.getPrdNo());
     }
@@ -172,7 +185,7 @@ public class DyExcelBf {
                     pp.setThum(thum+p.fh);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    commonsThrow(msgs,"保存图片异常《"+行计数器+"行有问题》");
+                    this.commonsThrow(msgs,"保存图片异常《"+行计数器+"行有问题》");
                 }
             }
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),品牌)){

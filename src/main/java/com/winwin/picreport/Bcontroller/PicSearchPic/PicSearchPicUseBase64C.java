@@ -57,15 +57,16 @@ public class PicSearchPicUseBase64C {
         List<SearchResult> searchPicResultList=new ArrayList<>();
         if (p.empty(base64Image)){return searchPicResultList;}
         try {
-            A临时url和file a临时url和file = f得到给码隆下载的临时图片url以及文件(base64Image);
-            SearchResult[] maLongResult = getMaLongResult(a临时url和file);
+            A临时url和file a临时url和file = this.f得到给码隆下载的临时图片url以及文件(base64Image);
+            SearchResult[] maLongResult = this.getMaLongResult(a临时url和file);
             Long timeStamp1 = p.getTimeStamp();
             //主要结果都在返回的Results对象中,其他地方没有
             for(SearchResult searchResult: maLongResult){
                 String infoWillUseInDbSelect = this.getInfoWillUseInDbSelect(searchResult);
                 //通过得到的相似图片的url中的包含信息,去找到对应的数据库中的 货号和品名 放入SimplePrdtSamp对象,虽然是list,其实一般只有一个
               if(p.notEmpty(infoWillUseInDbSelect)){
-                  List<SimplePrdtSamp>simplePrdtSampList=cnst.a001TongYongMapper.getSimplePrdtSamps("%"+infoWillUseInDbSelect+"%");
+                  List<SimplePrdtSamp>simplePrdtSampList=cnst.a001TongYongMapper
+                          .getSimplePrdtSamps("%"+infoWillUseInDbSelect+"%");
                   if(p.empty(simplePrdtSampList)){ simplePrdtSampList.add(new SimplePrdtSamp()); }
                   searchResult.setSimplePrdtSamp(simplePrdtSampList);
               }

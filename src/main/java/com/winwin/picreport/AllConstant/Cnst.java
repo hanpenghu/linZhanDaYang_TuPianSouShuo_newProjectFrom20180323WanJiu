@@ -10,11 +10,13 @@ import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
 import com.winwin.picreport.Futils.GeneratePrdNo.GetMaxPrdNo;
 import com.winwin.picreport.Futils.SpringbootJarPath;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.Date;
 
 @Order(2)
@@ -89,7 +91,10 @@ public class Cnst {
 
 
     public static String getProjectPath(){
-        String jarPath = SpringbootJarPath.JarLuJingGet();
+//        String jarPath = SpringbootJarPath.JarLuJingGet();
+        String jarPath = p.springBootJarPath();
+        //截取调最后一个 路径分隔符
+        jarPath=jarPath.substring(0,jarPath.length()-1);
         return jarPath;
     }
 
