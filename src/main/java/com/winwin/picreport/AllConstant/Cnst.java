@@ -90,6 +90,8 @@ public class Cnst {
     public static final String dingJiaXiuGaiSale="dingJiaXiuGaiSale";
 
 
+
+//    E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable  这种最后无杠的
     public static String getProjectPath(){
 //        String jarPath = SpringbootJarPath.JarLuJingGet();
         String jarPath = p.springBootJarPath();
