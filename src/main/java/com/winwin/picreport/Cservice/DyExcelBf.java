@@ -50,33 +50,54 @@ public class DyExcelBf {
         List<ExcelPicTxtTemplate> excel所有文字和图片集行List = null;
         try {excel所有文字和图片集行List = Excel2007.g().getExcelPicTxt(excelFile);} catch (IOException e) {e.printStackTrace();commonsThrow(msgs,"excel解析异常");}
         List<PrdtSamp>prdtSamps将要入数据库=new LinkedList<PrdtSamp>();
-        int 行计数器=0;
-        for(ExcelPicTxtTemplate e:excel所有文字和图片集行List){
-            PrdtSamp pp= null;
+        for(int 行计数器=0;行计数器<excel所有文字和图片集行List.size();行计数器++){
+            ExcelPicTxtTemplate e=excel所有文字和图片集行List.get(行计数器);
+            PrdtSamp pp;
+            List<String> listImgIgll2Del =new LinkedList<>();
             try {
                 String uuid = p.sj();
                 pp = this.f设置pp(uuid,usr);
                 List<ExcelTxtTemplate> list该行文本集 = e.getTxtRowList();
                 List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
-                this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器+2);
+                this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器+2, listImgIgll2Del);
                 //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
-                this.f给pp装上货号(pp,msgs,行计数器+2);
-            } catch (IOException e1) {
+                this.setPrdNo2pp(pp,msgs,行计数器+2);
+            } catch (Exception e1) {
                 //有异常的跳过去,但是搜集异常到msgs,最终一起处理
-                e1.printStackTrace();
-                msgs.add(e1.getMessage());
+                this.delImgAddMsg(listImgIgll2Del,e1,msgs);
                 continue;
             }
-            if(this.if数据库PrdCode重复则不导入该条_其他继续导入(pp,msgs)){
+            if(this.if数据库PrdCode重复则不导入该条_其他继续导入(pp,msgs,listImgIgll2Del)){
                 //继续下一个,当前这个不要了
                 continue;
             }
-            prdtSamps将要入数据库.add(pp);
-            行计数器=行计数器+1;
+            if(null!=pp){
+                prdtSamps将要入数据库.add(pp);
+            }
         }
-        this.ifList里编码重复(prdtSamps将要入数据库,msgs);
         this.saveData(prdtSamps将要入数据库,msgs);
         excelFile.delete();
+    }
+
+
+
+
+    private void delImgAddMsg(List<String> listImgIgll2Del, Exception e1,List<String>msgs) {
+        e1.printStackTrace();
+        this.deleteIgllImg(listImgIgll2Del);
+        msgs.add(e1.getMessage());
+    }
+
+
+    private void deleteIgllImg(List<String> list异常后要删除的图片路径) {
+        if(p.notEmpty(list异常后要删除的图片路径)){
+            for(String s:list异常后要删除的图片路径){
+                File file=new File(s);
+                if(file.exists()){
+                    file.delete();
+                }
+            }
+        }
     }
 
     private PrdtSamp f设置pp(String uuid, PrdtSampCreateUser usr) {
@@ -90,7 +111,7 @@ public class DyExcelBf {
     }
 
 
-    private boolean if数据库PrdCode重复则不导入该条_其他继续导入(PrdtSamp pp, List<String> msgs) {
+    private boolean if数据库PrdCode重复则不导入该条_其他继续导入(PrdtSamp pp, List<String> msgs,List<String> listImgIgll2Del) {
         /**
          *下面判断是否有重复数据在数据库,有的话就停止导入excel
          * //这个判断重复的其实已经做了,但是后来老郑说只要prdtCode重复就 不能导入,
@@ -98,15 +119,15 @@ public class DyExcelBf {
         PrdtSampExample pse=new PrdtSampExample();
         pse.createCriteria().andPrdCodeEqualTo(pp.getPrdCode());
         if(cnst.prdtSampMapper.countByExample(pse)>0){
-//            commonsThrow(msgs,重复编码数据+"《"+pp.getPrdCode()+"》");
             msgs.add(CC.重复编码数据_+"《"+pp.getPrdCode()+"》");
+            this.deleteIgllImg(listImgIgll2Del);
             return true;
         }else{
             return false;
         }
     }
 
-    private void ifList里编码重复(List<PrdtSamp> prdtSamps将要入数据库, List<String> msgs) {
+    private void ifPrdCodeRepeat(List<PrdtSamp> prdtSamps将要入数据库, List<String> msgs) {
         Set<PrdtSamp> set=new TreeSet<PrdtSamp>(Comparator.comparing(PrdtSamp::getPrdCode));
         set.addAll(prdtSamps将要入数据库);
         if(prdtSamps将要入数据库.size()!=set.size()){
@@ -140,7 +161,7 @@ public class DyExcelBf {
         }
     }
 
-    private void f给pp装上货号(PrdtSamp pp,List<String>msgs,int 行计数器) {
+    private void setPrdNo2pp(PrdtSamp pp, List<String>msgs, int 行计数器) {
         String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
         if(p.empty(pp.getFenLeiName())){
             p.throwEAddToList(excel中有中类名称是空的+",在《"+行计数器+"》行附近,无法流水货号",msgs);
@@ -177,11 +198,11 @@ public class DyExcelBf {
         pp.setPrdNo(p0.getPrdNo());
     }
 
-    private void f封装插入数据库的集合和保存图片(List<ExcelTxtTemplate> list该行文本集,List<ExcelPicTemplate> list该行图片集,String uuid,PrdtSamp pp,List<String> msgs,int 行计数器) throws IOException {
+    private void f封装插入数据库的集合和保存图片(List<ExcelTxtTemplate> list该行文本集,List<ExcelPicTemplate> list该行图片集,String uuid,PrdtSamp pp,List<String> msgs,int 行计数器,List<String> list异常后要删除的图片路径) throws IOException {
         for(ExcelTxtTemplate ee:list该行文本集){
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),图片)){
                 try {
-                    String thum=this.savePic(list该行图片集,uuid);
+                    String thum=this.savePic(list该行图片集,uuid,list异常后要删除的图片路径);
                     pp.setThum(thum+p.fh);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -239,7 +260,7 @@ public class DyExcelBf {
 
     private final String 点=".";
     private final String png="png";
-    private String savePic(List<ExcelPicTemplate> list该行图片集,String uuid) throws IOException {
+    private String savePic(List<ExcelPicTemplate> list该行图片集,String uuid,List<String> list异常后要删除的图片路径) throws IOException {
         String thum="";
         if(p.notEmpty(list该行图片集)){
             PictureData pictureData = list该行图片集.get(0).getPictureData();
@@ -251,7 +272,7 @@ public class DyExcelBf {
                     thum = cnst.getSpringbootJarSuoLueTuFilePath()+uuid+点+"emf";
                     System.out.println("------------emf保存到文件夹结束-------------------");
                 }
-
+                list异常后要删除的图片路径.add(thum);
                 FileOutputStream fileOutputStream = new FileOutputStream(thum);
                 byte[] data = null;
 //                if(p.dy(pictureData.getMimeType(),emf)){

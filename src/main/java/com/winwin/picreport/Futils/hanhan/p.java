@@ -2170,7 +2170,6 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
                 file.delete();
             }
             return jarPath;
-
     }
 
     /**

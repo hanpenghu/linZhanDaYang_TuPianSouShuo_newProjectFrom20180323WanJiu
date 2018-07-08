@@ -132,7 +132,10 @@ public class PrdtSamp {
     protected String checkOutOpinion;
 
     //起订金额
-     protected BigDecimal miniOrderAmt;
+    protected BigDecimal miniOrderAmt;
+
+    //财务起订金额
+    protected BigDecimal fiMiniOrderAmt;
 
     public String getId() {
         return id;
@@ -540,5 +543,13 @@ public class PrdtSamp {
 
     public void setMiniOrderAmt(BigDecimal miniOrderAmt) {
         this.miniOrderAmt = miniOrderAmt;
+    }
+
+    public BigDecimal getFiMiniOrderAmt() {
+        return fiMiniOrderAmt;
+    }
+
+    public void setFiMiniOrderAmt(BigDecimal fiMiniOrderAmt) {
+        this.fiMiniOrderAmt = fiMiniOrderAmt;
     }
 }

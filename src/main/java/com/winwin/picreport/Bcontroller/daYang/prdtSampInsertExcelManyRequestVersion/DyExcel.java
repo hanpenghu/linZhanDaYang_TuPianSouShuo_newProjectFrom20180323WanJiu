@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by Administrator on 2018/5/17.
@@ -60,26 +62,45 @@ public class DyExcel {
     }
 
 
+
+
     private Msg rightReturn(List<String> msgs){
-        String s = this.msgs包含重复数据提示(msgs);
-        if(null!= s){
-            return Msg.gmg().setMsg("导入《成功》,已经去掉"+s).setStatus("1");
+        LinkedHashSet<String>ts=new LinkedHashSet<String>();
+        ts.addAll(msgs);
+        String s=this.msgJoin(ts);
+        if(p.notEmpty(s)){
+            return Msg.gmg().setMsg("导入《成功》,"+s).setStatus("1");
         }
         return Msg.gmg().setMsg("《成功》").setStatus("1");
     }
 
 
-    private String  msgs包含重复数据提示(List<String> msgs) {
+
+
+
+
+    private String msgJoin(LinkedHashSet<String>msgs) {
+        String s="";
         if(p.notEmpty(msgs)){
-            for(String str:msgs){
-                if(str.contains(CC.重复编码数据_)){
-                    return str;
-                }
+            for(String ss:msgs) {
+                s=s+"|__|"+ss;
             }
         }
-        //不包含
-        return null;
+        return s;
     }
+
+
+//    private String  msgs包含重复数据提示(List<String> msgs) {
+//        if(p.notEmpty(msgs)){
+//            for(String str:msgs){
+//                if(str.contains(CC.重复编码数据_)){
+//                    return str;
+//                }
+//            }
+//        }
+//        //不包含
+//        return null;
+//    }
 
 
     private void throwE(MultipartFile excel, HttpServletRequest request, List<String> msgs) {
