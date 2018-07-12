@@ -1,5 +1,6 @@
 package com.winwin.picreport.Futils.MsgGenerate;
 import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.AuthJsonObj.Auth;
+import com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.columnAuth.ColumnAuth;
 import com.winwin.picreport.Edto.Data;
 
 import java.util.LinkedList;
@@ -19,20 +20,20 @@ public class Msg {
     private String userEmail="";//公司里面该用户的用
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
-
     private  List objs=new LinkedList ();
-
-    public List getObjs() {
-        return objs;
-    }
-
-    public Msg setObjs(List objs) {
-        this.objs = objs;
-        return this;
-    }
-
     //注意,下面这个对象是怕上面那个字符串auth在前端解析不出来才做的
     private Auth auth=new Auth();
+
+    private ColumnAuth columnAuth=new ColumnAuth();
+
+
+    public ColumnAuth getColumnAuth() {
+        return columnAuth;
+    }
+
+    public void setColumnAuth(ColumnAuth columnAuth) {
+        this.columnAuth = columnAuth;
+    }
 
     public Auth getAuth() {
         return auth;
@@ -40,6 +41,15 @@ public class Msg {
 
     public Msg setAuth(Auth auth) {
         this.auth = auth;
+        return this;
+    }
+
+    public List getObjs() {
+        return objs;
+    }
+
+    public Msg setObjs(List objs) {
+        this.objs = objs;
         return this;
     }
 

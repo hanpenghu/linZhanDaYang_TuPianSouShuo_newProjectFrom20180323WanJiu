@@ -31,11 +31,11 @@ public class GiveSaleService {
        //排列组合后没有80个
         List<UpDefStr> upDefStrs = this.f通过货号拿到前80个采购定价对应的采购和销售(prdNo, ms);
         this.sortUpDefStrs(upDefStrs);
-        List<String>dingJiaGuanLians=this.getAllReadyOlefieldOfSale(upDefStrs);
-        //搞到一些原来没有采购定价的销售定价老数据放进去
-        List<UpDefStr> upDefStrsNoBuy =this.getOldDataOfSalePrice(prdNo,dingJiaGuanLians,ms);
-        this.sortUpDefStrs(upDefStrsNoBuy);
-        upDefStrs.addAll(upDefStrsNoBuy);
+//        List<String>dingJiaGuanLians=this.getAllReadyOlefieldOfSale(upDefStrs);
+//        //搞到一些原来没有采购定价的销售定价老数据放进去
+//        List<UpDefStr> upDefStrsNoBuy =this.getOldDataOfSalePrice(prdNo,dingJiaGuanLians,ms);
+//        this.sortUpDefStrs(upDefStrsNoBuy);
+//        upDefStrs.addAll(upDefStrsNoBuy);
        return upDefStrs;
 
     }

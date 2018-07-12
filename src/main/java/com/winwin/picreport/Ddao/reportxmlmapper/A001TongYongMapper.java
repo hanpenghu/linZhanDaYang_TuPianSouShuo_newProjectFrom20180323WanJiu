@@ -377,4 +377,10 @@ public interface A001TongYongMapper {
 
     @Select({"select userPswd from users where user_name=#{userName}"})
     List<String> selectSecretFromUserName(@Param("userName") String userName);
+
+    @Update({"update prdt_samp set main_unit=#{mainUt} where id =#{id}"})
+    int  updateUt2PrdtSamp(@Param("id") String id,@Param("mainUt")String mainUt);
+
+    @Select({"select top 1 model_name from model_auth where model_uuid=#{modelUuid}"})
+    String selectModelName(@Param("modelUuid") String modelUuid);
 }

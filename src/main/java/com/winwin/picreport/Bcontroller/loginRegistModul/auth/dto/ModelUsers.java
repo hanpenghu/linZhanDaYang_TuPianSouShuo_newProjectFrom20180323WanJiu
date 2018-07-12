@@ -11,7 +11,8 @@ public class ModelUsers {
     //是否能够查看 T是可以,F是不可以
     private String canUse="";
     //对应的模块
-   private Model model;
+    private Model model;
+
 
     public Model getModel() {
         return model;

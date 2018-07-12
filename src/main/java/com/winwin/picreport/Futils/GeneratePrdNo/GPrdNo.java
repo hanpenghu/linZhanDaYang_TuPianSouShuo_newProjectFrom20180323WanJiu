@@ -36,20 +36,7 @@ public class GPrdNo {
             //如果不是空的,我们就要把这个prdtNo放到prdtSamp里面,将来进行插入prdt_samp表用
             prdtSamp.setPrdNo(prdtNo);
             //此时再判断 该prdNo在prdt表中对应的有ut没有,没有就插入一个,有的话算了
-            String ut = cnst.a001TongYongMapper.selectUtByPrdNoFromPrdt(prdtNo);
-            p.p("===============4=================");
-            if (p.empty(ut)) {
-                p.p("===============5=================");
-                String mainUnit = prdtSamp.getMainUnit();
-                //此时prdt表么没有ut单位,插入一个
-                if (mainUnit != null && mainUnit.contains("主:")) {
-                    mainUnit = mainUnit.replace("主:", "");
-                }
-                p.p("===============6=================");
-                int i = cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo, mainUnit);
-                p.p("===============7=================");
-            }
-
+           this.updatePrdNoOfPrdt(prdtNo,prdtSamp);
         } else {
             //此时代表prdt表中没有对应的prd_no,这时候需要到idx表流水一个
             //通过prd_code(name)到表idx中找最后一个流水
@@ -60,6 +47,8 @@ public class GPrdNo {
 
 
     }
+
+
 
 
     //    @Transactional
@@ -74,7 +63,7 @@ public class GPrdNo {
         p.p("===============10=================");
         if (p.empty(indx1)) {
             p.p("==============11=================");
-            throw new RuntimeException("中类编号是空的");
+            throw new RuntimeException("该中类编号在《"+indx1+"》在prdt表中没有一个记录,导致无法流水");
         }
 
         p.p("===============12=================");
@@ -86,18 +75,46 @@ public class GPrdNo {
             //给prdtSamp添加货号
             prdtSamp.setPrdNo(prdNoMax);
             p.p("-----------得到货号-----prdtSamp.setPrdNo(prdNoMax)---" + prdtSamp.getPrdNo() + "-------------------------");
-            //对应数据库的name
-            String prdCode = prdtSamp.getPrdCode();
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
-            String knd = "1";String dfu_ut = "1";String usr = "ADMIN";String chkMan = "ADMIN";
-            String mainUnit = prdtSamp.getMainUnit();
-            cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax, indx1, prdCode, usr, chkMan, knd, dfu_ut, mainUnit);
-            p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
-            p.p("===============15=================");
+           this.insertPrdtAPrdNo(prdtSamp,prdNoMax,indx1);
         }else{
             throw new RuntimeException("货号流水异常,未能流水到货号");
         }
     }
+
+
+
+    private void updatePrdNoOfPrdt(String prdtNo, PrdtSamp0 prdtSamp) {
+        String ut = cnst.a001TongYongMapper.selectUtByPrdNoFromPrdt(prdtNo);
+        p.p("===============4=================");
+        if (p.empty(ut)) {
+            p.p("===============5=================");
+            String mainUnit = prdtSamp.getMainUnit();
+            //此时prdt表么没有ut单位,插入一个
+            if (mainUnit != null && mainUnit.contains("主:")) {
+                mainUnit = mainUnit.replace("主:", "");
+            }
+            p.p("===============6=================");
+            int i = cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo, mainUnit);
+            p.p("===============7=================");
+        }
+    }
+
+
+
+    private void insertPrdtAPrdNo(PrdtSamp0 prdtSamp, String prdNoMax, String indx1) {
+        //对应数据库的name
+        String prdCode = prdtSamp.getPrdCode();
+        p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
+        String knd = "1";String dfu_ut = "1";String usr = "ADMIN";String chkMan = "ADMIN";
+        String mainUnit = prdtSamp.getMainUnit();
+        if (mainUnit != null && mainUnit.contains("主:")) {
+            mainUnit = mainUnit.replace("主:", "");
+        }
+        cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax, indx1, prdCode, usr, chkMan, knd, dfu_ut, mainUnit);
+        p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
+        p.p("===============15=================");
+    }
+
 
     /**
      * 当prdt_samp中prdno,存在,而prdt中prdno不存在的时候的操作

@@ -23,6 +23,9 @@ import java.util.Date;
 @Component("cnst")
 public class Cnst {
 
+    //保留小数位数
+    public static final int pointAfter=4;
+
     //下面3个是打样的审核流程
     public static final String weiTiJiao="0";//已经保存但未提交
     public static final String yiTiJiao="1";
@@ -97,6 +100,7 @@ public class Cnst {
         String jarPath = p.springBootJarPath();
         //截取调最后一个 路径分隔符
         jarPath=jarPath.substring(0,jarPath.length()-1);
+        System.out.println("++++++++getProjectPath()++++++++"+jarPath+"+++++++++++++");
         return jarPath;
     }
 
@@ -105,6 +109,8 @@ public class Cnst {
        return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
 
+    @Autowired
+    public ModelUsersSpcMapper modelUsersSpcMapper;
 
     @Autowired
     public DingJiaXiuGaiSaleService dingJiaXiuGaiSaleService;

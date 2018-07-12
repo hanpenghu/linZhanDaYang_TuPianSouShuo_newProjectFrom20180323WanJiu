@@ -236,17 +236,7 @@ public class SaveSaleOrBuyPrice {
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
         //给当前的prdtSamp流水一个货号
-        try {
-            cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            if(e.getMessage().contains("中类编号是空的")){
-                p.throwEAddToList("品号不存在，请修改产品分类保存重新产生品号",msgs);
-            }else{
-                p.throwEAddToList("流水货号异常！",msgs);
-            }
-
-        }
+        cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
         if(p.empty(p0.getPrdNo())){
             String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
             p.throwEAddToList(s,msgs);

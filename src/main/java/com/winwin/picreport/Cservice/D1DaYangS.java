@@ -46,6 +46,7 @@ public class D1DaYangS {
         }
         for (String id : idList) {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
+            this.mainUnitSet(prdtSampX1);
             //设置创建时间和价格和修改记录
             PrdtSamp0 prdtSampX = this.setCreateTimeAndPriceAndAlterRec(prdtSampX1);
             prdtSampList.add(prdtSampX);
@@ -59,6 +60,20 @@ public class D1DaYangS {
         }
         return fenYe;
     }
+
+
+
+
+    private void mainUnitSet(PrdtSamp prdtSampX1) {
+        if(p.empty(prdtSampX1.getMainUnit())){
+            String mainUt = cnst.a001TongYongMapper.selectUtByPrdNoFromPrdt(prdtSampX1.getPrdNo());
+            prdtSampX1.setMainUnit(mainUt);
+            cnst.a001TongYongMapper.updateUt2PrdtSamp(prdtSampX1.getId(),mainUt);
+        }
+    }
+
+
+
 
 
     public PrdtSamp0 setCreateTimeAndPriceAndAlterRec(PrdtSamp prdtSampX1初始) {

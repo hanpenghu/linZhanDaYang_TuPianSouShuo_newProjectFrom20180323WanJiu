@@ -1,0 +1,63 @@
+[
+  {
+    "data": null,
+    "status": "1",
+    "xiaoHaoShiJian": "",
+    "msg": "success",
+    "chMsg": "登录成功",
+    "otherMsg": "",
+    "token": "MTUzMTEyMzI2MTg2NXt-fWlwYWNle359MTM2NDE5Mjg3NDE=",
+    "tenantId": "ipace",
+    "tenantName": "IPACE Company",
+    "userEmail": "演示数据",
+    "notExsitThisPrdtNoInPrdtTab": "",
+    "weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao": "",
+    "objs": [],
+    "auth": {
+      "logistics": {
+        "salesorder": {
+          "page": "T"
+        },
+        "salesorderForSAP": {
+          "page": "T"
+        },
+        "salesDetail": {
+          "page": "T"
+        },
+        "productCode": {
+          "page": "T"
+        },
+        "purchasePricing": {
+          "page": "T"
+        },
+        "salesPricing": {
+          "page": "T",
+          "part": {
+            "purchasePrice": "T",
+            "salesPrice": "T"
+          }
+        },
+        "sampleConfirm": {
+          "page": "T"
+        },
+        "productMsgExport": {
+          "page": "T"
+        },
+        "pricingCheck": {
+          "page": "T"
+        }
+      },
+      "ai": {
+        "picture": {
+          "page": "T"
+        },
+        "uploadImg": {
+          "page": "T"
+        }
+      }
+    },
+    "columnAuth": {
+      "模块名1": {"字段名字1":"字段值1"}
+    }
+  }
+]

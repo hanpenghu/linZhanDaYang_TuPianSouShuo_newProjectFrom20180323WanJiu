@@ -21,13 +21,11 @@ public class PrdtSamp0 extends PrdtSamp{
      * */
     //销售的
     private List<UpDefMy01>upDefMyList=new ArrayList<>();
-
-
     //价格列表,单独采购的
     private List<UpDefMy01>upDefMyListBuy=new ArrayList<>();
  /////////////////////////////////////////////////////////////////////////////////
     //销售价格修改模块
- List<AlterPriceRecToFront>saleAlterRecList=new ArrayList();
+    List<AlterPriceRecToFront>saleAlterRecList=new ArrayList();
 
     //采购价格修改模块
     private List<AlterPriceRecToFront>buyAlterRecList=new ArrayList();

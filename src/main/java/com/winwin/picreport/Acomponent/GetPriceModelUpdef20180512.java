@@ -66,7 +66,7 @@ public class GetPriceModelUpdef20180512 {
                     UpDefMy01 up=new UpDefMy01();
                     if(p.notEmpty(uf01销售不含运费本币)){
                         BeanUtils.copyProperties(uf01销售不含运费本币,up);
-                        setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
+                        this.setUpOfSale(up,uf01销售不含运费本币,uf01销售含运费本币,uf01销售不含运费外币,uf01销售含运费外币);
 
                     }
                     if(p.notEmpty(uf01销售含运费本币)){

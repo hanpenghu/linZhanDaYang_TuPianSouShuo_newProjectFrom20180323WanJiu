@@ -11,12 +11,13 @@ import java.util.*;
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
-public class D1DaYangC {
+public class DyBaseContrller {
     @Autowired
     private Cnst cnst;
     /**
  *delete 一条数据库信息并delete对应的图片和附件资源
  * 支持一次多删除
+     * /d/deleteSomeRecode
  * */
 @RequestMapping(value = "deleteSomeRecode", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 public @ResponseBody List<Msg> deleteSomeRecode(@RequestBody List<String>uuidList) {

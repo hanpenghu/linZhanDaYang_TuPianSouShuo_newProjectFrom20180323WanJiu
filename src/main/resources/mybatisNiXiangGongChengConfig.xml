@@ -65,8 +65,17 @@
             targetProject=".\src\main">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
-        
-        
+
+
+
+
+
+        <!-- targetPackage：mapper接口生成的位置，重要！！ -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.winwin.picreport.Ddao.reportxmlmapper"
+                             targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
 
         
         
@@ -84,7 +93,7 @@
      <!--   <table tableName="prdt_samp"></table>-->
         <!--<table tableName="salm"></table>
         <table tableName="my_wh"></table>-->
-        <!--<table tableName="prdt_samp"></table>-->
+        <!--<table tableName="model_users_spc"></table>-->
        <!-- <table tableName="TF_POS_Z"></table>-->
     </context>
 </generatorConfiguration>

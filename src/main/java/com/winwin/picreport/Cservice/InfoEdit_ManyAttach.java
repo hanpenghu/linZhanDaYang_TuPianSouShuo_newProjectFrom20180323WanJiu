@@ -71,19 +71,13 @@ public class InfoEdit_ManyAttach {
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
         //给当前的prdtSamp流水一个货号
-        try {
             /*if(p.empty(p0.getFenLeiNo())){
                 p.throwEAddToList("中类编号fenLeiNo为空,无法流水",msgs);
             }*/
-            p.p("----------流水货号开始---fenleino="+pp.getFenLeiNo()+"----------------------");
-            cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
-            p.p("----------流水货号结束---prdNo="+pp.getPrdNo()+"----------------------");
-        } catch (Exception e) {
-            e.printStackTrace();
-            if(e.getMessage().contains("中类编号是空的")){
-                p.throwEAddToList("中类编号是空的,无法流水货号！",msgs);
-            }else{p.throwEAddToList("流水货号异常!",msgs);}
-        }
+        p.p("----------流水货号开始---fenleino="+pp.getFenLeiNo()+"----------------------");
+        cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
+        p.p("----------流水货号结束---prdNo="+pp.getPrdNo()+"----------------------");
+
         p.p("==============="+p0.getPrdNo()+"================");
         if(p.empty(p0.getPrdNo())){
             String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类";

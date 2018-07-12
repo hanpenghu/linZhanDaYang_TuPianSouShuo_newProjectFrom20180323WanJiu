@@ -1,5 +1,6 @@
 package com.winwin.picreport.Bcontroller.daYang.givePriceToFront.sale.entity;
 
+import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Futils.hanhan.p;
 
 /**
@@ -71,7 +72,7 @@ public class UpdefSaleStr {
     }
 
     public String getQty() {
-        return p.getNum(3,3,qty);
+        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,qty);
     }
 
     public void setQty(String qty) {
@@ -79,7 +80,7 @@ public class UpdefSaleStr {
     }
 
     public String getHaveTransUpBenBi() {
-        return p.getNum(3,3,haveTransUpBenBi);
+        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,haveTransUpBenBi);
     }
 
     public void setHaveTransUpBenBi(String haveTransUpBenBi) {
@@ -87,7 +88,7 @@ public class UpdefSaleStr {
     }
 
     public String getHaveTransUpWaiBi() {
-        return p.getNum(3,3,haveTransUpWaiBi);
+        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,haveTransUpWaiBi);
     }
 
     public void setHaveTransUpWaiBi(String haveTransUpWaiBi) {
@@ -95,7 +96,7 @@ public class UpdefSaleStr {
     }
 
     public String getNoTransUpBenBi() {
-        return p.getNum(3,3,noTransUpBenBi);
+        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,noTransUpBenBi);
     }
 
     public void setNoTransUpBenBi(String noTransUpBenBi) {
@@ -103,7 +104,7 @@ public class UpdefSaleStr {
     }
 
     public String getNoTransUpWaiBi() {
-        return p.getNum(3,3,noTransUpWaiBi);
+        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,noTransUpWaiBi);
     }
 
     public void setNoTransUpWaiBi(String noTransUpWaiBi) {

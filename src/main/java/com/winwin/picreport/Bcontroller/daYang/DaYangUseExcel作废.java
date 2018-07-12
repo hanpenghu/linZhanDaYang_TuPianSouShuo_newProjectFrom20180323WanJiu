@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/d")
-public class DaYangUseExcel {
+public class DaYangUseExcel作废 {
     @Autowired
     private Cnst cnst;
 
