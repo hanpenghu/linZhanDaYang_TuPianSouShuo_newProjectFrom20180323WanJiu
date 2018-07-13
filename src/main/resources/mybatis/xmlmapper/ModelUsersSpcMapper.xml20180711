@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.ModelUsersSpcMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.ModelUsersSpc">
+    <id column="users_uuid" jdbcType="VARCHAR" property="usersUuid" />
+    <id column="ctrl_id" jdbcType="VARCHAR" property="ctrlId" />
+    <result column="spc_id" jdbcType="VARCHAR" property="spcId" />
+    <result column="rem" jdbcType="VARCHAR" property="rem" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    users_uuid, ctrl_id, spc_id, rem
+  </sql>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.ModelUsersSpcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from model_users_spc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.ModelUsersSpcKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from model_users_spc
+    where users_uuid = #{usersUuid,jdbcType=VARCHAR}
+      and ctrl_id = #{ctrlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.winwin.picreport.Edto.ModelUsersSpcKey">
+    delete from model_users_spc
+    where users_uuid = #{usersUuid,jdbcType=VARCHAR}
+      and ctrl_id = #{ctrlId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.ModelUsersSpcExample">
+    delete from model_users_spc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.ModelUsersSpc">
+    insert into model_users_spc (users_uuid, ctrl_id, spc_id, 
+      rem)
+    values (#{usersUuid,jdbcType=VARCHAR}, #{ctrlId,jdbcType=VARCHAR}, #{spcId,jdbcType=VARCHAR}, 
+      #{rem,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.ModelUsersSpc">
+    insert into model_users_spc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usersUuid != null">
+        users_uuid,
+      </if>
+      <if test="ctrlId != null">
+        ctrl_id,
+      </if>
+      <if test="spcId != null">
+        spc_id,
+      </if>
+      <if test="rem != null">
+        rem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usersUuid != null">
+        #{usersUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctrlId != null">
+        #{ctrlId,jdbcType=VARCHAR},
+      </if>
+      <if test="spcId != null">
+        #{spcId,jdbcType=VARCHAR},
+      </if>
+      <if test="rem != null">
+        #{rem,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.ModelUsersSpcExample" resultType="java.lang.Long">
+    select count(*) from model_users_spc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update model_users_spc
+    <set>
+      <if test="record.usersUuid != null">
+        users_uuid = #{record.usersUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctrlId != null">
+        ctrl_id = #{record.ctrlId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spcId != null">
+        spc_id = #{record.spcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rem != null">
+        rem = #{record.rem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update model_users_spc
+    set users_uuid = #{record.usersUuid,jdbcType=VARCHAR},
+      ctrl_id = #{record.ctrlId,jdbcType=VARCHAR},
+      spc_id = #{record.spcId,jdbcType=VARCHAR},
+      rem = #{record.rem,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.ModelUsersSpc">
+    update model_users_spc
+    <set>
+      <if test="spcId != null">
+        spc_id = #{spcId,jdbcType=VARCHAR},
+      </if>
+      <if test="rem != null">
+        rem = #{rem,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where users_uuid = #{usersUuid,jdbcType=VARCHAR}
+      and ctrl_id = #{ctrlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.ModelUsersSpc">
+    update model_users_spc
+    set spc_id = #{spcId,jdbcType=VARCHAR},
+      rem = #{rem,jdbcType=VARCHAR}
+    where users_uuid = #{usersUuid,jdbcType=VARCHAR}
+      and ctrl_id = #{ctrlId,jdbcType=VARCHAR}
+  </update>
+</mapper>
