@@ -7,6 +7,7 @@ import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.NotEmpty;
+import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,7 @@ public class D1DaYangService {
     }*/
 
 
+    @SuppressWarnings("unchecked")
     @Transactional
     public List<Msg> ImageUpLoadAndDataSave002OfManyAttach
             (String projectPath, MultipartFile thum, List<MultipartFile> attachList,
@@ -132,8 +134,10 @@ public class D1DaYangService {
 
             PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
 
-
-
+            List <Msg> msgs1=this.isPrdCodeRepeat(prdtSampOb);
+            if(p.notEmpty(msgs1)){
+               return msgs1;
+            }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             String uuidstr = UUID.randomUUID().toString();
@@ -217,6 +221,20 @@ public class D1DaYangService {
 
 
 
+    }
+
+    @Transactional
+    public List<Msg> isPrdCodeRepeat(PrdtSamp0 prdtSampOb) {
+        PrdtSampExample ppp=new PrdtSampExample();
+        ppp.createCriteria().andPrdCodeEqualTo(prdtSampOb.getPrdCode());
+        long l = cnst.prdtSampMapper.countByExample(ppp);
+        if(l>0){
+            String s="您的编码(prd_code="+prdtSampOb.getPrdCode()+")在数据库已经存在,请更换编码再试";
+            //注意,只有37是成功
+            return  MessageGenerate.generateMessage(s,s, "", "34");
+        }else{
+            return null;
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

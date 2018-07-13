@@ -85,6 +85,9 @@ public class DaYangFromHtml {
     }
     }
 ]*/
+
+   //页面上添加一条数据
+   //37是成功//其他都是失败,失败返回码很多
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,
             method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

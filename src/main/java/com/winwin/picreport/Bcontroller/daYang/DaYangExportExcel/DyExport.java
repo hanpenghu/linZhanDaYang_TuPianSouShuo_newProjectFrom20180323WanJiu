@@ -218,7 +218,6 @@ public class DyExport {
             fileOut.close();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
         }
 
         return excelPath;
@@ -482,9 +481,6 @@ public class DyExport {
     private String f创建存储excel的临时目录不带杠() {
         String s = p.strCutNoHead(cnst.daYangSuoLueTuAndFuJianZongPath, "./");
         String s1 = p.strCutEndNothave(s, "/");
-        //        p.p("-------------------------s1------------------------------");
-        //        p.p(s1);
-        //        p.p("-------------------------------------------------------");
         File file = new File(new File(s1).getAbsolutePath() + File.separator + "saveExcelTemp");
         if (p.notExists(file)) {
             file.mkdir();

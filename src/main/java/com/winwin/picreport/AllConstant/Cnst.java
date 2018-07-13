@@ -91,10 +91,10 @@ public class Cnst {
     public static final String fu="副:";
     public static final String curIdBefore="curIdBefore";
     public static final String dingJiaXiuGaiSale="dingJiaXiuGaiSale";
+    public static final String ADMIN="ADMIN";
 
 
-
-//    E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable  这种最后无杠的
+    //    E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable  这种最后无杠的
     public static String getProjectPath(){
 //        String jarPath = SpringbootJarPath.JarLuJingGet();
         String jarPath = p.springBootJarPath();
