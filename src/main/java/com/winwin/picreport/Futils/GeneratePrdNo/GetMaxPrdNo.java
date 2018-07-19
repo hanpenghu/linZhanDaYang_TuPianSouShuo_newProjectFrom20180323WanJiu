@@ -24,7 +24,6 @@ public class GetMaxPrdNo {
             String maxPrdNoSecond= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(idxNo);
             if(p.empty(maxPrdNoSecond)){
                 //此时具有该中类no的商拼在prdt还没有一条,我们从1开始流水一条
-                //                return "1";
                 throw new RuntimeException("分类编号在prdt里没有任何记录,无法流水");
 
             }
@@ -39,14 +38,14 @@ public class GetMaxPrdNo {
      * */
     public String getMaxPrdNoSecond(String prdNoMax){
        Integer ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
-//       System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //       System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
        while(ii>0){
            //如果ii在里面已经存在,就需要加1
            long l = new Long(prdNoMax) + 1L;
            prdNoMax=String.valueOf(l);
            ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
        }
-//        System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        //        System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
        return prdNoMax;
     }
 

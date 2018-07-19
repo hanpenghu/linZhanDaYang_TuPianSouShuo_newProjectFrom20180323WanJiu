@@ -260,14 +260,6 @@ public class PrdtSamp0 extends PrdtSamp{
         return this;
     }
 
-    public String getDirUrl() {
-        return dirUrl;
-    }
-
-    public PrdtSamp0 setDirUrl(String dirUrl) {
-        this.dirUrl = dirUrl;
-        return this;
-    }
 
     public List<UpDefMy01> getUpDefMyListBuy() {
         return upDefMyListBuy;
@@ -277,6 +269,22 @@ public class PrdtSamp0 extends PrdtSamp{
         this.upDefMyListBuy = upDefMyListBuy;
         return this;
     }
+
+
+
+
+
+
+    public String getDirUrl() {
+        return dirUrl;
+    }
+
+    public PrdtSamp0 setDirUrl(String dirUrl) {
+        this.dirUrl = dirUrl;
+        return this;
+    }
+
+
 
     public List<AlterPriceRecToFront> getSaleAlterRecList() {
         return saleAlterRecList;

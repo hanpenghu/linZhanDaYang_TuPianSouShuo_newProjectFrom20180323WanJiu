@@ -1,7 +1,10 @@
 package com.winwin.picreport.Futils;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.PrdtSamp1;
+import com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 /**
  *首先set  dangQianYe---前端穿过来
@@ -19,6 +22,7 @@ import java.util.List;
  *
  * */
 public class FenYe {
+	private List<PrdtSampExcleExportManyCondition>prdtSampExcleList=new LinkedList<PrdtSampExcleExportManyCondition>();
 	private List<PrdtSamp0> prdtSampList=new ArrayList<>();//第一次需要传入的数据
 	private Integer dangQianYe;//当前页的页面传过来
 	private Integer meiYeXianShiShu=10;
@@ -28,6 +32,15 @@ public class FenYe {
 	//角色代码,0代表董事长,1表示普通用户,2表示业务员,3表示采购 4,表示销售 5表示财务
 	//具体查看RoleCnst
 	private Integer role;
+
+
+	public List<PrdtSampExcleExportManyCondition> getPrdtSampExcleList() {
+		return prdtSampExcleList;
+	}
+
+	public void setPrdtSampExcleList(List<PrdtSampExcleExportManyCondition> prdtSampExcleList) {
+		this.prdtSampExcleList = prdtSampExcleList;
+	}
 
 	public static FenYe g(){
 		return new FenYe();

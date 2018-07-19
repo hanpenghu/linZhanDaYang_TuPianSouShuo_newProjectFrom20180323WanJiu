@@ -89,10 +89,7 @@ public class GPrdNo {
         if (p.empty(ut)) {
             p.p("===============5=================");
             String mainUnit = prdtSamp.getMainUnit();
-            //此时prdt表么没有ut单位,插入一个
-            if (mainUnit != null && mainUnit.contains("主:")) {
-                mainUnit = mainUnit.replace("主:", "");
-            }
+            mainUnit=this.setUnit(mainUnit,prdtSamp);
             p.p("===============6=================");
             int i = cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo, mainUnit);
             p.p("===============7=================");
@@ -107,12 +104,22 @@ public class GPrdNo {
         p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
         String knd = "1";String dfu_ut = "1";String usr = "ADMIN";String chkMan = "ADMIN";
         String mainUnit = prdtSamp.getMainUnit();
-        if (mainUnit != null && mainUnit.contains("主:")) {
-            mainUnit = mainUnit.replace("主:", "");
-        }
+        mainUnit=this.setUnit(mainUnit,prdtSamp);
         cnst.a001TongYongMapper.insertPrdtOnePrdNo(prdNoMax, indx1, prdCode, usr, chkMan, knd, dfu_ut, mainUnit);
         p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo结束~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p("===============15=================");
+    }
+
+    private String setUnit(String mainUnit,PrdtSamp0 prdtSamp) {
+        if(p.empty(mainUnit)){
+            if(p.notEmpty(prdtSamp.getUnit())){
+                mainUnit=prdtSamp.getUnit();
+            }
+        }
+        if (mainUnit != null && mainUnit.contains("主:")) {
+            mainUnit = mainUnit.replace("主:", "");
+        }
+        return mainUnit;
     }
 
 

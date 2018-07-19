@@ -154,7 +154,13 @@ public interface A001TongYongMapper {
 
 
    List<PrdtSamp0> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
+
+
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
+
+
+    Integer getCountOfDuoTiaoJianChaXunZongJiLuShuExportExcel(PrdtSamp1 p1);
+
 
    @Select("Select top 1 prd_no from prdt where name=#{prdCode} order by prd_no desc")
    String selectTop1PrdtNo(@Param("prdCode") String prdCode);
@@ -383,4 +389,9 @@ public interface A001TongYongMapper {
 
     @Select({"select top 1 model_name from model_auth where model_uuid=#{modelUuid}"})
     String selectModelName(@Param("modelUuid") String modelUuid);
+
+    List<PrdtSampExcleExportManyCondition> chanPinBianMaJianDangTiaoJianChaXunExportExcel(PrdtSamp1 p1);
+
+
+
 }

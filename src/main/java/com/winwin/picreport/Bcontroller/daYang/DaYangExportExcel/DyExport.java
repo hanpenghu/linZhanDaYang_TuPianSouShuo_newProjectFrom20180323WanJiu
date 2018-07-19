@@ -2,6 +2,8 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
+import com.winwin.picreport.Edto.UpDef;
+import com.winwin.picreport.Edto.UpDefExample;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.FileUtils;
@@ -26,9 +28,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/6/1.
@@ -101,6 +101,8 @@ public class DyExport {
             p.p("====daoChus是null=========");
             return null;
         }
+        //2018_7_18   weekday(3)   11:45:05  after add
+        daoChus=this.f设置所有价格(daoChus);
         //把字段写入excel
         String excel路径 = this.a写入excel(daoChus, list导出头信息);
         File file = new File(excel路径);
@@ -109,6 +111,59 @@ public class DyExport {
         //application/octet-stream ： 二进制流数据（最常见的文件下载）。
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
+
+    private List<DaoChu> f设置所有价格(List<DaoChu> daoChus) {
+        List<DaoChu>daoChus1=new LinkedList<DaoChu>();
+        for(DaoChu d:daoChus){
+            this.usePrdNoSetPrice(d,daoChus1);
+        }
+        return daoChus1;
+    }
+
+    private void usePrdNoSetPrice(DaoChu d,List<DaoChu> daoChus1) {
+        UpDefExample ue=new UpDefExample();
+        ue.createCriteria().andPrdNoEqualTo(d.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId);
+        List<UpDef> upDefList = cnst.upDefMapper.selectByExample(ue);
+        if(null==upDefList){upDefList=new LinkedList<UpDef>();}
+        Set<String> olefieldSet=new LinkedHashSet<String>();
+        if(p.notEmpty(upDefList)){
+            for(UpDef upDef:upDefList){
+                olefieldSet.add(upDef.getOlefield());
+            }
+            for(String olefield:olefieldSet){
+                DaoChu daoChu=new DaoChu();
+                BeanUtils.copyProperties(d,daoChu);
+                UpDefExample ue1=new UpDefExample();
+                ue1.createCriteria().andOlefieldEqualTo(olefield);
+                List<UpDef> upDefList1 = cnst.upDefMapper.selectByExample(ue1);
+                this.f设置相应价格(upDefList1,daoChu);
+                daoChus1.add(daoChu);
+            }
+        }else{
+            daoChus1.add(d);
+        }
+    }
+
+    private void f设置相应价格(List<UpDef> upDefList1, DaoChu daoChu) {
+        for(UpDef u:upDefList1){
+            //销售无运费本币
+            if(Cnst.benBi.equals(u.getCurId())&&Cnst.saleBilTypeNoTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setNoTransUpSaleBenBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售有运费本币
+            if(Cnst.benBi.equals(u.getCurId())&&Cnst.saleBilTypeHaveTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setHaveTransUpSaleBenBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售有运费外币
+            if(Cnst.USD.equals(u.getCurId())&&Cnst.saleBilTypeHaveTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setHaveTransUpSaleWaiBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售无运费外币
+            if(Cnst.USD.equals(u.getCurId())&&Cnst.saleBilTypeNoTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setNoTransUpSaleWaiBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+        }
     }
 
 
@@ -499,7 +554,6 @@ public class DyExport {
             DaoChu daoChu = new DaoChu();
             //得到 haveTransUpSaleBenBi
             DaoChu daoChu1 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.benBi, Cnst.salPriceId, id);
-
             p.p("---------------------------daoChu1.getMainUnit()----------------------------");
             if (null != daoChu1) {
                 p.p(daoChu1.getMainUnit());
@@ -518,6 +572,7 @@ public class DyExport {
             String thum = this.a缩略图全路径生成(daoChu);
             daoChu.setThum(thum);
             daoChuList.add(daoChu);
+
         }
         return daoChuList;
     }

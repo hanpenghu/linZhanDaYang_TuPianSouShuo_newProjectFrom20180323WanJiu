@@ -190,7 +190,7 @@ public class InfoEdit_ManyAttach {
         boolean b4=attach.getOriginalFilename().contains("[");
         boolean b5=attach.getOriginalFilename().contains("]");
         if (b1 && (b2 || b3 || b4 || b5)) {
-            p.throwEAddToList("您的附件不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+            p.throwEAddToList("您的附件不能包含有以下四种符号    !    ;   [    ]  ", ms);
         }
     }
 
@@ -203,7 +203,7 @@ public class InfoEdit_ManyAttach {
             boolean b4=thum.getOriginalFilename().contains("[");
             boolean b5=thum.getOriginalFilename().contains("]");
             if (b2 || b3 || b4 || b5) {
-                p.throwEAddToList("您的图片不能包含有 ! 符号或者  ;  符号 或者 [ 或者 ]", ms);
+                p.throwEAddToList("您的图片不能包含有以下四种符号    !    ;   [    ] ", ms);
             }
         }
 

@@ -263,6 +263,225 @@
         <include refid="productProofWithManyCondition"/>
     </select>
 
+<!-- =================================================================================================================== -->
+
+    <!-- 产品打样列表多条件查询导出excel-->
+    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcel" resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
+        SELECT
+        TOP
+        (#{meiYeXianShiShu})
+        <include refid="column_ListOfExportExcel"/>
+        FROM
+        PRDT_SAMP p
+        <include refid="leftJoinOfExportExcel"/>
+        WHERE
+        p.id NOT IN
+        (
+                  select top
+                (
+                  (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+                )p1.id from PRDT_SAMP p1
+                <include refid="leftJoinOfExportExcel1"/>
+                WHERE
+                <!-- 产品打样列表多条件查询的条件-->
+                 <include refid="exportExcelManyCondition1"/>
+                 ORDER BY p1.insertdate DESC
+        )
+        AND
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="exportExcelManyCondition"/>
+        ORDER BY p.insertdate DESC
+    </select>
+
+
+
+
+    <sql id="leftJoinOfExportExcel">
+        left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='2' -- 2是有运费
+        left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='1' and u2.olefield=u1.olefield
+        left join up_def u3 on p.prd_no=u3.prd_no and u3.price_id='1' and u3.cur_id='USD' and u3.bil_type='2' and u3.olefield=u2.olefield
+        left join up_def u4 on p.prd_no=u4.prd_no and u4.price_id='1' and u4.cur_id='USD' and u4.bil_type='1' and u4.olefield=u3.olefield
+    </sql>
+
+    <sql id="exportExcelManyCondition">
+           p.id=p.id
+        <if test=" insertdateStr != null and insertdateStr != '' ">
+            <![CDATA[  AND  p.insertDate >= #{insertdateStr}  ]]>
+        </if>
+        <if test=" insertdateStrEnd != null and insertdateStrEnd != '' ">
+            <![CDATA[  AND  p.insertDate <= #{insertdateStrEnd}  ]]>
+        </if>
+        <if test=" idxName != null and idxName != '' ">
+            AND  isnull(p.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+        </if>
+        <if test=" fenLeiName != null and fenLeiName != '' ">
+            AND  isnull(p.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+        </if>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND  isnull(p.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+        </if>
+        <if test=" salName != null and salName != '' ">
+            AND  isnull(p.sal_name,'') LIKE ('%'+( #{salName}) +'%')
+        </if>
+        <if test=" isconfirm != null and isconfirm != '' ">
+            AND  isnull(p.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+        </if>
+        <if test="confirmtimestr != null and confirmtimestr != ''">
+            <![CDATA[ AND p.confirmTimeStr >=  #{confirmtimestr}  ]]>
+        </if>
+        <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+            <![CDATA[ AND p.confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+        </if>
+        <if test=" isCheckOut != null and isCheckOut  != '' ">
+            <![CDATA[ AND p.is_Check_Out LIKE  #{ isCheckOut }  ]]>
+        </if>
+    </sql>
+
+
+
+
+    <sql id="leftJoinOfExportExcel1">
+        left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='2' -- 2是有运费
+        left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
+        left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u22.olefield
+        left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u33.olefield
+    </sql>
+
+    <sql id="exportExcelManyCondition1">
+        p1.id=p1.id
+        <if test=" insertdateStr != null and insertdateStr != '' ">
+            <![CDATA[  AND  p1.insertDate >= #{insertdateStr}  ]]>
+        </if>
+        <if test=" insertdateStrEnd != null and insertdateStrEnd != '' ">
+            <![CDATA[  AND  p1.insertDate <= #{insertdateStrEnd}  ]]>
+        </if>
+        <if test=" idxName != null and idxName != '' ">
+            AND  isnull(p1.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+        </if>
+        <if test=" fenLeiName != null and fenLeiName != '' ">
+            AND  isnull(p1.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+        </if>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND  isnull(p1.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+        </if>
+        <if test=" salName != null and salName != '' ">
+            AND  isnull(p1.sal_name,'') LIKE ('%'+( #{salName}) +'%')
+        </if>
+        <if test=" isconfirm != null and isconfirm != '' ">
+            AND  isnull(p1.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+        </if>
+        <if test="confirmtimestr != null and confirmtimestr != ''">
+            <![CDATA[ AND p1.confirmTimeStr >=  #{confirmtimestr}  ]]>
+        </if>
+        <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+            <![CDATA[ AND p1.confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+        </if>
+        <if test=" isCheckOut != null and isCheckOut  != '' ">
+            <![CDATA[ AND p1.is_Check_Out LIKE  #{ isCheckOut }  ]]>
+        </if>
+    </sql>
+
+    <sql id="column_ListOfExportExcel">
+          isnull(p.id,'')as id,
+            isnull(p.prd_code,'') as prdCode,
+            isnull(p.idx_Name,'') as idxName,
+             isnull(p.idx_no,'') as idxNo,
+             isnull(p.fen_Lei_No,'') as fenLeiNo,
+            isnull(p.fen_Lei_Name,'') as fenLeiName,
+             isnull(p.mark_Name,'') as markName,
+            isnull(p.mark_No,'') as markNo,
+             isnull(p.colour,'')as colour,
+             isnull(p.size,'')as size,
+             isnull(p.sal_Name,'') as salName,
+             isnull(p.sal_No,'') as salNo,
+             isnull(p.cus_No,'') as cusNo,
+             isnull(p.cus_Name,'') as cusName,
+             isnull(p.cus_No_Give,'') as cusNoGive,
+             isnull(p.cus_Name_Give,'') as cusNameGive,
+             isnull(p.isfenjie,'')as isfenjie,
+             isnull(convert(varchar(100),p.samp_Make,121),'') as sampMake,
+             isnull(convert(varchar(100),p.samp_Send,121),'') as sampSend,
+             isnull(p.samp_Requ,'') as sampRequ,
+             isnull(p.samp_Desc,'') as sampDesc,
+             isnull(p.thum,'')as thum,
+             isnull(p.attach,'')as attach,
+             isnull(convert(varchar(100),p.insertdate,121),'')as insertdate,
+             isnull(p.confirmman,'')as confirmman,
+             isnull(p.confirmtimestr,'')as confirmtimestr,
+             isnull(convert(varchar(10),p.isconfirm),'0')as isconfirm,
+             isnull(p.category,'')as category,
+             isnull(p.teamname,'')as teamname,
+             isnull(p.confirmrem,'')as confirmrem,
+             isnull(p.unit,'')as unit,
+             isnull(p.businessdesc,'')as businessdesc,--//业务描述
+             isnull(p.financedesc,'')as financedesc,--//财务描述
+            --//        private BigDecimal startsellcount,//采购起订数量//json可以直接转换输出给外部//起订量
+             isnull(convert(varchar(23),convert(decimal(23,4),p.startsellcount)),'')as startsellcount,
+            --//        private BigDecimal modelcost,//模具费
+            isnull(convert(varchar(23),convert(decimal(23,4),p.modelcost)),'') as modelcost,--//模具费
+           -- //        private BigDecimal estimateprice,//预估价
+            isnull(convert(varchar(23),convert(decimal(23,4),p.estimateprice)),'')as estimateprice,--//预估价
+            --//        private BigDecimal littleorderprice,//小单费
+             isnull(convert(varchar(23),convert(decimal(23,4),p.littleorderprice)),'')as littleorderprice,--//小单费
+             isnull(p.modelcostinvoiceno,'')as modelcostinvoiceno,--//模具费用发票号
+           -- //财务起订量
+             isnull(convert(varchar(23),convert(decimal(23,4),p.financestartsellcount)),'')as financestartsellcount,
+           -- //财务模具费
+             isnull(convert(varchar(23),convert(decimal(23,4),p.financemodelcost)),'')as financemodelcost,
+            --//财务小单费
+             isnull(convert(varchar(23),convert(decimal(23,4),p.financelittleorderprice)),'')as financelittleorderprice,
+           -- //采购描述
+             isnull(p.buyerdesc,'')as buyerdesc,
+            --//货号
+             isnull(p.prd_No,'') as prdNo,
+            --//销售描述
+            isnull(p.salemandesc,'')as salemandesc,
+            --//    /停用时间/
+             isnull(convert(varchar(23),p.stopusedate),'')as stopusedate,
+            --//创建人的userName,实际上我传给徐勇的放在userEmail字段了
+             isnull(p.user_Name,'') as userName,
+            --//创建人所在的公司,
+             isnull(p.tenant_Id,'') as tenantId,
+            --//是否审核   0或者null或者''代表未提交,  1代表已经提交但未审核,  2代表已经审核过
+            --//    有状态: 0、未提交,1、已经提交但是未审核等待审核,2、已经提交已审核
+            --//-- ---2018_6_19   weekday(2)   12:08:01---  添加一个是否提交并审核字段该字段 is_check_out 有状态:
+            --//            -- 0(或者null或者'')、未提交,
+            --//            --  1、已经提交但是未审核等待审核,2、已经提交已审核  ---------- --
+           -- //            --    提交的前提是: 必须有： 供应商(cus_No_Give,cus_Name_Give),起订量(startsellcount),小单费(littleorderprice) 和 已经进行过采购定价
+             isnull(p.is_Check_Out,'0') as isCheckOut,
+            --//审核意见
+             isnull(p.check_Out_Opinion,'') as checkOutOpinion,
+           -- //起订金额
+             isnull(convert(varchar(23),convert(decimal(23,4),p.mini_Order_Amt)),'') as miniOrderAmt,
+            --//财务起订金额
+            isnull(convert(varchar(23),convert(decimal(23,4),p.fi_Mini_Order_Amt)),'') as fiMiniOrderAmt ,
+            --//不含运费单价的销售价格//up_def中bil_type=01
+            isnull(convert(varchar(23),convert(decimal(23,4),u2.up)),'') as noTransUpSale,--//
+           -- //含运费单价销售价格//up_def中bil_type!=01
+           isnull(convert(varchar(23),convert(decimal(23,4),u1.up)),'') as haveTransUpSale,--//
+            --//注意:采购只有本币
+           -- //由于销售价格有本币和外币区别,所以加2个字段区分//然后上面2个作为本币销售
+           -- //不含运费单价的销售价格外币
+            isnull(convert(varchar(23),convert(decimal(23,4),u4.up)),'') as noTransUpSaleWaiBi,
+            --//含运费单价销售价格外币//up_def中bil_type!=01
+             isnull(convert(varchar(23),convert(decimal(23,4),u3.up)),'') as haveTransUpSaleWaiBi,
+             --//主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
+             isnull(p.main_Unit,isnull(u1.hj_no,'')) as mainUnit,  --prdt_samp里的主单位
+             isnull(u1.hj_no,'') as unit,     --- 单位,来自up_def表
+             isnull(convert(varchar(23),convert(decimal(23,4),u1.qty)),'') as qty,
+	      isnull(convert(varchar(23),DATEDIFF(S,'1970-01-01 00:00:00',convert(varchar(23),u1.s_dd,121)) - 8 * 3600)+'000','')as sDd
+    </sql>
+
+    <select id="getCountOfDuoTiaoJianChaXunZongJiLuShuExportExcel" resultType="java.lang.Integer">
+        SELECT count(p.id)
+        FROM PRDT_SAMP p
+        <include refid="leftJoinOfExportExcel"/>
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="exportExcelManyCondition"/>
+    </select>
+
+    <!-- =================================================================================================================== -->
 
     <select id="getUpDefMy" resultMap="UpDefMyBaseResultMap">
         Select

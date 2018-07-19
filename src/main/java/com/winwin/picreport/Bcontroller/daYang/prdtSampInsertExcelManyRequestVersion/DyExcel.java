@@ -26,6 +26,10 @@ public class DyExcel {
     @Autowired
     private Cnst cnst;
 
+
+
+    private final String excel图片无法转换_可能是因为excel格式不对="org.apache.poi.xssf.usermodel.XSSFSimpleShape cannot be cast to org.apache.poi.xssf.usermodel.XSSFPicture";
+    private final String excel图片无法转换_excel格式不对="excel格式不对_excel图片无法转换";
     /**
      * 上传一个包含信息的excel到数据库
      * 这个一次只能穿一个附件
@@ -123,10 +127,14 @@ public class DyExcel {
         }
     }
 
+
     private Msg exceptionReturn(List<String> msgs, Exception e) {
         if (msgs.contains(e.getMessage())) {
             return Msg.gmg().setMsg(e.getMessage()).setStatus("0").setOtherMsg(e.getMessage());
+        }else if(p.dy(excel图片无法转换_可能是因为excel格式不对,e.getMessage())){
+            return Msg.gmg().setMsg(e.getMessage()).setStatus("0").setOtherMsg(excel图片无法转换_excel格式不对);
         } else {
+            e.printStackTrace();
             return Msg.gmg().setMsg("《未知异常》").setStatus("0").setOtherMsg(e.getMessage());
         }
     }
