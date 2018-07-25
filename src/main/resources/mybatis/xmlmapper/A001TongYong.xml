@@ -162,6 +162,10 @@
             <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
         </if>
 
+        <if test=" cusName != null and cusName  != '' ">
+            <![CDATA[ AND cus_Name LIKE  #{ cusName }  ]]>
+        </if>
+
     </sql>
 
 
@@ -301,6 +305,8 @@
         left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='1' and u2.olefield=u1.olefield
         left join up_def u3 on p.prd_no=u3.prd_no and u3.price_id='1' and u3.cur_id='USD' and u3.bil_type='2' and u3.olefield=u2.olefield
         left join up_def u4 on p.prd_no=u4.prd_no and u4.price_id='1' and u4.cur_id='USD' and u4.bil_type='1' and u4.olefield=u3.olefield
+        -- left join up_def u5 on p.prd_no=u5.prd_no and u5.price_id='2' and u5.cur_id='RMB' and u5.bil_type='1' and u5.prm_no=u4.prm_no -- 无运费
+        -- left join up_def u6 on p.prd_no=u6.prd_no and u6.price_id='2' and u6.cur_id='RMB' and u6.bil_type='' and u6.olefield=u5.olefield -- 有运费
     </sql>
 
     <sql id="exportExcelManyCondition">
@@ -335,6 +341,9 @@
         <if test=" isCheckOut != null and isCheckOut  != '' ">
             <![CDATA[ AND p.is_Check_Out LIKE  #{ isCheckOut }  ]]>
         </if>
+        <if test=" cusName != null and cusName  != '' ">
+            <![CDATA[ AND p.cus_name LIKE  #{ cusName }  ]]>
+        </if>
     </sql>
 
 
@@ -345,6 +354,8 @@
         left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
         left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u22.olefield
         left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u33.olefield
+        -- left join up_def u55 on p.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u44.prm_no -- 无运费
+        -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
     </sql>
 
     <sql id="exportExcelManyCondition1">
@@ -378,6 +389,9 @@
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
             <![CDATA[ AND p1.is_Check_Out LIKE  #{ isCheckOut }  ]]>
+        </if>
+        <if test=" cusName != null and cusName  != '' ">
+            <![CDATA[ AND p1.cus_name LIKE  #{ cusName }  ]]>
         </if>
     </sql>
 
@@ -469,6 +483,8 @@
              isnull(p.main_Unit,isnull(u1.hj_no,'')) as mainUnit,  --prdt_samp里的主单位
              isnull(u1.hj_no,'') as unit,     --- 单位,来自up_def表
              isnull(convert(varchar(23),convert(decimal(23,4),u1.qty)),'') as qty,
+            -- isnull(u1.prm_no,'') as prmNo,
+            -- isnull(convert(varchar(23),convert(decimal(23,4),u5.qty)),isnull(convert(varchar(23),convert(decimal(23,4),u6.qty)),'')) as qty,
 	      isnull(convert(varchar(23),DATEDIFF(S,'1970-01-01 00:00:00',convert(varchar(23),u1.s_dd,121)) - 8 * 3600)+'000','')as sDd
     </sql>
 

@@ -38,6 +38,14 @@ public class UpDefMy01 extends UpDefMy {
     //货号,后台数据流转用
     String prdNo;
 
+    //数量
+    public BigDecimal getQty() {
+        if(null==qty){
+            return qty;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(qty)));
+        }
+    }
 
     public String getPrdNo() {
         return prdNo;
@@ -49,9 +57,13 @@ public class UpDefMy01 extends UpDefMy {
 
 
 
-
     public BigDecimal getNoTransUpSaleWaiBi() {
-        return noTransUpSaleWaiBi;
+        if(null==noTransUpSaleWaiBi){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(noTransUpSaleWaiBi)));
+        }
+//        return noTransUpSaleWaiBi;
     }
 
     public UpDefMy01 setNoTransUpSaleWaiBi(BigDecimal noTransUpSaleWaiBi) {
@@ -60,7 +72,12 @@ public class UpDefMy01 extends UpDefMy {
     }
 
     public BigDecimal getHaveTransUpSaleWaiBi() {
-        return haveTransUpSaleWaiBi;
+        if(null==haveTransUpSaleWaiBi){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(haveTransUpSaleWaiBi)));
+        }
+//        return haveTransUpSaleWaiBi;
     }
 
     public UpDefMy01 setHaveTransUpSaleWaiBi(BigDecimal haveTransUpSaleWaiBi) {
@@ -88,9 +105,12 @@ public class UpDefMy01 extends UpDefMy {
                 this.noTransUpBuy=this.up;
                 return this.up;
             }
-
         }
-        return noTransUpBuy;
+        if(null==noTransUpBuy){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(noTransUpBuy)));
+        }
     }
 
 
@@ -108,7 +128,12 @@ public class UpDefMy01 extends UpDefMy {
                 return this.up;
             }
         }
-        return haveTransUpBuy;
+        if(null==haveTransUpBuy){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(haveTransUpBuy)));
+        }
+//        return haveTransUpBuy;
     }
 
     public UpDefMy01 setHaveTransUpBuy(BigDecimal haveTransUpBuy) {
@@ -125,7 +150,12 @@ public class UpDefMy01 extends UpDefMy {
             }
 
         }
-        return noTransUpSale;
+        if(null==noTransUpSale){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(noTransUpSale)));
+        }
+//        return noTransUpSale;
     }
 
     public UpDefMy01 setNoTransUpSale(BigDecimal noTransUpSale) {
@@ -141,7 +171,12 @@ public class UpDefMy01 extends UpDefMy {
             }
 
         }
-        return haveTransUpSale;
+        if(null==haveTransUpSale){
+            return null;
+        }else{
+            return new BigDecimal(p.del0(String.valueOf(haveTransUpSale)));
+        }
+//        return haveTransUpSale;
     }
 
     public UpDefMy01 setHaveTransUpSale(BigDecimal haveTransUpSale) {

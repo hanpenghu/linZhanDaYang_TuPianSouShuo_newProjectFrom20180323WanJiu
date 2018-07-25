@@ -1,8 +1,10 @@
 package com.winwin.picreport.Edto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.ConstantInit;
+import com.winwin.picreport.Futils.hanhan.p;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +113,7 @@ public class PrdtSampExcleExportManyCondition {
     private String buyerdesc;
     //货号
     private String prdNo;
+
 
     //销售描述
     private String salemandesc;
@@ -590,6 +593,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getFinancelittleorderprice() {
+        if(p.notEmpty(financelittleorderprice)){
+            financelittleorderprice=p.del0(financelittleorderprice);
+        }
         return financelittleorderprice;
     }
 
@@ -686,6 +692,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getNoTransUpSale() {
+        if(p.notEmpty(noTransUpSale)){
+            noTransUpSale=p.del0(noTransUpSale);
+        }
         return noTransUpSale;
     }
 
@@ -694,6 +703,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getHaveTransUpSale() {
+        if(p.notEmpty(haveTransUpSale)){
+            haveTransUpSale=p.del0(haveTransUpSale);
+        }
         return haveTransUpSale;
     }
 
@@ -702,6 +714,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getNoTransUpSaleWaiBi() {
+        if(p.notEmpty(noTransUpSaleWaiBi)){
+            noTransUpSaleWaiBi=p.del0(noTransUpSaleWaiBi);
+        }
         return noTransUpSaleWaiBi;
     }
 
@@ -710,6 +725,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getHaveTransUpSaleWaiBi() {
+        if(p.notEmpty(haveTransUpSaleWaiBi)){
+            haveTransUpSaleWaiBi=p.del0(haveTransUpSaleWaiBi);
+        }
         return haveTransUpSaleWaiBi;
     }
 

@@ -23,8 +23,8 @@ public class SalePriceGetController {
         List<String> ms=new LinkedList<String>();
         List<UpDefStr> upDefStrs=new LinkedList<UpDefStr>();
         try {
-            this.f打印(uuid);
-            this.f前端数据是否非法(uuid,ms);
+            this.print(uuid);
+            this.isIgll(uuid,ms);
             upDefStrs = giveSaleService.f(uuid, ms);
         } catch (Exception e) {
             return controllerIgllReturn(e,ms);
@@ -36,14 +36,14 @@ public class SalePriceGetController {
 
 
 
-    private void f前端数据是否非法(String uuid,List<String> ms) {
+    private void isIgll(String uuid, List<String> ms) {
         if(p.empty(uuid)){
             p.throwEAddToList("前端传过来的uuid是空的",ms);
         }
     }
 
 
-    private void f打印(String uuid) {
+    private void print(String uuid) {
         p.p("----salePriceGet接口---------前端传过来的prdt_samp的id是uuid="+uuid+"---------------");
     }
 

@@ -1,14 +1,15 @@
 package com.winwin.picreport.Edto;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.ConstantInit;
 import com.winwin.picreport.Bcontroller.daYang.dto.AlterPriceRecToFront;
 import com.winwin.picreport.Futils.hanhan.p;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 //PrdtSamp是原汁原味的自动生成的,  PrdtSamp0是添加的功能
 public class PrdtSamp0 extends PrdtSamp{
@@ -54,6 +55,14 @@ public class PrdtSamp0 extends PrdtSamp{
         this.dirUrl= ConstantInit.getDirUrl001();
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public BigDecimal getFinancelittleorderprice() {
+        if(p.notEmpty(financelittleorderprice)){
+            financelittleorderprice=new BigDecimal(p.del0(String.valueOf(financelittleorderprice)));
+        }
+        return financelittleorderprice;
+    }
+
 
     public String getUsr() {
         if(p.notEmpty(getUserName())){

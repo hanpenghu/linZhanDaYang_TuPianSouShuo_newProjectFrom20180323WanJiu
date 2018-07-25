@@ -213,6 +213,43 @@ public strictfp class p {
         throw new RuntimeException(strException);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *去掉数字   后面无用的0
+     * */
+
+    public static String del0(String s){
+        if(null==s||"".equals(s)){
+            return null;
+        }else{
+            //注意有的数字有逗号分隔符
+            s=s.replace(",","");
+            try {
+                new BigDecimal(s);
+            } catch (Exception e) {
+                //不是数字
+                return null;
+            }
+            if(s.contains(".")){
+                while(s.endsWith("0")){
+                    s=s.substring(0,s.lastIndexOf("0"));
+                }
+                if(s.endsWith(".")){
+                    s=s.substring(0,s.lastIndexOf("."));
+                }
+                return s;
+            }else{
+                return s;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 public static List<?extends Object> removeNull(List<?extends Object> list) {
     if(notEmpty(list)){
         while(list.contains(null)){
@@ -1438,27 +1475,26 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
      * 和min的值都写一样,比如max=min=4就是说四舍五入后小数后面留4位
      * */
     public static String getNum(int max,int min,String num){
+        num=num.replace(",","");
         BigDecimal b;
         try {
             b = new BigDecimal(num);
         } catch (Exception e) {
-            p("p.getNum yao format de bu shi shuZi001");
+            p("p.getNum yao format de bu shi shuZi001 ----  public static String getNum(int max,int min,String num)");
             return null;
         }
         try {
             java.text.NumberFormat  f  =  java.text.DecimalFormat.getInstance();
             f.setMaximumFractionDigits(max);
             f.setMinimumFractionDigits(min);
-            return f.format(b);
+            return f.format(b).replace(",","");
         } catch (Exception e) {
-            p("p.getNum yao format de bu shi shuZi002");
+            p("p.getNum yao format de bu shi shuZi002 ------ public static String getNum(int max,int min,String num)");
             return null;
         }
     }
 
-    /*public static void main(String[]args){
-            p.p(getNum(4,1,"657573.1423929831"));
-    }*/
+
 
 
 

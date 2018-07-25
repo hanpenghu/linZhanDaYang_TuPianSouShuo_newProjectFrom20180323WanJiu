@@ -72,6 +72,26 @@ public class PrdtSamp1 {
     //0代表未提交的,  1代表已经提交未审核的,  2代表已经审核的
     private String isCheckOut;
 
+    private String  cusName;
+
+    private String cusNo;
+
+
+    public String getCusName() {
+        return cusName;
+    }
+
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
+
+    public String getCusNo() {
+        return cusNo;
+    }
+
+    public void setCusNo(String cusNo) {
+        this.cusNo = cusNo;
+    }
 
     public String getIsCheckOut() {
         return isCheckOut;

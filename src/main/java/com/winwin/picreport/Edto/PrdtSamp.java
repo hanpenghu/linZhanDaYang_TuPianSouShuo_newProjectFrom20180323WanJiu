@@ -101,6 +101,7 @@ public class PrdtSamp {
     protected Date stopusedate;
 
 
+
     //创建人的userName,实际上我传给徐勇的放在userEmail字段了
     protected String userName;
     //创建人所在的公司,

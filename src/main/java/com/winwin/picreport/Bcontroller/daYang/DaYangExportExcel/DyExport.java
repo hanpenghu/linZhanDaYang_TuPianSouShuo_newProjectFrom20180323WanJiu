@@ -2,8 +2,7 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.UpDef;
-import com.winwin.picreport.Edto.UpDefExample;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.FileUtils;
@@ -571,10 +570,33 @@ public class DyExport {
             p.strValeOfNullSpace(daoChu);
             String thum = this.a缩略图全路径生成(daoChu);
             daoChu.setThum(thum);
+            this.NmEngSet(daoChu);
             daoChuList.add(daoChu);
 
         }
         return daoChuList;
+    }
+
+    private void NmEngSet(DaoChu daoChu) {
+        if(p.empty(daoChu.getNmEng())){
+            if(p.notEmpty(daoChu)){
+                if(p.notEmpty(daoChu.getCusNo())){
+                    CustWithBLOBs custWithBLOBs = cnst.custMapper.selectByPrimaryKey(daoChu.getCusNo());
+                    if(custWithBLOBs==null){
+                        CustExample ce=new CustExample();
+                        ce.createCriteria().andNameEqualTo(daoChu.getCusName());
+                        List<CustWithBLOBs> custWithBLOBs1 = cnst.custMapper.selectByExampleWithBLOBs(ce);
+                        if(p.notEmpty(custWithBLOBs1)){
+                            daoChu.setNmEng(custWithBLOBs1.get(0).getNmEng());
+                        }
+                    }else{
+                        daoChu.setNmEng(custWithBLOBs.getNmEng());
+                    }
+
+                }
+            }
+        }
+
     }
 
 

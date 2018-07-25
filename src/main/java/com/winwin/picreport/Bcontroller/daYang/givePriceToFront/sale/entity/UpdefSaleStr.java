@@ -72,7 +72,11 @@ public class UpdefSaleStr {
     }
 
     public String getQty() {
-        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,qty);
+        String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, qty);
+        if(p.notEmpty(num)){
+            num=p.del0(num);
+        }
+        return num;
     }
 
     public void setQty(String qty) {
@@ -80,7 +84,11 @@ public class UpdefSaleStr {
     }
 
     public String getHaveTransUpBenBi() {
-        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,haveTransUpBenBi);
+        String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, haveTransUpBenBi);
+        if(p.notEmpty(num)){
+            num=p.del0(num);
+        }
+        return num;
     }
 
     public void setHaveTransUpBenBi(String haveTransUpBenBi) {
@@ -88,7 +96,11 @@ public class UpdefSaleStr {
     }
 
     public String getHaveTransUpWaiBi() {
-        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,haveTransUpWaiBi);
+        String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, haveTransUpWaiBi);
+        if(p.notEmpty(num)){
+            num=p.del0(num);
+        }
+        return num;
     }
 
     public void setHaveTransUpWaiBi(String haveTransUpWaiBi) {
@@ -96,7 +108,12 @@ public class UpdefSaleStr {
     }
 
     public String getNoTransUpBenBi() {
-        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,noTransUpBenBi);
+        String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, noTransUpBenBi);
+        if(p.notEmpty(num)){
+            num=p.del0(num);
+        }
+        return num;
+
     }
 
     public void setNoTransUpBenBi(String noTransUpBenBi) {
@@ -104,7 +121,11 @@ public class UpdefSaleStr {
     }
 
     public String getNoTransUpWaiBi() {
-        return p.getNum(Cnst .pointAfter,Cnst .pointAfter,noTransUpWaiBi);
+        String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, noTransUpWaiBi);
+        if(p.notEmpty(num)) {
+            num=p.del0(num);
+        }
+        return num;
     }
 
     public void setNoTransUpWaiBi(String noTransUpWaiBi) {

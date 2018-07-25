@@ -52,6 +52,8 @@ public class InfoEdit_ManyAttach {
         p.p("---------------------------555----------------------------");
         this.f保存单张图片(prdtSamp,thum,projectPath,uuid,prdtSampOb,ms);
         this.f保存多个附件(attachList,prdtSampOb,projectPath,ms);
+        //更新商品主库的停用时间
+        this.f更新商品主库的停用时间(prdtSampOb);
     }
 
     @Transactional
@@ -118,6 +120,7 @@ public class InfoEdit_ManyAttach {
         prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
         prdtSampOb.setIsconfirm(null);
         prdtSampOb.setIsCheckOut(Cnst.weiTiJiao);
+
         //Selective是不更新null
         cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
     }
@@ -153,8 +156,6 @@ public class InfoEdit_ManyAttach {
             prdtSampO.setIsconfirm(null);//不更新这个
             //Selective是不更新null
             cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
-            //更新商品主库的停用时间
-            this.f更新商品主库的停用时间(prdtSampO);
             if (attach != null && !new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
                 p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);
             }
@@ -165,20 +166,22 @@ public class InfoEdit_ManyAttach {
     @Transactional
     public void f更新商品主库的停用时间(PrdtSamp0 prdtSampO) {
         Date stopusedate = prdtSampO.getStopusedate();
-        String prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
-        PrdtWithBLOBs prdt = new PrdtWithBLOBs();
-        prdt.setPrdNo(prdNo);
-        prdt.setNouseDd(stopusedate);
-        if (p.notEmpty(prdNo)) {
-            if (stopusedate == null) {
-                p.p("前端传过来的停用时间是null");
-            } else {
-                //selective的意思就是null的不更新
-                Integer i = cnst.a001TongYongMapper.updatePrdtNouseDd(prdNo, p.dtoStr(stopusedate));
-            }
+        if(null!=stopusedate){
+            String prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
+//            PrdtWithBLOBs prdt = new PrdtWithBLOBs();
+//            prdt.setPrdNo(prdNo);
+//            prdt.setNouseDd(stopusedate);
+            if (p.notEmpty(prdNo)) {
+                if (stopusedate == null) {
+                    p.p("前端传过来的停用时间是null");
+                } else {
+                    //selective的意思就是null的不更新
+                    Integer i = cnst.a001TongYongMapper.updatePrdtNouseDd(prdNo, p.dtoStr(stopusedate));
+                }
 
-        } else {
-            System.out.println("prdNo是空的,无法更新prdt的停用时间");
+            } else {
+                System.out.println("prdNo是空的,无法更新prdt的停用时间");
+            }
         }
     }
 

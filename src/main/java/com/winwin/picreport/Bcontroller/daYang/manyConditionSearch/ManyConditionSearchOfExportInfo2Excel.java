@@ -1,9 +1,7 @@
 package com.winwin.picreport.Bcontroller.daYang.manyConditionSearch;
 
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.PrdtSamp0;
-import com.winwin.picreport.Edto.PrdtSamp1;
-import com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition;
+import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.FenYe;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +100,7 @@ public class ManyConditionSearchOfExportInfo2Excel {
                 cnst.getPriceModelUpdef20180512.getPriceModel(p0);
                 pp.setUpDefMyList(p0.getUpDefMyList());
                 pp.setUpDefMyListBuy(p0.getUpDefMyListBuy());
+                this.qtySet(pp);
             }
         }
 //        p.p("--------------------List<PrdtSampExcleExportManyCondition> prdtSampExcels = -----------------------------------");
@@ -114,6 +113,32 @@ public class ManyConditionSearchOfExportInfo2Excel {
 
 
     }
+
+    private String qtySet(PrdtSampExcleExportManyCondition pp) {
+        if(p.notEmpty(pp.getQty())){
+            pp.setQty(p.del0(pp.getQty()));
+            return "结束";
+        }else{
+            if(p.notEmpty(pp.getPrdNo())){
+                UpDefExample u=new UpDefExample();
+                u.createCriteria().andPrdNoEqualTo(pp.getPrdNo());
+                List<UpDef> upDefs = cnst.upDefMapper.selectByExample(u);
+                for(UpDef uu:upDefs){
+                    if(null!=uu.getQty()){
+                        pp.setQty(String.valueOf(uu.getQty()));
+                        if(null!=pp.getQty()) {
+                            pp.setQty(p.del0(pp.getQty()));
+                        }
+                        return "结束";
+                    }
+                }
+            }
+        }
+        return "结束";
+    }
+
+
+
 
 
 
