@@ -362,16 +362,36 @@ public class DyExport {
                 cell.setCellValue(daoChu.getMainUnit()); // 设置内容13
             }
             if ("Price 单价美元".equals(s)) {
-                cell.setCellValue(daoChu.getNoTransUpSaleWaiBi()); // 设置内容--14
+                String noTransUpSaleWaiBi = daoChu.getNoTransUpSaleWaiBi();
+                if(p.notEmpty(noTransUpSaleWaiBi)){
+                    noTransUpSaleWaiBi=p.del0(noTransUpSaleWaiBi);
+                    noTransUpSaleWaiBi="$"+noTransUpSaleWaiBi;
+                }
+                cell.setCellValue(noTransUpSaleWaiBi); // 设置内容--14
             }
             if ("Price 单价(Lisa填写)".equals(s)) {
-                cell.setCellValue(daoChu.getNoTransUpSaleBenBi()); // 设置内容--15
+                String noTransUpSaleBenBi = daoChu.getNoTransUpSaleBenBi();
+                if(p.notEmpty(noTransUpSaleBenBi)) {
+                    noTransUpSaleBenBi=p.del0(noTransUpSaleBenBi);
+                    noTransUpSaleBenBi="¥"+noTransUpSaleBenBi;
+                }
+                cell.setCellValue(noTransUpSaleBenBi); // 设置内容--15
             }
             if ("含运费价格 美元".equals(s)) {
-                cell.setCellValue(daoChu.getHaveTransUpSaleWaiBi()); // 设置内容--  16
+                String haveTransUpSaleWaiBi = daoChu.getHaveTransUpSaleWaiBi();
+                if(p.notEmpty(haveTransUpSaleWaiBi)){
+                    haveTransUpSaleWaiBi=p.del0(haveTransUpSaleWaiBi);
+                    haveTransUpSaleWaiBi="$"+haveTransUpSaleWaiBi;
+                }
+                cell.setCellValue(haveTransUpSaleWaiBi); // 设置内容--  16
             }
             if ("含运费价格".equals(s)) {
-                cell.setCellValue(daoChu.getHaveTransUpSaleBenBi()); // 设置内容--17
+                String haveTransUpSaleBenBi = daoChu.getHaveTransUpSaleBenBi();
+                if(p.notEmpty(haveTransUpSaleBenBi)){
+                    haveTransUpSaleBenBi=p.del0(haveTransUpSaleBenBi);
+                    haveTransUpSaleBenBi="¥"+haveTransUpSaleBenBi;
+                }
+                cell.setCellValue(haveTransUpSaleBenBi); // 设置内容--17
             }
             if ("MOQ 起订量要求 (Lisa填写)".equals(s)) {
                 cell.setCellValue(daoChu.getFinancestartsellcount()); // 设置内容--18

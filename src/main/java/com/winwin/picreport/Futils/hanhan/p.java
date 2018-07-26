@@ -218,28 +218,33 @@ public strictfp class p {
      * */
 
     public static String del0(String s){
-        if(null==s||"".equals(s)){
-            return null;
-        }else{
-            //注意有的数字有逗号分隔符
-            s=s.replace(",","");
-            try {
-                new BigDecimal(s);
-            } catch (Exception e) {
-                //不是数字
+        try {
+            if(null==s||"".equals(s)){
                 return null;
-            }
-            if(s.contains(".")){
-                while(s.endsWith("0")){
-                    s=s.substring(0,s.lastIndexOf("0"));
-                }
-                if(s.endsWith(".")){
-                    s=s.substring(0,s.lastIndexOf("."));
-                }
-                return s;
             }else{
-                return s;
+                //注意有的数字有逗号分隔符
+                s=s.replace(",","");
+                try {
+                    new BigDecimal(s);
+                } catch (Exception e) {
+                    //不是数字
+                    return null;
+                }
+                if(s.contains(".")){
+                    while(s.endsWith("0")){
+                        s=s.substring(0,s.lastIndexOf("0"));
+                    }
+                    if(s.endsWith(".")){
+                        s=s.substring(0,s.lastIndexOf("."));
+                    }
+                    return s;
+                }else{
+                    return s;
+                }
             }
+        } catch (Exception e) {
+            p.p("--------public static String del0(String s) 异常--------");
+            return s;
         }
     }
 

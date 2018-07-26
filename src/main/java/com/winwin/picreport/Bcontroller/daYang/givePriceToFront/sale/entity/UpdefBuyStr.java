@@ -118,6 +118,10 @@ public class UpdefBuyStr {
         this.haveTransUpWaiBi = haveTransUpWaiBi;
     }
 
+
+
+
+
     public String getNoTransUpBenBi() {
         String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, noTransUpBenBi);
         if(p.notEmpty(num)){
@@ -125,6 +129,7 @@ public class UpdefBuyStr {
         }
         return num;
     }
+
 
 
 

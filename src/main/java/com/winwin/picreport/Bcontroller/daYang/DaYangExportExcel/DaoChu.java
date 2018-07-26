@@ -135,7 +135,9 @@ public class DaoChu {
 
 
     public String getNoTransUpSaleWaiBi() {
+
         return noTransUpSaleWaiBi;
+
     }
 
     public void setNoTransUpSaleWaiBi(String noTransUpSaleWaiBi) {

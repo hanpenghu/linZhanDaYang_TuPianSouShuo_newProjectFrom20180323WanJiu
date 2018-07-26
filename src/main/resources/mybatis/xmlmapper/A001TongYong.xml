@@ -153,10 +153,10 @@
             AND  isnull(isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
-            <![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>
+            <![CDATA[ AND convert(datetime,confirmtimestr) >=  #{confirmtimestr}  ]]>
         </if>
         <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
-            <![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+            <![CDATA[ AND convert(datetime,confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
             <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
@@ -333,10 +333,10 @@
             AND  isnull(p.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
-            <![CDATA[ AND p.confirmTimeStr >=  #{confirmtimestr}  ]]>
+            <![CDATA[ AND convert(datetime,p.confirmtimestr) >=  #{confirmtimestr}  ]]>
         </if>
         <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
-            <![CDATA[ AND p.confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+            <![CDATA[ AND convert(datetime,p.confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
             <![CDATA[ AND p.is_Check_Out LIKE  #{ isCheckOut }  ]]>
@@ -382,10 +382,10 @@
             AND  isnull(p1.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
-            <![CDATA[ AND p1.confirmTimeStr >=  #{confirmtimestr}  ]]>
+            <![CDATA[ AND convert(datetime,p1.confirmtimestr) >=  #{confirmtimestr}  ]]>
         </if>
         <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
-            <![CDATA[ AND p1.confirmTimeStr <=  #{confirmtimestrEnd}  ]]>
+            <![CDATA[ AND convert(datetime,p1.confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
             <![CDATA[ AND p1.is_Check_Out LIKE  #{ isCheckOut }  ]]>
