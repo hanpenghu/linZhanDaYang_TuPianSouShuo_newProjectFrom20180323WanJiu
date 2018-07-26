@@ -104,12 +104,15 @@ public class UpdefBuyStr {
     }
 
     public String getHaveTransUpWaiBi() {
+
         String num = p.getNum(Cnst.pointAfter, Cnst.pointAfter, haveTransUpWaiBi);
         if(p.notEmpty(num)) {
             num=p.del0(num);
         }
         return num;
     }
+
+
 
     public void setHaveTransUpWaiBi(String haveTransUpWaiBi) {
         this.haveTransUpWaiBi = haveTransUpWaiBi;
@@ -122,6 +125,10 @@ public class UpdefBuyStr {
         }
         return num;
     }
+
+
+
+
 
     public void setNoTransUpBenBi(String noTransUpBenBi) {
         this.noTransUpBenBi = noTransUpBenBi;
