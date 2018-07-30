@@ -393,5 +393,5 @@ public interface A001TongYongMapper {
     List<PrdtSampExcleExportManyCondition> chanPinBianMaJianDangTiaoJianChaXunExportExcel(PrdtSamp1 p1);
 
 
-
+    List<String> diGuiFenLeiName(@Param("fenLeiName") String fenLeiName);
 }

@@ -93,6 +93,7 @@ public class ManyConditionSearchOfExportInfo2Excel {
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         List<PrdtSampExcleExportManyCondition> prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
+
         for(PrdtSampExcleExportManyCondition pp:prdtSampExcels){
             if(p.notEmpty(pp.getPrdNo())){
                 PrdtSamp0 p0=new PrdtSamp0();

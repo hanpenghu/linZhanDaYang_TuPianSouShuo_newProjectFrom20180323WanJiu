@@ -2,15 +2,16 @@ package com.winwin.picreport.Futils;
 
 
 import com.winwin.picreport.Edto.TokenYuanMa;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 
 public class TokenChaiJie {
-    public static boolean tokenChaiJie(TokenYuanMa tokenYuanMa, String token1 , HttpServletResponse response){
+    public static boolean tokenChaiJie(TokenYuanMa tokenYuanMa,String token1,HttpServletResponse response){
 //        tokenYuanMa=new TokenYuanMa();
-        if(!NotEmpty.notEmpty(token1)){//空的时候
+        if(p.empty(token1)){//空的时候
             TipMsg.falseOfNoLogin(response);
             return false;
         }
@@ -24,7 +25,7 @@ public class TokenChaiJie {
             TipMsg.falseOfNoLogin(response);
             return false;
         }
-        if(!NotEmpty.notEmpty(token)){
+        if(p.empty(token)){
             TipMsg.falseOfNoLogin(response);
             return false;
         }
@@ -45,5 +46,9 @@ public class TokenChaiJie {
         String userEmail = split[2];
         tokenYuanMa.setTimestr(timestr).setTenantId(tenantId).setUserEmail(userEmail);
         return true;
+    }
+
+    public static void main(String[]args){
+        p.p(new String(Base64.getUrlDecoder().decode("MTUxNTYzNDkzODE4Mnt-fVNIQU5HSEFJIExJTkdaSEFOe359MTM4MDE4MDI5MTU=")));
     }
 }

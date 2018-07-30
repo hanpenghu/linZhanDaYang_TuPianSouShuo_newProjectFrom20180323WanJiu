@@ -22,7 +22,7 @@ import java.util.Date;
 @Order(2)
 @Component("cnst")
 public class Cnst {
-
+    public static final String saveExcelTemp="saveExcelTemp";
     //保留小数位数
     public static final int pointAfter=4;
 

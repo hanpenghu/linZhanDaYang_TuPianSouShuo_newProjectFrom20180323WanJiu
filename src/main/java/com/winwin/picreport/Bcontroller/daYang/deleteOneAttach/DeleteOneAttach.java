@@ -40,6 +40,34 @@ public class DeleteOneAttach {
         return Msg.gmg().setMsg("删除成功").setStatus("1");
     }
 
+
+    @RequestMapping(value = "deleteSomeAttach",
+            method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody
+    Msg deleteSomeAttach(@RequestBody List<String> attachUrls) {
+        List<String> msgList=new LinkedList<>();
+        try {
+            this.throwEs(attachUrls,msgList);
+            cnst.dyDeleteOneAttach.fMany(attachUrls,msgList);
+        } catch (Exception e) {
+            if(msgList.contains(e.getMessage())){
+                return Msg.gmg().setMsg("删除失败！").setStatus("0");
+            }else{
+                return Msg.gmg().setMsg("删除失败！未知异常").setStatus("0");
+            }
+        }
+        return Msg.gmg().setMsg("删除成功").setStatus("1");
+    }
+
+    private void throwEs(List<String> attachUrls,List<String> msgList){
+        if(p.empty(attachUrls)){
+            p.throwEAddToList("前端传过来的数组是空的",msgList);
+        }
+        for(String s:attachUrls){
+            throwE(s,msgList);
+        }
+    }
+
     private void throwE(String attachUrl,List<String> msgList){
         if(p.empty(attachUrl)){
             commonMsgthrow(msgList,"前端穿过来的附件url是空的！");

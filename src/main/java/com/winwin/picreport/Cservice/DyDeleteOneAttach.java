@@ -19,6 +19,13 @@ public class DyDeleteOneAttach {
     private Cnst cnst;
     private String xg="/";
 
+    @Transactional
+    public void fMany(List<String> attachUrls, List<String> msgList) {
+        for(String attachUrl:attachUrls){
+            this.f(attachUrl,msgList);
+        }
+    }
+
     //   //"http://127.0.0.1:8070/suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg"
     @Transactional
     public void f(String attachUrl,List<String> msgList){
@@ -57,49 +64,49 @@ public class DyDeleteOneAttach {
 
     //得到  suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg;   这种
     @Transactional
-    private String 得到db存储的url(String attachUrl){
+    public String 得到db存储的url(String attachUrl){
         String s = p.strCut(attachUrl, cnst.fuJianWenJianJia)+p.fh;
         return s;
     }
-
-    private String 得到文件名字(String attachUrl){
+    @Transactional
+    public String 得到文件名字(String attachUrl){
         attachUrl= attachUrl+"{~}";
         String s = p.strCutNoHead(attachUrl,cnst.fuJianWenJianJia,"{~}").replace("{~}","");
         return s;
     }
-
-    private void commonMsgthrow(List<String> msgList,String msgStr){
+    @Transactional
+    public void commonMsgthrow(List<String> msgList,String msgStr){
         msgList.add(msgStr);
         l.error(msgStr);
         p.throwE(msgStr);
     }
 
-
+    @Transactional
     //得到的是   daYangSuoLueTuAndFuJianZongPath/  这种
-    private String getZongPathBeforeNo_AndAfterHave_(){
+    public String getZongPathBeforeNo_AndAfterHave_(){
         //得 到     ./daYangSuoLueTuAndFuJianZongPath/
         String daYangSuoLueTuAndFuJianZongPath = cnst.daYangSuoLueTuAndFuJianZongPath;
         return daYangSuoLueTuAndFuJianZongPath.substring(2).replace("/",File.separator);//从0算 包头不包尾部
     }
 
-
+    @Transactional
     //得到   suoLueTuAndFuJian/  这种
-    private String getAttachDirPath(){
+    public String getAttachDirPath(){
         return  cnst.fuJianWenJianJia.replace("/",File.separator);
     }
 
 
-
+    @Transactional
     //得到  daYangSuoLueTuAndFuJianZongPath/suoLueTuAndFuJian/这种
-    private String getAttachDirPathAfterHave_(){
+    public String getAttachDirPathAfterHave_(){
         return (getZongPathBeforeNo_AndAfterHave_()+getAttachDirPath()).replace("/",File.separator);
     }
 
 
-
+    @Transactional
     //得到  全路径父目录类似  E：/xx/daYangSuoLueTuAndFuJianZongPath/suoLueTuAndFuJian/
     //p.springBootJarPath()后面带杠
-    private String getParentAbsolutPath(){
+    public String getParentAbsolutPath(){
         return p.springBootJarPath()+getAttachDirPathAfterHave_();
     }
 
@@ -109,4 +116,6 @@ public class DyDeleteOneAttach {
 
 
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
+
+
 }

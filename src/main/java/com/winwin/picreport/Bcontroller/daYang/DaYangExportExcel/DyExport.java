@@ -19,7 +19,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -74,14 +73,14 @@ public class DyExport {
         if (null == ep) {
             return null;
         }
-        List<String> idsFromConfirmTime = this.idsFromConfirmTime(ep);
-        p.p("--------------------this.idsFromConfirmTime(ep, idsFromConfirmTime);-----------------------------------");
+        List<String> idsFromConfirmTime = this.idsFromManyConditionSearch(ep);
+        p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
         p.p(idsFromConfirmTime);
         p.p("-------------------------------------------------------");
         List<String> list导出头信息 = f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
-        //为了装入 idsFromConfirmTime
+        //为了装入 idsFromManyConditionSearch
         if (null == ids) {
             ids = new LinkedList<String>();
         }
@@ -168,7 +167,7 @@ public class DyExport {
 
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-        p.p("--perfectIds()----idsFromConfirmTime=" + idsFromConfirmTime + "----------------");
+        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
         p.p("---perfectIds()---ids=" + ids + "----------------");
         if (p.notEmpty(ids)) {
             l.error("----3---前端穿过来的ids不为空----------------");
@@ -183,8 +182,37 @@ public class DyExport {
     }
 
 
-    private List<String> idsFromConfirmTime(ExportXlsParam ep) {
-        p.p("---------idsFromConfirmTime--------------ExportXlsParam--------------------------------");
+    private List<String> idsFromManyConditionSearch(ExportXlsParam ep) {
+        List<ExportXlsParam>epList=new LinkedList<ExportXlsParam>();
+        if(p.empty(ep.getFenLeiName())){
+            epList.add(ep);
+        }else{
+            List<String>fenLeiNameList=cnst.a001TongYongMapper.diGuiFenLeiName(ep.getFenLeiName());
+            if(p.notEmpty(fenLeiNameList)){
+                for (String s:fenLeiNameList){
+                    if(p.notEmpty(s)){
+                        ExportXlsParam e=new ExportXlsParam();
+                        BeanUtils.copyProperties(ep,e);
+                        e.setFenLeiName(s);
+                        epList.add(e);
+                    }
+                }
+            }
+        }
+
+        List <String>ids来自多条件查询=new LinkedList<>();
+        for( ExportXlsParam ee:epList){
+            List<String> idList一次查询 = this.f得到一次多条件的ids(ee);
+            if(p.notEmpty(idList一次查询)){
+                ids来自多条件查询.addAll(idList一次查询);
+            }
+        }
+
+        return ids来自多条件查询;
+    }
+
+    private List<String> f得到一次多条件的ids(ExportXlsParam ep) {
+        p.p("---------idsFromManyConditionSearch--------------ExportXlsParam--------------------------------");
         p.p(ep);
         p.p("-------------------------------------------------------");
         List<String> ids来自多条件查询 = null;
@@ -195,9 +223,9 @@ public class DyExport {
             if (p.notEmpty(ids来自多条件查询)) {
                 l.error("--2----起止时间得到的ids不为空----------");
             } else {
-                l.error("--2----起止时间得到的ids为null---idsFromConfirmTime=" + ids来自多条件查询 + "-------");
+                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
             }
-            p.p("--idsFromConfirmTime= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
             p.p(ids来自多条件查询);
             p.p("-------------------------------------------------------");
         }
@@ -365,7 +393,7 @@ public class DyExport {
                 String noTransUpSaleWaiBi = daoChu.getNoTransUpSaleWaiBi();
                 if(p.notEmpty(noTransUpSaleWaiBi)){
                     noTransUpSaleWaiBi=p.del0(noTransUpSaleWaiBi);
-                    noTransUpSaleWaiBi="$"+noTransUpSaleWaiBi;
+                    noTransUpSaleWaiBi=p.dollor+noTransUpSaleWaiBi;
                 }
                 cell.setCellValue(noTransUpSaleWaiBi); // 设置内容--14
             }
@@ -373,7 +401,7 @@ public class DyExport {
                 String noTransUpSaleBenBi = daoChu.getNoTransUpSaleBenBi();
                 if(p.notEmpty(noTransUpSaleBenBi)) {
                     noTransUpSaleBenBi=p.del0(noTransUpSaleBenBi);
-                    noTransUpSaleBenBi="¥"+noTransUpSaleBenBi;
+                    noTransUpSaleBenBi=p.rmb+noTransUpSaleBenBi;
                 }
                 cell.setCellValue(noTransUpSaleBenBi); // 设置内容--15
             }
@@ -381,7 +409,7 @@ public class DyExport {
                 String haveTransUpSaleWaiBi = daoChu.getHaveTransUpSaleWaiBi();
                 if(p.notEmpty(haveTransUpSaleWaiBi)){
                     haveTransUpSaleWaiBi=p.del0(haveTransUpSaleWaiBi);
-                    haveTransUpSaleWaiBi="$"+haveTransUpSaleWaiBi;
+                    haveTransUpSaleWaiBi=p.dollor+haveTransUpSaleWaiBi;
                 }
                 cell.setCellValue(haveTransUpSaleWaiBi); // 设置内容--  16
             }
@@ -389,15 +417,23 @@ public class DyExport {
                 String haveTransUpSaleBenBi = daoChu.getHaveTransUpSaleBenBi();
                 if(p.notEmpty(haveTransUpSaleBenBi)){
                     haveTransUpSaleBenBi=p.del0(haveTransUpSaleBenBi);
-                    haveTransUpSaleBenBi="¥"+haveTransUpSaleBenBi;
+                    haveTransUpSaleBenBi=p.rmb+haveTransUpSaleBenBi;
                 }
                 cell.setCellValue(haveTransUpSaleBenBi); // 设置内容--17
             }
             if ("MOQ 起订量要求 (Lisa填写)".equals(s)) {
-                cell.setCellValue(daoChu.getFinancestartsellcount()); // 设置内容--18
+                String financestartsellcount = daoChu.getFinancestartsellcount();
+                if(p.isBd(financestartsellcount)) {
+                    financestartsellcount=p.del0(financestartsellcount);
+                }
+                cell.setCellValue(financestartsellcount); // 设置内容--18
             }
             if ("财务小单费".equals(s)) {
-                cell.setCellValue(daoChu.getFinancelittleorderprice()); // 设置内容--19
+                String financelittleorderprice = daoChu.getFinancelittleorderprice();
+                if(p.isBd(financelittleorderprice)){
+                    financelittleorderprice=p.del0(financelittleorderprice);
+                }
+                cell.setCellValue(financelittleorderprice); // 设置内容--19
             }
             if ("Sample Approved Date 样品确认日期".equals(s)) {
                 cell.setCellValue(daoChu.getConfirmtimestr()); // 设置内容--20
@@ -555,7 +591,7 @@ public class DyExport {
     private String f创建存储excel的临时目录不带杠() {
         String s = p.strCutNoHead(cnst.daYangSuoLueTuAndFuJianZongPath, "./");
         String s1 = p.strCutEndNothave(s, "/");
-        File file = new File(new File(s1).getAbsolutePath() + File.separator + "saveExcelTemp");
+        File file = new File(new File(s1).getAbsolutePath() + File.separator + Cnst.saveExcelTemp);
         if (p.notExists(file)) {
             file.mkdir();
         }
@@ -706,17 +742,17 @@ public class DyExport {
         return daoChuExcelHeadList;
     }
 
-    public static void main(String[]args) throws UnsupportedEncodingException {
-        String s="%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
-       s="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-
-       s=URLEncoder.encode(s,"UTF-8");
-        p.p("-------------------------------------------------------");
-        p.p(s);
-        s=URLDecoder.decode(s);
-        p.p(s);
-        p.p("-------------------------------------------------------");
-    }
+//    public static void main(String[]args) throws UnsupportedEncodingException {
+//        String s="%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+//       s="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+//
+//       s=URLEncoder.encode(s,"UTF-8");
+//        p.p("-------------------------------------------------------");
+//        p.p(s);
+//        s=URLDecoder.decode(s);
+//        p.p(s);
+//        p.p("-------------------------------------------------------");
+//    }
 
 
 

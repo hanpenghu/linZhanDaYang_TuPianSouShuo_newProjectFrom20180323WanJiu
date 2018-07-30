@@ -150,7 +150,7 @@
             AND  isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND  isnull(isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -330,7 +330,7 @@
             AND  isnull(p.sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(p.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND  isnull(p.isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,p.confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -379,7 +379,7 @@
             AND  isnull(p1.sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(p1.isConfirm,'') LIKE  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND  isnull(p1.isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,p1.confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -833,7 +833,9 @@
 
 
     <select id="getIdUseConfirmTime" resultType="java.lang.String">
-         SELECT top 500 id FROM prdt_samp  --  限制最多导出500行
+         SELECT
+        -- top 500
+        id FROM prdt_samp  --  限制最多导出500行
           <where>
               <include refid="productProofWithManyCondition"/>
           </where>
@@ -888,9 +890,21 @@
     </update>
 
 
+    <select id="diGuiFenLeiName" resultType="java.lang.String">
+        with cet1
+        AS
+        (
+            -- 基本语句,
+            select c.idx_no,c.idx_up,c.name from indx c where c.name like ('%'+( #{fenLeiName}) +'%') -- 递归出来 idx_no=9 的所有下级
 
-
-
+            union all
+            --  递归语句
+            select a.idx_no,a.idx_up,a.name from
+            indx a
+            inner join  cet1 b on a.idx_up=b.idx_no
+        )
+        select name as fenLeiName from cet1
+    </select>
 
 </mapper>
 

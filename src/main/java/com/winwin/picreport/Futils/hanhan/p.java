@@ -76,7 +76,7 @@ public strictfp class p {
     public static final String zgth="！";//中文感叹号
     public static final String egth="!";//英文感叹号
     public static final String at="@";
-    public static final String rmb="￥";
+    public static final String rmb="¥";
     public static final String dollor="$";
     public static final String bfh="%";
     public static final String zmh="：";//中文冒号
@@ -172,7 +172,15 @@ public strictfp class p {
     private Map<String,Object>map=new HashMap<>();
 
 
-
+    public static boolean notDic(File file){
+        if(null==file){
+            return true;
+        }else if(file.isDirectory()){
+            return false;
+        }else {
+            return true;
+        }
+    }
 
 
     /**

@@ -38,6 +38,16 @@ public class ExportXlsParam {
     //0是未提交  1是已提交未审核,  2是已审核
     private String isCheckOut;
 
+    private String cusName;
+
+
+    public String getCusName() {
+        return cusName;
+    }
+
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
 
     public String getConfirmtimestr() {
         return confirmtimestr;
