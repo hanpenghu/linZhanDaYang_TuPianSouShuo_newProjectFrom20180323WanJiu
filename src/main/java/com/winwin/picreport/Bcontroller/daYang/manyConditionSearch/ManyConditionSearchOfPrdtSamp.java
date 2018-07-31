@@ -16,6 +16,8 @@ public class ManyConditionSearchOfPrdtSamp {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Autowired
     private Cnst cnst;
+    //传过来这个默认不要价格模块,不传默认要加个模块
+    private final String 不要价格模块="noPriceModel";
     /**
      *根据条件查询产品编码建档
      * sql
@@ -25,7 +27,7 @@ public class ManyConditionSearchOfPrdtSamp {
      * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
      * */
     @RequestMapping(value= InterFaceCnst.chanPinBianMaJianDangTiaoJianChaXun, method = RequestMethod.POST)
-    public @ResponseBody FenYe f(@RequestBody FenYe fenYe){
+    public @ResponseBody FenYe f(@RequestBody FenYe fenYe,@RequestParam(value="ifGetPrice",required =false)String ifGetPrice){
         if(fenYe==null){
             FenYe f=new FenYe();
             ArrayList<PrdtSamp0> prdtSamps = new ArrayList<>();
@@ -33,7 +35,7 @@ public class ManyConditionSearchOfPrdtSamp {
             return f;
         }else{
             try {
-                return  this.manyConditionSearchOfPrdtFiltList(fenYe);
+                return  this.manyConditionSearchOfPrdtFiltList(fenYe,ifGetPrice);
             } catch (IllegalAccessException e) {
                 FenYe f1=new FenYe();
                 ArrayList<PrdtSamp0> prdtSamps1 = new ArrayList<>();
@@ -50,7 +52,7 @@ public class ManyConditionSearchOfPrdtSamp {
     /**
      *多条件产品打样列表
      * */
-    private FenYe manyConditionSearchOfPrdtFiltList(FenYe f) throws IllegalAccessException {
+    private FenYe manyConditionSearchOfPrdtFiltList(FenYe f,String ifGetPrice) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换前多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
@@ -103,14 +105,20 @@ public class ManyConditionSearchOfPrdtSamp {
 
 
         List<PrdtSamp0> prdtSampList= new  ArrayList<>();
-        if(p.notEmpty(prdtSampListOrg)){
-            for(PrdtSamp0 prdtSamp0:prdtSampListOrg){
-                //插入价格模块,走一遍这个模块就插入了
+        if(p.bdy(不要价格模块,ifGetPrice)){
+            if(p.notEmpty(prdtSampListOrg)){
+                for(PrdtSamp0 prdtSamp0:prdtSampListOrg){
+                    //插入价格模块,走一遍这个模块就插入了
 //                cnst.getPriceModelUpdef.GetPriceModel(prdtSamp0);
-                cnst.getPriceModelUpdef20180512.getPriceModel(prdtSamp0);
-                prdtSampList.add(prdtSamp0);
+                    cnst.getPriceModelUpdef20180512.getPriceModel(prdtSamp0);
+                    prdtSampList.add(prdtSamp0);
+                }
             }
+        }else{
+            //此时不要价格模块
+            prdtSampList.addAll(prdtSampListOrg);
         }
+
 
 
 //        p.p(p.zhifgf);

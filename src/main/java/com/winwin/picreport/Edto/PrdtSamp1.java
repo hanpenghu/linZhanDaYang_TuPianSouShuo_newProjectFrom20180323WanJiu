@@ -3,11 +3,14 @@ package com.winwin.picreport.Edto;
 
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 /**
  *该类只用于产便打样编码建档的时候的前后端条件传输
  * */
 
 public class PrdtSamp1 {
+    private List<String>fenLeiNames=new LinkedList<String>();
     /**
      *下面2个时间其实都是传的创建时间条件的开始时间
      * */
@@ -76,6 +79,14 @@ public class PrdtSamp1 {
 
     private String cusNo;
 
+
+    public List<String> getFenLeiNames() {
+        return fenLeiNames;
+    }
+
+    public void setFenLeiNames(List<String> fenLeiNames) {
+        this.fenLeiNames = fenLeiNames;
+    }
 
     public String getCusName() {
         return cusName;

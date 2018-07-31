@@ -320,8 +320,14 @@
         <if test=" idxName != null and idxName != '' ">
             AND  isnull(p.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
         </if>
-        <if test=" fenLeiName != null and fenLeiName != '' ">
-            AND  isnull(p.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+        <!--<if test=" fenLeiName != null and fenLeiName != '' ">-->
+            <!--AND  isnull(p.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
+        <!--</if>-->
+        <if test=" fenLeiNames !=null and fenLeiNames.size()>0 ">
+            and p.fen_lei_name  in
+            <foreach item="item" index="index" collection="fenLeiNames" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
         <if test=" prdCode != null and prdCode != '' ">
             AND  isnull(p.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
@@ -369,8 +375,14 @@
         <if test=" idxName != null and idxName != '' ">
             AND  isnull(p1.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
         </if>
-        <if test=" fenLeiName != null and fenLeiName != '' ">
-            AND  isnull(p1.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+        <!--<if test=" fenLeiName != null and fenLeiName != '' ">-->
+            <!--AND  isnull(p1.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
+        <!--</if>-->
+        <if test=" fenLeiNames !=null and fenLeiNames.size()>0 ">
+            and p1.fen_lei_name  IN
+            <foreach item="item" index="index" collection="fenLeiNames" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
         <if test=" prdCode != null and prdCode != '' ">
             AND  isnull(p1.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
@@ -895,7 +907,7 @@
         AS
         (
             -- 基本语句,
-            select c.idx_no,c.idx_up,c.name from indx c where c.name like ('%'+( #{fenLeiName}) +'%') -- 递归出来 idx_no=9 的所有下级
+            select c.idx_no,c.idx_up,c.name from indx c where c.name = #{fenLeiName} -- 递归出来 idx_no=9 的所有下级
 
             union all
             --  递归语句

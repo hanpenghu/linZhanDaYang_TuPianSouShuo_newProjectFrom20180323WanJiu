@@ -27,13 +27,14 @@ public class D1DaYangS {
     private Cnst cnst;
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     private final String 已经采购定价但未销售定价标记 = "yiJingCaiGouDingJiaDanWeiXiaoShouDingJia";
+    private final String 不要价格模块="noPriceModel";
     private final String sale = "sale";
     private final String buy = "buy";
 
     //注意:增加一个request获得参数,所有数据库定价类型分类的参数
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
-    public FenYe dangqianyeData(FenYe fenYe, String dingJiaType) {
+    public FenYe dangqianyeData(FenYe fenYe, String dingJiaType,String ifGetPrice) {
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
         fenYe.setZongYeShu();
         List<PrdtSamp0> prdtSampList = new ArrayList<>();
@@ -48,7 +49,7 @@ public class D1DaYangS {
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
             this.mainUnitSet(prdtSampX1);
             //设置创建时间和价格和修改记录
-            PrdtSamp0 prdtSampX = this.setCreateTimeAndPriceAndAlterRec(prdtSampX1);
+            PrdtSamp0 prdtSampX = this.setCreateTimeAndPriceAndAlterRec(prdtSampX1,ifGetPrice);
             prdtSampList.add(prdtSampX);
         }
         fenYe.setPrdtSampList(prdtSampList);
@@ -76,7 +77,7 @@ public class D1DaYangS {
 
 
 
-    public PrdtSamp0 setCreateTimeAndPriceAndAlterRec(PrdtSamp prdtSampX1初始) {
+    public PrdtSamp0 setCreateTimeAndPriceAndAlterRec(PrdtSamp prdtSampX1初始,String ifGetPrice) {
         PrdtSamp0 prdtSampX完美 = new PrdtSamp0();
         BeanUtils.copyProperties(prdtSampX1初始, prdtSampX完美);
         Date insertdate = prdtSampX完美.getInsertdate();
@@ -86,18 +87,20 @@ public class D1DaYangS {
         } catch (Exception e) {
             //        System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
         }
-        //插入价格模块,走一遍这个模块就插入了
-        //        cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
-        cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX完美);
+        if(p.bdy(不要价格模块,ifGetPrice)){
+            //插入价格模块,走一遍这个模块就插入了
+            //        cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
+            cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX完美);
 
-        String prdtSampUuid = prdtSampX完美.getId();
-        //插入修改记录
-        List<AlterPriceRecToFront> saleAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,sale);
-        prdtSampX完美.setSaleAlterRecList(saleAlterRecList);
-        List<AlterPriceRecToFront> buyAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,buy);
-        prdtSampX完美.setBuyAlterRecList(buyAlterRecList);
-        //处理时间为1970的为NULL
-        MakeDate1970Null.make1970null(prdtSampX完美);
+            String prdtSampUuid = prdtSampX完美.getId();
+            //插入修改记录
+            List<AlterPriceRecToFront> saleAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,sale);
+            prdtSampX完美.setSaleAlterRecList(saleAlterRecList);
+            List<AlterPriceRecToFront> buyAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,buy);
+            prdtSampX完美.setBuyAlterRecList(buyAlterRecList);
+            //处理时间为1970的为NULL
+            MakeDate1970Null.make1970null(prdtSampX完美);
+        }
         return prdtSampX完美;
     }
 
@@ -196,7 +199,7 @@ public class D1DaYangS {
     public CategoryNameCode getCommonderHavePrdt() {
         //其实只有一个元素
         List<CategoryNameCode> commonders = cnst.manyTabSerch.getCommonder();
-        if (NotEmpty.notEmpty(commonders)) {
+        if (p.notEmpty(commonders)) {
             CategoryNameCode categoryNameCode = commonders.get(0);
             List<String> codeList = cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
             categoryNameCode.setPrdCodeList(codeList);
@@ -213,7 +216,7 @@ public class D1DaYangS {
     public CategoryNameCode getCommonderNoPrdt() {
         //其实只有一个元素
         List<CategoryNameCode> commonders = cnst.manyTabSerch.getCommonder();
-        if (NotEmpty.notEmpty(commonders)) {
+        if (p.notEmpty(commonders)) {
             CategoryNameCode categoryNameCode = commonders.get(0);
             return categoryNameCode;
         }
@@ -229,7 +232,7 @@ public class D1DaYangS {
         List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
         //用一个新的list替换所有下级集合 来 搜集   装好 code的  所有下级
         List<CategoryNameCode> ccncListChild = new ArrayList<>();
-        if (NotEmpty.notEmpty(ccnc)) {
+        if (p.notEmpty(ccnc)) {
             //给所有的下级添加货品名字
             for (CategoryNameCode c : ccnc) {
                 List<String> codeList = cnst.manyTabSerch.getCodeList(c.getIdxNo());
@@ -280,7 +283,7 @@ public class D1DaYangS {
         //设置该top的child
         top = this.getChildAndNotSetCode(top);
         List<CategoryNameCode> childs = top.getChilds();
-        if (NotEmpty.notEmpty(childs)) {
+        if (p.notEmpty(childs)) {
             //寻找该childs里面的所有child的childs
             for (CategoryNameCode c : childs) {
                 this.getAllLayerUtilUseRecursionNotGetPrdt(c);

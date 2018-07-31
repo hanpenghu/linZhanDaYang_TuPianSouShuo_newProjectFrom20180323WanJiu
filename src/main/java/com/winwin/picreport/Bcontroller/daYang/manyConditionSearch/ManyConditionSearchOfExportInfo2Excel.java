@@ -92,18 +92,17 @@ public class ManyConditionSearchOfExportInfo2Excel {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<PrdtSampExcleExportManyCondition> prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
 
-        for(PrdtSampExcleExportManyCondition pp:prdtSampExcels){
-            if(p.notEmpty(pp.getPrdNo())){
-                PrdtSamp0 p0=new PrdtSamp0();
-                p0.setPrdNo(pp.getPrdNo());
-                cnst.getPriceModelUpdef20180512.getPriceModel(p0);
-                pp.setUpDefMyList(p0.getUpDefMyList());
-                pp.setUpDefMyListBuy(p0.getUpDefMyListBuy());
-                this.qtySet(pp);
-            }
+        System.out.println("================p1.getFenLeiName()="+p1.getFenLeiName()+"==========================================");
+
+        if(p.notEmpty(p1.getFenLeiName())){
+            List<String> fenLeiNameList = cnst.a001TongYongMapper.diGuiFenLeiName(p1.getFenLeiName());
+            p1.setFenLeiNames((List<String>) p.removeNull(fenLeiNameList));
         }
+        System.out.println("======list==========p1.getFenLeiNames()="+p1.getFenLeiNames()+"==========================================");
+        System.out.println("================p1.getFenLeiName()="+p1.getFenLeiName()+"==========================================");
+        List<PrdtSampExcleExportManyCondition> prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
+        this.onePriceSet(prdtSampExcels);
 //        p.p("--------------------List<PrdtSampExcleExportManyCondition> prdtSampExcels = -----------------------------------");
 //        p.p(prdtSampExcels);
 //        p.p("-------------------------------------------------------");
@@ -114,6 +113,20 @@ public class ManyConditionSearchOfExportInfo2Excel {
 
 
     }
+
+    private void onePriceSet(List<PrdtSampExcleExportManyCondition> prdtSampExcels) {
+        for(PrdtSampExcleExportManyCondition pp:prdtSampExcels){
+            if(p.notEmpty(pp.getPrdNo())){
+                PrdtSamp0 p0=new PrdtSamp0();
+                p0.setPrdNo(pp.getPrdNo());
+                cnst.getPriceModelUpdef20180512.getPriceModel(p0);
+                pp.setUpDefMyList(p0.getUpDefMyList());
+                pp.setUpDefMyListBuy(p0.getUpDefMyListBuy());
+                this.qtySet(pp);
+            }
+        }
+    }
+
 
     private String qtySet(PrdtSampExcleExportManyCondition pp) {
         if(p.notEmpty(pp.getQty())){

@@ -18,7 +18,33 @@ public class DangQianYeDataC {
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
-    //
+
+    ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
+    //    /d/dangqianyeData      {"dangQianYe":"1","meiYeXianShiShu":"1"}
+    @RequestMapping(value = InterFaceCnst.dangqianyeData,
+            method = RequestMethod.POST,
+            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody//注意:增加一个request获得参数,所有数据库定价类型分类的参数
+    //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
+    //代表 已经采购定价但未销售定价的所有数据
+    FenYe dangqianyeData(@RequestBody FenYe fenYe, @RequestParam(value="dingJiaType",required =false)String dingJiaType,@RequestParam(value="ifGetPrice",required =false)String ifGetPrice) {
+        l.error("---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<"+dingJiaType+">---------------------");
+//        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
+//            //此时是要返回已经采购定价但未销售定价的数据
+        //这种用于显示在: 页面的销售定价那一栏
+//        }
+        // /d/dangqianyeData?dingJiaType=yiJingCaiGouDingJiaDanWeiXiaoShouDingJia  此时证明你调的接口是为了在页面上的(销售定价的显示)
+
+        return cnst.fenLei.dangqianyeData(fenYe,dingJiaType,ifGetPrice);//主要传过来当前页和每页显示数量
+    }
+
+    private final String 已经采购定价但未销售定价标记 = "yiJingCaiGouDingJiaDanWeiXiaoShouDingJia";
+    //传过来这个默认不要价格模块,不传默认要加个模块
+    private final String 不要价格模块="noPriceModel";
+
+
+}
+//
 //    /////////////////////////徐勇页面展示第一次调的接口,注意顺带返回了第一页的信息////////////////////////////////////////////////////////////////////
 //    @RequestMapping(value = "daYangZongYeShuHeMeiYeXianShiShu", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody
@@ -32,18 +58,18 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
 
 
-    /**
-     *返回给前端的dingJiaGuanLian对应数据库的oleField,是一个SimplesSys+uuid组成
-     *
-     * 前端徐勇根据  dingJiaGuanLian+
-     *
-     * http://61.177.44.218:8070/d/dangqianyeData?token=MTUyMDQ4NDk0Nzk0OXt-fWlwYWNle359MTM2NDE5Mjg3NDE=
-     * 参数    {"dangQianYe":"1","meiYeXianShiShu":"1"}
-     *
-     *
-     *
-     *
-     * */
+/**
+ *返回给前端的dingJiaGuanLian对应数据库的oleField,是一个SimplesSys+uuid组成
+ *
+ * 前端徐勇根据  dingJiaGuanLian+
+ *
+ * http://61.177.44.218:8070/d/dangqianyeData?token=MTUyMDQ4NDk0Nzk0OXt-fWlwYWNle359MTM2NDE5Mjg3NDE=
+ * 参数    {"dangQianYe":"1","meiYeXianShiShu":"1"}
+ *
+ *
+ *
+ *
+ * */
 
 
     /*{
@@ -118,7 +144,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
             "estimateprice": null,
             //小单费
             "littleorderprice": null,
-            //模具费用发票号    
+            //模具费用发票号
             "modelcostinvoiceno": null,
             //财务起订量
             "financestartsellcount": null,
@@ -242,34 +268,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
     "prdtSamp1": null,//
     "role": null//权限里面的角色,暂时不用
 }*/
-    //select top 100 olefield,hj_no,cur_id,prd_no,qty,bil_type,up,a.s_dd,rem,price_id,'------',* from up_def a order by a.s_dd desc
-    //select *  from PRDT_SAMP where id='10478a3d-e981-40d6-92ee-4a07d6bb54b8'
-    //select top 100* from PRDT where name='WW-NEPEP-0013'
-    //select *from alter_price_rec//修改价格记录表,修改一次记录一次
-    ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
-    //    /d/dangqianyeData      {"dangQianYe":"1","meiYeXianShiShu":"1"}
-    @RequestMapping(value = InterFaceCnst.dangqianyeData,
-            method = RequestMethod.POST,
-            produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody//注意:增加一个request获得参数,所有数据库定价类型分类的参数
-    //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
-    //代表 已经采购定价但未销售定价的所有数据
-    FenYe dangqianyeData(@RequestBody FenYe fenYe, @RequestParam(value="dingJiaType",required =false)String dingJiaType) {
-        l.error("---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<"+dingJiaType+">---------------------");
-//        if(p.dy("yiJingCaiGouDingJiaDanWeiXiaoShouDingJia",yiJingCaiGouDingJiaDanWeiXiaoShouDingJia)){
-//            //此时是要返回已经采购定价但未销售定价的数据
-        //这种用于显示在: 页面的销售定价那一栏
-//        }
-        // /d/dangqianyeData?dingJiaType=yiJingCaiGouDingJiaDanWeiXiaoShouDingJia  此时证明你调的接口是为了在页面上的(销售定价的显示)
-
-        return cnst.fenLei.dangqianyeData(fenYe,dingJiaType);//主要传过来当前页和每页显示数量
-    }
-
-
-
-
-
-
-
-
-}
+//select top 100 olefield,hj_no,cur_id,prd_no,qty,bil_type,up,a.s_dd,rem,price_id,'------',* from up_def a order by a.s_dd desc
+//select *  from PRDT_SAMP where id='10478a3d-e981-40d6-92ee-4a07d6bb54b8'
+//select top 100* from PRDT where name='WW-NEPEP-0013'
+//select *from alter_price_rec//修改价格记录表,修改一次记录一次

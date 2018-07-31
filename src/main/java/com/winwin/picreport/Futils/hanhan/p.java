@@ -278,6 +278,11 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
 }
 
 
+//    public static void main(String[]args){
+//        List g = new linklistT<String>().a(null).a("1").a("2").g();
+//        p.p(removeNull(g));
+//    }
+
     public static String trim(String str2Trim){
         if(null==str2Trim){
             return "is fuck nullPoint";
@@ -751,9 +756,43 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
     }
 
 
+//    public static void main(String[]args){
+//        p.p(p.bdy(null,null));
+//    }
 
 
 
+    public static void make1970null(Object o){
+        List<Field> fieldList=new ArrayList<>();
+        Class<?> aClass = o.getClass();
+        while (aClass != null) {//用while得到所有超类的字段属性
+            fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+            aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+        for(Field field:fieldList){
+            field.setAccessible(true);
+            //得到当前字段类型
+            String typeName = field.getType().getTypeName();
+            if("java.util.Date".equals(typeName)){
+                //得到我的生日
+                try {
+                    if(field.get(o)!=null){
+                        Date date=null;
+                        try {  date = new SimpleDateFormat("yyyy-MM-dd").parse("1986-12-26"); } catch (ParseException e) { e.printStackTrace(); }
+                        long mybrith = date.getTime();
+                        long time = ((Date) field.get(o)).getTime();
+                        if(time<=mybrith){
+                            //如果这个时间小于我的生日,证明这个时间是在1986年以前的时间,需要变成NULL
+                            field.set(o,null);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
     /**
      *解决字段set方法的时候需要null变空的问题
@@ -2157,10 +2196,10 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         return true;
     }
 
-    public static void main(String[]args){
-        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
-        System.out.println(b);
-    }
+//    public static void main(String[]args){
+//        boolean b = writeToTxt("[\"1\",\"2\"]", "C:/123");
+//        System.out.println(b);
+//    }
     /**
      *读文本的所有内容变为字符串
      * */

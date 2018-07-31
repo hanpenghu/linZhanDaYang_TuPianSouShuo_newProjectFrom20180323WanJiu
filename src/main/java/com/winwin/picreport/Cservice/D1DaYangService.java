@@ -269,17 +269,18 @@ public class D1DaYangService {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @Transactional//37成功,38失败
-    public Msg getOneRecordFromAId(String id) {
+    public Msg getOneRecordFromAId(String id,String ifGetPrice) {
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(id);
-        if(NotEmpty.empty(prdtSamp)){
+        if(p.empty(prdtSamp)){
             return Msg.gmg().setStatus(StatusCnst.dbMistakeCausePrdtSampFalse)
                     .setMsg("获取一条信息失败").setChMsg("getOneRecordFromAId这个方法获取一条信息失败!");
         }
 
 
         List<Object> prdtSampList=new ArrayList<>();
-        PrdtSamp0 p0 = cnst.fenLei.setCreateTimeAndPriceAndAlterRec(prdtSamp);
+        PrdtSamp0 p0 = cnst.fenLei.setCreateTimeAndPriceAndAlterRec(prdtSamp,ifGetPrice);
         prdtSampList.add(p0);
         return Msg.gmg().setData(Data.gD().setObjs(prdtSampList))
                 .setStatus(StatusCnst.prdtSampSaveOneDataSucc)

@@ -28,19 +28,19 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
 //    @Scheduled(fixedDelay = Long.MAX_VALUE,initialDelay = 7000)//启动项目执行一次
     public void qiDong_XiangMu_shiHou_ShangChuan_YiCi(){
-        duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong();
+        nativePic2MaLong();
 
     }
 
     @Scheduled(cron="0 0 1 * * ?")//每天凌晨一点执行
     public void meiTian_dingShi_zhiXing(){
-        duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong();
+        this.nativePic2MaLong();
     }
 
 
 
 
-public  void duQu_BenDi_DaYangTuPianKu_shangChuan_TuPian_Url_Dao_MaLong(){
+public  void nativePic2MaLong(){
     l.info("----------------kaiShi tongBu wenJianJia de tuPian-dao-MaLong---------------");
     try {
         //得到图片路径前半身 比如:http://61.177.44.218:8070/suoLueTuWenJianJia/
