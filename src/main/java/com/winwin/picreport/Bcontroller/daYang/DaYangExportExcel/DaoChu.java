@@ -1,5 +1,11 @@
 package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
+import com.winwin.picreport.Futils.hanhan.p;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Administrator on 2018/6/1.
  */
@@ -292,6 +298,7 @@ public class DaoChu {
         return sampSend;
     }
 
+
     public void setSampSend(String sampSend) {
         this.sampSend = sampSend;
     }
@@ -568,6 +575,14 @@ public class DaoChu {
     public void setNmEng(String nmEng) {
         this.nmEng = nmEng;
     }
+
+
+
+
+
+
+
+
 
     @Override
     public String toString() {

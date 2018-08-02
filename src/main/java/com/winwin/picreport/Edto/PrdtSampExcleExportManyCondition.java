@@ -6,8 +6,11 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.Constant.ConstantInit;
 import com.winwin.picreport.Futils.hanhan.p;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -126,7 +129,7 @@ public class PrdtSampExcleExportManyCondition {
     //创建人所在的公司,
     private String tenantId;
     //主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
-    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
+    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了,并且考察prdt表并进入了
     private String mainUnit;//prdt表里的
 
     private String unit;//单位,up_def表里的
@@ -179,7 +182,16 @@ public class PrdtSampExcleExportManyCondition {
     private List<UpDefMy01>upDefMyListBuy=new ArrayList<>();
 
 
+    //加一个销售备注,没有销售备注的取采购备注
+    private String rem;
 
+    public String getRem() {
+        return rem;
+    }
+
+    public void setRem(String rem) {
+        this.rem = rem;
+    }
 
     public String getsDd() {
         return sDd;
@@ -409,7 +421,7 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getSampMake() {
-        return sampMake;
+        return this.getSjc(sampMake);
     }
 
     public void setSampMake(String sampMake) {
@@ -417,7 +429,7 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getSampSend() {
-        return sampSend;
+        return this.getSjc(sampSend);
     }
 
     public void setSampSend(String sampSend) {
@@ -457,7 +469,8 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getInsertdate() {
-        return insertdate;
+
+        return this.getSjc(insertdate);
     }
 
     public void setInsertdate(String insertdate) {
@@ -628,7 +641,7 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getStopusedate() {
-        return stopusedate;
+        return this.getSjc(stopusedate);
     }
 
     public void setStopusedate(String stopusedate) {
@@ -734,7 +747,19 @@ public class PrdtSampExcleExportManyCondition {
     public void setHaveTransUpSaleWaiBi(String haveTransUpSaleWaiBi) {
         this.haveTransUpSaleWaiBi = haveTransUpSaleWaiBi;
     }
-
+    public String getSjc(String strSj){
+        if(p.empty(strSj)){
+            return null;
+        }else{
+            try {
+                Date d=new SimpleDateFormat(p.d16).parse(strSj);
+                strSj=String.valueOf(d.getTime());
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        return strSj;
+    }
     @Override
     public String toString() {
         return "PrdtSampExcleExportManyCondition{" +

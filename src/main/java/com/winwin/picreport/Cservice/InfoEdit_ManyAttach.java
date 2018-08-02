@@ -2,14 +2,13 @@ package com.winwin.picreport.Cservice;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.AllConstant.Constant.msgCnst;
-import com.winwin.picreport.AllConstant.StatusCnst;
+
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
-import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
 
 @Service("infoEditOfManyAttach")
 public class InfoEdit_ManyAttach {
@@ -54,10 +53,34 @@ public class InfoEdit_ManyAttach {
         this.f保存多个附件(attachList,prdtSampOb,projectPath,ms);
         //更新商品主库的停用时间
         this.f更新商品主库的停用时间(prdtSampOb);
+        this.prdt表里的编码同步更新(prdtSampOb);
     }
 
     @Transactional
-    private void f流水货号(PrdtSamp prdtSamp,List<String>ms) {
+    public void prdt表里的编码同步更新(PrdtSamp0 prdtSampOb) {
+        PrdtWithBLOBs prdtWithBLOBs = cnst.prdtMapper.selectByPrimaryKey(prdtSampOb.getPrdNo());
+        if(p.empty(prdtWithBLOBs)){
+            //这种情况应该不会发生,因为上面或者以前的录入已经流水过货号
+            return;
+        }
+        if(p.dy(prdtWithBLOBs.getName(),prdtSampOb.getPrdCode())){
+            //此时一样不用更新
+            return;
+        }
+        //此时不一样,将现在 编码放入货品名称
+        PrdtWithBLOBs prdt=new PrdtWithBLOBs();
+        prdt.setPrdNo(prdtSampOb.getPrdNo());
+        prdt.setName(prdtSampOb.getPrdCode());
+        cnst.prdtMapper.updateByPrimaryKeySelective(prdt);
+    }
+
+
+
+
+
+
+    @Transactional
+    public void f流水货号(PrdtSamp prdtSamp,List<String>ms) {
         p.p("-------------f给pp装上货号---111--------"+prdtSamp.getPrdNo()+"-------------------------------");
         this.f给pp装上货号(prdtSamp,ms);
         p.p("-----------------f给pp装上货号-----222------"+prdtSamp.getPrdNo()+"---------------------------------------");
@@ -68,7 +91,7 @@ public class InfoEdit_ManyAttach {
     }
 
     @Transactional
-    private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
+    public void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
 //        this.f根据name找no不推荐用(pp,msgs);
         PrdtSamp0 p0=new PrdtSamp0();
         BeanUtils.copyProperties(pp,p0);
@@ -90,7 +113,7 @@ public class InfoEdit_ManyAttach {
 
 
     @Transactional
-    private void f根据name找no不推荐用(PrdtSamp pp,List<String>msgs) {
+    public void f根据name找no不推荐用(PrdtSamp pp,List<String>msgs) {
         String fenLeiNo = cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
         if(p.notEmpty(fenLeiNo)) {
             pp.setFenLeiNo(fenLeiNo);

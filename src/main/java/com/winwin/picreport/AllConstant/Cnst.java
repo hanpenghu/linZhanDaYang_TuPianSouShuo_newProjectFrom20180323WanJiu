@@ -5,6 +5,7 @@ import com.winwin.picreport.Acomponent.SapsoChongfu;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
 import com.winwin.picreport.Bcontroller.daYang.AlterPrice.DingJiaXiuGaiSaleService;
+import com.winwin.picreport.Bcontroller.loginRegistModul.auth.UserAuth;
 import com.winwin.picreport.Cservice.*;
 import com.winwin.picreport.Ddao.reportxmlmapper.*;
 import com.winwin.picreport.Futils.GeneratePrdNo.GPrdNo;
@@ -108,6 +109,10 @@ public class Cnst {
     public  String getSpringbootJarSuoLueTuFilePath(){
        return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
+
+
+    @Autowired
+    public UserAuth userAuth;
 
     @Autowired
     public ModelUsersSpcMapper modelUsersSpcMapper;

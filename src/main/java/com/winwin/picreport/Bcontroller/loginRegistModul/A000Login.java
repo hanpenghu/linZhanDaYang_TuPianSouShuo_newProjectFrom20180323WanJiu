@@ -110,7 +110,7 @@ public class A000Login {
         try {
             if(p.dy(msg.getMsg(),p.success)){
                 //登录成功了再加验证模块
-                userAuth.addAuth(msg,info);
+                userAuth.addAuth(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();

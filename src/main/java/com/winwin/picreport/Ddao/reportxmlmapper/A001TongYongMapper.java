@@ -171,9 +171,7 @@ public interface A001TongYongMapper {
    String selectTop1MaxPrdtNo(@Param("indx1")String indx1);
 
    //prdCode对应name
-   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man,knd,dfu_ut,ut)" +
-           "values(#{prdNo},#{indx1},#{prdCode}," +
-           "'SamplesSys',#{usr},#{chkMan},#{knd},#{dfuUt},#{mainUnit})"})
+   @Insert({"insert into prdt(prd_no,idx1,name,rem,usr,chk_man,knd,dfu_ut,ut)values(#{prdNo},#{indx1},#{prdCode},'SamplesSys',#{usr},#{chkMan},#{knd},#{dfuUt},#{mainUnit})"})
    Integer insertPrdtOnePrdNo(@Param("prdNo") String prdNo,
                               @Param("indx1")String indx1,
                               @Param("prdCode") String prdCode,
@@ -394,4 +392,7 @@ public interface A001TongYongMapper {
 
 
     List<String> diGuiFenLeiName(@Param("fenLeiName") String fenLeiName);
+
+    @Select({"select timetoken from users a inner join tenant b on a.tenantId=b.tenantId where a.tenantId=#{tenantId} and (a.phone_no=#{userEmail} or a.user_name=#{userEmail} or a.userEmail=#{userEmail})"})
+    String getToekn(@Param("tenantId") String tenantId,@Param("userEmail")  String userEmail);
 }

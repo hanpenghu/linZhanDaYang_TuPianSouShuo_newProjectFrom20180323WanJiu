@@ -1,9 +1,7 @@
 package com.winwin.picreport.Bcontroller.daYang;
-
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Futils.ListUtils.ListUtils;
-import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +24,7 @@ public class DyInfoUpdate {
      *
      * //我这里原来是37成功,其他的是失败
      * */
+    @SuppressWarnings("unchecked")
     //    @Transactional
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSave_InfoEdit_ManyAttach,
             method = RequestMethod.POST,
