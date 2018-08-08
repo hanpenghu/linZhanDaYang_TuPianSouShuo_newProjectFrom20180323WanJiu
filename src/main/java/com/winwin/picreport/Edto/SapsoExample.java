@@ -1344,6 +1344,76 @@ public class SapsoExample {
             addCriterion("sup_prd_no not between", value1, value2, "supPrdNo");
             return (Criteria) this;
         }
+
+        public Criteria andRemBodyIsNull() {
+            addCriterion("rem_body is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyIsNotNull() {
+            addCriterion("rem_body is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyEqualTo(String value) {
+            addCriterion("rem_body =", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyNotEqualTo(String value) {
+            addCriterion("rem_body <>", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyGreaterThan(String value) {
+            addCriterion("rem_body >", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyGreaterThanOrEqualTo(String value) {
+            addCriterion("rem_body >=", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyLessThan(String value) {
+            addCriterion("rem_body <", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyLessThanOrEqualTo(String value) {
+            addCriterion("rem_body <=", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyLike(String value) {
+            addCriterion("rem_body like", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyNotLike(String value) {
+            addCriterion("rem_body not like", value, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyIn(List<String> values) {
+            addCriterion("rem_body in", values, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyNotIn(List<String> values) {
+            addCriterion("rem_body not in", values, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyBetween(String value1, String value2) {
+            addCriterion("rem_body between", value1, value2, "remBody");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBodyNotBetween(String value1, String value2) {
+            addCriterion("rem_body not between", value1, value2, "remBody");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

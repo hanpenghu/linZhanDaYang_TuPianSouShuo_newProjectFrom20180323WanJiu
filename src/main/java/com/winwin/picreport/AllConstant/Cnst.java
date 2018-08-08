@@ -111,6 +111,8 @@ public class Cnst {
     }
 
 
+
+
     @Autowired
     public UserAuth userAuth;
 
@@ -162,8 +164,10 @@ public class Cnst {
     public CommonDaoRuDBZhiQianZhengLi commonDaoRuDBZhiQianZhengLi;
     @Autowired
      public  AlterPriceRecMapper alterPriceRecMapper;
+
     @Autowired
     public GPrdNo gPrdNo;
+
     @Autowired
     public UpDefMapper upDefMapper;
 

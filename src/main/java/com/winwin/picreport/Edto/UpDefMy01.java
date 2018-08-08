@@ -38,6 +38,18 @@ public class UpDefMy01 extends UpDefMy {
     //货号,后台数据流转用
     String prdNo;
 
+    //prm_no,采购和销售一行上的联系no
+    String prmNo;
+
+
+    public String getPrmNo() {
+        return prmNo;
+    }
+
+    public void setPrmNo(String prmNo) {
+        this.prmNo = prmNo;
+    }
+
     //数量
     public BigDecimal getQty() {
         if(null==qty){

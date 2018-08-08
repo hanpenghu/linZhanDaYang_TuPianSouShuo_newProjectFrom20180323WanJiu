@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 @Component
 public class CommonDaoRuDBZhiQianZhengLi {
 
@@ -104,6 +105,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
                     }
 
                         Sapso b = new Sapso();
+                        b.setRemBody(shouDingDanFromExcel.getRemBody());
                         b.setSupPrdNo(shouDingDanFromExcel.getDuiFangPrdNo());
                         b.setOsno(shouDingDanFromExcel.getOsNo());
                         b.setPrdno(shouDingDanFromExcel.getPrdNo());
@@ -180,7 +182,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
         for(int iii=0;iii<list3.size();iii++){
             ShouDingDanFromExcel s=list3.get(iii);
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-            this.saveOneShouDingDanFromExcelToTable(s, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList,sapsoList);
+            this.saveOneShouDingDanFromExcelToTable(s, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList);
         }
 
 /////////////////////////////////////for循环结束///////////////////////////////////////////////////////////////////////////////////////
@@ -210,7 +212,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
     // Isolation.READ_UNCOMMITTED读取未提交数据(会出现脏读, 不可重复读)
     //Propagation.REQUIRED 如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)
 
-    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii, MfPosWithBLOBs mm,List<TfPosWithBLOBs> tfPosWithBLOBsList,List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
+    public void saveOneShouDingDanFromExcelToTable(ShouDingDanFromExcel s, List<Msg> listmsg,int iii, MfPosWithBLOBs mm,List<TfPosWithBLOBs> tfPosWithBLOBsList,List<TfPosZ> tfPosZList) {
         Msg msg = new Msg();
         //直接set进去
         //        this.通过对方品号获取prdNo(s,msg,listmsg);
@@ -435,7 +437,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         this.saveOneShouDingDanFromExcelToTableInsert
                 (t, tz, pdt, s, listmsg, iii,mm,
-                tfPosWithBLOBsList,tfPosZList,sapsoList);
+                tfPosWithBLOBsList,tfPosZList);
 ///////////////////////////////////////////
     }
 
@@ -447,7 +449,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
     ( TfPosWithBLOBs t, TfPosZ tz, PrdtWithBLOBs pdt,
      ShouDingDanFromExcel s, List<Msg> listmsg,int iii,MfPosWithBLOBs mm
             ,List<TfPosWithBLOBs> tfPosWithBLOBsList,
-     List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
+     List<TfPosZ> tfPosZList) {
 
 
         PrdtExample prdtExample = new PrdtExample();
@@ -470,7 +472,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
             throw new RuntimeException(msg.getMsg());
         } else {
             //单独分出来是为了只在下面的几个插入使用事务
-            this.saveChuLePrdtDe(t, tz, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList,sapsoList);
+            this.saveChuLePrdtDe(t, tz, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList);
         }
 //    } catch (RuntimeException e) {
 //        e.printStackTrace();
@@ -489,7 +491,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
     public void saveChuLePrdtDe(TfPosWithBLOBs t, TfPosZ tz,
                                 List<Msg> listmsg,int iii,MfPosWithBLOBs mm,
                                 List<TfPosWithBLOBs> tfPosWithBLOBsList,
-                                List<TfPosZ> tfPosZList,List<Sapso> sapsoList) {
+                                List<TfPosZ> tfPosZList) {
         try {
 
 

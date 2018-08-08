@@ -185,12 +185,11 @@
         ,isnull(sapso.ebno,'') as ebno
         ,isnull(sapso.sapwlm,'')as sapwlm
         ,isnull(sapso.maitouno,'') as maitouno
-
-
+         ,isnull(sapso.rem_Body,'') as remBody
         FROM MF_PSS mf
         LEFT JOIN TF_PSS tf ON mf.ps_no=tf.ps_no
         left JOIN TF_PSS_Z tfz on tfz.ps_no=tf.ps_no and tf.itm=tfz.itm
-       LEFT JOIN sapso  sapso ON ( sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no and sapso.chengfendaima=tfz.cfdm)
+       LEFT JOIN sapso  sapso ON (  sapso.osNo=tf.cus_os_no AND sapso.prdNo=tf.prd_no and sapso.chengfendaima=tfz.cfdm)
         WHERE
         mf.ps_id='SA'
         AND

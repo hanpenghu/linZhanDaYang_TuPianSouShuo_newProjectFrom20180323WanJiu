@@ -1,18 +1,13 @@
 package com.winwin.picreport.Futils.GeneratePrdNo;
-
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.Prdt;
-import com.winwin.picreport.Edto.PrdtExample;
 import com.winwin.picreport.Edto.PrdtSamp0;
-import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 @Component
-@Transactional
 public class GPrdNo {
+
     @Autowired
     private Cnst cnst;
 
@@ -23,7 +18,7 @@ public class GPrdNo {
      */
 
 
-//    @Transactional
+    @Transactional
     public void prdtSampObjGetPrdNo(PrdtSamp0 prdtSamp) {
         //得到前端传过来的prdt_code//在prdt里面其实对应的name
         String prdCode = prdtSamp.getPrdCode();
@@ -51,23 +46,23 @@ public class GPrdNo {
 
 
 
-    //    @Transactional
+    @Transactional
     public void prdtSampObjGetPrdNoByIndxGenerate(PrdtSamp0 prdtSamp) {
         p.p("--------------------开始流水货号--prdtSamp.getFenLeiNo()=" + prdtSamp.getFenLeiNo() + "---------------------------------");
         p.p("==============9=================");
         //        synchronized (this) {
         //得到中类代号,fenLeiNo是最小范围的
-        String indx1 = prdtSamp.getFenLeiNo();
+        String fenLeiNo = prdtSamp.getFenLeiNo();
         //在prdt里面找到相同的indx1的prdNo流水最大的那个
         //            String prdNoMax= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(indx1);
         p.p("===============10=================");
-        if (p.empty(indx1)) {
+        if (p.empty(fenLeiNo)) {
             p.p("==============11=================");
-            throw new RuntimeException("该中类编号在《"+indx1+"》在prdt表中没有一个记录,导致无法流水");
+            throw new RuntimeException("该中类编号在《"+fenLeiNo+"》在prdt表中没有一个记录,导致无法流水");
         }
 
         p.p("===============12=================");
-        String prdNoMax = cnst.getMaxPrdNo.getAllUpAndDownIdxNo(indx1);
+        String prdNoMax = this.getAllUpAndDownIdxNo(fenLeiNo);
         p.p("===============13================");
         //将prdNoMax转化成long
         if (p.notEmpty(prdNoMax)) {
@@ -75,15 +70,15 @@ public class GPrdNo {
             //给prdtSamp添加货号
             prdtSamp.setPrdNo(prdNoMax);
             p.p("-----------得到货号-----prdtSamp.setPrdNo(prdNoMax)---" + prdtSamp.getPrdNo() + "-------------------------");
-           this.insertPrdtAPrdNo(prdtSamp,prdNoMax,indx1);
+           this.insertPrdtAPrdNo(prdtSamp,prdNoMax,fenLeiNo);
         }else{
             throw new RuntimeException("货号流水异常,未能流水到货号");
         }
     }
 
 
-
-    private void updatePrdNoOfPrdt(String prdtNo, PrdtSamp0 prdtSamp) {
+    @Transactional
+    public void updatePrdNoOfPrdt(String prdtNo, PrdtSamp0 prdtSamp) {
         String ut = cnst.a001TongYongMapper.selectUtByPrdNoFromPrdt(prdtNo);
         p.p("===============4=================");
         if (p.empty(ut)) {
@@ -98,7 +93,8 @@ public class GPrdNo {
 
 
 
-    private void insertPrdtAPrdNo(PrdtSamp0 prdtSamp, String prdNoMax, String indx1) {
+    @Transactional
+    public void insertPrdtAPrdNo(PrdtSamp0 prdtSamp, String prdNoMax, String indx1) {
         //对应数据库的name
         String prdCode = prdtSamp.getPrdCode();
         p.p("~~~~~~~~~~~~~~~~~~~~~~~~prdt插入prdNo开始~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -110,7 +106,8 @@ public class GPrdNo {
         p.p("===============15=================");
     }
 
-    private String setUnit(String mainUnit,PrdtSamp0 prdtSamp) {
+    @Transactional
+    public String setUnit(String mainUnit,PrdtSamp0 prdtSamp) {
         if(p.empty(mainUnit)){
             if(p.notEmpty(prdtSamp.getUnit())){
                 mainUnit=prdtSamp.getUnit();
@@ -120,6 +117,39 @@ public class GPrdNo {
             mainUnit = mainUnit.replace("主:", "");
         }
         return mainUnit;
+    }
+
+    //找到idxNo的所有上下级 idxNp
+    @Transactional
+    public synchronized String   getAllUpAndDownIdxNo(String fenLeiNo){
+        //在prdt里面找到相同的indx1的prdNo流水最大的那个
+        String maxPrdNoSecond= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(fenLeiNo);
+        if(p.empty(maxPrdNoSecond)){
+            //此时具有该中类no的商拼在prdt还没有一条,我们从1开始流水一条
+            throw new RuntimeException("分类编号在prdt里没有任何记录,无法流水");
+
+        }
+        maxPrdNoSecond = this.getMaxPrdNoSecond(maxPrdNoSecond);
+        return maxPrdNoSecond;
+    }
+
+
+
+    /**
+     *害怕这个prdt_no已经存在,再次通过加1的手段搞定
+     * */
+    @Transactional
+    public String getMaxPrdNoSecond(String prdNoMax){
+        Integer ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
+        //       System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        while(ii>0){
+            //如果ii在里面已经存在,就需要加1
+            long l = new Long(prdNoMax) + 1L;
+            prdNoMax=String.valueOf(l);
+            ii= cnst.a001TongYongMapper.ifIdxNoExistInPrdt(prdNoMax);
+        }
+        //        System.out.println("~~~~~~~~~prdNoMax=~~~"+prdNoMax+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        return prdNoMax;
     }
 
 
@@ -154,4 +184,13 @@ public class GPrdNo {
 
 
     }*/
+
+
+
+
+
+
+
+
+
 }

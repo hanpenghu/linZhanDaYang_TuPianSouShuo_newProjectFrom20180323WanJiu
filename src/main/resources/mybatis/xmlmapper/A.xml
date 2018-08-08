@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.A12">
+
+  <!-- 经证明,日期类型可以直接被转化 -->
+     <select id="testDate" resultType="com.winwin.picreport.Edto.Prdt">
+       SELECT
+       SYS_DATE AS sysDate,
+       SPC_TAX AS spcTax,
+       pak_Exc AS pakExc
+       FROM PRDT WHERE PRD_NO='10100002'
+     </select>
+
+</mapper>

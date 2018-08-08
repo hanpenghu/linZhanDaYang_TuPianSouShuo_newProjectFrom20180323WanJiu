@@ -44,7 +44,10 @@ public class ManyConditionSearchOfExportInfo2Excel {
      *多条件产品打样列表
      * */
     private FenYe manyConditionSearchOfPrdtFiltList(FenYe f) throws IllegalAccessException {
+
         PrdtSamp1 p1 = f.getPrdtSamp1();
+        boolean b = this.conditionOnlyPrdCode(p1);
+
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换前多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -101,11 +104,18 @@ public class ManyConditionSearchOfExportInfo2Excel {
         }
         System.out.println("======list==========p1.getFenLeiNames()="+p1.getFenLeiNames()+"==========================================");
         System.out.println("================p1.getFenLeiName()="+p1.getFenLeiName()+"==========================================");
-        List<PrdtSampExcleExportManyCondition> prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
+        List<PrdtSampExcleExportManyCondition> prdtSampExcels;
+        if(b){
+            prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode(p1);
+        }else{
+            prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
+        }
+
+
         this.onePriceSet(prdtSampExcels);
-//        p.p("--------------------List<PrdtSampExcleExportManyCondition> prdtSampExcels = -----------------------------------");
-//        p.p(prdtSampExcels);
-//        p.p("-------------------------------------------------------");
+        p.p("--------------------List<PrdtSampExcleExportManyCondition> prdtSampExcels = -----------------------------------");
+        p.p(prdtSampExcels);
+        p.p("-------------------------------------------------------");
         f.setPrdtSampExcleList(prdtSampExcels);
         //我在这个方法中顺便调了setZongYeShu()方法
         f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShuExportExcel(p1));
@@ -153,7 +163,25 @@ public class ManyConditionSearchOfExportInfo2Excel {
 
 
 
+    private boolean conditionOnlyPrdCode(PrdtSamp1 p1) {
 
+        boolean b6 = p.notEmpty(p1.getPrdCode());
+        boolean b =  p.empty(p1.getCusName());
+        boolean b1 =  p.empty(p1.getInsertdateStr());
+        boolean b2 =  p.empty(p1.getInsertdateStrEnd());
+        boolean b3 =  p.empty(p1.getConfirmtimestr());
+        boolean b4 = p.empty(p1.getConfirmtimestrEnd() );
+        boolean b5 = p.empty(p1.getIdxName());
+        boolean b7 = p.empty(p1.getSalName() );
+        boolean b8 = p.empty(p1.getFenLeiName());
+        if(b6&&b&&b1&&b2&&b3&&b4&&b5&&b6&&b7&&b8){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
 
 
 }

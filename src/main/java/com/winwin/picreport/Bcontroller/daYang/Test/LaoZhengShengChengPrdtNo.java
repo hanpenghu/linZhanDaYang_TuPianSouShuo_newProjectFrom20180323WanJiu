@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang;
+package com.winwin.picreport.Bcontroller.daYang.Test;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
@@ -8,6 +8,7 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,57 @@ public class LaoZhengShengChengPrdtNo {
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private Cnst cnst;
+
+    /**
+     * 把prdt_samp里面符合以下条件的生成货号
+     *select * from  prdt_samp where tenant_id='88' and fen_lei_no is not NULL and (prd_no is NULL or prd_no='')
+     * */
+    @RequestMapping(value="/schh001",method= RequestMethod.GET)
+    public String f1(){
+        p.p("-------------------------------------------------------");
+        p.p("开始更新货号");
+        p.p("-------------------------------------------------------");
+        PrdtSampExample pp=new PrdtSampExample();
+        pp.createCriteria().andTenantIdEqualTo("88").andFenLeiNoIsNotNull().andPrdNoIsNull().andFenLeiNoNotEqualTo("");
+        List<PrdtSamp> prdtSamps = cnst.prdtSampMapper.selectByExample(pp);
+
+        PrdtSampExample ppp=new PrdtSampExample();
+        ppp.createCriteria().andTenantIdEqualTo("88").andFenLeiNoIsNotNull().andPrdNoEqualTo("").andFenLeiNoNotEqualTo("");
+        List<PrdtSamp> prdtSamps1 = cnst.prdtSampMapper.selectByExample(ppp);
+
+        prdtSamps.addAll(prdtSamps1);
+
+
+        int i=0;
+        for(PrdtSamp pppp:prdtSamps){
+            if(p.notEmpty(pppp.getPrdNo())){
+                continue;
+            }
+            if(p.empty(pppp.getFenLeiNo())){
+                continue;
+            }
+
+            PrdtSamp0 prdtSamp0=new PrdtSamp0();
+            BeanUtils.copyProperties(pppp,prdtSamp0);
+            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp0);
+
+            PrdtSamp prdtSamp=new PrdtSamp();
+            prdtSamp.setId(prdtSamp0.getId());
+            prdtSamp.setPrdNo(prdtSamp0.getPrdNo());
+            cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSamp);
+
+            i=i+1;
+        }
+
+
+
+        return "-----------------共"+prdtSamps.size()+"个---------流水成功"+i+"个-----------------------------";
+    }
+
+
+
+
+
 
     //  schh  就是生成货号的意思
     @RequestMapping(value="/schh",method= RequestMethod.GET)

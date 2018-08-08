@@ -22,29 +22,45 @@ public class DyDeleteOneImg {
 
     @Transactional
     public void f(String imgUrl, List<String> msgList) {
+        p.p("---------------------------imgUrl----------------------------");
+        p.p(imgUrl);
+        p.p("-------------------------------------------------------");
         //得到  suoLueTuWenJianJia/be1272e8-b8cc-467d-8c84-981af0a4b2af!通过域名找到IP.jpg;   这种
         String urlInDb = this.得到db存储的url(imgUrl);
-
+        p.p("---------------------------urlInDb----------------------------");
+        p.p(urlInDb);
+        p.p("-------------------------------------------------------");
         String urlInDb无中括号=urlInDb;
         if(urlInDb.contains("[")){
             //老数据中的[无法是在数据库中做like处理
             urlInDb无中括号=urlInDb.substring(0,urlInDb.indexOf("["));
         }
+        p.p("---------------------------urlInDb无中括号----------------------------");
+        p.p(urlInDb无中括号);
+        p.p("-------------------------------------------------------");
         //该url在数据库中应该是唯一的//通过该url找到该url对应的所有的attch组成的字符串
         String thumStr=cnst.manyTabSerch.selectSuoLueTuUse_urlInDb(p.bfh+urlInDb无中括号+p.bfh);
+        p.p("---------------------------thumStr----------------------------");
+        p.p(thumStr);
+        p.p("-------------------------------------------------------");
         if(thumStr.contains(urlInDb)){
             thumStr=thumStr.replace(urlInDb,"");
+            p.p("---------------------------thumStr1----------------------------");
+            p.p(thumStr);
+            p.p("-------------------------------------------------------");
             int k= cnst.manyTabSerch.updateThum(p.bfh+urlInDb+p.bfh,thumStr);
             if(k!=1)commonMsgthrow(msgList,"删除失败！有可能该url在数据库不唯一,检查数据库中来自老系统的url!");
         }
-        String 文件绝对路径 = this.getParentAbsolutPath() + 得到文件名字(imgUrl);
+        String 文件绝对路径 = this.getParentAbsolutPath() + this.得到文件名字(imgUrl);
         File 要删除的thum=new File(文件绝对路径);
         if(!要删除的thum.exists()){
             //这里主要是解决原来2个人删除的时候的假象问题
-            p.throwEAddToList("该图片已经删除！",msgList);
+//            p.throwEAddToList("该图片已经删除！",msgList);
+        }else{
+            boolean delete = 要删除的thum.delete();
         }
-        boolean delete = 要删除的thum.delete();
-        if(!delete) commonMsgthrow(msgList,"删除失败！图片无法删除或者根本不存在");
+
+//        if(!delete) commonMsgthrow(msgList,"删除失败！图片无法删除或者根本不存在");
     }
 
 

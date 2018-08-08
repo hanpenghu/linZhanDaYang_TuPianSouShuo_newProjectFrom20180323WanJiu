@@ -255,7 +255,31 @@
             <include refid="productProofWithManyCondition"/>
         ORDER BY insertdate DESC
     </select>
-
+    <!-- 产品打样列表多条件查询 按照prd_code从大到小排列-->
+    <select id="chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC" resultMap="PrdtSampBaseResultMap">
+        SELECT
+        TOP
+        (#{meiYeXianShiShu})
+        <include refid="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.Base_Column_List"/>
+        FROM
+        PRDT_SAMP
+        WHERE
+        id NOT IN
+        (
+            select top
+            (
+                 (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+             )id from PRDT_SAMP
+            WHERE
+            <!-- 产品打样列表多条件查询的条件-->
+            <include refid="productProofWithManyCondition"/>
+            ORDER BY prd_code DESC
+        )
+        AND
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        ORDER BY prd_code DESC
+    </select>
 
     <!--林展多条件查询接口 -->
 
@@ -300,6 +324,40 @@
 
 
 
+
+    <!-- 产品打样列表多条件查询导出excel-->
+    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode" resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
+        SELECT
+        TOP
+        (#{meiYeXianShiShu})
+        <include refid="column_ListOfExportExcel"/>
+        FROM
+        PRDT_SAMP p
+        <include refid="leftJoinOfExportExcel"/>
+        WHERE
+        p.id NOT IN
+        (
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )p1.id from PRDT_SAMP p1
+        <include refid="leftJoinOfExportExcel1"/>
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="exportExcelManyCondition1"/>
+        ORDER BY p1.prd_code DESC
+        )
+        AND
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="exportExcelManyCondition"/>
+        ORDER BY p.prd_code DESC
+    </select>
+
+
+
+
+
+
     <sql id="leftJoinOfExportExcel">
         left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='2' -- 2是有运费
         left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='1' and u2.olefield=u1.olefield
@@ -308,7 +366,14 @@
         -- left join up_def u5 on p.prd_no=u5.prd_no and u5.price_id='2' and u5.cur_id='RMB' and u5.bil_type='1' and u5.prm_no=u4.prm_no -- 无运费
         -- left join up_def u6 on p.prd_no=u6.prd_no and u6.price_id='2' and u6.cur_id='RMB' and u6.bil_type='' and u6.olefield=u5.olefield -- 有运费
     </sql>
-
+    <sql id="leftJoinOfExportExcel1">
+        left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='2' -- 2是有运费
+        left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
+        left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u22.olefield
+        left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u33.olefield
+        -- left join up_def u55 on p.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u44.prm_no -- 无运费
+        -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
+    </sql>
     <sql id="exportExcelManyCondition">
            p.id=p.id
         <if test=" insertdateStr != null and insertdateStr != '' ">
@@ -345,24 +410,17 @@
             <![CDATA[ AND convert(datetime,p.confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
-            <![CDATA[ AND p.is_Check_Out LIKE  #{ isCheckOut }  ]]>
+            <![CDATA[ AND p.is_Check_Out LIKE  ('%'+#{ isCheckOut }+ '%')  ]]>
         </if>
         <if test=" cusName != null and cusName  != '' ">
-            <![CDATA[ AND p.cus_name LIKE  #{ cusName }  ]]>
+            <![CDATA[ AND p.cus_name LIKE  ('%'+#{ cusName } + '%') ]]>
         </if>
     </sql>
 
 
 
 
-    <sql id="leftJoinOfExportExcel1">
-        left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='2' -- 2是有运费
-        left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
-        left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u22.olefield
-        left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u33.olefield
-        -- left join up_def u55 on p.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u44.prm_no -- 无运费
-        -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
-    </sql>
+
 
     <sql id="exportExcelManyCondition1">
         p1.id=p1.id
@@ -400,10 +458,10 @@
             <![CDATA[ AND convert(datetime,p1.confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
         </if>
         <if test=" isCheckOut != null and isCheckOut  != '' ">
-            <![CDATA[ AND p1.is_Check_Out LIKE  #{ isCheckOut }  ]]>
+            <![CDATA[ AND p1.is_Check_Out LIKE  ('%'+#{ isCheckOut }+ '%')  ]]>
         </if>
         <if test=" cusName != null and cusName  != '' ">
-            <![CDATA[ AND p1.cus_name LIKE  #{ cusName }  ]]>
+            <![CDATA[ AND p1.cus_name LIKE  ('%'+#{ cusName } + '%') ]]>
         </if>
     </sql>
 
@@ -438,7 +496,7 @@
              isnull(p.category,'')as category,
              isnull(p.teamname,'')as teamname,
              isnull(p.confirmrem,'')as confirmrem,
-             isnull(p.unit,'')as unit,
+             -- isnull(p.unit,'')as unit,
              isnull(p.businessdesc,'')as businessdesc,--//业务描述
              isnull(p.financedesc,'')as financedesc,--//财务描述
             --//        private BigDecimal startsellcount,//采购起订数量//json可以直接转换输出给外部//起订量
@@ -493,7 +551,7 @@
              isnull(convert(varchar(23),convert(decimal(23,4),u3.up)),'') as haveTransUpSaleWaiBi,
              --//主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
              isnull(p.main_Unit,isnull(u1.hj_no,'')) as mainUnit,  --prdt_samp里的主单位,来源于第一次导excel进来的时候
-             isnull(u1.hj_no,'') as unit,     --- 单位,来自up_def表 ,后来决定在导出 excel中的取这个
+             isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,isnull(u4.hj_no,'')))) as unit,     --- 单位,来自up_def表 ,后来决定在导出 excel中的取这个
              isnull(convert(varchar(23),convert(decimal(23,4),u1.qty)),'') as qty,
              isnull(u1.rem,'') as rem,  -- 2018_8_2   weekday(4)   13:28:48 销售备注,其实徐勇让销售备注没有的时候取采购备注,我没干,因为再连一个表会更慢
             -- isnull(u1.prm_no,'') as prmNo,
@@ -603,6 +661,7 @@
         ,a.rem---备注,打样系统的会存为"打样系统"
         ,a.price_id----1代表销售价格, 2代表采购价格
         ,b.name ----as curName ----币别名字
+        ,a.prm_no
         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
         from up_def a
@@ -630,6 +689,7 @@
         <result column="price_id" jdbcType="VARCHAR" property="priceId"/>
         <result column="rem" jdbcType="VARCHAR" property="remOfPrdtSampOs"/>
         <result column="hj_no" jdbcType="VARCHAR" property="unit"/>
+        <result column="prm_no" jdbcType="VARCHAR" property="prmNo"/>
         <!-- <result column="ut" jdbcType="VARCHAR" property="unit" />-->
     </resultMap>
 
@@ -697,6 +757,7 @@
         ,a.rem---备注,打样系统的会存为"打样系统"
         ,a.price_id----1代表销售价格, 2代表采购价格
         ,b.name ----as curName ----币别名字
+        ,a.prm_no
         --- ,isnull(a.OLEFIELD,'') as olefield---是页面四条数据保存的时候关联同一次的字段
         ,isnull(a.OLEFIELD,'') as dingJiaGuanLian--是页面四条数据保存的时候关联同一次的字段
         from up_def a

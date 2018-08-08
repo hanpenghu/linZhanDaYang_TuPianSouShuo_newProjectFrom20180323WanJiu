@@ -155,6 +155,7 @@ public interface A001TongYongMapper {
 
    List<PrdtSamp0> chanPinBianMaJianDangTiaoJianChaXun(PrdtSamp1 p1);
 
+    List<PrdtSamp0> chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(PrdtSamp1 p1);
 
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 
@@ -395,4 +396,7 @@ public interface A001TongYongMapper {
 
     @Select({"select timetoken from users a inner join tenant b on a.tenantId=b.tenantId where a.tenantId=#{tenantId} and (a.phone_no=#{userEmail} or a.user_name=#{userEmail} or a.userEmail=#{userEmail})"})
     String getToekn(@Param("tenantId") String tenantId,@Param("userEmail")  String userEmail);
+
+    List<PrdtSampExcleExportManyCondition> chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode(PrdtSamp1 p1);
+
 }

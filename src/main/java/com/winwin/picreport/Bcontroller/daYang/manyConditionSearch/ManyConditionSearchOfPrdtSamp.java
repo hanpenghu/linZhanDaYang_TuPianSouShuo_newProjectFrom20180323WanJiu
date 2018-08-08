@@ -54,6 +54,7 @@ public class ManyConditionSearchOfPrdtSamp {
      * */
     private FenYe manyConditionSearchOfPrdtFiltList(FenYe f,String ifGetPrice) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
+        boolean b = this.conditionOnlyPrdCode(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换前多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -101,7 +102,16 @@ public class ManyConditionSearchOfPrdtSamp {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
         p.p(p1);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        List<PrdtSamp0> prdtSampListOrg = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+
+
+
+        List<PrdtSamp0> prdtSampListOrg;
+        if(b){
+            prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(p1);
+        }else{
+            prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+        }
+
 
 
         List<PrdtSamp0> prdtSampList= new  ArrayList<>();
@@ -136,17 +146,25 @@ public class ManyConditionSearchOfPrdtSamp {
 
     }
 
+    private boolean conditionOnlyPrdCode(PrdtSamp1 p1) {
+
+        boolean b6 = p.notEmpty(p1.getPrdCode());
+        boolean b =  p.empty(p1.getCusName());
+        boolean b1 =  p.empty(p1.getInsertdateStr());
+        boolean b2 =  p.empty(p1.getInsertdateStrEnd());
+        boolean b3 =  p.empty(p1.getConfirmtimestr());
+        boolean b4 = p.empty(p1.getConfirmtimestrEnd() );
+        boolean b5 = p.empty(p1.getIdxName());
+        boolean b7 = p.empty(p1.getSalName() );
+        boolean b8 = p.empty(p1.getFenLeiName());
+        if(b6&&b&&b1&&b2&&b3&&b4&&b5&&b6&&b7&&b8){
+            return true;
+        }else{
+           return false;
+        }
 
 
-
-
-
-
-
-
-
-
-
+    }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

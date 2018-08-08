@@ -132,7 +132,8 @@ public class InfoEdit_ManyAttach {
             thum.transferTo(new File(s));
             if (!new File(s).exists()) {p.throwEAddToList("缩略图没有保存成功导致所有数据没保存",ms);}
             if (imageThumUrl == null) {imageThumUrl = "";}
-            imageThumUrl = imageThumUrl+cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
+//            imageThumUrl = imageThumUrl+cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
+            imageThumUrl = cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
         }
         if ("".equals(imageThumUrl)) {
             //为了是null的时候不更新这个字段
