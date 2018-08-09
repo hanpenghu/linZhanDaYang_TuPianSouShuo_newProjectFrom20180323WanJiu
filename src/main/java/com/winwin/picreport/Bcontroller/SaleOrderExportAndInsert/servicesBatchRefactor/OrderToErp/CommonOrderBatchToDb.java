@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class CommonOrderBatchToDb {
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
+
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
     /**

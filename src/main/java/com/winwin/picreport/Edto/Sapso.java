@@ -244,9 +244,8 @@ public class Sapso implements Comparable<Sapso>{
 
     @Override//
     public int compareTo(Sapso o) {
-///this在后是降序,this在前是升序
-
-        return this.getSaphhDouble().compareTo(o.getSaphhDouble());//降序
+        ///this在后是降序,this在前是升序
+        return this.getSaphhDouble().compareTo(o.getSaphhDouble());
 
     }
 

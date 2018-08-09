@@ -2,6 +2,7 @@ package com.winwin.picreport.Edto;
 
 import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.TongJiXiaoShuDianHouDeWeiShu;
+import com.winwin.picreport.Futils.hanhan.p;
 
 
 public class SalePrdDetailTab1 {//导出excel用
@@ -232,7 +233,7 @@ public class SalePrdDetailTab1 {//导出excel用
     }
 
     public String getUp() {
-        if(NotEmpty.notEmpty(this.up)&&this.up.contains(".")&& TongJiXiaoShuDianHouDeWeiShu.f(this.up)>5){
+        if(p.notEmpty(this.up)&&this.up.contains(".")&& TongJiXiaoShuDianHouDeWeiShu.f(this.up)>5){
             this.up=this.up.trim().substring(0,this.up.indexOf(".")+5);
         }
         return up;
