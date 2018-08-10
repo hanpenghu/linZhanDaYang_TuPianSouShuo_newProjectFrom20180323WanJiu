@@ -24,7 +24,7 @@ public class DyInfoUpdate {
      *
      * //我这里原来是37成功,其他的是失败
      * */
-    @SuppressWarnings("unchecked")
+
     //    @Transactional
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSave_InfoEdit_ManyAttach,
             method = RequestMethod.POST,

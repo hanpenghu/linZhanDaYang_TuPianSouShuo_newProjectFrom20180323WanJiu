@@ -140,14 +140,18 @@ public class D1DaYangService {
             }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            String uuidstr = UUID.randomUUID().toString();
+            String uuidstr = p.sj();
             String imageThumUrl = "";
             String attachmentUrl = "";
             /**
              *下面是保存缩略图和附件
              * */
             if (thum != null) {
-                String thumImg = thum.getOriginalFilename();
+                String thumImg = thum.getOriginalFilename().replace("#","_jh_")
+                        .replace(";","_fh_")
+                        .replace("!","_gth_")
+                        .replace("[","_zzkh_")
+                        .replace("]","_yzkh_");
                 //缩略图和附件不能包含截取字符串的符号
                 if (thumImg.contains("!") || thumImg.contains(";")) {
                     return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号",
@@ -172,7 +176,11 @@ public class D1DaYangService {
 
             for (MultipartFile attach : attachList) {
                 if (attach != null) {
-                    String attachment = attach.getOriginalFilename();
+                    String attachment = attach.getOriginalFilename().replace("#","_jh_")
+                            .replace(";","_fh_")
+                            .replace("!","_gth_")
+                            .replace("[","_zzkh_")
+                            .replace("]","_yzkh_");
                     //缩略图和附件不能包含截取字符串的符号
                     if (attachment.contains("!") || attachment.contains(";")) {
                         return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号",

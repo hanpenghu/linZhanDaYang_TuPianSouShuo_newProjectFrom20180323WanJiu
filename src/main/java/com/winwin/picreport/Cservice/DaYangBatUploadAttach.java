@@ -38,7 +38,7 @@ private Cnst cnst;
             //通过id找到当前的attach字段所有内容     suoLueTuAndFuJian/20170317143142NEC_DL17_AndreTreiner_003[1].pdf;这种
             String attach= cnst.a001TongYongMapper.selectAttachUseId(id);
             if(null==attach){msgList.add("该id《"+id+"》在表prdt_samp不存在！");p.throwE("该id《"+id+"》对应的记录在表prdt_samp不存在！");}
-            AttachS attchs = getAttachS2Save(multipartFileList);
+            AttachS attchs = this.getAttachS2Save(multipartFileList);
 
             //更新附件字段// 必须是  /  不能是  \  分隔符
             int k=cnst.a001TongYongMapper.updateAttachById(id,attach+attchs.getToSave2Db().replace(File.separator,"/"));
@@ -88,7 +88,16 @@ private Cnst cnst;
         String toSave2Db="";
         List<String>toSavePathList=new LinkedList<String>();
         for(MultipartFile m:multipartFileList){
-            String newName=p.uuid()+p.egth+m.getOriginalFilename();
+            //注意去除特殊符号
+            String newName=p.sj()+p.egth+
+                    m.getOriginalFilename()
+                            .replace("#","_jh_")
+                            .replace(";","_fh_")
+                            .replace("!","_gth_")
+                            .replace("[","_zzkh_")
+                            .replace("]","_yzkh_")
+                    ;
+            //去掉路径不支持的特殊符号#
             //E：/xx/daYangSuoLueTuAndFuJianZongPath/suoLueTuAndFuJian/lasdflkdasf!woCao.png   这种
             String toSavePath=getParentAbsolutPath()+newName;
             toSavePathList.add(toSavePath);
@@ -99,7 +108,10 @@ private Cnst cnst;
         attachS.setToSave2Db(toSave2Db);
         return attachS;
     }
-    
+
+
+
+
     class AttachS{
         //   suoLueTuAndFuJian/lasdflkdasf!woCao.png;suoLueTuAndFuJian/lasdflkdasf!woCao.png;   这种
         private String toSave2Db;

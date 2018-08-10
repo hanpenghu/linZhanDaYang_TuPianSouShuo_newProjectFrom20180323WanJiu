@@ -31,6 +31,7 @@ import java.util.*;
 /**
  * Created by Administrator on 2018/6/1.
  */
+@SuppressWarnings("unchecked")
 @CrossOrigin
 @RestController
 public class DyExport {
@@ -77,7 +78,7 @@ public class DyExport {
         p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
         p.p(idsFromConfirmTime);
         p.p("-------------------------------------------------------");
-        List<String> list导出头信息 = f得到完整导出头信息();
+        List<String> list导出头信息 = this.f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
         //为了装入 idsFromManyConditionSearch
@@ -99,6 +100,7 @@ public class DyExport {
             p.p("====daoChus是null=========");
             return null;
         }
+        //分级价格显示
         //2018_7_18   weekday(3)   11:45:05  after add
         daoChus=this.f设置所有价格(daoChus);
         //把字段写入excel
@@ -167,16 +169,16 @@ public class DyExport {
 
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
-        p.p("---perfectIds()---ids=" + ids + "----------------");
+//        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
+//        p.p("---perfectIds()---ids=" + ids + "----------------");
         if (p.notEmpty(ids)) {
-            l.error("----3---前端穿过来的ids不为空----------------");
+//            l.error("----3---前端穿过来的ids不为空----------------");
         }
         if (ids != null && idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
             ids.addAll(idsFromConfirmTime);
         }
         if (p.notEmpty(ids)) {
-            l.error("-----4------最终得到的ids不为空--------------");
+//            l.error("-----4------最终得到的ids不为空--------------");
         }
         p.removeNull(ids);
     }
@@ -212,22 +214,22 @@ public class DyExport {
     }
 
     private List<String> f得到一次多条件的ids(ExportXlsParam ep) {
-        p.p("---------idsFromManyConditionSearch--------------ExportXlsParam--------------------------------");
-        p.p(ep);
-        p.p("-------------------------------------------------------");
+//        p.p("---------idsFromManyConditionSearch--------------ExportXlsParam--------------------------------");
+//        p.p(ep);
+//        p.p("-------------------------------------------------------");
         List<String> ids来自多条件查询 = null;
         //起止时间有一个非空才取id//注意,sql限制最多取出500个
         //通过确认时间过得id
         if(this.f多条件查询成立条件(ep)){
             ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
             if (p.notEmpty(ids来自多条件查询)) {
-                l.error("--2----起止时间得到的ids不为空----------");
+//                l.error("--2----起止时间得到的ids不为空----------");
             } else {
-                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
+//                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
             }
-            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-            p.p(ids来自多条件查询);
-            p.p("-------------------------------------------------------");
+//            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+//            p.p(ids来自多条件查询);
+//            p.p("-------------------------------------------------------");
         }
         return ids来自多条件查询;
     }
@@ -257,7 +259,7 @@ public class DyExport {
         try {
             ep = JSON.parseObject(param, ExportXlsParam.class);
         } catch (Exception e) {
-            l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化", e);
+//            l.error("前端传过来到dyExportExcel打样导出excel的接口的《json》无法格式化", e);
             return null;
         }
         if (p.empty(ep)) {
@@ -318,11 +320,11 @@ public class DyExport {
                     this.a写入内容行(daoChu, row, sheet1, cellStyle, i行计数器, wb, list导出头信息);
                     i行计数器 = i行计数器 + 1;
                 } else {
-                    l.error("------a写行列-----daoChu-是null------------------");
+//                    l.error("------a写行列-----daoChu-是null------------------");
                 }
             }
         } else {
-            l.error("------a写行列-----daoChus-是null------------------");
+//            l.error("------a写行列-----daoChus-是null------------------");
         }
     }
 
@@ -391,11 +393,17 @@ public class DyExport {
             }
             if ("Price 单价美元".equals(s)) {
                 String noTransUpSaleWaiBi = daoChu.getNoTransUpSaleWaiBi();
+//                p.p("------------------noTransUpSaleWaiBi-------------------------------------");
+//                p.p(noTransUpSaleWaiBi);
+//                p.p("-------------------------------------------------------");
                 if(p.notEmpty(noTransUpSaleWaiBi)){
                     noTransUpSaleWaiBi=p.del0(noTransUpSaleWaiBi);
                     noTransUpSaleWaiBi=p.dollor+noTransUpSaleWaiBi;
                 }
                 cell.setCellValue(noTransUpSaleWaiBi); // 设置内容--14
+//                p.p("----------------------noTransUpSaleWaiBi---------------------------------");
+//                p.p(noTransUpSaleWaiBi);
+//                p.p("-------------------------------------------------------");
             }
             if ("Price 单价(Lisa填写)".equals(s)) {
                 String noTransUpSaleBenBi = daoChu.getNoTransUpSaleBenBi();
@@ -407,11 +415,17 @@ public class DyExport {
             }
             if ("含运费价格 美元".equals(s)) {
                 String haveTransUpSaleWaiBi = daoChu.getHaveTransUpSaleWaiBi();
+//                p.p("-------------------------haveTransUpSaleWaiBi------------------------------");
+//                p.p(haveTransUpSaleWaiBi);
+//                p.p("-------------------------------------------------------");
                 if(p.notEmpty(haveTransUpSaleWaiBi)){
                     haveTransUpSaleWaiBi=p.del0(haveTransUpSaleWaiBi);
                     haveTransUpSaleWaiBi=p.dollor+haveTransUpSaleWaiBi;
                 }
                 cell.setCellValue(haveTransUpSaleWaiBi); // 设置内容--  16
+//                p.p("---------------------haveTransUpSaleWaiBi----------------------------------");
+//                p.p(haveTransUpSaleWaiBi);
+//                p.p("-------------------------------------------------------");
             }
             if ("含运费价格".equals(s)) {
                 String haveTransUpSaleBenBi = daoChu.getHaveTransUpSaleBenBi();
@@ -604,22 +618,29 @@ public class DyExport {
         List<DaoChu> daoChuList = new LinkedList<DaoChu>();
         p.p("------------a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径   的ids-------------------------------------------");
         p.p(ids);
-        p.p("-------------------------------------------------------");
+//        p.p("-------------------------------------------------------");
         for (String id : ids) {
             DaoChu daoChu = new DaoChu();
             //得到 haveTransUpSaleBenBi
             DaoChu daoChu1 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.benBi, Cnst.salPriceId, id);
-            p.p("---------------------------daoChu1.getMainUnit()----------------------------");
+//            p.p("---------------------------daoChu1.getMainUnit()----------------------------");
             if (null != daoChu1) {
                 p.p(daoChu1.getMainUnit());
             }
-            p.p("-------------------------------------------------------");
+//            p.p("-------------------------------------------------------");
             //haveTransUpSaleWaiBi
             DaoChu daoChu2 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.USD, Cnst.salPriceId, id);
             //noTransUpSaleBenBi
             DaoChu daoChu3 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.benBi, Cnst.salPriceId, id);
             //noTransUpSaleWaiBi
             DaoChu daoChu4 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.USD, Cnst.salPriceId, id);
+
+//            p.p("------------------------所有价格-------------------------------");
+//            p.p(daoChu1.getUp());
+//            p.p(daoChu2.getUp());
+//            p.p(daoChu3.getUp());
+//            p.p(daoChu4.getUp());
+//            p.p("-------------------------------------------------------");
             this.a复制daoChu对象(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
             this.a设置daoChu对象的各种价格(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
             daoChu.setUp("");

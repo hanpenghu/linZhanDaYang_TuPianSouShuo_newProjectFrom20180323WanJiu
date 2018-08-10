@@ -31,7 +31,7 @@ public class InfoEdit_ManyAttach {
 //        synchronized (this) {
         String uuid = p.timeAndRandom0_999NoHead_1();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
         String projectPath = SpringbootJarPath.JarLuJingGet();
-        this.f图片名字不能有四种非法字符(thum, ms);
+//        this.f图片名字不能有四种非法字符(thum, ms);
         p.p("----------------------111---------------------------------");
         PrdtSamp0 prdtSampOb = null;
         if (prdtSamp1 != null && !"".equals(prdtSamp1)) {
@@ -126,14 +126,20 @@ public class InfoEdit_ManyAttach {
 
     @Transactional
     public void f保存单张图片(PrdtSamp prdtSamp, MultipartFile thum, String projectPath, String uuid, PrdtSamp0 prdtSampOb, List<String> ms) throws IOException {
+
         String imageThumUrl = prdtSamp.getThum();
         if (thum != null&&thum.getSize()>0) {
-            String s = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename();
+            String originalFilename = thum.getOriginalFilename().replace("#","_jh_")
+                    .replace(";","_fh_")
+                    .replace("!","_gth_")
+                    .replace("[","_zzkh_")
+                    .replace("]","_yzkh_");
+            String s = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia+uuid+"!"+ originalFilename;
             thum.transferTo(new File(s));
             if (!new File(s).exists()) {p.throwEAddToList("缩略图没有保存成功导致所有数据没保存",ms);}
             if (imageThumUrl == null) {imageThumUrl = "";}
 //            imageThumUrl = imageThumUrl+cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
-            imageThumUrl = cnst.suoLueTuWenJianJia+uuid+"!"+thum.getOriginalFilename()+";";
+            imageThumUrl = cnst.suoLueTuWenJianJia+uuid+"!"+ originalFilename +";";
         }
         if ("".equals(imageThumUrl)) {
             //为了是null的时候不更新这个字段
@@ -153,21 +159,27 @@ public class InfoEdit_ManyAttach {
     @Transactional
     public void f保存多个附件(List<MultipartFile> attachList, PrdtSamp0 prdtSampOb, String projectPath, List<String> ms) throws IOException {
         for (MultipartFile attach : attachList) {
+            if(attach==null) continue;
+            String originalFilename = attach.getOriginalFilename().replace("#","_jh_")
+                    .replace(";","_fh_")
+                    .replace("!","_gth_")
+                    .replace("[","_zzkh_")
+                    .replace("]","_yzkh_");
             PrdtSamp0 prdtSampO = new PrdtSamp0();
             //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
             PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
             String attachmentUr = prdtsa.getAttach();
             String uid =p.sj();
             ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
-            this.f附件不能包含四种符号(attach,ms);
+//            this.f附件不能包含四种符号(attach,ms);
             String s1 = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.fuJianWenJianJia;
             if (attach != null) {
-                String ss = uid + Cnst.ganTanHao + attach.getOriginalFilename();
+                String ss = uid + Cnst.ganTanHao + originalFilename;
                 //将附件保存在指定的目录
                 attach.transferTo(new File(s1, ss));
                 if (!new File(s1,ss).exists()) {p.throwEAddToList("附件没有保存成功导致所有数据没保存！",ms);}
                 if (attachmentUr == null) {attachmentUr = "";}//第一次没上传任何东西可能是空
-                attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + attach.getOriginalFilename() + ";";
+                attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + originalFilename + ";";
             }
             if ("".equals(attachmentUr)) {
                 //为了是null的时候不更新这个字段
@@ -180,7 +192,7 @@ public class InfoEdit_ManyAttach {
             prdtSampO.setIsconfirm(null);//不更新这个
             //Selective是不更新null
             cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
-            if (attach != null && !new File(s1, uid + "!" + attach.getOriginalFilename()).exists()) {
+            if (attach != null && !new File(s1, uid + "!" + originalFilename).exists()) {
                 p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);
             }
         }
@@ -208,33 +220,34 @@ public class InfoEdit_ManyAttach {
             }
         }
     }
+    //已经替换掉,不用判断
+//    @Transactional
+//    public void f附件不能包含四种符号(MultipartFile attach,List<String>ms) {
+//        boolean b1=attach != null;
+//        boolean b2=attach.getOriginalFilename().contains(Cnst.ganTanHao);
+//        boolean b3=attach.getOriginalFilename().contains(Cnst.fenHao);
+//        boolean b4=attach.getOriginalFilename().contains("[");
+//        boolean b5=attach.getOriginalFilename().contains("]");
+//        if (b1 && (b2 || b3 || b4 || b5)) {
+//            p.throwEAddToList("您的附件不能包含有以下四种符号    !    ;   [    ]  ", ms);
+//        }
+//    }
 
-    @Transactional
-    public void f附件不能包含四种符号(MultipartFile attach,List<String>ms) {
-        boolean b1=attach != null;
-        boolean b2=attach.getOriginalFilename().contains(Cnst.ganTanHao);
-        boolean b3=attach.getOriginalFilename().contains(Cnst.fenHao);
-        boolean b4=attach.getOriginalFilename().contains("[");
-        boolean b5=attach.getOriginalFilename().contains("]");
-        if (b1 && (b2 || b3 || b4 || b5)) {
-            p.throwEAddToList("您的附件不能包含有以下四种符号    !    ;   [    ]  ", ms);
-        }
-    }
-
-    @Transactional
-    public void f图片名字不能有四种非法字符(MultipartFile thum, List<String> ms) {
-        boolean b1=thum != null;
-        if(b1) {
-            boolean b2=thum.getOriginalFilename().contains(Cnst.ganTanHao);
-            boolean b3=thum.getOriginalFilename().contains(Cnst.fenHao);
-            boolean b4=thum.getOriginalFilename().contains("[");
-            boolean b5=thum.getOriginalFilename().contains("]");
-            if (b2 || b3 || b4 || b5) {
-                p.throwEAddToList("您的图片不能包含有以下四种符号    !    ;   [    ] ", ms);
-            }
-        }
-
-    }
+    //已经替换掉,不用判断
+//    @Transactional
+//    public void f图片名字不能有四种非法字符(MultipartFile thum, List<String> ms) {
+//        boolean b1=thum != null;
+//        if(b1) {
+//            boolean b2=thum.getOriginalFilename().contains(Cnst.ganTanHao);
+//            boolean b3=thum.getOriginalFilename().contains(Cnst.fenHao);
+//            boolean b4=thum.getOriginalFilename().contains("[");
+//            boolean b5=thum.getOriginalFilename().contains("]");
+//            if (b2 || b3 || b4 || b5) {
+//                p.throwEAddToList("您的图片不能包含有以下四种符号    !    ;   [    ] ", ms);
+//            }
+//        }
+//
+//    }
     @Transactional
     public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms) {
         if (p.notEmpty(prdtSampOb)) {

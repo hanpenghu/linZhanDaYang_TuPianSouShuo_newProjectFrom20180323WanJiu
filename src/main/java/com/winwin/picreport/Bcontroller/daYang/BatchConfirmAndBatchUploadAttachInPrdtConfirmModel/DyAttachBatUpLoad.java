@@ -104,15 +104,16 @@ public class DyAttachBatUpLoad {
                 p.throwE("《失败！前端传过来的id有空的》");
             }
         }
-        for(MultipartFile m:multipartFileList){
-            if(m.getName().contains("!")){
-                msgList.add("《附件名称中不能包含  !  》");
-                p.throwE("《附件名称中不能包含  !  》");
-            }
-            if(m.getName().contains(";")){
-                msgList.add("《附件名称中不能包含  ;  》");
-                p.throwE("《附件名称中不能包含  ;  》");
-            }
-        }
+        //程序中已经替换
+//        for(MultipartFile m:multipartFileList){
+//            if(m.getName().contains("!")){
+//                msgList.add("《附件名称中不能包含  !  》");
+//                p.throwE("《附件名称中不能包含  !  》");
+//            }
+//            if(m.getName().contains(";")){
+//                msgList.add("《附件名称中不能包含  ;  》");
+//                p.throwE("《附件名称中不能包含  ;  》");
+//            }
+//        }
     }
 }

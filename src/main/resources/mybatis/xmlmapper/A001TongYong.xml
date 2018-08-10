@@ -905,19 +905,57 @@
 
 
 
+<!--      ==========================================================================                -->
+    <sql id="productProofWithManyConditionExcel090">
+        id=id
+        <if test=" insertdateStr != null and insertdateStr != '' ">
+            <![CDATA[  AND  insertDate >= #{insertdateStr}  ]]>
+        </if>
+        <if test=" insertdateStrEnd != null and insertdateStrEnd != '' ">
+            <![CDATA[  AND  insertDate <= #{insertdateStrEnd}  ]]>
+        </if>
+        <if test=" idxName != null and idxName != '' ">
+            AND  isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+        </if>
+        <if test=" fenLeiName != null and fenLeiName != '' ">
+            AND  isnull(fen_lei_name,'') = #{fenLeiName}   --  小范围
+        </if>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+        </if>
+        <if test=" salName != null and salName != '' ">
+            AND  isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
+        </if>
+        <if test=" isconfirm != null and isconfirm != '' ">
+            AND  isnull(isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+        </if>
+        <if test="confirmtimestr != null and confirmtimestr != ''">
+            <![CDATA[ AND convert(datetime,confirmtimestr) >=  #{confirmtimestr}  ]]>
+        </if>
+        <if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">
+            <![CDATA[ AND convert(datetime,confirmtimestr) <=  #{confirmtimestrEnd}  ]]>
+        </if>
+        <if test=" isCheckOut != null and isCheckOut  != '' ">
+            <![CDATA[ AND is_Check_Out LIKE  #{ isCheckOut }  ]]>
+        </if>
 
+        <if test=" cusName != null and cusName  != '' ">
+            <![CDATA[ AND cus_Name LIKE  #{ cusName }  ]]>
+        </if>
+
+    </sql>
     <select id="getIdUseConfirmTime" resultType="java.lang.String">
          SELECT
         -- top 500
         id FROM prdt_samp  --  限制最多导出500行
           <where>
-              <include refid="productProofWithManyCondition"/>
+              <include refid="productProofWithManyConditionExcel090"/>
           </where>
 
     </select>
 
 
-
+<!--      ==========================================================================                -->
     <select id="selectTop80OlefiledAndNoIn" resultType="java.lang.String">
         select a.olefield from
         (
