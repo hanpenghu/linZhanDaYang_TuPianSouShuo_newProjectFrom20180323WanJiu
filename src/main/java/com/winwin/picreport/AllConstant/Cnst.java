@@ -111,7 +111,8 @@ public class Cnst {
     }
 
 
-
+    @Autowired
+    public A12 a12;
 
     @Autowired
     public UserAuth userAuth;

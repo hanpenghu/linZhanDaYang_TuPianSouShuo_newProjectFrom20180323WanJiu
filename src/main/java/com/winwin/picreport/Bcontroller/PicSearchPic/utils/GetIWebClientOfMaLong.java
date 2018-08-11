@@ -24,4 +24,5 @@ public class GetIWebClientOfMaLong {
         IWebClient client = new DefaultProductAIClient(profile);
         return client;
     }
+
 }

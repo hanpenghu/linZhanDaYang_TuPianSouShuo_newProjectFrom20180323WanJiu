@@ -2,7 +2,10 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Edto.CustExample;
+import com.winwin.picreport.Edto.CustWithBLOBs;
+import com.winwin.picreport.Edto.UpDef;
+import com.winwin.picreport.Edto.UpDefExample;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.FileUtils;
@@ -16,17 +19,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2018/6/1.
@@ -34,7 +40,7 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 @CrossOrigin
 @RestController
-public class DyExport {
+public class DyExport原来 {
 
     @Autowired
     private Cnst cnst;
@@ -64,7 +70,7 @@ public class DyExport {
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
      */
 
-    @RequestMapping(value = "dyExportExcel001", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
+    @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
     public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
         //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
         p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
@@ -87,33 +93,22 @@ public class DyExport {
         }
         //将确认时间得到的id放入  全局id集合
         this.perfectIds(ids, idsFromConfirmTime);
-
         if (p.empty(ids)) {
             p.p("#######得到时间获得的ids之后 ids是null或者空######");
             return null;
         }
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {
-            this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
+            this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
-
-
-
-
-        List<DaoChu> daoChus =
-                this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径
-                    (ids);
-
-
-
-        if (   p.empty(daoChus)   ) {
+        List<DaoChu> daoChus = this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(ids, 前端穿过来要显示的fields);
+        if (p.empty(daoChus)) {
             p.p("====daoChus是null=========");
             return null;
         }
-
         //分级价格显示
         //2018_7_18   weekday(3)   11:45:05  after add
-
+        daoChus=this.f设置所有价格(daoChus);
         //把字段写入excel
         String excel路径 = this.a写入excel(daoChus, list导出头信息);
         File file = new File(excel路径);
@@ -124,9 +119,58 @@ public class DyExport {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
+    private List<DaoChu> f设置所有价格(List<DaoChu> daoChus) {
+        List<DaoChu>daoChus1=new LinkedList<DaoChu>();
+        for(DaoChu d:daoChus){
+            this.usePrdNoSetPrice(d,daoChus1);
+        }
+        return daoChus1;
+    }
 
+    private void usePrdNoSetPrice(DaoChu d,List<DaoChu> daoChus1) {
+        UpDefExample ue=new UpDefExample();
+        ue.createCriteria().andPrdNoEqualTo(d.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId);
+        List<UpDef> upDefList = cnst.upDefMapper.selectByExample(ue);
+        if(null==upDefList){upDefList=new LinkedList<UpDef>();}
+        Set<String> olefieldSet=new LinkedHashSet<String>();
+        if(p.notEmpty(upDefList)){
+            for(UpDef upDef:upDefList){
+                olefieldSet.add(upDef.getOlefield());
+            }
+            for(String olefield:olefieldSet){
+                DaoChu daoChu=new DaoChu();
+                BeanUtils.copyProperties(d,daoChu);
+                UpDefExample ue1=new UpDefExample();
+                ue1.createCriteria().andOlefieldEqualTo(olefield);
+                List<UpDef> upDefList1 = cnst.upDefMapper.selectByExample(ue1);
+                this.f设置相应价格(upDefList1,daoChu);
+                daoChus1.add(daoChu);
+            }
+        }else{
+            daoChus1.add(d);
+        }
+    }
 
-
+    private void f设置相应价格(List<UpDef> upDefList1, DaoChu daoChu) {
+        for(UpDef u:upDefList1){
+            //销售无运费本币
+            if(Cnst.benBi.equals(u.getCurId())&&Cnst.saleBilTypeNoTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setNoTransUpSaleBenBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售有运费本币
+            if(Cnst.benBi.equals(u.getCurId())&&Cnst.saleBilTypeHaveTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setHaveTransUpSaleBenBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售有运费外币
+            if(Cnst.USD.equals(u.getCurId())&&Cnst.saleBilTypeHaveTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setHaveTransUpSaleWaiBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+            //销售无运费外币
+            if(Cnst.USD.equals(u.getCurId())&&Cnst.saleBilTypeNoTrans.equals(u.getBilType())&&Cnst.salPriceId.equals(u.getPriceId())){
+                daoChu.setNoTransUpSaleWaiBi(    p.sm(   p.notEmpty(u.getUp())  ,String.valueOf(u.getUp()),""   )      );
+            }
+        }
+    }
 
 
     //完善ids,主要是从传入时间也得到的ids放进来
@@ -147,16 +191,16 @@ public class DyExport {
 
 
     private List<String> idsFromManyConditionSearch(ExportXlsParam ep) {
-        List<ExportXlsParam> epList = new LinkedList<ExportXlsParam>();
-        if (p.empty(ep.getFenLeiName())) {
+        List<ExportXlsParam>epList=new LinkedList<ExportXlsParam>();
+        if(p.empty(ep.getFenLeiName())){
             epList.add(ep);
-        } else {
-            List<String> fenLeiNameList = cnst.a001TongYongMapper.diGuiFenLeiName(ep.getFenLeiName());
-            if (p.notEmpty(fenLeiNameList)) {
-                for (String s : fenLeiNameList) {
-                    if (p.notEmpty(s)) {
-                        ExportXlsParam e = new ExportXlsParam();
-                        BeanUtils.copyProperties(ep, e);
+        }else{
+            List<String>fenLeiNameList=cnst.a001TongYongMapper.diGuiFenLeiName(ep.getFenLeiName());
+            if(p.notEmpty(fenLeiNameList)){
+                for (String s:fenLeiNameList){
+                    if(p.notEmpty(s)){
+                        ExportXlsParam e=new ExportXlsParam();
+                        BeanUtils.copyProperties(ep,e);
                         e.setFenLeiName(s);
                         epList.add(e);
                     }
@@ -164,10 +208,10 @@ public class DyExport {
             }
         }
 
-        List<String> ids来自多条件查询 = new LinkedList<>();
-        for (ExportXlsParam ee : epList) {
+        List <String>ids来自多条件查询=new LinkedList<>();
+        for( ExportXlsParam ee:epList){
             List<String> idList一次查询 = this.f得到一次多条件的ids(ee);
-            if (p.notEmpty(idList一次查询)) {
+            if(p.notEmpty(idList一次查询)){
                 ids来自多条件查询.addAll(idList一次查询);
             }
         }
@@ -182,21 +226,38 @@ public class DyExport {
         List<String> ids来自多条件查询 = null;
         //起止时间有一个非空才取id//注意,sql限制最多取出500个
         //通过确认时间过得id
-//        if(this.f多条件查询成立条件(ep)){
-        ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
-        if (p.notEmpty(ids来自多条件查询)) {
-                //                l.error("--2----起止时间得到的ids不为空----------");
-        } else {
-                //                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
+        if(this.f多条件查询成立条件(ep)){
+            ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
+            if (p.notEmpty(ids来自多条件查询)) {
+//                l.error("--2----起止时间得到的ids不为空----------");
+            } else {
+//                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
+            }
+//            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+//            p.p(ids来自多条件查询);
+//            p.p("-------------------------------------------------------");
         }
-            //            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-            //            p.p(ids来自多条件查询);
-            //            p.p("-------------------------------------------------------");
-//        }
         return ids来自多条件查询;
     }
 
-
+    private boolean f多条件查询成立条件(ExportXlsParam ep) {
+        boolean b1=(p.notEmpty(ep.getConfirmtimestr()));
+        boolean b2=(p.notEmpty(ep.getConfirmtimestrEnd()));
+        boolean b3=(p.notEmpty(ep.getInsertdateStr()));
+        boolean b4=(p.notEmpty(ep.getInsertdateStrEnd()));
+        boolean b5=(p.notEmpty(ep.getIdxName()));
+        boolean b6=(p.notEmpty(ep.getFenLeiName()));
+        boolean b7=(p.notEmpty(ep.getPrdCode()));
+        boolean b8=(p.notEmpty(ep.getSalName()));
+        boolean b9=(p.notEmpty(ep.getIsconfirm()));
+        boolean b10=(p.notEmpty(ep.getIsCheckOut()));
+        boolean b=b1||b2||b3||b4||b5||b6||b7||b8||b9||b10;
+        if(b){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     private ExportXlsParam formatJsonFromFront(String param) {
@@ -341,9 +402,9 @@ public class DyExport {
 //                p.p("------------------noTransUpSaleWaiBi-------------------------------------");
 //                p.p(noTransUpSaleWaiBi);
 //                p.p("-------------------------------------------------------");
-                if (p.notEmpty(noTransUpSaleWaiBi)) {
-                    noTransUpSaleWaiBi = p.del0(noTransUpSaleWaiBi);
-                    noTransUpSaleWaiBi = p.dollor + noTransUpSaleWaiBi;
+                if(p.notEmpty(noTransUpSaleWaiBi)){
+                    noTransUpSaleWaiBi=p.del0(noTransUpSaleWaiBi);
+                    noTransUpSaleWaiBi=p.dollor+noTransUpSaleWaiBi;
                 }
                 cell.setCellValue(noTransUpSaleWaiBi); // 设置内容--14
 //                p.p("----------------------noTransUpSaleWaiBi---------------------------------");
@@ -352,9 +413,9 @@ public class DyExport {
             }
             if ("Price 单价(Lisa填写)".equals(s)) {
                 String noTransUpSaleBenBi = daoChu.getNoTransUpSaleBenBi();
-                if (p.notEmpty(noTransUpSaleBenBi)) {
-                    noTransUpSaleBenBi = p.del0(noTransUpSaleBenBi);
-                    noTransUpSaleBenBi = p.rmb + noTransUpSaleBenBi;
+                if(p.notEmpty(noTransUpSaleBenBi)) {
+                    noTransUpSaleBenBi=p.del0(noTransUpSaleBenBi);
+                    noTransUpSaleBenBi=p.rmb+noTransUpSaleBenBi;
                 }
                 cell.setCellValue(noTransUpSaleBenBi); // 设置内容--15
             }
@@ -363,9 +424,9 @@ public class DyExport {
 //                p.p("-------------------------haveTransUpSaleWaiBi------------------------------");
 //                p.p(haveTransUpSaleWaiBi);
 //                p.p("-------------------------------------------------------");
-                if (p.notEmpty(haveTransUpSaleWaiBi)) {
-                    haveTransUpSaleWaiBi = p.del0(haveTransUpSaleWaiBi);
-                    haveTransUpSaleWaiBi = p.dollor + haveTransUpSaleWaiBi;
+                if(p.notEmpty(haveTransUpSaleWaiBi)){
+                    haveTransUpSaleWaiBi=p.del0(haveTransUpSaleWaiBi);
+                    haveTransUpSaleWaiBi=p.dollor+haveTransUpSaleWaiBi;
                 }
                 cell.setCellValue(haveTransUpSaleWaiBi); // 设置内容--  16
 //                p.p("---------------------haveTransUpSaleWaiBi----------------------------------");
@@ -374,23 +435,23 @@ public class DyExport {
             }
             if ("含运费价格".equals(s)) {
                 String haveTransUpSaleBenBi = daoChu.getHaveTransUpSaleBenBi();
-                if (p.notEmpty(haveTransUpSaleBenBi)) {
-                    haveTransUpSaleBenBi = p.del0(haveTransUpSaleBenBi);
-                    haveTransUpSaleBenBi = p.rmb + haveTransUpSaleBenBi;
+                if(p.notEmpty(haveTransUpSaleBenBi)){
+                    haveTransUpSaleBenBi=p.del0(haveTransUpSaleBenBi);
+                    haveTransUpSaleBenBi=p.rmb+haveTransUpSaleBenBi;
                 }
                 cell.setCellValue(haveTransUpSaleBenBi); // 设置内容--17
             }
             if ("MOQ 起订量要求 (Lisa填写)".equals(s)) {
                 String financestartsellcount = daoChu.getFinancestartsellcount();
-                if (p.isBd(financestartsellcount)) {
-                    financestartsellcount = p.del0(financestartsellcount);
+                if(p.isBd(financestartsellcount)) {
+                    financestartsellcount=p.del0(financestartsellcount);
                 }
                 cell.setCellValue(financestartsellcount); // 设置内容--18
             }
             if ("财务小单费".equals(s)) {
                 String financelittleorderprice = daoChu.getFinancelittleorderprice();
-                if (p.isBd(financelittleorderprice)) {
-                    financelittleorderprice = p.del0(financelittleorderprice);
+                if(p.isBd(financelittleorderprice)){
+                    financelittleorderprice=p.del0(financelittleorderprice);
                 }
                 cell.setCellValue(financelittleorderprice); // 设置内容--19
             }
@@ -460,6 +521,7 @@ public class DyExport {
             k计数器 = k计数器 + 1;
         }
     }
+
 
 
     private void a干掉excel中不需要的字段(List<String> daoChuExcelHeadList, List<String> a前端传过来需要显示的fields) {
@@ -543,6 +605,9 @@ public class DyExport {
     }
 
 
+
+
+
     private String f创建存储excel的临时目录不带杠() {
         String s = p.strCutNoHead(cnst.daYangSuoLueTuAndFuJianZongPath, "./");
         String s1 = p.strCutEndNothave(s, "/");
@@ -555,7 +620,7 @@ public class DyExport {
 
 
     //对于销售定价,每次找到up_def中最近s_dd的一个
-    private List<DaoChu> a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(List<String> ids) {
+    private List<DaoChu> a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(List<String> ids, List<String> fields) {
         List<DaoChu> daoChuList = new LinkedList<DaoChu>();
         p.p("------------a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径   的ids-------------------------------------------");
         p.p(ids);
@@ -596,18 +661,18 @@ public class DyExport {
     }
 
     private void NmEngSet(DaoChu daoChu) {
-        if (p.empty(daoChu.getNmEng())) {
-            if (p.notEmpty(daoChu)) {
-                if (p.notEmpty(daoChu.getCusNo())) {
+        if(p.empty(daoChu.getNmEng())){
+            if(p.notEmpty(daoChu)){
+                if(p.notEmpty(daoChu.getCusNo())){
                     CustWithBLOBs custWithBLOBs = cnst.custMapper.selectByPrimaryKey(daoChu.getCusNo());
-                    if (custWithBLOBs == null) {
-                        CustExample ce = new CustExample();
+                    if(custWithBLOBs==null){
+                        CustExample ce=new CustExample();
                         ce.createCriteria().andNameEqualTo(daoChu.getCusName());
                         List<CustWithBLOBs> custWithBLOBs1 = cnst.custMapper.selectByExampleWithBLOBs(ce);
-                        if (p.notEmpty(custWithBLOBs1)) {
+                        if(p.notEmpty(custWithBLOBs1)){
                             daoChu.setNmEng(custWithBLOBs1.get(0).getNmEng());
                         }
-                    } else {
+                    }else{
                         daoChu.setNmEng(custWithBLOBs.getNmEng());
                     }
 
@@ -678,13 +743,13 @@ public class DyExport {
                 new linklistT<String>()
                         .a("Win Win Merchandiser WinWin 负责业务员")//salName   0
                         .a("Inquiry Source 帽厂/NE")//cusName    1
-                        .a("NE CODE NE编码")//   2   x.nm_eng
+                        .a("NE CODE NE编码")//   2
                         .a("Win Win Model# WinWin编号")//prdCode  3
                         .a("产品大中类（中文）")//4
                         .a("产品大中类（英文）")//5
                         .a("产品子中类（中文）")//idxName    6
                         .a("产品子中类（英文）")//7
-                        .a("Product Photo 打样产品照片或图籍")//  8 thum
+                        .a("Product Photo 打样产品照片或图籍")//  8
                         .a("Category Name")//category   9
                         .a("Team Name")//teamname  10
                         .a("颜色")//colour  11
@@ -715,6 +780,9 @@ public class DyExport {
 //        p.p(s);
 //        p.p("-------------------------------------------------------");
 //    }
+
+
+
 
 
 }

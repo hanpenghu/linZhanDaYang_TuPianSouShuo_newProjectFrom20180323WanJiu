@@ -3,10 +3,7 @@ package com.winwin.picreport.Bcontroller.PicSearchPic.Schedule.upLoadPicFromWinW
 import cn.productai.api.core.IWebClient;
 import cn.productai.api.pai.entity.dataset.DataSetModifyResponse;
 import com.alibaba.fastjson.JSON;
-import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
-import com.winwin.picreport.Bcontroller.PicSearchPic.utils.CnstO;
-import com.winwin.picreport.Bcontroller.PicSearchPic.utils.DataSetSingleModifyExample1;
-import com.winwin.picreport.Bcontroller.PicSearchPic.utils.GetIWebClientOfMaLong;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.*;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -134,7 +131,7 @@ public  void nativePic2MaLong(){
             //得到上传图片到码隆索引库的主类
             DataSetSingleModifyExample1 g = DataSetSingleModifyExample1.g();
             //上传单条数据的例子
-            DataSetModifyResponse res = g.run(client, Cnst.image_set_idOfWinWinPrdtSamp, url);
+            DataSetModifyResponse res = g.run(client, Cnst.image_set_idOfWinWinPrdtSamp,url);
             if(null!=res){
                 l.info("-----shangChuan--maLong--fanHui--xinXi-----"+res.getMessage()+"--------------------");
             }
@@ -143,7 +140,7 @@ public  void nativePic2MaLong(){
             /**
              *下面是记录已经上传过的文件名到文件中的模块
              * */
-            jiLu_yiJing_ShangChuan_DeTuPian(havenUpRecPath,fileName);
+            this.recAllReadyUpPic(havenUpRecPath,fileName);
 
         }
 
@@ -154,30 +151,28 @@ public  void nativePic2MaLong(){
     }
 }
 
-public void jiLu_yiJing_ShangChuan_DeTuPian(
-        String yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing
-        ,String dangQianDe_tuPian_QuanMingCheng){
+public void recAllReadyUpPic(String havenUpRecPath,String currPicName){
     try {
-        File havenUpFile = new File(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+        File havenUpFile = new File(havenUpRecPath);
         if (p.notExists(havenUpFile)) {
             //不存在,就创建
             havenUpFile.createNewFile();
         }
-        havenUpFile = new File(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+        havenUpFile = new File(havenUpRecPath);
         if (p.exists(havenUpFile)) {
             List<String> fileNamess;
             //存在,就向里面添加已经上传过的图片数据
-            String havaUpFileNameJson = p.readAllTxt(yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+            String havaUpFileNameJson = p.readAllTxt(havenUpRecPath);
             if (p.empty(havaUpFileNameJson)) {
                 fileNamess = new LinkedList<>();
             } else {
                 fileNamess = JSON.parseArray(havaUpFileNameJson, String.class);
             }
-            fileNamess.add(dangQianDe_tuPian_QuanMingCheng);
+            fileNamess.add(currPicName);
             //得到添加内容后的json
             String jsonAlreadyAdd = JSON.toJSONString(fileNamess);
             //将 jsonAlreadyAdd 放入记录文本中
-            p.writeToTxt(jsonAlreadyAdd, yongLai_JiLu_yiJing_ShangChuan_tuPian_de_wenBen_luJing);
+            p.writeToTxt(jsonAlreadyAdd, havenUpRecPath);
         }
     } catch (IOException e) {
         e.printStackTrace();
