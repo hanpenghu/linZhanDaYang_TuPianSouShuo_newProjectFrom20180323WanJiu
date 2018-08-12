@@ -3,13 +3,11 @@ package com.winwin.picreport.Bcontroller.PicSearchPic;
 import cn.productai.api.example.TestExample;
 import cn.productai.api.pai.entity.search.ImageSearchResponse;
 import cn.productai.api.pai.response.SearchResult;
-import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Bcontroller.PicSearchPic.dto.SimplePrdtSamp;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
-import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst001;
 import com.winwin.picreport.Edto.Base64Image;
 import com.winwin.picreport.Futils.ImageAndBase64;
-import com.winwin.picreport.Futils.NotEmpty;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,12 +24,12 @@ import java.util.UUID;
 @CrossOrigin
 @RestController
 @RequestMapping("/b2")
-public class PicSearchPicUseBase64C {
+public class PicSearchPicUseBase64CTestServer001 {
     private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private com.winwin.picreport.AllConstant.Cnst  cnst;
 //    @Value("${tupianserviceId}")
-    private String  tupianserviceId= Cnst.serviceIdOfWinWinPrdtSamp;
+    private String  tupianserviceId= Cnst001.serviceIdOfWinWinPrdtSamp;
     @Value("${tupianFanHuiCount}")
     private int tupianFanHuiCount;
 
@@ -50,7 +47,7 @@ public class PicSearchPicUseBase64C {
      * 这个后来应该不用了
      * */
 
-    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian
     (@RequestBody Base64Image base64Image){
         //将来用来装入 码隆的图片url信息和我们数据库的到的商品名和商品码
@@ -65,9 +62,18 @@ public class PicSearchPicUseBase64C {
                 String infoWillUseInDbSelect = this.getInfoWillUseInDbSelect(searchResult);
                 //通过得到的相似图片的url中的包含信息,去找到对应的数据库中的 货号和品名 放入SimplePrdtSamp对象,虽然是list,其实一般只有一个
               if(p.notEmpty(infoWillUseInDbSelect)){
-                  List<SimplePrdtSamp>simplePrdtSampList=cnst.a001TongYongMapper
-                          .getSimplePrdtSamps("%"+infoWillUseInDbSelect+"%");
-                  if(p.empty(simplePrdtSampList)){ simplePrdtSampList.add(new SimplePrdtSamp()); }
+                  List<SimplePrdtSamp>simplePrdtSampList=cnst.a001TongYongMapper.getSimplePrdtSamps("%"+infoWillUseInDbSelect+"%");
+                  if(p.empty(simplePrdtSampList)){
+                      SimplePrdtSamp simplePrdtSamp = new SimplePrdtSamp();
+                      //-------------------下面是后来加的给老郑给客户演示的-------------------------------
+                      //2018_8_12   weekday(0)   16:05:12 add
+                      simplePrdtSamp.setPrdtCode(infoWillUseInDbSelect);
+                      simplePrdtSamp.setPrdtName(infoWillUseInDbSelect);
+                      //---------------上面是后来加的给老郑给客户演示的-----------------------------------
+
+                      simplePrdtSampList.add(simplePrdtSamp);
+
+                  }
                   searchResult.setSimplePrdtSamp(simplePrdtSampList);
               }
                 searchPicResultList.add(searchResult);

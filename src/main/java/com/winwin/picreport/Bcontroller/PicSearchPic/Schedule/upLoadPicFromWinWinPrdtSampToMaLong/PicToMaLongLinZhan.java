@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component
-public class PicToMaLong {
+public class PicToMaLongLinZhan {
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private CnstO cnstO;
