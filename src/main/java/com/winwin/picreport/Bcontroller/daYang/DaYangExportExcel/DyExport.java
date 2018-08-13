@@ -99,11 +99,12 @@ public class DyExport {
 
 
 
+//        List<DaoChu> daoChus =
+//                this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径
+//                    (ids);
 
-        List<DaoChu> daoChus =
-                this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径
-                    (ids);
 
+        List<DaoChu> daoChus =this.ids分批得到DaoChu(ids);
 
 
         if (   p.empty(daoChus)   ) {
@@ -124,23 +125,25 @@ public class DyExport {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
+    private List<DaoChu>  ids分批得到DaoChu(List<String> ids) {
+        List<DaoChu> daoChus =new LinkedList<DaoChu>();
 
-
-
+        return daoChus;
+    }
 
 
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-//        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
-//        p.p("---perfectIds()---ids=" + ids + "----------------");
+            //        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
+            //        p.p("---perfectIds()---ids=" + ids + "----------------");
         if (p.notEmpty(ids)) {
-//            l.error("----3---前端穿过来的ids不为空----------------");
+            //            l.error("----3---前端穿过来的ids不为空----------------");
         }
         if (ids != null && idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
             ids.addAll(idsFromConfirmTime);
         }
         if (p.notEmpty(ids)) {
-//            l.error("-----4------最终得到的ids不为空--------------");
+            //            l.error("-----4------最终得到的ids不为空--------------");
         }
         p.removeNull(ids);
     }

@@ -120,8 +120,14 @@ public class PicSearchPicUseBase64CTestServer001 {
         ImageSearchResponse imageSearchResponse =
                 new TestExample().fullFlowExample
                         (a临时url和file.getUrl(), tupianserviceId, tupianFanHuiCount);
+
         //得到返回的结果集
         SearchResult[] results = imageSearchResponse.getResults();
+        p.p("------------------------相似度-------------------------------");
+        for(SearchResult s:results){
+            p.p(s.getScore());
+        }
+        p.p("-------------------------------------------------------");
         return results;
     }
 

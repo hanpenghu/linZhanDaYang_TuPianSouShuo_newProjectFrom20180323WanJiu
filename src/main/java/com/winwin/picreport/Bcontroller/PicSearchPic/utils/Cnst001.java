@@ -5,8 +5,9 @@ public interface Cnst001 {
     String accessKeyId="61978e61a90b979a90a47296ea0f32cf";
     //总的账号key
     String secretKey="0bc16f8a8e3129b84cfa8d7e24f5f7cf";
-    //测试1服务id
-    String serviceIdOfWinWinPrdtSamp ="h893wv53";
+    //测试1服务id//5reqbui7
+    String serviceIdOfWinWinPrdtSamp ="5reqbui7";//有得分
+//    String serviceIdOfWinWinPrdtSamp ="h893wv53";//精准无得分
     //打样数据集id
     String image_set_idOfWinWinPrdtSamp="4g3fgs4j";
     //每次码隆返回的相似图片数量
