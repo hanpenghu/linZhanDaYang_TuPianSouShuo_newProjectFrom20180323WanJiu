@@ -36,6 +36,7 @@ public class GiveSaleService {
 //        List<UpDefStr> upDefStrsNoBuy =this.getOldDataOfSalePrice(prdNo,dingJiaGuanLians,ms);
 //        this.sortUpDefStrs(upDefStrsNoBuy);
 //        upDefStrs.addAll(upDefStrsNoBuy);
+
        return upDefStrs;
 
     }
@@ -87,20 +88,99 @@ public class GiveSaleService {
         //先找到该货号对应的定价关联的前80个
         List<String>n采购定价关联s去重复=cnst.a001TongYongMapper.selectTop80Olefiled(prdNo,"%"+Cnst.SamplesSys+"%",Cnst.buyPriceId);
         List<UpDefStr>upDefStrs总=new LinkedList<>();
-        for(String s:n采购定价关联s去重复){
-            UpDefStr upDefStr总=new UpDefStr();
-            UpdefBuyStr updefBuyStr分=this.f拿到该定价关联的采购对象(s,ms);
-            upDefStr总.setUpdefBuyStr(updefBuyStr分);
-            if(p.notEmpty(updefBuyStr分)){
-                //此时才能找到对应的销售定价
-                if(p.notEmpty(updefBuyStr分.getPrmNo())){
-                    UpdefSaleStr updefSaleStr分=this.f拿到该prmNo关联的销售定价对象(updefBuyStr分,prdNo,ms);
-                    upDefStr总.setUpdefSaleStr(updefSaleStr分);
+        if(p.empty(n采购定价关联s去重复)){
+            //此时没有采购价格,只给销售价格
+            this.onlySale(upDefStrs总,prdNo,ms);
+        }else{
+            for(String s:n采购定价关联s去重复){
+                UpDefStr upDefStr总=new UpDefStr();
+                UpdefBuyStr updefBuyStr分=this.f拿到该定价关联的采购对象(s,ms);
+                upDefStr总.setUpdefBuyStr(updefBuyStr分);
+                if(p.notEmpty(updefBuyStr分)){
+                    //此时才能找到对应的销售定价
+                    if(p.notEmpty(updefBuyStr分.getPrmNo())){
+                        UpdefSaleStr updefSaleStr分=this.f拿到该prmNo关联的销售定价对象(updefBuyStr分,prdNo,ms);
+                        upDefStr总.setUpdefSaleStr(updefSaleStr分);
+                    }
                 }
+                upDefStrs总.add(upDefStr总);
             }
-            upDefStrs总.add(upDefStr总);
         }
         return upDefStrs总;
+    }
+
+    //只有销售没有采购的老数据用
+    private void onlySale(List<UpDefStr> upDefStrs总, String prdNo, List<String> ms) {
+        List<String> olefields = cnst.a001TongYongMapper.selectSaleOlefield(prdNo, Cnst.salPriceId);
+        if(p.empty(olefields))return;
+        for(String s:olefields){
+            UpDefStr upDefStr=new UpDefStr();
+            UpdefSaleStr updefSaleStr = this.getSalPriceUseOlefield(s, prdNo, ms);
+            this.updefSaleStrNull2Space(updefSaleStr);
+            //没有采购弄个空的给前端
+            UpdefBuyStr updefBuyStr=new UpdefBuyStr();
+            this.updefBuyStrNull2Space(updefBuyStr);
+            upDefStr.setUpdefBuyStr(updefBuyStr);
+            upDefStr.setUpdefSaleStr(updefSaleStr);
+            upDefStrs总.add(upDefStr);
+        }
+    }
+
+
+    private UpdefSaleStr getSalPriceUseOlefield(String olefield,String prdNo,List<String> ms) {
+        UpDefExample upDefExample=new UpDefExample();
+        upDefExample.createCriteria().andOlefieldEqualTo(olefield).andPriceIdEqualTo(Cnst.salPriceId).andPrdNoEqualTo(prdNo);
+        //长度：1到4个
+        List<UpDef> upDefs = cnst.upDefMapper.selectByExample(upDefExample);
+        UpdefSaleStr updefSaleStr=new UpdefSaleStr();
+        for(UpDef u:upDefs){
+            this.f封装updefSaleStr(ms,u,updefSaleStr);
+        }
+        return updefSaleStr;
+    }
+
+
+    private UpdefSaleStr getSalPriceUsePrmNo(String prmNo,String prdNo,List<String> ms) {
+        UpDefExample upDefExample=new UpDefExample();
+        upDefExample.createCriteria().andPrmNoEqualTo(prmNo).andPriceIdEqualTo(Cnst.salPriceId).andPrdNoEqualTo(prdNo);
+        //长度：1到4个
+        List<UpDef> upDefs = cnst.upDefMapper.selectByExample(upDefExample);
+        UpdefSaleStr updefSaleStr=new UpdefSaleStr();
+        for(UpDef u:upDefs){
+            this.f封装updefSaleStr(ms,u,updefSaleStr);
+        }
+        return updefSaleStr;
+    }
+
+
+    private void updefBuyStrNull2Space(UpdefBuyStr u) {
+        u.setCurIdWaiBi(p.strNullToSpace(u.getCurIdWaiBi()));
+        u.setRem(p.strNullToSpace(u.getRem()));
+        u.setUnitFu(p.strNullToSpace(u.getUnitFu()));
+        u.setUnitZhu(p.strNullToSpace(u.getUnitZhu()));
+        u.setDingJiaGuanLian(p.strNullToSpace(u.getDingJiaGuanLian()));
+        u.setQty(p.strNullToSpace(u.getQty()));
+        u.setHaveTransUpBenBi(p.strNullToSpace(u.getHaveTransUpBenBi()));
+        u.setHaveTransUpWaiBi(p.strNullToSpace(u.getHaveTransUpWaiBi()));
+        u.setNoTransUpBenBi(p.strNullToSpace(u.getNoTransUpBenBi()));
+        u.setNoTransUpWaiBi(p.strNullToSpace(u.getNoTransUpWaiBi()));
+        u.setPrmNo(p.strNullToSpace(u.getPrmNo()));
+        u.setsDd(p.strNullToSpace(u.getsDd()));
+    }
+
+    private void updefSaleStrNull2Space(UpdefSaleStr u) {
+        u.setCurIdWaiBi(p.strNullToSpace(u.getCurIdWaiBi()));
+        u.setRem(p.strNullToSpace(u.getRem()));
+        u.setUnitFu(p.strNullToSpace(u.getUnitFu()));
+        u.setUnitZhu(p.strNullToSpace(u.getUnitZhu()));
+        u.setDingJiaGuanLian(p.strNullToSpace(u.getDingJiaGuanLian()));
+        u.setQty(p.strNullToSpace(u.getQty()));
+        u.setHaveTransUpBenBi(p.strNullToSpace(u.getHaveTransUpBenBi()));
+        u.setHaveTransUpWaiBi(p.strNullToSpace(u.getHaveTransUpWaiBi()));
+        u.setNoTransUpBenBi(p.strNullToSpace(u.getNoTransUpBenBi()));
+        u.setNoTransUpWaiBi(p.strNullToSpace(u.getNoTransUpWaiBi()));
+        u.setPrmNo(p.strNullToSpace(u.getPrmNo()));
+        u.setsDd(p.strNullToSpace(u.getsDd()));
     }
 
     private UpdefSaleStr f拿到该prmNo关联的销售定价对象(UpdefBuyStr updefBuyStr分,String prdNo,List<String> ms) {

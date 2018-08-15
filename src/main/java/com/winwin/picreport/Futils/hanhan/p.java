@@ -503,7 +503,33 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
     }*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * 反射,内省,将类里面的String的null变成""
+     *将对象里面的String类型的null变成space
+     * */
+    public static void strNullToSpace(Object o){
+        List<Field> fieldList=new ArrayList<>();
+        Class<?> aClass = o.getClass();
+        while (aClass != null) {//用while得到所有超类的字段属性
+            fieldList.addAll(Arrays.asList(aClass.getDeclaredFields()));
+            aClass = aClass.getSuperclass(); //得到父类,然后赋给自己
+        }
+        for(Field field:fieldList){
+            field.setAccessible(true);
+            //得到当前字段类型
+            String typeName = field.getType().getTypeName();
+            if("java.lang.String".equals(typeName)){
+                //得到我的生日
+                try {
+                    if(field.get(o)==null){
+                        field.set(o,"");
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     public static String strNullToSpace(String s){
         return (null==s?"":s);
     }

@@ -20,6 +20,9 @@ public class SalePriceGetController {
     //得到销售定价
     @RequestMapping(value="salePriceGet",method = RequestMethod.POST)
     public @ResponseBody Msg f(@Param("uuid")String uuid){
+        p.p("-------------------------------------------------------");
+        p.p("123123");
+        p.p("-------------------------------------------------------");
         List<String> ms=new LinkedList<String>();
         List<UpDefStr> upDefStrs=new LinkedList<UpDefStr>();
         try {
