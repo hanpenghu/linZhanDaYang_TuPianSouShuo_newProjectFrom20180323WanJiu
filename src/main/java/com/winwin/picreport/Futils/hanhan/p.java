@@ -1660,7 +1660,108 @@ public static Object StringTypeSpace2Null(Object o) throws IllegalAccessExceptio
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public static BigDecimal b(Object o){
+    if(null==o){
+        return null;
+    }else{
+        try {
+            return new BigDecimal(String.valueOf(o));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}
 
+    /**
+     *是否是BigDecimal
+     * */
+    public static boolean isBd(Object o){
+        try {
+            new BigDecimal(String.valueOf(o));
+            //不抛异常就是true
+            return true;
+        } catch (Exception e) {
+            //抛出异常就是false
+            return false;
+        }
+    }
+
+    /**
+     *BigDecimal相加
+     * */
+    public static BigDecimal badd(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).add(p.b(o2));
+        }else{
+            return null;
+        }
+    }
+    /**
+     *BigDecimal相减,前减去后面
+     * */
+    public static BigDecimal bsub(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).subtract(p.b(o2));
+        }else{
+            return null;
+        }
+    }
+    /**
+     *BigDecimal乘,前乘以后面
+     * */
+    public static BigDecimal bmul(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).multiply(p.b(o2));
+        }else{
+            return null;
+        }
+    }
+    /**
+     *BigDecimal除法,前面除以后面,后面是除数,前面被除数
+     * */
+    public static BigDecimal bdiv(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).divide(p.b(o2));
+        }else{
+            return null;
+        }
+    }
+
+
+    /**
+     * BigDecimal
+     *前面比后面大
+     * */
+    public static Boolean bbig(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).compareTo(p.b(o2))==1;
+        }else{
+            return null;
+        }
+    }
+    /**
+     * BigDecimal
+     *前面比后面小
+     * */
+    public static Boolean bsml(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).compareTo(p.b(o2))==-1;
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * BigDecimal
+     *两数字相等
+     * */
+    public static Boolean beql(Object o1,Object o2){
+        if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
+            return p.b(o1).compareTo(p.b(o2))==0;
+        }else{
+            return null;
+        }
+    }
     /**
      *删除文件
      * */

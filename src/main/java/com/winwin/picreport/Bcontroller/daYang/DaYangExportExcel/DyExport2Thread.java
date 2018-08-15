@@ -188,8 +188,8 @@ public class DyExport2Thread {
             if(!p.isBd(s)){
                 p.throwEAddToList("统计后台下载数目不是数字",msg);
             }else{
-                if(p.b(s).compareTo(p.b(60000))==1){
-                    p.throwEAddToList("下载任务中多余6万条记录,请稍后下载",msg);
+                if(p.b(s).compareTo(p.b(59999))==1){
+                    p.throwEAddToList("下载任务中多于6万条记录,请稍后下载",msg);
                 }
             }
         }else{
