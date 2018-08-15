@@ -5,14 +5,10 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper;
 import com.winwin.picreport.Edto.TokenYuanMa;
 import com.winwin.picreport.Futils.*;
-import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Writer;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Interceptor001 implements HandlerInterceptor {

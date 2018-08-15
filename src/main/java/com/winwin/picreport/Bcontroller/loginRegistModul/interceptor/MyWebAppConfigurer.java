@@ -30,11 +30,14 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/userNameSecret")
                 .excludePathPatterns("/dyExportExcel")
                 .excludePathPatterns("/userNameSecret")
+                .excludePathPatterns("/dyExportExcel2Thread")
+                .excludePathPatterns("/getDownCenter")
                 .excludePathPatterns("/daYangSuoLueTuAndFuJianZongPath")
                 .excludePathPatterns("/schh")//老郑让生成的2000个货号
         .excludePathPatterns("/manyConditionSearchOfExportInfo2Excel")
         .excludePathPatterns("/tokenAndRoleGet")
         .excludePathPatterns("/schh001")
+        .excludePathPatterns("/fuck")
         ;
 //        registry.addWebRequestInterceptor();
         super.addInterceptors(registry);

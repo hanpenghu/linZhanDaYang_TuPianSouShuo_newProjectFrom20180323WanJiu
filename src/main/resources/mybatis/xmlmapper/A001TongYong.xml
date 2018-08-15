@@ -361,21 +361,21 @@
     <sql id="leftJoinOfExportExcel">
         left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='2' -- 2是有运费
         left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='1' and u2.olefield=u1.olefield
-        left join up_def u3 on p.prd_no=u3.prd_no and u3.price_id='1' and u3.cur_id='USD' and u3.bil_type='2' and u3.olefield=u2.olefield
-        left join up_def u4 on p.prd_no=u4.prd_no and u4.price_id='1' and u4.cur_id='USD' and u4.bil_type='1' and u4.olefield=u3.olefield
+        left join up_def u3 on p.prd_no=u3.prd_no and u3.price_id='1' and u3.cur_id='USD' and u3.bil_type='2' and u3.olefield=u1.olefield
+        left join up_def u4 on p.prd_no=u4.prd_no and u4.price_id='1' and u4.cur_id='USD' and u4.bil_type='1' and u4.olefield=u1.olefield
         -- left join up_def u5 on p.prd_no=u5.prd_no and u5.price_id='2' and u5.cur_id='RMB' and u5.bil_type='1' and u5.prm_no=u4.prm_no -- 无运费
         -- left join up_def u6 on p.prd_no=u6.prd_no and u6.price_id='2' and u6.cur_id='RMB' and u6.bil_type='' and u6.olefield=u5.olefield -- 有运费
     </sql>
     <sql id="leftJoinOfExportExcel1">
         left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='2' -- 2是有运费
         left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
-        left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u22.olefield
-        left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u33.olefield
+        left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u11.olefield
+        left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u11.olefield
         -- left join up_def u55 on p.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u44.prm_no -- 无运费
         -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
     </sql>
     <sql id="exportExcelManyCondition">
-           p.id=p.id
+           p.id=p.id AND p.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  p.insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -423,7 +423,7 @@
 
 
     <sql id="exportExcelManyCondition1">
-        p1.id=p1.id
+        p1.id=p1.id AND p1.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  p1.insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -838,6 +838,82 @@
             #{item}
         </foreach>
     </select>
+
+
+
+
+    <select id="getDaoChus" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
+        select
+        isnull(a.id,'') as id,
+        isnull(a.prd_code,'') as prdCode,
+        isnull(a.idx_name,'') as idxName,
+        isnull(a.idx_no,'') as idxNo,
+        isnull(a.fen_lei_no,'') as fenLeiNo,
+        isnull(a.fen_lei_name,'') as  fenLeiName,
+        isnull(a.mark_name,'') as markName,
+        isnull(a.mark_no,'') as markNo,
+        isnull(a.colour,'')as colour,
+        isnull(a.size,'') as size,
+        isnull(a.sal_name,'') as salName,
+        isnull(a.sal_No,'') as salNo,
+        isnull(a.cus_no,'') as cusNo,
+        isnull(a.cus_name,'') as cusName,
+        isnull(a.isfenjie,'') as isfenjie,
+        isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
+        isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
+        isnull(a.samp_requ,'') as sampRequ,
+        isnull(a.samp_desc,'') as sampDesc,
+        isnull(a.thum,'') as thum,
+        isnull(a.attach,'') as attach,
+        isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
+        isnull(a.confirmman,'') as confirmman,
+        isnull(a.confirmtimestr,'') as confirmtimestr,
+        isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
+        isnull(a.category,'')as category,
+        isnull(a.teamname,'') as teamname,
+        isnull(a.confirmrem,'')as confirmrem,
+        isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as unit,
+        isnull(a.businessdesc,'')as businessdesc,
+        isnull(a.financedesc,'') as financedesc ,
+        isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
+        isnull(convert(varchar(36),a.modelcost),'')as modelcost,
+        isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
+        isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
+        isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
+        isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
+        isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
+        isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
+        isnull(a.buyerdesc,'')as buyerdesc,
+        isnull(a.prd_No,'') as prdNo,
+        isnull(a.salemandesc,'')salemandesc,
+        isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
+        isnull(a.cus_No_Give,'') as   cusNoGive,
+        isnull(a.cus_Name_Give,'') as cusNameGive,
+        isnull(a.user_Name,'') as userName,
+        isnull(a.tenant_Id,'') as  tenantId,
+        isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as mainUnit ,
+        -- //含运费本币销售价格
+        isnull(convert(varchar(100),u1.up),'') as haveTransUpSaleBenBi,
+        --//含运费单价销售外币价格
+        isnull(convert(varchar(100),u3.up),'')as haveTransUpSaleWaiBi,
+        -- //无运费单价销售本币
+        isnull(convert(varchar(100),u.up),'') as noTransUpSaleBenBi,
+        -- //无运费单价销售WaiBi
+        isnull(convert(varchar(100),u2.up),'') as noTransUpSaleWaiBi,
+        isnull(x.nm_eng,'') as  nmEng
+        FROM prdt_samp a
+        LEFT JOIN UP_DEF u  ON   a.prd_no=u.prd_no and u.bil_type='1' and u.cur_id='RMB' and u.price_id='1'
+        LEFT JOIN UP_DEF u1  ON   a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and u1.olefield=u.olefield
+        LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
+        LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
+        LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
+        where a.stopusedate is null and    a.id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by u.s_dd desc
+    </select>
+
 
 
     <select id="getPrdtSamp002" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">

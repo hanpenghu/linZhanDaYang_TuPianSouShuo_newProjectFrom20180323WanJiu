@@ -2,7 +2,9 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Edto.CustExample;
+import com.winwin.picreport.Edto.CustWithBLOBs;
+import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.commons.io.FileUtils;
@@ -16,14 +18,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
@@ -34,12 +40,13 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 @CrossOrigin
 @RestController
-public class DyExport {
+public class DyExport2Thread {
 
     @Autowired
     private Cnst cnst;
 
     private String jarPath;
+
     /**
      * param后面跟上一个URLEncode的json
      * http://localhost:8070/dyExportExcel?param=%7B%22ids%22%3A%5B%220000e1a2-ec00-4b06-94da-db80628473eb%22%2C%2200013fb7-ba16-4ad2-9ca6-7257c660f9a3%22%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22prdCode%22%2C%22mainUnit%22%2C%22haveTransUpSaleBenBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22noTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%5D%2C%22confirmtimestr%22%3A%222018-06-11%22%2C%22confirmtimestrEnd%22%3A%222018-06-20%22%7D
@@ -65,21 +72,47 @@ public class DyExport {
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
      */
 
-    @RequestMapping(value = "dyExportExcel", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
-    public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
+    @RequestMapping(value = "dyExportExcel2Thread", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
+    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail){
+        p.p("-------------------------------------------------------");
+        p.p("dyExportExcel2Thread");
+        p.p("-------------------------------------------------------");
+        List<String> msg = new LinkedList<String>();
+        try {
+            this.isIgll(tenantId, userEmail, msg);
+            this.mainF(param, tenantId, userEmail, msg);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (msg.contains(message)) {
+                return Msg.gmg().setStatus("0").setMsg("失败!" + message);
+            } else {
+                return Msg.gmg().setStatus("0").setMsg("失败!未知异常！" + message);
+            }
+        }
+        return Msg.gmg().setStatus("1").setMsg("成功！已经下载,请随时关注下载中心！");
+    }
+
+    private void isIgll(String tenantId, String userEmail, List<String> msg) {
+        if (p.empty(tenantId) || p.empty(userEmail)) {
+            p.throwEAddToList("前端传过来的公司id或者用户名是空的", msg);
+        }
+    }
+
+    private void mainF(String param, String tenantId, String userEmail, List<String> msg) throws Exception {
+        String dateStr = p.sjc2StrDate(p.getTimeStamp());
         jarPath = p.springBootJarPath();
         //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
-//        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
-//        p.p(param);
-//        p.p("-------------------------------------------------------");
+        //        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
+        //        p.p(param);
+        //        p.p("-------------------------------------------------------");
         ExportXlsParam ep = this.formatJsonFromFront(param);
         if (null == ep) {
-            return null;
+            p.throwEAddToList("前端传过来的参数是null", msg);
         }
         List<String> idsFromConfirmTime = this.idsFromManyConditionSearch(ep);
-//        p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
-//        p.p(idsFromConfirmTime);
-//        p.p("-------------------------------------------------------");
+        //        p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
+        //        p.p(idsFromConfirmTime);
+        //        p.p("-------------------------------------------------------");
         List<String> list导出头信息 = this.f得到完整导出头信息();
         //注意  ep  是 空的,会直接报错给前端,不用管
         List<String> ids = ep.getIds();
@@ -87,59 +120,131 @@ public class DyExport {
         if (null == ids) {
             ids = new LinkedList<String>();
         }
+        //下载的总条数是否超过6万
+        BigDecimal bbb=this.isDownLoadCountOverIgll(msg);
         //将确认时间得到的id放入  全局id集合
         this.perfectIds(ids, idsFromConfirmTime);
-
         if (p.empty(ids)) {
-            p.p("#######得到时间获得的ids之后 ids是null或者空######");
-            return null;
+            p.throwEAddToList("《您所选则的条件没有任何记录》得到时间获得的ids和前端传过来的ids之后,ids是null或者空", msg);
         }
+
+        BigDecimal bb = p.b(ids.size());
+        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
+
+        //线程里面传不进去ids,放到对象里穿进去
+        Map<String,List<String>> mapids=new HashMap();
+        mapids.put("ids",ids);
+
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {
-            this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
+            this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
+        new Thread(() -> {
+            try {
+                List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get("ids"));
+                if (p.empty(daoChus)) {
+                    p.throwEAddToList("《您所选则的条件没有任何记录》daoChus是null", msg);
+                }
+                //把字段写入excel
+                Map<String, String> m = this.a写入excel(daoChus, list导出头信息);
+                File file = new File(m.get(this.excelPath));
+                file.createNewFile();
+                //将创建的excel情况放入数据库
+                this.dbRec(tenantId,userEmail,m,dateStr);
+                this.downCountSubstract( bb );
+               } catch (Exception e) {
+                //如果组装excel异常在数据库记录一个下载失败的对象
+                    this.recErrorDownLoad(tenantId,userEmail,dateStr);
+                    this.downCountSubstract(bb);
+            }
+        }).start();
 
-
-
-//        List<DaoChu> daoChus =
-//                this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径
-//                    (ids);
-
-        Long timeStamp1 = p.getTimeStamp();
-        l.error("==========start search=========="+p.getDate()+"===="+timeStamp1+"====================");
-        List<DaoChu> daoChus =this.ids分批得到DaoChu(ids);
-        Long timeStamp2 = p.getTimeStamp();
-        l.error("======end search=============="+p.getDate()+"===="+timeStamp2+"====================");
-        l.error("====================database search use time===="+(timeStamp2-timeStamp1)/1000+"=s==="+(timeStamp2-timeStamp1)/1000/60+"==min==============");
-
-        if (   p.empty(daoChus)   ) {
-            p.p("====daoChus是null=========");
-            return null;
-        }
-
-        //分级价格显示
-        //2018_7_18   weekday(3)   11:45:05  after add
-
-        Long timeStamp3 = p.getTimeStamp();
-        l.error("=======kai shi zu zhuang excel============="+p.getDate()+"===="+timeStamp3+"====================");
-        //把字段写入excel
-        String excel路径 = this.a写入excel(daoChus, list导出头信息);
-        File file = new File(excel路径);
-        Long timeStamp4 = p.getTimeStamp();
-        l.error("============zu zhuang excel end========"+p.getDate()+"===="+timeStamp4+"====================");
-        l.error("====================zu zhuang EXCEL xiao hao shi jian===="+(timeStamp4-timeStamp3)/1000+"=s==="+(timeStamp4-timeStamp3)/1000/60+"==min==============");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("UTF-8"), "iso-8859-1"));
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
-    private List<DaoChu>  ids分批得到DaoChu(List<String> ids) {
-        List<DaoChu>daoChus=new LinkedList<DaoChu>();
+    private void downCountSubstract(BigDecimal bb) {
+        File file = new File(down);
+        String s = p.readAllTxt(file.getAbsolutePath());
+        if(p.b(s).compareTo(p.b(0))==1){
+            BigDecimal sb = p.b(s).subtract(bb);
+            if(sb.compareTo(p.b(0))==-1){
+                sb=p.b(0);
+            }
+            p.writeToTxt(String.valueOf(sb),new File(down).getAbsolutePath());
+        }
+    }
+
+    private String down="down";
+    private void writeThisDownCountIntoFile(BigDecimal bbb) {
+        p.writeToTxt(String.valueOf(bbb),new File(down).getAbsolutePath());
+    }
+
+    private BigDecimal isDownLoadCountOverIgll(List<String> msg) throws Exception {
+        File file = new File(down);
+        if(p.notExists(file)){
+            file.createNewFile();
+        }
+        String s = p.readAllTxt(file.getAbsolutePath());
+        if(p.notEmpty(s)){
+            if(!p.isBd(s)){
+                p.throwEAddToList("统计后台下载数目不是数字",msg);
+            }else{
+                if(p.b(s).compareTo(p.b(60000))==1){
+                    p.throwEAddToList("下载任务中多余6万条记录,请稍后下载",msg);
+                }
+            }
+        }else{
+            s="0";
+        }
+        return p.b(s);
+    }
+
+//
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(p.b(9999).compareTo(p.b(999000)));
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+
+    private void dbRec(String tenantId, String userEmail, Map<String, String> m, String dateStr) {
+        String down = cnst.a001TongYongMapper.selectDown(tenantId, userEmail);
+        List<GetDownLoadCenterEntity> list;
+        if (p.empty(down)) {
+            list = new LinkedList<GetDownLoadCenterEntity>();
+        } else {
+            list = JSON.parseArray(down, GetDownLoadCenterEntity.class);
+        }
+        GetDownLoadCenterEntity g = new GetDownLoadCenterEntity();
+        g.setUrl(m.get(this.excelName));
+        g.setStatus("1");
+        g.setTime(dateStr);
+        list.add(g);
+        int i = cnst.a001TongYongMapper.updateDown(tenantId, userEmail, JSON.toJSONString(list));
+    }
+
+
+    private void recErrorDownLoad(String tenantId, String userEmail, String dateStr) {
+        String down = cnst.a001TongYongMapper.selectDown(tenantId, userEmail);
+        List<GetDownLoadCenterEntity> list;
+        if (p.empty(down)) {
+            list = new LinkedList<GetDownLoadCenterEntity>();
+        } else {
+            list = JSON.parseArray(down, GetDownLoadCenterEntity.class);
+        }
+        GetDownLoadCenterEntity g = new GetDownLoadCenterEntity();
+        g.setUrl("下载失败");
+        g.setStatus("0");
+        g.setTime(dateStr);
+        list.add(g);
+        int i = cnst.a001TongYongMapper.updateDown(tenantId, userEmail, JSON.toJSONString(list));
+    }
+
+
+    private List<DaoChu> ids分批得到DaoChu(List<String> ids) {
+        List<DaoChu> daoChus = new LinkedList<DaoChu>();
         List<List<String>> lists = p.avgList(ids, 2000);
-        for(List<String> ls:lists){
+        for (List<String> ls : lists) {
             List<DaoChu> daoChus1 = cnst.a001TongYongMapper.getDaoChus(ls);
             daoChus.addAll(daoChus1);
         }
@@ -149,12 +254,12 @@ public class DyExport {
 
     //完善ids,主要是从传入时间也得到的ids放进来
     private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-            //        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
-            //        p.p("---perfectIds()---ids=" + ids + "----------------");
+        //        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
+        //        p.p("---perfectIds()---ids=" + ids + "----------------");
         if (p.notEmpty(ids)) {
             //            l.error("----3---前端穿过来的ids不为空----------------");
         }
-        if (ids != null && ids.size()==0&&idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
+        if (ids != null && ids.size() == 0 && idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
             ids.addAll(idsFromConfirmTime);
         }
         if (p.notEmpty(ids)) {
@@ -203,18 +308,16 @@ public class DyExport {
 //        if(this.f多条件查询成立条件(ep)){
         ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
         if (p.notEmpty(ids来自多条件查询)) {
-                //                l.error("--2----起止时间得到的ids不为空----------");
+            //                l.error("--2----起止时间得到的ids不为空----------");
         } else {
-                //                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
+            //                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
         }
-            //            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-            //            p.p(ids来自多条件查询);
-            //            p.p("-------------------------------------------------------");
+        //            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
+        //            p.p(ids来自多条件查询);
+        //            p.p("-------------------------------------------------------");
 //        }
         return ids来自多条件查询;
     }
-
-
 
 
     private ExportXlsParam formatJsonFromFront(String param) {
@@ -243,8 +346,11 @@ public class DyExport {
     }
 
 
-    private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
-        String excelName = "SampExport" + p.sj() + ".xls";
+    private String excelPath = "excelPath";
+    private String excelName = "excelName";
+
+    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
+        String excelName = Cnst.SampExport + p.timeAndRandom0_999NoHead_1() + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
         FileOutputStream fileOut = null;
@@ -266,8 +372,10 @@ public class DyExport {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return excelPath;
+        Map<String, String> map = new LinkedHashMap<String, String>();
+        map.put(this.excelPath, excelPath);
+        map.put(this.excelName, excelName);
+        return map;
     }
 
 
@@ -734,14 +842,14 @@ public class DyExport {
         return daoChuExcelHeadList;
     }
 
-//    public static void main(String[]args) throws UnsupportedEncodingException {
-//        String s="%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
-//       s="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-//
-//       s=URLEncoder.encode(s,"UTF-8");
+//    public static void main(String[] args) throws Exception {
+//        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
+//        s = URLEncoder.encode(s, "UTF-8");
 //        p.p("-------------------------------------------------------");
 //        p.p(s);
-//        s=URLDecoder.decode(s);
+//        s = URLDecoder.decode(s);
 //        p.p(s);
 //        p.p("-------------------------------------------------------");
 //    }
