@@ -89,7 +89,7 @@ public class DyExport2Thread {
                 return Msg.gmg().setStatus("0").setMsg("失败!未知异常！" + message);
             }
         }
-        return Msg.gmg().setStatus("1").setMsg("成功！已经下载,请随时关注下载中心！");
+        return Msg.gmg().setStatus("1").setMsg("正在下载,下载完成后移至下载中心下载到本地！");
     }
 
     private void isIgll(String tenantId, String userEmail, List<String> msg) {
@@ -189,7 +189,7 @@ public class DyExport2Thread {
                 p.throwEAddToList("统计后台下载数目不是数字",msg);
             }else{
                 if(p.b(s).compareTo(p.b(59999))==1){
-                    p.throwEAddToList("下载任务中多于6万条记录,请稍后下载",msg);
+                    p.throwEAddToList("已有超过6万条数据正在下载，请稍后重试",msg);
                 }
             }
         }else{

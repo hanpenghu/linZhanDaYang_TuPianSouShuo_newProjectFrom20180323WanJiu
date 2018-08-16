@@ -8,6 +8,16 @@ public class GetDownLoadCenterEntity {
     private String status="0";//0是失败//1是成功
     private String url="下载失败";
     private String time="";
+    private String name="";
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getStatus() {
         return status;

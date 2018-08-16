@@ -34,6 +34,7 @@ public class GetDownLoadCenter {
             String s = cnst.a001TongYongMapper.selectDown(tenantId, userEmail);
             if(p.notEmpty(s)){
                 List<GetDownLoadCenterEntity> list = JSON.parseArray(s, GetDownLoadCenterEntity.class);
+                this.urlSet(list);
                 objs.addAll(list);
             }
         } catch (Exception e) {
@@ -45,6 +46,15 @@ public class GetDownLoadCenter {
             }
         }
         return Msg.gmg().setStatus("1").setMsg("成功！").setObjs(objs);
+    }
+
+    private void urlSet(List<GetDownLoadCenterEntity> list) {
+        for(GetDownLoadCenterEntity g:list){
+            //此时是文件名
+            g.setName(g.getUrl());
+            g.setUrl(cnst.dirUrl+Cnst.saveExcelTemp+"/"+g.getUrl());
+        }
+
     }
 
 

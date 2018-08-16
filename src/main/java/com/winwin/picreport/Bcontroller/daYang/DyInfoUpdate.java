@@ -26,6 +26,7 @@ public class DyInfoUpdate {
      * */
 
     //    @Transactional
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSave_InfoEdit_ManyAttach,
             method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
