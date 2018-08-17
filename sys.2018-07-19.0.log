@@ -1,0 +1,5 @@
+2018-07-19 11:29:53,912 ERROR (AllExceptionHandler.java:17)- null
+2018-07-19 11:32:11,105 ERROR (AllExceptionHandler.java:17)- null
+2018-07-19 11:36:58,836 ERROR (AllExceptionHandler.java:17)- Could not write JSON: (was java.lang.NullPointerException); nested exception is com.fasterxml.jackson.databind.JsonMappingException: (was java.lang.NullPointerException) (through reference chain: com.winwin.picreport.Futils.FenYe["zongYeShu"])
+2018-07-19 11:37:09,242 ERROR (AllExceptionHandler.java:17)- Could not write JSON: (was java.lang.NullPointerException); nested exception is com.fasterxml.jackson.databind.JsonMappingException: (was java.lang.NullPointerException) (through reference chain: com.winwin.picreport.Futils.FenYe["zongYeShu"])
+2018-07-19 11:38:48,670 ERROR (AllExceptionHandler.java:17)- Could not write JSON: (was java.lang.NullPointerException); nested exception is com.fasterxml.jackson.databind.JsonMappingException: (was java.lang.NullPointerException) (through reference chain: com.winwin.picreport.Futils.FenYe["zongYeShu"])

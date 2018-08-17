@@ -1,0 +1,960 @@
+2018-08-08 10:05:10,132 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(sal_no,'') as 'salNo',isnull(name,'') as 'salName' from salm 
+2018-08-08 10:05:10,134 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up is null 
+2018-08-08 10:05:10,138 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(mark_no,'')as 'markNo',isnull(name,'')as 'name' from mark 
+2018-08-08 10:05:10,145 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx 
+2018-08-08 10:05:10,151 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT CUS_NO,NAME FROM CUST WHERE OBJ_ID=1 
+2018-08-08 10:05:10,164 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:10,164 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:10,164 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:10,164 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:10,164 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:10,923 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:10,936 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT DISTINCT UT FROM PRDT WHERE ISNULL(UT,'')!='' 
+2018-08-08 10:05:10,936 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:11,030 ERROR (DangQianYeDataC.java:31)- ---dang qian ye shuju yong yu na ge yemian?----dingJiaType=<null>---------------------
+2018-08-08 10:05:11,103 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 66
+2018-08-08 10:05:11,105 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select count(id) from PRDT_SAMP 
+2018-08-08 10:05:11,106 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:11,156 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 205
+2018-08-08 10:05:11,215 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:11,215 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:11,218 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 0000000000(String)
+2018-08-08 10:05:11,219 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,220 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 0000000000(String)
+2018-08-08 10:05:11,368 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 45
+2018-08-08 10:05:11,372 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,375 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1(String)
+2018-08-08 10:05:11,379 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,382 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,384 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 10(String)
+2018-08-08 10:05:11,390 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:11,393 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,394 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1001(String)
+2018-08-08 10:05:11,396 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,397 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,398 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1002(String)
+2018-08-08 10:05:11,399 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,401 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,403 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1003(String)
+2018-08-08 10:05:11,404 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,406 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,407 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 11(String)
+2018-08-08 10:05:11,411 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:11,413 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,415 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1101(String)
+2018-08-08 10:05:11,417 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,419 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,420 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1102(String)
+2018-08-08 10:05:11,422 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,424 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,425 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1103(String)
+2018-08-08 10:05:11,427 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,428 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,429 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 12(String)
+2018-08-08 10:05:11,430 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 14
+2018-08-08 10:05:11,431 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,433 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1201(String)
+2018-08-08 10:05:11,435 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,438 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,438 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1202(String)
+2018-08-08 10:05:11,439 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,440 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,441 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1203(String)
+2018-08-08 10:05:11,442 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,443 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,444 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1204(String)
+2018-08-08 10:05:11,445 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,447 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,447 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1205(String)
+2018-08-08 10:05:11,448 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,449 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,450 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1206(String)
+2018-08-08 10:05:11,451 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,452 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,453 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1207(String)
+2018-08-08 10:05:11,454 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,455 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,456 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1208(String)
+2018-08-08 10:05:11,457 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,459 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,460 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1209(String)
+2018-08-08 10:05:11,461 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,462 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,463 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1214(String)
+2018-08-08 10:05:11,464 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,465 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,466 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1216(String)
+2018-08-08 10:05:11,467 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,468 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,469 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1217(String)
+2018-08-08 10:05:11,470 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,471 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,472 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1218(String)
+2018-08-08 10:05:11,472 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,474 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,474 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1219(String)
+2018-08-08 10:05:11,475 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,476 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,477 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 13(String)
+2018-08-08 10:05:11,478 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 14
+2018-08-08 10:05:11,480 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,481 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1301(String)
+2018-08-08 10:05:11,482 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,483 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,483 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1302(String)
+2018-08-08 10:05:11,485 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,486 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,487 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1303(String)
+2018-08-08 10:05:11,488 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,489 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,490 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1304(String)
+2018-08-08 10:05:11,491 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,493 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,493 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1305(String)
+2018-08-08 10:05:11,494 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,495 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,496 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1306(String)
+2018-08-08 10:05:11,497 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,498 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,499 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1307(String)
+2018-08-08 10:05:11,500 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,501 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,502 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1308(String)
+2018-08-08 10:05:11,503 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,505 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,505 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1309(String)
+2018-08-08 10:05:11,507 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,508 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,508 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1310(String)
+2018-08-08 10:05:11,509 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,511 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,511 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1311(String)
+2018-08-08 10:05:11,512 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,513 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,514 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1312(String)
+2018-08-08 10:05:11,515 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,516 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,517 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1313(String)
+2018-08-08 10:05:11,519 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,520 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,521 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1314(String)
+2018-08-08 10:05:11,522 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,523 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,523 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 14(String)
+2018-08-08 10:05:11,525 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 13
+2018-08-08 10:05:11,526 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,527 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1401(String)
+2018-08-08 10:05:11,528 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,529 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,530 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1402(String)
+2018-08-08 10:05:11,530 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,531 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,532 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1403(String)
+2018-08-08 10:05:11,533 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,533 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,534 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1404(String)
+2018-08-08 10:05:11,535 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,536 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,537 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1405(String)
+2018-08-08 10:05:11,538 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,539 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,540 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1406(String)
+2018-08-08 10:05:11,540 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,541 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,542 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1407(String)
+2018-08-08 10:05:11,543 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,544 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,544 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1408(String)
+2018-08-08 10:05:11,545 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,546 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,547 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1409(String)
+2018-08-08 10:05:11,547 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,548 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,549 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1410(String)
+2018-08-08 10:05:11,550 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,551 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,552 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1411(String)
+2018-08-08 10:05:11,553 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,555 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,556 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1412(String)
+2018-08-08 10:05:11,557 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,558 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,558 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1413(String)
+2018-08-08 10:05:11,559 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,560 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,560 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 15(String)
+2018-08-08 10:05:11,562 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 16
+2018-08-08 10:05:11,562 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,563 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1501(String)
+2018-08-08 10:05:11,564 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,565 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,566 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1502(String)
+2018-08-08 10:05:11,566 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,567 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,568 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1503(String)
+2018-08-08 10:05:11,569 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,570 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,571 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1504(String)
+2018-08-08 10:05:11,572 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,573 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,573 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1505(String)
+2018-08-08 10:05:11,574 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,575 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,576 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1506(String)
+2018-08-08 10:05:11,577 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,579 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,580 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1507(String)
+2018-08-08 10:05:11,581 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,582 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,583 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1508(String)
+2018-08-08 10:05:11,584 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,589 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,590 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1509(String)
+2018-08-08 10:05:11,591 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,594 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,595 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1510(String)
+2018-08-08 10:05:11,596 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,597 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,598 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1511(String)
+2018-08-08 10:05:11,599 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,600 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,600 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1512(String)
+2018-08-08 10:05:11,601 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,602 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,603 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1513(String)
+2018-08-08 10:05:11,604 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,605 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,606 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1514(String)
+2018-08-08 10:05:11,607 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,608 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,609 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1515(String)
+2018-08-08 10:05:11,610 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,611 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,611 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1516(String)
+2018-08-08 10:05:11,612 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,613 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,614 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 17(String)
+2018-08-08 10:05:11,615 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,617 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,617 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1701(String)
+2018-08-08 10:05:11,619 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,620 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,620 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1702(String)
+2018-08-08 10:05:11,621 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,622 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,623 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 18(String)
+2018-08-08 10:05:11,624 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,625 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,626 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1801(String)
+2018-08-08 10:05:11,627 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,628 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,629 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1802(String)
+2018-08-08 10:05:11,630 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,631 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,632 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2(String)
+2018-08-08 10:05:11,633 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 8
+2018-08-08 10:05:11,634 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,635 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 201(String)
+2018-08-08 10:05:11,636 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,637 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,638 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 202(String)
+2018-08-08 10:05:11,639 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,641 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,642 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 203(String)
+2018-08-08 10:05:11,643 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,645 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,645 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 204(String)
+2018-08-08 10:05:11,646 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,647 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,648 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 205(String)
+2018-08-08 10:05:11,649 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,650 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,651 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 206(String)
+2018-08-08 10:05:11,652 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,653 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,654 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 207(String)
+2018-08-08 10:05:11,656 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,657 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,658 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 208(String)
+2018-08-08 10:05:11,660 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,661 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,661 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 21(String)
+2018-08-08 10:05:11,662 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,663 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,663 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 22(String)
+2018-08-08 10:05:11,664 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,665 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,666 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 23(String)
+2018-08-08 10:05:11,667 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,668 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,669 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 24(String)
+2018-08-08 10:05:11,671 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 5
+2018-08-08 10:05:11,691 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,691 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2401(String)
+2018-08-08 10:05:11,693 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,693 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,694 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2402(String)
+2018-08-08 10:05:11,695 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,695 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,696 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2403(String)
+2018-08-08 10:05:11,697 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,698 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,698 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2404(String)
+2018-08-08 10:05:11,699 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,700 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,701 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2405(String)
+2018-08-08 10:05:11,702 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,703 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,704 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 25(String)
+2018-08-08 10:05:11,705 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,706 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,707 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2501(String)
+2018-08-08 10:05:11,708 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,709 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,710 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2502(String)
+2018-08-08 10:05:11,710 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,711 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,712 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 26(String)
+2018-08-08 10:05:11,712 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,713 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,713 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 27(String)
+2018-08-08 10:05:11,714 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,715 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,715 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 29(String)
+2018-08-08 10:05:11,716 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,717 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,717 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3(String)
+2018-08-08 10:05:11,718 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,719 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,720 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 30(String)
+2018-08-08 10:05:11,722 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:11,723 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,724 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3001(String)
+2018-08-08 10:05:11,725 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,726 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,726 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 32(String)
+2018-08-08 10:05:11,727 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,728 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,728 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 33(String)
+2018-08-08 10:05:11,730 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 9
+2018-08-08 10:05:11,731 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,732 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3301(String)
+2018-08-08 10:05:11,733 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,734 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,734 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3302(String)
+2018-08-08 10:05:11,735 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,736 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,737 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3303(String)
+2018-08-08 10:05:11,738 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,739 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,739 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3304(String)
+2018-08-08 10:05:11,740 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,741 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,742 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3305(String)
+2018-08-08 10:05:11,742 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,743 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,744 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3306(String)
+2018-08-08 10:05:11,744 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,745 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,745 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3307(String)
+2018-08-08 10:05:11,746 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,747 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,747 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3308(String)
+2018-08-08 10:05:11,748 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,749 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,750 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3309(String)
+2018-08-08 10:05:11,750 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,751 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,752 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 34(String)
+2018-08-08 10:05:11,753 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,754 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,754 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 36(String)
+2018-08-08 10:05:11,756 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:11,757 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,757 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3601(String)
+2018-08-08 10:05:11,758 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,758 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,759 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3602(String)
+2018-08-08 10:05:11,760 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,761 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,761 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3603(String)
+2018-08-08 10:05:11,762 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,763 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,764 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 37(String)
+2018-08-08 10:05:11,765 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 4
+2018-08-08 10:05:11,765 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,766 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3701(String)
+2018-08-08 10:05:11,767 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,768 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,768 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3702(String)
+2018-08-08 10:05:11,769 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,770 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,771 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3703(String)
+2018-08-08 10:05:11,772 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,773 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,773 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3704(String)
+2018-08-08 10:05:11,774 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,775 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,775 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 38(String)
+2018-08-08 10:05:11,776 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,777 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,777 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3801(String)
+2018-08-08 10:05:11,778 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,779 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,780 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3802(String)
+2018-08-08 10:05:11,781 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,781 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,782 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 39(String)
+2018-08-08 10:05:11,783 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,783 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,784 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3901(String)
+2018-08-08 10:05:11,784 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,785 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,786 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 3902(String)
+2018-08-08 10:05:11,787 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,788 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,789 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4(String)
+2018-08-08 10:05:11,790 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 6
+2018-08-08 10:05:11,791 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,792 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 401(String)
+2018-08-08 10:05:11,793 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,794 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,795 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 402(String)
+2018-08-08 10:05:11,796 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,796 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,797 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 403(String)
+2018-08-08 10:05:11,797 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,798 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,798 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 404(String)
+2018-08-08 10:05:11,799 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,799 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,800 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 405(String)
+2018-08-08 10:05:11,848 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,857 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,858 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 406(String)
+2018-08-08 10:05:11,862 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,891 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,891 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 44(String)
+2018-08-08 10:05:11,980 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:11,981 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,982 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4401(String)
+2018-08-08 10:05:11,983 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,984 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,985 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4402(String)
+2018-08-08 10:05:11,992 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,993 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,993 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 45(String)
+2018-08-08 10:05:11,994 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:11,995 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:11,995 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 46(String)
+2018-08-08 10:05:11,999 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 4
+2018-08-08 10:05:12,002 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,002 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4601(String)
+2018-08-08 10:05:12,028 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,029 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,030 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4602(String)
+2018-08-08 10:05:12,031 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,031 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 100
+2018-08-08 10:05:12,032 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,033 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4603(String)
+2018-08-08 10:05:12,035 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,036 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,037 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 4604(String)
+2018-08-08 10:05:12,040 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,041 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,041 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 47(String)
+2018-08-08 10:05:12,042 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,043 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,044 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 48(String)
+2018-08-08 10:05:12,045 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,046 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,047 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 49(String)
+2018-08-08 10:05:12,048 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,048 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,049 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5(String)
+2018-08-08 10:05:12,050 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 11
+2018-08-08 10:05:12,051 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,052 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 501(String)
+2018-08-08 10:05:12,053 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,054 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,055 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 502(String)
+2018-08-08 10:05:12,059 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,060 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,060 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 503(String)
+2018-08-08 10:05:12,061 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,062 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,062 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 504(String)
+2018-08-08 10:05:12,063 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,064 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,064 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 505(String)
+2018-08-08 10:05:12,065 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,066 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,066 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 506(String)
+2018-08-08 10:05:12,067 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,068 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,069 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 507(String)
+2018-08-08 10:05:12,070 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,071 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,072 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 508(String)
+2018-08-08 10:05:12,073 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,073 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,074 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 510(String)
+2018-08-08 10:05:12,075 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,075 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,076 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 511(String)
+2018-08-08 10:05:12,076 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,077 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,077 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 512(String)
+2018-08-08 10:05:12,078 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,079 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,079 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 50(String)
+2018-08-08 10:05:12,079 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,080 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,081 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 51(String)
+2018-08-08 10:05:12,083 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,084 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,084 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 52(String)
+2018-08-08 10:05:12,085 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,086 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,086 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 53(String)
+2018-08-08 10:05:12,087 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,088 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,089 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 54(String)
+2018-08-08 10:05:12,090 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 5
+2018-08-08 10:05:12,091 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,091 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5401(String)
+2018-08-08 10:05:12,092 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,093 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,093 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5402(String)
+2018-08-08 10:05:12,094 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,094 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,095 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5403(String)
+2018-08-08 10:05:12,096 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,096 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,097 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5404(String)
+2018-08-08 10:05:12,097 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,099 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,099 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 5405(String)
+2018-08-08 10:05:12,100 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,101 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,101 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 56(String)
+2018-08-08 10:05:12,162 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,164 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,166 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 6(String)
+2018-08-08 10:05:12,168 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:12,171 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,172 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 601(String)
+2018-08-08 10:05:12,174 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,176 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,177 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 602(String)
+2018-08-08 10:05:12,179 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,181 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,182 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 7(String)
+2018-08-08 10:05:12,185 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 7
+2018-08-08 10:05:12,188 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,189 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 701(String)
+2018-08-08 10:05:12,191 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,194 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,196 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 702(String)
+2018-08-08 10:05:12,198 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,200 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,202 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 703(String)
+2018-08-08 10:05:12,207 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,210 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,210 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 704(String)
+2018-08-08 10:05:12,215 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,219 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,220 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 705(String)
+2018-08-08 10:05:12,222 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,223 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,224 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 706(String)
+2018-08-08 10:05:12,225 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,226 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,226 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 707(String)
+2018-08-08 10:05:12,227 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,229 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,229 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 8(String)
+2018-08-08 10:05:12,230 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:12,232 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,232 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 801(String)
+2018-08-08 10:05:12,233 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,234 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,235 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 802(String)
+2018-08-08 10:05:12,236 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,237 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,237 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 9(String)
+2018-08-08 10:05:12,239 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 16
+2018-08-08 10:05:12,240 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,241 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 901(String)
+2018-08-08 10:05:12,241 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,242 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,243 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 902(String)
+2018-08-08 10:05:12,243 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,244 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,244 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 903(String)
+2018-08-08 10:05:12,245 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,246 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,247 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 904(String)
+2018-08-08 10:05:12,247 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,248 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,249 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 905(String)
+2018-08-08 10:05:12,249 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,250 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,251 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 906(String)
+2018-08-08 10:05:12,252 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,253 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,253 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 907(String)
+2018-08-08 10:05:12,254 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,255 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,256 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 908(String)
+2018-08-08 10:05:12,256 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,257 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,258 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 909(String)
+2018-08-08 10:05:12,258 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,259 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,259 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 910(String)
+2018-08-08 10:05:12,260 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,261 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,261 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 911(String)
+2018-08-08 10:05:12,262 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,263 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,264 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 912(String)
+2018-08-08 10:05:12,265 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,266 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,266 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 913(String)
+2018-08-08 10:05:12,267 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,268 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,268 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 914(String)
+2018-08-08 10:05:12,269 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,270 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,270 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 915(String)
+2018-08-08 10:05:12,271 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:12,272 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=? 
+2018-08-08 10:05:12,272 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 916(String)
+2018-08-08 10:05:12,273 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:13,394 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT SYS_DATE AS sysDate, SPC_TAX AS spcTax, pak_Exc AS pakExc FROM PRDT WHERE PRD_NO='10100002' 
+2018-08-08 10:05:13,396 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:13,551 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:13,554 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT SYS_DATE AS sysDate, SPC_TAX AS spcTax, pak_Exc AS pakExc FROM PRDT WHERE PRD_NO='10100002' 
+2018-08-08 10:05:13,555 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:13,558 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:13,635 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT SYS_DATE AS sysDate, SPC_TAX AS spcTax, pak_Exc AS pakExc FROM PRDT WHERE PRD_NO='10100002' 
+2018-08-08 10:05:13,637 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:13,641 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:15,354 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:15,356 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: SELECT DISTINCT UT1 FROM PRDT WHERE ISNULL(UT1,'')!='' 
+2018-08-08 10:05:15,357 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:20,205 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:20,217 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select top(?) id from PRDT_SAMP where id not in ( select top ( (?)*((?)-1) ) id from PRDT_SAMP ORDER BY insertDate DESC )ORDER BY insertDate DESC 
+2018-08-08 10:05:20,218 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 10(Integer), 10(Integer), 1(Integer)
+2018-08-08 10:05:21,268 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:21,269 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,270 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306689-787(String)
+2018-08-08 10:05:21,292 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,301 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,301 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306606-550(String)
+2018-08-08 10:05:21,321 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,323 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,324 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306521-545(String)
+2018-08-08 10:05:21,343 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,344 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,345 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306437-194(String)
+2018-08-08 10:05:21,365 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,366 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,366 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306357-575(String)
+2018-08-08 10:05:21,386 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,387 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,387 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306175-45(String)
+2018-08-08 10:05:21,407 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,408 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,408 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184306073-210(String)
+2018-08-08 10:05:21,428 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,429 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,429 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184305954-456(String)
+2018-08-08 10:05:21,449 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,450 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,450 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184305867-682(String)
+2018-08-08 10:05:21,470 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,471 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select id, prd_code, idx_name, idx_no, mark_name, mark_no, colour, size, sal_name, sal_no, cus_no, cus_name, isFenJie, samp_make, samp_send, samp_requ, samp_desc, thum, attach, insertdate, prd_no, confirmMan, confirmTimeStr, isConfirm, Category, TeamName, confirmRem, unit, financeStartSellCount, startSellCount, modelCostInvoiceNo, modelCost, financeModelCost, estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, fi_Mini_Order_Amt from PRDT_SAMP where id = ? 
+2018-08-08 10:05:21,471 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 180716184305724-340(String)
+2018-08-08 10:05:21,496 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,498 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: Select count(id) from prdt_samp 
+2018-08-08 10:05:21,498 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 
+2018-08-08 10:05:21,509 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:21,928 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:21,929 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:21,931 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:21,933 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1(String)
+2018-08-08 10:05:22,157 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 45
+2018-08-08 10:05:22,158 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,159 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 10(String)
+2018-08-08 10:05:22,170 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:22,171 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,171 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1001(String)
+2018-08-08 10:05:22,199 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 90
+2018-08-08 10:05:22,200 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,200 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1002(String)
+2018-08-08 10:05:22,211 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 13
+2018-08-08 10:05:22,212 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,212 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1003(String)
+2018-08-08 10:05:22,223 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 11
+2018-08-08 10:05:22,224 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,224 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 11(String)
+2018-08-08 10:05:22,235 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:22,236 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,236 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1101(String)
+2018-08-08 10:05:22,247 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 255
+2018-08-08 10:05:22,248 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,248 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1102(String)
+2018-08-08 10:05:22,259 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 12
+2018-08-08 10:05:22,260 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,260 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1103(String)
+2018-08-08 10:05:22,271 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 379
+2018-08-08 10:05:22,272 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,272 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 12(String)
+2018-08-08 10:05:22,283 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 47
+2018-08-08 10:05:22,283 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,284 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1201(String)
+2018-08-08 10:05:22,295 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 428
+2018-08-08 10:05:22,296 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,296 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1202(String)
+2018-08-08 10:05:22,306 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 77
+2018-08-08 10:05:22,307 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,308 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1203(String)
+2018-08-08 10:05:22,318 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 95
+2018-08-08 10:05:22,319 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,319 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1204(String)
+2018-08-08 10:05:22,330 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 17
+2018-08-08 10:05:22,331 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,331 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1205(String)
+2018-08-08 10:05:22,342 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 350
+2018-08-08 10:05:22,343 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,343 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1206(String)
+2018-08-08 10:05:22,353 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 115
+2018-08-08 10:05:22,354 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,354 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1207(String)
+2018-08-08 10:05:22,371 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1656
+2018-08-08 10:05:22,372 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,372 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1208(String)
+2018-08-08 10:05:22,384 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:22,385 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,385 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1209(String)
+2018-08-08 10:05:22,396 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 54
+2018-08-08 10:05:22,397 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,398 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1214(String)
+2018-08-08 10:05:22,410 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 476
+2018-08-08 10:05:22,411 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,411 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1216(String)
+2018-08-08 10:05:22,423 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 13
+2018-08-08 10:05:22,424 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,424 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1217(String)
+2018-08-08 10:05:22,436 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 27
+2018-08-08 10:05:22,437 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,437 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1218(String)
+2018-08-08 10:05:22,449 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:22,450 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,450 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1219(String)
+2018-08-08 10:05:22,462 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 19
+2018-08-08 10:05:22,463 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,463 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 13(String)
+2018-08-08 10:05:22,475 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 107
+2018-08-08 10:05:22,476 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,476 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1301(String)
+2018-08-08 10:05:22,487 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 85
+2018-08-08 10:05:22,488 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,488 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1302(String)
+2018-08-08 10:05:22,499 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 4
+2018-08-08 10:05:22,500 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,500 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1303(String)
+2018-08-08 10:05:22,511 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 7
+2018-08-08 10:05:22,513 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,513 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1304(String)
+2018-08-08 10:05:22,525 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 33
+2018-08-08 10:05:22,526 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,526 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1305(String)
+2018-08-08 10:05:22,537 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:22,537 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,538 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1306(String)
+2018-08-08 10:05:22,548 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 91
+2018-08-08 10:05:22,549 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,549 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1307(String)
+2018-08-08 10:05:22,560 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 85
+2018-08-08 10:05:22,560 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,561 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1308(String)
+2018-08-08 10:05:22,574 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1218
+2018-08-08 10:05:22,574 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,575 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1309(String)
+2018-08-08 10:05:22,590 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 56
+2018-08-08 10:05:22,591 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,591 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1310(String)
+2018-08-08 10:05:22,603 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 17
+2018-08-08 10:05:22,604 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,604 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1311(String)
+2018-08-08 10:05:22,616 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:22,617 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,617 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1312(String)
+2018-08-08 10:05:22,629 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:22,629 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,630 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1313(String)
+2018-08-08 10:05:22,643 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 17
+2018-08-08 10:05:22,643 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,644 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1314(String)
+2018-08-08 10:05:22,655 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:22,656 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,656 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 14(String)
+2018-08-08 10:05:22,668 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 86
+2018-08-08 10:05:22,669 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,670 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1401(String)
+2018-08-08 10:05:22,682 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 589
+2018-08-08 10:05:22,683 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,684 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1402(String)
+2018-08-08 10:05:22,695 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 120
+2018-08-08 10:05:22,696 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,696 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1403(String)
+2018-08-08 10:05:22,707 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 230
+2018-08-08 10:05:22,708 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,708 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1404(String)
+2018-08-08 10:05:22,720 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 396
+2018-08-08 10:05:22,721 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,721 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1405(String)
+2018-08-08 10:05:22,731 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 24
+2018-08-08 10:05:22,732 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,733 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1406(String)
+2018-08-08 10:05:22,743 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:22,744 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,744 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1407(String)
+2018-08-08 10:05:22,754 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:22,755 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,755 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1408(String)
+2018-08-08 10:05:22,765 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 9
+2018-08-08 10:05:22,766 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,766 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1409(String)
+2018-08-08 10:05:22,777 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 30
+2018-08-08 10:05:22,777 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,778 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1410(String)
+2018-08-08 10:05:22,793 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:22,794 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,795 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1411(String)
+2018-08-08 10:05:22,810 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 8
+2018-08-08 10:05:22,811 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,811 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1412(String)
+2018-08-08 10:05:22,828 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:22,829 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,829 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1413(String)
+2018-08-08 10:05:22,841 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 25
+2018-08-08 10:05:22,842 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,842 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 15(String)
+2018-08-08 10:05:22,854 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 288
+2018-08-08 10:05:22,855 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,855 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1501(String)
+2018-08-08 10:05:22,868 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 449
+2018-08-08 10:05:22,868 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,869 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1502(String)
+2018-08-08 10:05:22,882 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 884
+2018-08-08 10:05:22,883 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,883 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1503(String)
+2018-08-08 10:05:22,905 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 6253
+2018-08-08 10:05:22,906 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,907 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1504(String)
+2018-08-08 10:05:22,917 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 13
+2018-08-08 10:05:22,918 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,918 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1505(String)
+2018-08-08 10:05:22,949 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 11324
+2018-08-08 10:05:22,950 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,950 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1506(String)
+2018-08-08 10:05:22,961 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 156
+2018-08-08 10:05:22,962 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,962 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1507(String)
+2018-08-08 10:05:22,977 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2891
+2018-08-08 10:05:22,978 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:22,978 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1508(String)
+2018-08-08 10:05:23,010 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 8461
+2018-08-08 10:05:23,011 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,011 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1509(String)
+2018-08-08 10:05:23,027 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 176
+2018-08-08 10:05:23,028 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,029 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1510(String)
+2018-08-08 10:05:23,041 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:23,042 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,043 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1511(String)
+2018-08-08 10:05:23,056 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 20
+2018-08-08 10:05:23,056 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,057 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1512(String)
+2018-08-08 10:05:23,068 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 37
+2018-08-08 10:05:23,069 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,069 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1513(String)
+2018-08-08 10:05:23,083 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:23,083 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,084 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1514(String)
+2018-08-08 10:05:23,095 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 18
+2018-08-08 10:05:23,096 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,096 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1515(String)
+2018-08-08 10:05:23,108 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:23,108 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,109 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1516(String)
+2018-08-08 10:05:23,119 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 73
+2018-08-08 10:05:23,120 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,120 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 17(String)
+2018-08-08 10:05:23,131 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:23,132 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,132 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1701(String)
+2018-08-08 10:05:23,142 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 5
+2018-08-08 10:05:23,143 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,143 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1702(String)
+2018-08-08 10:05:23,154 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 6
+2018-08-08 10:05:23,154 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,155 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 18(String)
+2018-08-08 10:05:23,165 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:23,166 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,166 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1801(String)
+2018-08-08 10:05:23,176 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 2
+2018-08-08 10:05:23,177 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,178 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 1802(String)
+2018-08-08 10:05:23,190 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:23,191 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,191 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2(String)
+2018-08-08 10:05:23,202 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 0
+2018-08-08 10:05:23,202 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,203 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 201(String)
+2018-08-08 10:05:23,213 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 19
+2018-08-08 10:05:23,213 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,214 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 202(String)
+2018-08-08 10:05:23,229 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 19
+2018-08-08 10:05:23,230 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,231 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 203(String)
+2018-08-08 10:05:23,242 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 27
+2018-08-08 10:05:23,243 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,243 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 204(String)
+2018-08-08 10:05:23,255 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 9
+2018-08-08 10:05:23,256 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,256 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 205(String)
+2018-08-08 10:05:23,277 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 5
+2018-08-08 10:05:23,278 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,279 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 206(String)
+2018-08-08 10:05:23,292 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 14
+2018-08-08 10:05:23,292 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,293 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 207(String)
+2018-08-08 10:05:23,304 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 6
+2018-08-08 10:05:23,305 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,305 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 208(String)
+2018-08-08 10:05:23,317 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 10
+2018-08-08 10:05:23,318 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,318 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 21(String)
+2018-08-08 10:05:23,330 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:23,330 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,331 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 22(String)
+2018-08-08 10:05:23,341 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 77
+2018-08-08 10:05:23,342 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,342 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 23(String)
+2018-08-08 10:05:23,353 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 3
+2018-08-08 10:05:23,353 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,354 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 24(String)
+2018-08-08 10:05:23,364 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 8
+2018-08-08 10:05:23,365 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,365 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2401(String)
+2018-08-08 10:05:23,375 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 1
+2018-08-08 10:05:23,376 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,376 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2402(String)
+2018-08-08 10:05:23,387 DEBUG (BaseJdbcLogger.java:159)- <==      Total: 5
+2018-08-08 10:05:23,388 DEBUG (BaseJdbcLogger.java:159)- ==>  Preparing: select isnull(name,'') from prdt where idx1 in(select idx_no from indx where idx_no=?) 
+2018-08-08 10:05:23,388 DEBUG (BaseJdbcLogger.java:159)- ==> Parameters: 2403(String)

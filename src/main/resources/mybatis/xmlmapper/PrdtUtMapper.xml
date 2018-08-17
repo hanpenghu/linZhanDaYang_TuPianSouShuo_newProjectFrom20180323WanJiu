@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winwin.picreport.Ddao.reportxmlmapper.PrdtUtMapper">
+  <resultMap id="BaseResultMap" type="com.winwin.picreport.Edto.PrdtUt">
+    <id column="UT_ID" jdbcType="VARCHAR" property="utId" />
+    <id column="UT" jdbcType="VARCHAR" property="ut" />
+    <result column="CPY_SW" jdbcType="VARCHAR" property="cpySw" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UT_ID, UT, CPY_SW
+  </sql>
+  <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtUtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PRDT_UT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.winwin.picreport.Edto.PrdtUtKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PRDT_UT
+    where UT_ID = #{utId,jdbcType=VARCHAR}
+      and UT = #{ut,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.winwin.picreport.Edto.PrdtUtKey">
+    delete from PRDT_UT
+    where UT_ID = #{utId,jdbcType=VARCHAR}
+      and UT = #{ut,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.winwin.picreport.Edto.PrdtUtExample">
+    delete from PRDT_UT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.winwin.picreport.Edto.PrdtUt">
+    insert into PRDT_UT (UT_ID, UT, CPY_SW
+      )
+    values (#{utId,jdbcType=VARCHAR}, #{ut,jdbcType=VARCHAR}, #{cpySw,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtUt">
+    insert into PRDT_UT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="utId != null">
+        UT_ID,
+      </if>
+      <if test="ut != null">
+        UT,
+      </if>
+      <if test="cpySw != null">
+        CPY_SW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="utId != null">
+        #{utId,jdbcType=VARCHAR},
+      </if>
+      <if test="ut != null">
+        #{ut,jdbcType=VARCHAR},
+      </if>
+      <if test="cpySw != null">
+        #{cpySw,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.winwin.picreport.Edto.PrdtUtExample" resultType="java.lang.Long">
+    select count(*) from PRDT_UT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PRDT_UT
+    <set>
+      <if test="record.utId != null">
+        UT_ID = #{record.utId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ut != null">
+        UT = #{record.ut,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpySw != null">
+        CPY_SW = #{record.cpySw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpySw == null">
+        CPY_SW = CPY_SW,
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PRDT_UT
+    set UT_ID = #{record.utId,jdbcType=VARCHAR},
+      UT = #{record.ut,jdbcType=VARCHAR},
+      CPY_SW = #{record.cpySw,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.PrdtUt">
+    update PRDT_UT
+    <set>
+      <if test="cpySw != null">
+        CPY_SW = #{cpySw,jdbcType=VARCHAR},
+      </if>
+      <if test="cpySw == null">
+        CPY_SW = CPY_SW,
+      </if>
+    </set>
+    where UT_ID = #{utId,jdbcType=VARCHAR}
+      and UT = #{ut,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.winwin.picreport.Edto.PrdtUt">
+    update PRDT_UT
+    set CPY_SW = #{cpySw,jdbcType=VARCHAR}
+    where UT_ID = #{utId,jdbcType=VARCHAR}
+      and UT = #{ut,jdbcType=VARCHAR}
+  </update>
+</mapper>
