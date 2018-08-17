@@ -19,6 +19,69 @@ public class DaYangFromHtml {
     @Autowired
     private Cnst cnst;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+   //页面上添加一条数据
+   //37是成功//其他都是失败,失败返回码很多
+    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,
+            method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    List<Msg> ImageUpLoadAndDataSave002
+    (@RequestParam(value = "thum", required = false) MultipartFile thum,
+     @RequestParam(value = "attach1", required = false) MultipartFile attach1,
+     @RequestParam(value = "attach2", required = false) MultipartFile attach2,
+     @RequestParam(value = "attach3", required = false) MultipartFile attach3,
+     @RequestParam(value = "attach4", required = false) MultipartFile attach4,
+     @RequestParam(value = "attach5", required = false) MultipartFile attach5,
+     @RequestParam(value = "attach6", required = false) MultipartFile attach6,
+     @RequestParam(value = "attach7", required = false) MultipartFile attach7,
+     @RequestParam(value = "attach8", required = false) MultipartFile attach8,
+     @RequestParam(value = "attach9", required = false) MultipartFile attach9,
+     @RequestParam(value = "attach10", required = false) MultipartFile attach10,
+     HttpServletRequest request) {
+
+
+        List<MultipartFile> attachList = new ArrayList();
+        attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);
+        attachList.add(attach6);attachList.add(attach7);attachList.add(attach8);attachList.add(attach9);attachList.add(attach10);
+        if(attachList!=null&&attachList.size()>0){
+            for(MultipartFile file:attachList){
+                if(file!=null){
+                    if(file.getSize()>(100*1024*1024)){
+                        return MessageGenerate.generateMessage("文件大小超过限制", "文件大小超过限制",
+                                "上传的单个文件已经超过100M", "", "41");
+                    }
+                }
+            }
+        }
+
+        //上传到指定目录
+        try {
+            String projectPath= Cnst.getProjectPath();
+            System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
+            //将来用作数据库一条数据的唯一标识
+
+            return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach
+                    (projectPath, thum, attachList,request,
+                            cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,
+                            cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return MessageGenerate.generateMessage
+                ("保存失败", "保存失败",
+                        "数据库系统级别错误",
+                        "", "38");
+    }
+
+
+
+
+
+
+
+
     /**
      *
      * 这个一次能穿好多个附件
@@ -85,64 +148,6 @@ public class DaYangFromHtml {
     }
     }
 ]*/
-
-   //页面上添加一条数据
-   //37是成功//其他都是失败,失败返回码很多
-    @RequestMapping(value = InterFaceCnst.imageUpLoadAndDataSaveOfManyAttach,
-            method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    List<Msg> ImageUpLoadAndDataSave002
-    (@RequestParam(value = "thum", required = false) MultipartFile thum,
-     @RequestParam(value = "attach1", required = false) MultipartFile attach1,
-     @RequestParam(value = "attach2", required = false) MultipartFile attach2,
-     @RequestParam(value = "attach3", required = false) MultipartFile attach3,
-     @RequestParam(value = "attach4", required = false) MultipartFile attach4,
-     @RequestParam(value = "attach5", required = false) MultipartFile attach5,
-     @RequestParam(value = "attach6", required = false) MultipartFile attach6,
-     @RequestParam(value = "attach7", required = false) MultipartFile attach7,
-     @RequestParam(value = "attach8", required = false) MultipartFile attach8,
-     @RequestParam(value = "attach9", required = false) MultipartFile attach9,
-     @RequestParam(value = "attach10", required = false) MultipartFile attach10,
-     HttpServletRequest request) {
-
-
-        List<MultipartFile> attachList = new ArrayList();
-        attachList.add(attach1);attachList.add(attach2);attachList.add(attach3);attachList.add(attach4);attachList.add(attach5);
-        attachList.add(attach6);attachList.add(attach7);attachList.add(attach8);attachList.add(attach9);attachList.add(attach10);
-        if(attachList!=null&&attachList.size()>0){
-            for(MultipartFile file:attachList){
-                if(file!=null){
-                    if(file.getSize()>(100*1024*1024)){
-                        return MessageGenerate.generateMessage("文件大小超过限制", "文件大小超过限制",
-                                "上传的单个文件已经超过100M", "", "41");
-                    }
-                }
-            }
-        }
-
-        //上传到指定目录
-        try {
-            String projectPath= Cnst.getProjectPath();
-            System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
-            //将来用作数据库一条数据的唯一标识
-
-            return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach
-                    (projectPath, thum, attachList,request,
-                            cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,
-                            cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return MessageGenerate.generateMessage
-                ("保存失败", "保存失败",
-                        "数据库系统级别错误",
-                        "", "38");
-    }
-
-
-
 
 
 

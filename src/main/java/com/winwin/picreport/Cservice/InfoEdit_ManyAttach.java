@@ -48,30 +48,59 @@ public class InfoEdit_ManyAttach {
         if (prdtSamp == null) {p.throwEAddToList("您穿过来的主键id在数据库冇存在",ms);}
         p.p("---------------------------444--prdtSamp.getPrdNo()----"+prdtSamp.getPrdNo()+"----------------------");
         if(p.empty(prdtSamp.getPrdNo())){this.f流水货号(prdtSampOb,ms);}
-        p.p("---------------------------555----------------------------");
+        p.p("-----------"+prdtSamp.getPrdNo()+"----------------555----------"+prdtSampOb.getPrdNo()+"-------"+prdtSampOb.getId()+"-----------");
         this.f保存单张图片(prdtSamp,thum,projectPath,uuid,prdtSampOb,ms);
         this.f保存多个附件(attachList,prdtSampOb,projectPath,ms);
+        //不要在上面设置,因为上面不更新这一项
+        prdtSampOb.setPrdNo(prdtSamp.getPrdNo());
         //更新商品主库的停用时间
         this.f更新商品主库的停用时间(prdtSampOb);
         this.prdt表里的编码同步更新(prdtSampOb);
+        //把商品表prdt里的idx1分类(fen_lei_no)也更新了
+        this.prdtTabIdx1Update(prdtSampOb);
+    }
+
+    //把商品表prdt里的idx1分类也更新了
+    private void prdtTabIdx1Update(PrdtSamp0 prdtSampOb) {
+        if(p.empty(prdtSampOb.getFenLeiNo())){
+            //通过分类name到indx里面找到分类no
+            prdtSampOb.setFenLeiNo(cnst.a001TongYongMapper.getFenLeiNoUseFenLeiName(prdtSampOb.getFenLeiName()));
+        }
+        //给主表 更新分类no
+        int iiii=cnst.a001TongYongMapper.setFenLeiNo2PrdtSamp(prdtSampOb.getId(),prdtSampOb.getFenLeiNo());
+        //更新prdt表里 的idx1
+        int iiiii=cnst.a001TongYongMapper.updateIdx1(prdtSampOb.getPrdNo(),prdtSampOb.getFenLeiNo());
     }
 
     @Transactional
     public void prdt表里的编码同步更新(PrdtSamp0 prdtSampOb) {
+        p.p("-------------------------------------------------------");
+        p.p("prdt表里的编码同步更新"+prdtSampOb.getPrdCode());
+        p.p("---------------------"+prdtSampOb.getPrdNo()+"----------------------------------");
+
         PrdtWithBLOBs prdtWithBLOBs = cnst.prdtMapper.selectByPrimaryKey(prdtSampOb.getPrdNo());
         if(p.empty(prdtWithBLOBs)){
             //这种情况应该不会发生,因为上面或者以前的录入已经流水过货号
             return;
         }
+        p.p("-------------------------------------------------------");
+        p.p("prdt表里的编码同步更新111");
+        p.p("-------------------------------------------------------");
         if(p.dy(prdtWithBLOBs.getName(),prdtSampOb.getPrdCode())){
             //此时一样不用更新
             return;
         }
+        p.p("-------------------------------------------------------");
+        p.p("prdt表里的编码同步更新222");
+        p.p("-------------------------------------------------------");
         //此时不一样,将现在 编码放入货品名称
         PrdtWithBLOBs prdt=new PrdtWithBLOBs();
         prdt.setPrdNo(prdtSampOb.getPrdNo());
         prdt.setName(prdtSampOb.getPrdCode());
-        cnst.prdtMapper.updateByPrimaryKeySelective(prdt);
+        int i = cnst.prdtMapper.updateByPrimaryKeySelective(prdt);
+        p.p("-------------------------------------------------------");
+        p.p(i);
+        p.p("-------------------------------------------------------");
     }
 
 
@@ -203,7 +232,11 @@ public class InfoEdit_ManyAttach {
     public void f更新商品主库的停用时间(PrdtSamp0 prdtSampO) {
         Date stopusedate = prdtSampO.getStopusedate();
         if(null!=stopusedate){
-            String prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
+            String prdNo=prdtSampO.getPrdNo();
+            if(p.empty(prdNo)){
+               prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
+            }
+
 //            PrdtWithBLOBs prdt = new PrdtWithBLOBs();
 //            prdt.setPrdNo(prdNo);
 //            prdt.setNouseDd(stopusedate);

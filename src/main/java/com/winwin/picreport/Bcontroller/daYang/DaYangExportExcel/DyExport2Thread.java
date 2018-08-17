@@ -100,6 +100,7 @@ public class DyExport2Thread {
 
     private void mainF(String param, String tenantId, String userEmail, List<String> msg) throws Exception {
         String dateStr = p.sjc2StrDate(p.getTimeStamp());
+        String excelName001 = p.ra3o();
         jarPath = p.springBootJarPath();
         //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
         //        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
@@ -146,7 +147,7 @@ public class DyExport2Thread {
                     p.throwEAddToList("《您所选则的条件没有任何记录》daoChus是null", msg);
                 }
                 //把字段写入excel
-                Map<String, String> m = this.a写入excel(daoChus, list导出头信息);
+                Map<String, String> m = this.a写入excel(daoChus, list导出头信息,excelName001);
                 File file = new File(m.get(this.excelPath));
                 file.createNewFile();
                 //将创建的excel情况放入数据库
@@ -349,8 +350,8 @@ public class DyExport2Thread {
     private String excelPath = "excelPath";
     private String excelName = "excelName";
 
-    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
-        String excelName = Cnst.SampExport + p.timeAndRandom0_999NoHead_1() + ".xls";
+    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息,String excelName001) {
+        String excelName = Cnst.SampExport + excelName001 + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
         FileOutputStream fileOut = null;

@@ -15,6 +15,11 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2018/8/17.
+ * 1、	物流管理下面加货品单位（model_uuid=1026），放在产品信息导出下面
+ 界面栏位：单位名称，单位类型（主单位，副单位）；可以新增删除单位，
+ 进表prdt_ut（主单位ut_id=1，副单位ut_id=7）
+
+ select * from prdt_ut
  */
 @RestController
 @CrossOrigin
@@ -38,6 +43,8 @@ public class UnitAlterController {
         }
          return Msg.gmg().setMsg("成功").setObjs(prdtUts).setStatus("1");
     }
+
+
 
     //删除某些单位
     @RequestMapping(value="deleteSomeUnit",method=RequestMethod.POST)

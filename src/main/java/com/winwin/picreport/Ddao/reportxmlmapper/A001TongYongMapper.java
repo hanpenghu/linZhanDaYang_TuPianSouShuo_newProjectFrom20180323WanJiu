@@ -413,4 +413,14 @@ public interface A001TongYongMapper {
 
     @Update({"update users set down=null"})
     int setDownNull();
+
+    @Select({"select top 1 idx_no  from indx where name=#{fenLeiName}"})
+    String getFenLeiNoUseFenLeiName(@Param("fenLeiName") String fenLeiName);
+
+
+    @Update({"update prdt_samp set fen_lei_no=#{fenLeiNo} where id=#{id}"})
+    int setFenLeiNo2PrdtSamp(@Param("id") String id,@Param("fenLeiNo") String fenLeiNo);
+
+    @Update({"update prdt set idx1=#{fenLeiNo} where prd_no=#{prdNo}"})
+    int updateIdx1(@Param("prdNo") String prdNo, @Param("fenLeiNo") String fenLeiNo);
 }

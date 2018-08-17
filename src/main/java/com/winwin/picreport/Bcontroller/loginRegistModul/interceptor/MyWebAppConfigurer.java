@@ -39,6 +39,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         .excludePathPatterns("/schh001")
         .excludePathPatterns("/fuck")
         .excludePathPatterns("/salePriceGet")
+                .excludePathPatterns("/allUnit")
         ;
 //        registry.addWebRequestInterceptor();
         super.addInterceptors(registry);
