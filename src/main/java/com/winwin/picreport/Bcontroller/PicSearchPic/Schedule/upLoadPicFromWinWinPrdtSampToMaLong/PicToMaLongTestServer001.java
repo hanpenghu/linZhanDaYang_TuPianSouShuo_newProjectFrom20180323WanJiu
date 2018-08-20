@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.Bcontroller.PicSearchPic.utils.*;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Component
 public class PicToMaLongTestServer001 {
+
 private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
     @Autowired
     private CnstO cnstO;
