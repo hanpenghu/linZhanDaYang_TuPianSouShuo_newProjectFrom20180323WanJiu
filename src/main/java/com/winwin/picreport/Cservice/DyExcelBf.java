@@ -3,6 +3,7 @@ package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Bcontroller.daYang.prdtSampInsertExcelManyRequestVersion.CC;
+import com.winwin.picreport.Ddao.reportxmlmapper.PrdtUtMapper;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.excelHan.Excel2007;
 import com.winwin.picreport.Futils.excelHan.ExcelPicTemplate;
@@ -59,7 +60,9 @@ public class DyExcelBf {
                 pp = this.f设置pp(uuid,usr);
                 List<ExcelTxtTemplate> list该行文本集 = e.getTxtRowList();
                 List<ExcelPicTemplate> list该行图片集其实只有一个 = e.getTxtRowPicDataList();
-                this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器+2, listImgIgll2Del);
+                this.f封装插入数据库的集合和保存图片(list该行文本集,list该行图片集其实只有一个,uuid,pp,msgs,行计数器+2,listImgIgll2Del);
+                //主单位在prdt_ut不存在的时候跳过
+                this.prdtUtNotExsitThisUt(pp,msgs);
                 //加货号的时候会判断prdt表有没有主单位,没有的话会加一个上去
                 this.setPrdNo2pp(pp,msgs,行计数器+2);
             } catch (Exception e1) {
@@ -79,7 +82,24 @@ public class DyExcelBf {
         excelFile.delete();
     }
 
+    @Autowired
+    private PrdtUtMapper prdtUtMapper;
 
+    private void prdtUtNotExsitThisUt(PrdtSamp pp ,List<String>msgs) {
+        if(p.notEmpty(pp.getMainUnit())){
+            PrdtUtExample pe=new PrdtUtExample();
+            //我从excel里拿出来的主单位放在MainUt里了
+            pe.createCriteria().andUtEqualTo(pp.getMainUnit());
+            long l = prdtUtMapper.countByExample(pe);
+            if(l==0){
+                String s="excel中编码为《"+pp.getPrdCode()+"》" +
+                        "的货品单位《"+pp.getMainUnit()+"》" +
+                        "在erp系统表prdt_ut不存在,请录入该单位后再导入该条数据！";
+                p.throwEAddToList(s,msgs);
+            }
+        }
+
+    }
 
 
     private void delImgAddMsg(List<String> listImgIgll2Del, Exception e1,List<String>msgs) {

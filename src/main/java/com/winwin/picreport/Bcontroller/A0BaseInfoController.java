@@ -70,51 +70,51 @@ public @ResponseBody List<YeWuYuan> getAllYeWuYuan(){
 /////////////////////////////////////////////////////////////////////////////////////////////
 
     //   /base/allUnit
-    @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
-            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
-    public @ResponseBody Msg allUnit(){
-        //得到所有主单位
-        List<String> units = cnst.manyTabSerch.allUnit();
-        //得到所有副单位
-        List<String> units1 = cnst.manyTabSerch.allUnit1();
-        //得到去重复的工具
-        Set<String> set=new HashSet<>();
-        units.forEach(v->set.add(v.trim()));
-        units1.forEach(v->set.add(v.trim()));
-        //创建返回给前端的list
-        List<String>currentTypeList=new ArrayList<>();
-        set.forEach(v->currentTypeList.add(v));
-        return Msg.gmg().setData(Data.gD().setUnitList(currentTypeList))
-                .setStatus(StatusCnst.loginSucc).setChMsg("获得所有单位成功");
-    }
-    @Autowired
-    private PrdtUtMapper prdtUtMapper;
-
-//    //更换表,取prdt_ut里面的
 //    @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
 //            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
 //    public @ResponseBody Msg allUnit(){
-//
-//        PrdtUtExample pue=new PrdtUtExample();
-//        pue.createCriteria().andUtIsNotNull().andUtIdIsNotNull();
-//        List<PrdtUt> prdtUts = prdtUtMapper.selectByExample(pue);
 //        //得到所有主单位
-//        List<String> units = new ArrayList<String>();
-//        for(PrdtUt pu:prdtUts){
-//            units.add(pu.getUt());
-//        }
+//        List<String> units = cnst.manyTabSerch.allUnit();
 //        //得到所有副单位
-////        List<String> units1 = cnst.manyTabSerch.allUnit1();
+//        List<String> units1 = cnst.manyTabSerch.allUnit1();
 //        //得到去重复的工具
 //        Set<String> set=new HashSet<>();
 //        units.forEach(v->set.add(v.trim()));
-////        units1.forEach(v->set.add(v.trim()));
+//        units1.forEach(v->set.add(v.trim()));
 //        //创建返回给前端的list
 //        List<String>currentTypeList=new ArrayList<>();
 //        set.forEach(v->currentTypeList.add(v));
 //        return Msg.gmg().setData(Data.gD().setUnitList(currentTypeList))
 //                .setStatus(StatusCnst.loginSucc).setChMsg("获得所有单位成功");
 //    }
+    @Autowired
+    private PrdtUtMapper prdtUtMapper;
+
+    //更换表,取prdt_ut里面的
+    @RequestMapping(value=InterFaceCnst.allUnit,method= RequestMethod.POST
+            ,produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    public @ResponseBody Msg allUnit(){
+
+        PrdtUtExample pue=new PrdtUtExample();
+        pue.createCriteria().andUtIsNotNull().andUtIdIsNotNull();
+        List<PrdtUt> prdtUts = prdtUtMapper.selectByExample(pue);
+        //得到所有主单位
+        List<String> units = new ArrayList<String>();
+        for(PrdtUt pu:prdtUts){
+            units.add(pu.getUt());
+        }
+        //得到所有副单位
+//        List<String> units1 = cnst.manyTabSerch.allUnit1();
+        //得到去重复的工具
+        Set<String> set=new HashSet<>();
+        units.forEach(v->set.add(v.trim()));
+//        units1.forEach(v->set.add(v.trim()));
+        //创建返回给前端的list
+        List<String>currentTypeList=new ArrayList<>();
+        set.forEach(v->currentTypeList.add(v));
+        return Msg.gmg().setData(Data.gD().setUnitList(currentTypeList))
+                .setStatus(StatusCnst.loginSucc).setChMsg("获得所有单位成功");
+    }
 
 
 
