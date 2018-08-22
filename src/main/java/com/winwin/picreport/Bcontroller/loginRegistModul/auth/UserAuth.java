@@ -242,7 +242,157 @@ public class UserAuth {
         }
     }
 
+
     private void columnAuthSet1(ModelParent modelParent, ModelUsersSpc m) {
+        try {
+            List<p.FieldContent> modelParentFields = p.getField(modelParent);
+            for(p.FieldContent pf:modelParentFields){
+                //如果字段名跟数据库中控制点一样,  就设置该字段的值为该控制点位对应的  显示状态
+                if(   p.dy(     pf.getFieldName() , m.getCtrlId()   )   ){
+                        pf.setOMyGetVal(F.equals(m.getSpcId()) ? "0" : "1");
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    private final String F = "F";
+
+    //操作
+    private final String operate = "operate";
+    //查看信息
+    private final String checkMsg = "checkMsg";
+    //采购价格控制
+    private final String buyPrice = "buyPrice";
+    //销售价格控制
+    private final String salePrice = "salePrice";
+
+    //1是可以,0是不可以
+
+    //一条录入记录的唯一标识符号
+    private final String id = "id";
+    //产品编码
+    private final String prdCode = "prdCode";
+    //下面2个用作产品名称,的name和no,   分类的再加两个
+    //原来徐勇的界面上改了框里面的东西,其他地方不用改,前端的分类框中填范围小的,前端的名称框放范围 大的
+    //大范围的//产品名称
+    private final String idxName = "idxName";
+    //产品编号(高层分类编号)
+    private final String idxNo = "idxNo";
+    //货号
+    private final String prdNo = "prdNo";
+    //下面2个用于界面上产品分类那一栏//注意,存的时候不存,只是返回的时候返回给前端
+
+    //小范围的//中类号(底层分类编号)
+    private final String fenLeiNo = "fenLeiNo";
+
+    private final String fenLeiName = "fenLeiName";//产品中类
+
+    private final String markName = "markName";//品牌
+
+    private final String markNo = "markNo";//品牌编号
+
+    private final String colour = "colour";//颜色
+
+    private final String size = "size";//尺寸
+    //产品负责人
+    private final String salName = "salName";
+    //产品负责人编码
+    private final String salNo = "salNo";
+    // cust表1是客户  2是厂商  3是客户/厂商   4  会员客户
+    private final String cusNo = "cusNo";//客户编号
+    private final String cusName = "cusName";//客户名称
+    //供应商编号
+    private final String cusNoGive = "cusNoGive";
+    //供应商名字
+    private final String cusNameGive = "cusNameGive";
+    private final String isfenjie = "isfenjie";//是否分解//是否分解, y代表分解, n代表不分解
+    private final String sampMake = "sampMake";//打样时间
+    private final String sampSend = "sampSend";//----样品寄出时间
+    //样品要求
+    private final String sampRequ = "sampRequ";
+    //样品描述//产品描述
+    private final String sampDesc = "sampDesc";
+    //---缩略图名字包含的路径字符串,用="1";隔开,路径里面有!导致用户的缩略名字不能有!和="1";
+    private final String thum = "thum";
+    //附件路径字符串,多个用="1";隔开,名字中的！做分隔符号
+    private final String attach = "attach";
+    //该条记录插入时间,数据库自动会添加DEFAULT一个getdate()
+    private final String insertdate = "insertdate";
+    private final String confirmman = "confirmman";//确认人
+    private final String confirmtimestr = "confirmtimestr";//确认时间   直接带-的字符串
+    private final String isconfirm = "isconfirm";//是否确认，1代表已经确认  0代表未确认
+    private final String category = "category";//
+    private final String teamname = "teamname";//
+    private final String confirmrem = "confirmrem";//确认备注
+    private final String businessdesc = "businessdesc";//业务描述
+    private final String financedesc = "financedesc";//财务描述
+    private final String modelcost = "modelcost";//模具费
+    private final String estimateprice = "estimateprice";//预估价
+    //模具费用发票号
+    private final String modelcostinvoiceno = "modelcostinvoiceno";
+    //小单费
+    private final String littleorderprice = "littleorderprice";
+    //起订金额
+    private final String miniOrderAmt = "miniOrderAmt";
+    //采购起订数量
+    private final String startsellcount = "startsellcount";
+    //财务起订金额
+    private final String fiMiniOrderAmt = "fiMiniOrderAmt";
+    //财务起订量
+    private final String financestartsellcount = "financestartsellcount";
+    //财务模具费
+    private final String financemodelcost = "financemodelcost";
+    //财务小单费
+    private final String financelittleorderprice = "financelittleorderprice";
+    //采购描述
+    private final String buyerdesc = "buyerdesc";
+    //销售描述
+    private final String salemandesc = "salemandesc";
+    //    /停用时间/
+    private final String stopusedate = "stopusedate";
+    //主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
+    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
+    private final String mainUnit = "mainUnit";
+    //是否审核   0或者null或者''代表未提交,  1代表已经提交但未审核,  2代表已经审核过
+    //    有状态: 0、未提交,1、已经提交但是未审核等待审核,2、已经提交已审核
+    //-- ---2018_6_19   weekday(2)   12:08:01---  添加一个是否提交并审核字段该字段 is_check_out 有状态:
+    //            -- 0(或者null或者'')、未提交,
+    //            --  1、已经提交但是未审核等待审核,2、已经提交已审核  ---------- --
+    //            --    提交的前提是: 必须有： 供应商(cus_No_Give,cus_Name_Give),起订量(startsellcount),小单费(littleorderprice) 和 已经进行过采购定价
+    private final String isCheckOut = "isCheckOut";
+    //审核意见
+    private final String checkOutOpinion = "checkOutOpinion";
+
+    private boolean hanhanCanAccess(LoginInfo info) {
+        if (p.notEmpty(info) && "hanhanhan".equals(info.getTenantId()) && "hanhanhan".equals(info.getUserEmail()) && "hanhanhan".equals(info.getUserPswd())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void columnAuthSet1原来备份(ModelParent modelParent, ModelUsersSpc m) {
+
         //一条录入记录的唯一标识符号
         if (id.equals(m.getCtrlId())) {
             modelParent.setId(F.equals(m.getSpcId()) ? "0" : "1");
@@ -406,119 +556,6 @@ public class UserAuth {
 
     }
 
-    private final String F = "F";
 
-    //操作
-    private final String operate = "operate";
-    //查看信息
-    private final String checkMsg = "checkMsg";
-    //采购价格控制
-    private final String buyPrice = "buyPrice";
-    //销售价格控制
-    private final String salePrice = "salePrice";
 
-    //1是可以,0是不可以
-
-    //一条录入记录的唯一标识符号
-    private final String id = "id";
-    //产品编码
-    private final String prdCode = "prdCode";
-    //下面2个用作产品名称,的name和no,   分类的再加两个
-    //原来徐勇的界面上改了框里面的东西,其他地方不用改,前端的分类框中填范围小的,前端的名称框放范围 大的
-    //大范围的//产品名称
-    private final String idxName = "idxName";
-    //产品编号(高层分类编号)
-    private final String idxNo = "idxNo";
-    //货号
-    private final String prdNo = "prdNo";
-    //下面2个用于界面上产品分类那一栏//注意,存的时候不存,只是返回的时候返回给前端
-
-    //小范围的//中类号(底层分类编号)
-    private final String fenLeiNo = "fenLeiNo";
-
-    private final String fenLeiName = "fenLeiName";//产品中类
-
-    private final String markName = "markName";//品牌
-
-    private final String markNo = "markNo";//品牌编号
-
-    private final String colour = "colour";//颜色
-
-    private final String size = "size";//尺寸
-    //产品负责人
-    private final String salName = "salName";
-    //产品负责人编码
-    private final String salNo = "salNo";
-    // cust表1是客户  2是厂商  3是客户/厂商   4  会员客户
-    private final String cusNo = "cusNo";//客户编号
-    private final String cusName = "cusName";//客户名称
-    //供应商编号
-    private final String cusNoGive = "cusNoGive";
-    //供应商名字
-    private final String cusNameGive = "cusNameGive";
-    private final String isfenjie = "isfenjie";//是否分解//是否分解, y代表分解, n代表不分解
-    private final String sampMake = "sampMake";//打样时间
-    private final String sampSend = "sampSend";//----样品寄出时间
-    //样品要求
-    private final String sampRequ = "sampRequ";
-    //样品描述//产品描述
-    private final String sampDesc = "sampDesc";
-    //---缩略图名字包含的路径字符串,用="1";隔开,路径里面有!导致用户的缩略名字不能有!和="1";
-    private final String thum = "thum";
-    //附件路径字符串,多个用="1";隔开,名字中的！做分隔符号
-    private final String attach = "attach";
-    //该条记录插入时间,数据库自动会添加DEFAULT一个getdate()
-    private final String insertdate = "insertdate";
-    private final String confirmman = "confirmman";//确认人
-    private final String confirmtimestr = "confirmtimestr";//确认时间   直接带-的字符串
-    private final String isconfirm = "isconfirm";//是否确认，1代表已经确认  0代表未确认
-    private final String category = "category";//
-    private final String teamname = "teamname";//
-    private final String confirmrem = "confirmrem";//确认备注
-    private final String businessdesc = "businessdesc";//业务描述
-    private final String financedesc = "financedesc";//财务描述
-    private final String modelcost = "modelcost";//模具费
-    private final String estimateprice = "estimateprice";//预估价
-    //模具费用发票号
-    private final String modelcostinvoiceno = "modelcostinvoiceno";
-    //小单费
-    private final String littleorderprice = "littleorderprice";
-    //起订金额
-    private final String miniOrderAmt = "miniOrderAmt";
-    //采购起订数量
-    private final String startsellcount = "startsellcount";
-    //财务起订金额
-    private final String fiMiniOrderAmt = "fiMiniOrderAmt";
-    //财务起订量
-    private final String financestartsellcount = "financestartsellcount";
-    //财务模具费
-    private final String financemodelcost = "financemodelcost";
-    //财务小单费
-    private final String financelittleorderprice = "financelittleorderprice";
-    //采购描述
-    private final String buyerdesc = "buyerdesc";
-    //销售描述
-    private final String salemandesc = "salemandesc";
-    //    /停用时间/
-    private final String stopusedate = "stopusedate";
-    //主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
-    //这个主单位主要是将来进去prdt用的,不进prdt_samp也可以,但是我还是让他一起进去了
-    private final String mainUnit = "mainUnit";
-    //是否审核   0或者null或者''代表未提交,  1代表已经提交但未审核,  2代表已经审核过
-    //    有状态: 0、未提交,1、已经提交但是未审核等待审核,2、已经提交已审核
-    //-- ---2018_6_19   weekday(2)   12:08:01---  添加一个是否提交并审核字段该字段 is_check_out 有状态:
-    //            -- 0(或者null或者'')、未提交,
-    //            --  1、已经提交但是未审核等待审核,2、已经提交已审核  ---------- --
-    //            --    提交的前提是: 必须有： 供应商(cus_No_Give,cus_Name_Give),起订量(startsellcount),小单费(littleorderprice) 和 已经进行过采购定价
-    private final String isCheckOut = "isCheckOut";
-    //审核意见
-    private final String checkOutOpinion = "checkOutOpinion";
-
-    private boolean hanhanCanAccess(LoginInfo info) {
-        if (p.notEmpty(info) && "hanhanhan".equals(info.getTenantId()) && "hanhanhan".equals(info.getUserEmail()) && "hanhanhan".equals(info.getUserPswd())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
