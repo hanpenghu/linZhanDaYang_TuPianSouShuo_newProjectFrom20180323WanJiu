@@ -14,6 +14,7 @@ public class ShouDingDanFromExcel {
 //    }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //仓库编号在界面选取
     private String wh="";//仓库编号  2018_4_10   weekday(2)   10:10:25  Winston add
     private String osDd = "";//受订日期
     private String estDd = "";//预交日期
@@ -45,6 +46,7 @@ public class ShouDingDanFromExcel {
     private String gangHao="";//--缸号
     private String realWidth="";//实际幅宽
     private String realLength="";//实际长度
+    //业务员代号在界面选取
     private String salNo="";//业务员代号
     //2018_6_1   weekday(5)   9:50:37加上
     /**
@@ -57,8 +59,21 @@ public class ShouDingDanFromExcel {
     private String duiFangPrdNo="";
 
 
+    //加bilType, 运费类型, 1.不含运费 2.含运费//将来导入mf_pos.bil_type
+    //2018_8_24   weekday(5)   10:58:01
+    private String bilType;
 
 
+
+
+
+    public String getBilType() {
+        return bilType;
+    }
+
+    public void setBilType(String bilType) {
+        this.bilType = bilType;
+    }
 
     public String getWh() {
         return wh;

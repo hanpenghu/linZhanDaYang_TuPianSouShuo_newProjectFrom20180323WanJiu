@@ -172,6 +172,79 @@ public strictfp class p {
     private Map<String,Object>map=new HashMap<>();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *是否是标准时间
+     * 2017-01-09 12:23:33.333这种
+     * */
+    public static boolean isBzSj(String s){
+        try {
+
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    /**
+     * 是否是时间
+     *是否是标准时间
+     * 2017-01-09 12:23:33,333这种
+     * */
+    public static boolean isBzSj1(String s){
+        try {
+
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").parse(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    /**
+     *是否是标准时间
+     * 2017-01-09 12:23:33这种
+     * */
+    public static boolean isBzSj2(String s){
+        try {
+
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    /**
+     *是否是标准时间
+     * 2017-01-09这种
+     * */
+    public static boolean isBzSj3(String s){
+        try {
+
+            new SimpleDateFormat("yyyy-MM-dd").parse(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     *是否是标准时间
+     * */
+    public static boolean isDate(String s){
+        boolean bzSj = isBzSj(s);
+        boolean bzSj2 = isBzSj2(s);
+        boolean bzSj3 = isBzSj3(s);
+        if(bzSj||bzSj2||bzSj3){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+
+
     /**
      * 将一个list均分成n个list,主要通过偏移量来实现的
      * @param source

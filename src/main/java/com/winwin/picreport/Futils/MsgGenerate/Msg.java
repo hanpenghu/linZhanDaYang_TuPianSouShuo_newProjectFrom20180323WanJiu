@@ -20,11 +20,17 @@ public class Msg {
     private String userEmail="";//公司里面该用户的用
     private String notExsitThisPrdtNoInPrdtTab="";
     private String weiNengChaRuHuoZheChaRuShiBaiDeSuoYouDingDanHao="";
+    private Object obj="";
     private  List objs=new LinkedList ();
     //注意,下面这个对象是怕上面那个字符串auth在前端解析不出来才做的
     private Auth auth=new Auth();
 
     private ColumnAuth columnAuth=new ColumnAuth();
+
+
+
+
+
 
 
     public ColumnAuth getColumnAuth() {
@@ -162,5 +168,12 @@ public class Msg {
         return this;
     }
 
+    public Object getObj() {
+        return obj;
+    }
 
+    public Msg setObj(Object obj) {
+        this.obj = obj;
+        return this;
+    }
 }

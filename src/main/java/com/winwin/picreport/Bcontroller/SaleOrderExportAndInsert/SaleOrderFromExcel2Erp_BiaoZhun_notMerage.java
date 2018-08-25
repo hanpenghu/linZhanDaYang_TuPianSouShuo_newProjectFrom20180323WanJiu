@@ -5,6 +5,7 @@ import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Edto.MfPosExample;
 import com.winwin.picreport.Edto.ShouDingDanFromExcel;
+import com.winwin.picreport.Edto.UpDefExample;
 import com.winwin.picreport.Futils.BaoLiuXiaoShu;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
@@ -32,32 +33,92 @@ import java.util.*;
 /**
  *导入excel,销售订单,上面那个A1ReportRestControllerEXCELUpLoad是sap导入的,比这个复杂
  * */
-public class SaleOrderFromExcel2Erp_notMerage {
+public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
 
     @Autowired
     private Cnst cnst;
 
 
 
-/*    select amt,amtn,tax,tax_rto,up,qty,prd_no,*from tf_pos where os_no='EBNEK18004JY2056X'
-    select*from tf_pos_z where os_no='EBNEK18004JY2056X'
-    select*from mf_pos where os_no='EBNEK18004JY2056X'
-    select * from sapso where osno='EBNEK18004JY2056X'
+
+    /**
+     *添加一个接口,判断销售定价是否小于库中up_def中对应的定价
+     * */
+
+
+    @RequestMapping(value="checkSalePrice",method=RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public @ResponseBody Msg f(@RequestBody List<IfSalePriceSamllEntity> i){
+        List<String>msg=new LinkedList<String>();
+        try {
+            this.igll(i,msg);
+            this.checkSalePrice(i,msg);
+        } catch (Exception e) {
+            String s=e.getMessage();
+            if(msg.contains(s)){
+                return Msg.gmg().setStatus("0").setMsg(s);
+            }else{
+                return Msg.gmg().setStatus("0").setMsg("未知异常《"+s+"》");
+            }
+        }
+        return Msg.gmg().setStatus("1").setMsg("成功").setObjs(i);
+    }
+
+    private void checkSalePrice(List<IfSalePriceSamllEntity> ii, List<String> msg) {
+        int size = ii.size();
+        for(int k=0;k<size;k++){
+            IfSalePriceSamllEntity i = ii.get(k);
+            this.stateGet(i);
+        }
+    }
+
+    private void stateGet(IfSalePriceSamllEntity e) {
+        UpDefExample ue=new UpDefExample();
+        ue.createCriteria().andPrdNoEqualTo(e.getPrdNo());
+        long l = cnst.upDefMapper.countByExample(ue);
+        //货号在up_def不存在  蓝色背景
+        if(l==0){e.setState("2");return;}
+        UpDefExample ue1=new UpDefExample();
+        ue1.createCriteria().andPrdNoEqualTo(e.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId).andUpIsNotNull();
+        long l1 = cnst.upDefMapper.countByExample(ue1);
+        //销售定价在up_def不存在
+        if(l1==0){e.setState("3");return;}
+       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()));
+        //此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
+        if(k>=0)e.setState("1");
+    }
+
+    private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
+        if(p.empty(ii))p.throwEAddToList("前端传过来的数组是空的",msg);
+        for(IfSalePriceSamllEntity i:ii){
+            if(p.isBd(i.getUp()))p.throwEAddToList("第《"+i.getRow()+"》单价不是数字",msg);
+            if(p.empty(i.getRow()))p.throwEAddToList("前端传过来的行号有空的",msg);
+            if(p.empty(i.getPrdNo()))p.throwEAddToList("第《"+i.getRow()+"》行货号为空",msg);
+            if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期为空,",msg);
+            if(!p.isDate(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期格式不对,",msg);
+        }
+    }
+
+
+    /*    select amt,amtn,tax,tax_rto,up,qty,prd_no,*from tf_pos where os_no='EBNEK18004JY2056X'
+        select*from tf_pos_z where os_no='EBNEK18004JY2056X'
+        select*from mf_pos where os_no='EBNEK18004JY2056X'
+        select * from sapso where osno='EBNEK18004JY2056X'
 
 
 
 
-    delete from tf_pos where os_no='EBNEK18004JY2056X'
-    delete from tf_pos_z where os_no='EBNEK18004JY2056X'
-    delete from mf_pos where os_no='EBNEK18004JY2056X'
-    delete  from sapso where osno='EBNEK18004JY2056X'*/
+        delete from tf_pos where os_no='EBNEK18004JY2056X'
+        delete from tf_pos_z where os_no='EBNEK18004JY2056X'
+        delete from mf_pos where os_no='EBNEK18004JY2056X'
+        delete  from sapso where osno='EBNEK18004JY2056X'*/
     /////////////////////////////////////////////////////////////////////////////////////////////
 //前端没有任何参数传         [{}]         受订单号成功后是SO//注释掉暂时不用
-    @RequestMapping(value = InterFaceCnst.upLoadExcelDontMerageOfSaleOrder, method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
+    @RequestMapping(value = "upLoadExcelDontMerageOfSaleOrder", method = RequestMethod.POST, produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody List<Msg> shouDingDanExcelToTable(@RequestBody List<ShouDingDanFromExcel> sss) {
         this.打印当前对象(sss);
         List<Msg> listmsg = new ArrayList<>();
         try {
+            this.isPriceIgll(sss,listmsg);
             this.f检查excel里面订单号是否都一样(sss,listmsg);
             this.f前端穿过来的数据是否非法_扣税类别之类(sss,listmsg);
             Msg msg = new Msg();
@@ -81,6 +142,19 @@ public class SaleOrderFromExcel2Erp_notMerage {
         ////////////////////////////////////////////////////////////////////////
         return listmsg;
 ////////////////////////////////
+    }
+
+    private void isPriceIgll(List<ShouDingDanFromExcel> sss, List<Msg> listmsg) {
+        if(p.empty(sss))this.commonThrow(listmsg,"前端传过来的数组是空的");
+        int i=2;//出去表头第2行开始是excel的数据
+        for(ShouDingDanFromExcel s:sss){
+            if(p.empty(s.getUp()))this.commonThrow(listmsg,"在第《"+i+"》行有单价为空的; ");
+            if(p.empty(s.getPrdNo()))this.commonThrow(listmsg,"在第《"+i+"》行有货号为空的; ");
+            i=i+1;
+        }
+
+
+
     }
 
 
@@ -285,7 +359,7 @@ public class SaleOrderFromExcel2Erp_notMerage {
         set去重.addAll(shouDingDanFromExcels);
         if (set去重.size() != 1) {
             String s = "excel里面有不相同的单号,请检查excel并把不同的单号放到不同的excel再导入！";
-            commonThrow(listmsg, s);
+            this.commonThrow(listmsg, s);
         }
     }
 

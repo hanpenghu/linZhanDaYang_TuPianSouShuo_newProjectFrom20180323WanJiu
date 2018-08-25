@@ -69,60 +69,55 @@ public class CommonDaoRuDBZhiQianZhengLi {
                 ///////////////////////循环同一个货号下的要入sapso的数据开始/////////////////////////////////////////////////////////////
                 String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date());
                 String uuid = UUID.randomUUID().toString();//uuid相同代表  单号+货号+成分代码  相同
-                for (ShouDingDanFromExcel shouDingDanFromExcel : listx) {
+                for (ShouDingDanFromExcel s : listx) {
 
                     //直接set进去
 //                    this.通过对方品号获取prdNo(shouDingDanFromExcel,msg,listmsg);
 
-                    String prdName = shouDingDanFromExcel.getPrdName();
+                    String prdName = s.getPrdName();
 
 
                     //数据非法的时候这个方法会抛出异常//这个是通用数据非法处理器
                     //该方法主要判断有些数据不能为空
-                    this.a判断数据是否非法并获取prd_no(msg,shouDingDanFromExcel, listmsg,kkk);
+                    this.a判断数据是否非法并获取prd_no(msg,s, listmsg,kkk);
 
                     //sap行号不能为空
-                    if(p.empty(shouDingDanFromExcel.getSaphh())){
-                        String s1="有saphh(SAP行号)为空,可能在"+(kkk+1)+"行附近,可以通过货品名称"+ prdName +"来查找";
-                        msg.setMsg(s1);
+                    if(p.empty(s.getSaphh())){
+                        String sL="有saphh(SAP行号)为空,可能在"+(kkk+1)+"行附近,可以通过货品名称"+ prdName +"来查找";
+                        msg.setMsg(sL);
                         listmsg.add(msg);
-                        throw new RuntimeException(s1);
+                        throw new RuntimeException(sL);
                     }
 
 
 
                     //Eb单号不能为空
-                    if (p.empty(shouDingDanFromExcel.getEbNo())) {
-                        String ssss=stra.b()
-                                .a("有《EB单号》为空")
-                                .a(",应该在"+(kkk+1)+"行附近,")
-                                .a("请根据货号: ")
-                                .a(shouDingDanFromExcel.getPrdNo())
-                                .a("  查找").g();
-                        msg.setMsg(ssss);
+                    if (p.empty(s.getEbNo())) {
+                        String sf=stra.b().a("有《EB单号》为空").a(",应该在"+(kkk+1)+"行附近,").a("请根据货号: ").a(s.getPrdNo()).a("  查找").g();
+                        msg.setMsg(sf);
                         listmsg.add(msg);
-                        throw new RuntimeException(ssss);
+                        throw new RuntimeException(sf);
                     }
 
                         Sapso b = new Sapso();
-                        b.setRemBody(shouDingDanFromExcel.getRemBody());
-                        b.setSupPrdNo(shouDingDanFromExcel.getDuiFangPrdNo());
-                        b.setOsno(shouDingDanFromExcel.getOsNo());
-                        b.setPrdno(shouDingDanFromExcel.getPrdNo());
-                        b.setQty(new BigDecimal(shouDingDanFromExcel.getQty()));
-                        b.setCaigouno(shouDingDanFromExcel.getCaiGouNo());
-                        b.setEbno(shouDingDanFromExcel.getEbNo());
-                        b.setMaitouno(shouDingDanFromExcel.getMaiTouNo());
-                        b.setSaphh(shouDingDanFromExcel.getSaphh());
-                        b.setSapph(shouDingDanFromExcel.getSapph());
-                        b.setSapwlm(shouDingDanFromExcel.getSapwlm());
-                        b.setLuohao(shouDingDanFromExcel.getLuoHao());
-                        b.setGanghao(shouDingDanFromExcel.getGangHao());
-                        b.setReallength(shouDingDanFromExcel.getRealLength());
-                        b.setRealwidth(shouDingDanFromExcel.getRealWidth());
+                        b.setRemBody(s.getRemBody());
+                        b.setSupPrdNo(s.getDuiFangPrdNo());
+                        b.setOsno(s.getOsNo());
+                        b.setPrdno(s.getPrdNo());
+                        b.setQty(new BigDecimal(s.getQty()));
+                        b.setCaigouno(s.getCaiGouNo());
+                        b.setEbno(s.getEbNo());
+                        b.setMaitouno(s.getMaiTouNo());
+                        b.setSaphh(s.getSaphh());
+                        b.setSapph(s.getSapph());
+                        b.setSapwlm(s.getSapwlm());
+                        b.setLuohao(s.getLuoHao());
+                        b.setGanghao(s.getGangHao());
+                        b.setReallength(s.getRealLength());
+                        b.setRealwidth(s.getRealWidth());
                         //20171108加了成分代码
-                        b.setChengFenDaiMa(shouDingDanFromExcel.getCfdm());//这个是历史遗留问题//这个原来用于导出
-                        b.setChengfendaima(shouDingDanFromExcel.getCfdm());//这个是真正的导入的
+                        b.setChengFenDaiMa(s.getCfdm());//这个是历史遗留问题//这个原来用于导出
+                        b.setChengfendaima(s.getCfdm());//这个是真正的导入的
                         b.setTimesamebatch(dateStr);
                         b.setUuid(uuid);//uuid相同代表  单号+货号+成分代码  相同
                         /**
@@ -144,8 +139,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
                         //注意 sapao是excel的原始记录,跟erp系统表没有关系,只是将来sap导出excel的时候拆行用的
                         if (p.notEmpty(kk) && kk >0) {
                             //存在就删掉,将来再导入
-                            SapsoExample s=new SapsoExample();
-                            s.createCriteria()
+                            SapsoExample see=new SapsoExample();
+                            see.createCriteria()
                                   .andChengfendaimaEqualTo(b.getChengFenDaiMa().trim())
 //                                .andSapwlmEqualTo(b.getSapwlm().trim())
 //                                .andSapphEqualTo(b.getSapph().trim())
@@ -155,10 +150,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
                                     .andPrdnoEqualTo(b.getPrdno().trim())
                                     .andOsnoEqualTo(b.getOsno().trim());
                             //此时除了qty都不相等了//有重复的就删掉
-                            Integer pp = cnst.sapsoMapper.deleteByExample(s);//这个后期已经加上成分代码
+                            Integer pp = cnst.sapsoMapper.deleteByExample(see);//这个后期已经加上成分代码
 
-                        }else{
-//
                         }
 
 
@@ -180,9 +173,9 @@ public class CommonDaoRuDBZhiQianZhengLi {
         //插入sunlike主表//其实是插入一个list里面做准备,搜集tfpos  tfposz 和mfpos数据开始
 
         for(int iii=0;iii<list3.size();iii++){
-            ShouDingDanFromExcel s=list3.get(iii);
+            ShouDingDanFromExcel s1=list3.get(iii);
             //同一个iii下面必须一次性插入tf_pos 和tf_pos_z和sapso
-            this.saveOneShouDingDanFromExcelToTable(s, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList);
+            this.saveOneShouDingDanFromExcelToTable(s1, listmsg,iii,mm,tfPosWithBLOBsList,tfPosZList);
         }
 
 /////////////////////////////////////for循环结束///////////////////////////////////////////////////////////////////////////////////////
@@ -233,6 +226,8 @@ public class CommonDaoRuDBZhiQianZhengLi {
             //            estDd="32503564800000";
         }
         //////////////////////////////////////
+        //加bilType, 运费类型, 1.不含运费 2.含运费//将来导入mf_pos.bil_type
+       if(p.notEmpty(s.getBilType()))mm.setBilType(s.getBilType());
         mm.setTaxId(s.getTaxId());
         mm.setOsNo(s.getOsNo());
         mm.setRem(s.getRemhead());
@@ -612,7 +607,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
         //如果单价有问题,就要抛出异常
         if (p.empty(s.getUp()) || p.dy(s.getUp(),"0")) {
-            msg.setMsg("有单价《为空>或者《0》,估计在"+(jiShuQi+1)+"行附近,可以根据货号"+s.getPrdNo()+"查找");
+            msg.setMsg("有单价《为空>或者《0》,估计在《"+(jiShuQi+1)+"》行附近,可以根据货号《"+s.getPrdNo()+"》查找");
             listmsg.add(msg);
             throw new RuntimeException(msg.getMsg());
         }

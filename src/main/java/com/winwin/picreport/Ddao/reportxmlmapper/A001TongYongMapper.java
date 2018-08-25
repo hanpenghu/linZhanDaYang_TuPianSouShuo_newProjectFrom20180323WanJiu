@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -423,4 +424,7 @@ public interface A001TongYongMapper {
 
     @Update({"update prdt set idx1=#{fenLeiNo} where prd_no=#{prdNo}"})
     int updateIdx1(@Param("prdNo") String prdNo, @Param("fenLeiNo") String fenLeiNo);
+
+    @Select({"select count(*) from up_def where prd_no=#{prdNo} and price_id=#{salPriceId} and s_dd<=#{osDd} and #{up}<up"})
+    int countPriceOfSmallThenUpdef(@Param("osDd") String osDd, @Param("prdNo")String prdNo, @Param("salPriceId")String salPriceId, @Param("up")BigDecimal up);
 }
