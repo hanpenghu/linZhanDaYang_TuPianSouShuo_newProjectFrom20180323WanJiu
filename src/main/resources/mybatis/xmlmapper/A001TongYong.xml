@@ -907,11 +907,16 @@
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
-        where a.stopusedate is null and    a.id in
-        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        order by u.s_dd desc
+        where a.stopusedate is null
+        <if test=" ids != null and ids.size()>0 ">
+            and    a.id in
+            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+            order by u.s_dd desc
+
+
     </select>
 
 

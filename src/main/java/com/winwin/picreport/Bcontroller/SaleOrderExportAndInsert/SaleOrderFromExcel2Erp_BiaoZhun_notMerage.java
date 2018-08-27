@@ -43,15 +43,23 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
 
     /**
      *添加一个接口,判断销售定价是否小于库中up_def中对应的定价
+     *
+     * {"row":"1","prdNo":"prd_no","up":"0.18","osDd":"2018-07-27 10:37:31.757"}
      * */
 
 
     @RequestMapping(value="checkSalePrice",method=RequestMethod.POST,produces = {"application/json;charset=utf-8"})
     public @ResponseBody Msg f(@RequestBody List<IfSalePriceSamllEntity> i){
         List<String>msg=new LinkedList<String>();
+        IfSalePriceSamllEntityFlag ie=new IfSalePriceSamllEntityFlag();
         try {
             this.igll(i,msg);
-            this.checkSalePrice(i,msg);
+            i=this.checkSalePrice(i,msg);
+            if(p.notEmpty(i)){
+                //有颜色需要标记
+                ie.setFlag(p.s0);
+                ie.setStates(i);
+            }
         } catch (Exception e) {
             String s=e.getMessage();
             if(msg.contains(s)){
@@ -60,15 +68,19 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
                 return Msg.gmg().setStatus("0").setMsg("未知异常《"+s+"》");
             }
         }
-        return Msg.gmg().setStatus("1").setMsg("成功").setObjs(i);
+        return Msg.gmg().setStatus("1").setMsg("成功").setObj(ie);
     }
 
-    private void checkSalePrice(List<IfSalePriceSamllEntity> ii, List<String> msg) {
+    private List<IfSalePriceSamllEntity> checkSalePrice(List<IfSalePriceSamllEntity> ii, List<String> msg) {
         int size = ii.size();
+        List<IfSalePriceSamllEntity>list=new ArrayList<IfSalePriceSamllEntity>();
         for(int k=0;k<size;k++){
             IfSalePriceSamllEntity i = ii.get(k);
             this.stateGet(i);
+            //徐勇要求是0的状态是正常,不用返回过去,只是把不正常的返回过去
+            if(p.bdy(i.getState(),p.s0))list.add(i);
         }
+        return list;
     }
 
     private void stateGet(IfSalePriceSamllEntity e) {
@@ -90,7 +102,10 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
     private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
         if(p.empty(ii))p.throwEAddToList("前端传过来的数组是空的",msg);
         for(IfSalePriceSamllEntity i:ii){
-            if(p.isBd(i.getUp()))p.throwEAddToList("第《"+i.getRow()+"》单价不是数字",msg);
+            p.p("-------------------------------------------------------");
+            p.p(i.getUp());
+            p.p("-------------------------------------------------------");
+            if(!p.isBd(i.getUp()))p.throwEAddToList("第《"+i.getRow()+"》行单价不是数字",msg);
             if(p.empty(i.getRow()))p.throwEAddToList("前端传过来的行号有空的",msg);
             if(p.empty(i.getPrdNo()))p.throwEAddToList("第《"+i.getRow()+"》行货号为空",msg);
             if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期为空,",msg);

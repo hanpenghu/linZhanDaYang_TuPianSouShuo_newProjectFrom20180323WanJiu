@@ -122,7 +122,7 @@ public class DyExport2Thread {
             ids = new LinkedList<String>();
         }
         //下载的总条数是否超过6万
-        BigDecimal bbb=this.isDownLoadCountOverIgll(msg);
+//        BigDecimal bbb=this.isDownLoadCountOverIgll(msg);
         //将确认时间得到的id放入  全局id集合
         this.perfectIds(ids, idsFromConfirmTime);
         if (p.empty(ids)) {
@@ -130,7 +130,7 @@ public class DyExport2Thread {
         }
 
         BigDecimal bb = p.b(ids.size());
-        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
+//        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
 
         //线程里面传不进去ids,放到对象里穿进去
         Map<String,List<String>> mapids=new HashMap();
@@ -141,6 +141,9 @@ public class DyExport2Thread {
             this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
         new Thread(() -> {
+            p.p("-------------------------------------------------------");
+            p.p("进入线程");
+            p.p("-------------------------------------------------------");
             try {
                 List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get("ids"));
                 if (p.empty(daoChus)) {
@@ -152,52 +155,55 @@ public class DyExport2Thread {
                 file.createNewFile();
                 //将创建的excel情况放入数据库
                 this.dbRec(tenantId,userEmail,m,dateStr);
-                this.downCountSubstract( bb );
+//                this.downCountSubstract( bb );
                } catch (Exception e) {
                 //如果组装excel异常在数据库记录一个下载失败的对象
                     this.recErrorDownLoad(tenantId,userEmail,dateStr);
-                    this.downCountSubstract(bb);
+//                    this.downCountSubstract(bb);
             }
+            p.p("-------------------------------------------------------");
+            p.p("线程结束");
+            p.p("-------------------------------------------------------");
         }).start();
 
     }
 
-    private void downCountSubstract(BigDecimal bb) {
-        File file = new File(down);
-        String s = p.readAllTxt(file.getAbsolutePath());
-        if(p.b(s).compareTo(p.b(0))==1){
-            BigDecimal sb = p.b(s).subtract(bb);
-            if(sb.compareTo(p.b(0))==-1){
-                sb=p.b(0);
-            }
-            p.writeToTxt(String.valueOf(sb),new File(down).getAbsolutePath());
-        }
-    }
+//    private void downCountSubstract(BigDecimal bb) {
+//        File file = new File(down);
+//        String s = p.readAllTxt(file.getAbsolutePath());
+//        if(p.b(s).compareTo(p.b(0))==1){
+//            BigDecimal sb = p.b(s).subtract(bb);
+//            if(sb.compareTo(p.b(0))==-1){
+//                sb=p.b(0);
+//            }
+//            p.writeToTxt(String.valueOf(sb),new File(down).getAbsolutePath());
+//        }
+//    }
 
     private String down="down";
-    private void writeThisDownCountIntoFile(BigDecimal bbb) {
-        p.writeToTxt(String.valueOf(bbb),new File(down).getAbsolutePath());
-    }
+//    private void writeThisDownCountIntoFile(BigDecimal bbb) {
+//        p.writeToTxt(String.valueOf(bbb),new File(down).getAbsolutePath());
+//    }
 
-    private BigDecimal isDownLoadCountOverIgll(List<String> msg) throws Exception {
-        File file = new File(down);
-        if(p.notExists(file)){
-            file.createNewFile();
-        }
-        String s = p.readAllTxt(file.getAbsolutePath());
-        if(p.notEmpty(s)){
-            if(!p.isBd(s)){
-                p.throwEAddToList("统计后台下载数目不是数字",msg);
-            }else{
-                if(p.b(s).compareTo(p.b(59999))==1){
-                    p.throwEAddToList("已有超过6万条数据正在下载，请稍后重试",msg);
-                }
-            }
-        }else{
-            s="0";
-        }
-        return p.b(s);
-    }
+//    private BigDecimal isDownLoadCountOverIgll(List<String> msg) throws Exception {
+//        File file = new File(down);
+//        if(p.notExists(file)){
+//            file.createNewFile();
+//        }
+//        String s = p.readAllTxt(file.getAbsolutePath());
+//        if(p.notEmpty(s)){
+//            if(!p.isBd(s)){
+//                p.throwEAddToList("统计后台下载数目不是数字",msg);
+//            }else{
+//                if(p.b(s).compareTo(p.b(59999))==1){
+//                    p.throwEAddToList("已有超过6万条数据正在下载，请稍后重试",msg);
+//                }
+//            }
+//        }else{
+//            s="0";
+//        }
+//        return p.b(s);
+//    }
 
 //
 //    public static void main(String[]args){
@@ -243,12 +249,33 @@ public class DyExport2Thread {
 
 
     private List<DaoChu> ids分批得到DaoChu(List<String> ids) {
+        p.p("-------------------------------------------------------");
+        p.p("ids分批得到DaoChu开始");
+        p.p("-------------------------------------------------------");
         List<DaoChu> daoChus = new LinkedList<DaoChu>();
-        List<List<String>> lists = p.avgList(ids, 2000);
+        p.p("-----------------------ids.size()--------------------------------");
+        p.p(ids.size());
+        p.p("-------------------------------------------------------");
+        List<List<String>> lists = p.avgList(ids, 40);
+        int iiii=1;
         for (List<String> ls : lists) {
+            p.p("第《"+iiii+"》次得到daoChus");
+            p.p("-------------------------------------------------------");
+            p.p("开始得到daoChus");
+            p.p("-------------------------------------------------------");
             List<DaoChu> daoChus1 = cnst.a001TongYongMapper.getDaoChus(ls);
+            p.p("----------------daoChus1---------------------------------------");
+            p.p(daoChus1.size());
+            p.p("-------------------------------------------------------");
             daoChus.addAll(daoChus1);
+            p.p("-------------------------------------------------------");
+            p.p("结束得到daoChus");
+            p.p("-------------------------------------------------------");
+            iiii=iiii+1;
         }
+        p.p("-------------------------------------------------------");
+        p.p("ids分批得到DaoChu结束");
+        p.p("-------------------------------------------------------");
         return daoChus;
     }
 
@@ -440,6 +467,7 @@ public class DyExport2Thread {
                 cell.setCellValue(""); // 设置内容 7
             }
             if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
+                p.p("=================设置照片=================================");
 //                    cell.setCellValue(""); // 设置内容 8
 //                p.p2(daoChu.getThum());
                 try {
@@ -556,7 +584,7 @@ public class DyExport2Thread {
             } catch (Exception e) {
 //                p.p1("wufa jiequ thum zifuchuan  ,keneng shi kongde,ye keneng shi null");
             }
-
+            if(!new File(thum).exists())return;
             ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
             //加载图片
             bufferImg = ImageIO.read(new File(thum));
