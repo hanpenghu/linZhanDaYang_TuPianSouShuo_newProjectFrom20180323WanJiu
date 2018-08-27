@@ -46,8 +46,6 @@ public class SapSaleOrderExport2Excel002 {
     }
 
     private void canSplit(List<SalePrdDetailTab1> all, SalePrdDetailTab1 s, List<Sapso> sapsos) {
-
-
         for(Sapso sa:sapsos){
             //该对象作为备份对象,每次只是数量变化,重要的是让s的地址指向变化
             SalePrdDetailTab1 当前拆行备份s=new SalePrdDetailTab1();
@@ -62,7 +60,7 @@ public class SapSaleOrderExport2Excel002 {
                 break;
             }else{
                 当前拆行备份s.setQty(    p.bsub(   s.getQty()  ,  sa.getQty()  ).toString()  );
-                s.setQty(sa.getQty().toString());
+                s.setQty(    sa.getQty().toString()   );
                 this.sCommonSet(s,sa);
                 all.add(s);
                 //给后面拆行继续用这个数量
