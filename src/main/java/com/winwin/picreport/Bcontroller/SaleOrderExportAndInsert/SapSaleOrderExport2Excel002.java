@@ -58,11 +58,11 @@ public class SapSaleOrderExport2Excel002 {
             if(s.getQtyDouble()<=sa.getQtyDouble()){
                 this.sCommonSet(s,sa);
                 all.add(s);
-                sa.setQty(   p.b(sa.getQtyDouble()-s.getQtyDouble()   )  );
+                sa.setQty(   p.bsub(   sa.getQtyDouble(),s.getQtyDouble()     )  );
                 break;
             }else{
-                当前拆行备份s.setQty(p.strValeOfNull(s.getQtyDouble()-sa.getQtyDouble()));
-                s.setQty(p.strValeOfNull(sa.getQtyDouble()));
+                当前拆行备份s.setQty(    p.bsub(   s.getQty()  ,  sa.getQty()  ).toString()  );
+                s.setQty(sa.getQty().toString());
                 this.sCommonSet(s,sa);
                 all.add(s);
                 //给后面拆行继续用这个数量
@@ -71,6 +71,9 @@ public class SapSaleOrderExport2Excel002 {
             }
         }
     }
+
+
+
 
     private void sCommonSet(SalePrdDetailTab1 s, Sapso sapso) {
         s.setAmt(String.valueOf(s.getQtyDouble() * Double.parseDouble(s.getUp())));

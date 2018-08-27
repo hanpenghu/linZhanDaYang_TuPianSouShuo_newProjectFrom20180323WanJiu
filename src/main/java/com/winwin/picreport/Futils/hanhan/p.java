@@ -250,6 +250,13 @@ public strictfp class p {
      * @param source
      * @return
      */
+
+
+
+
+
+
+
     public static <T> List<List<T>> avgList(List<T> source,int n){
         List<List<T>> result=new ArrayList<List<T>>();
         int remaider=source.size()%n;  //(先计算出余数)
