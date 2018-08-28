@@ -36,13 +36,18 @@ public class DyDeleteOneAttach {
         p.p("-------------------------------------------------------");
         //该url在数据库中应该是唯一的//通过该url找到该url对应的所有的attch组成的字符串
         String urlInDb无中括号=urlInDb;
-        if(urlInDb.contains("[")){
+        if(p.notEmpty(urlInDb)&&urlInDb.contains("[")){
             urlInDb无中括号=urlInDb.substring(0,urlInDb.indexOf("["));
         }
         String attachsStr=cnst.manyTabSerch.selectAttachsUse_urlInDb(p.bfh+urlInDb无中括号+p.bfh);
 
         attachsStr=attachsStr.replace(urlInDb,"");
 
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
        int k= cnst.manyTabSerch.updateAttach(p.bfh+urlInDb无中括号+p.bfh,attachsStr);
         p.p("-------------------------k----------urlInDb无中括号--------------------");
         p.p(k);
@@ -52,9 +57,7 @@ public class DyDeleteOneAttach {
 
         String 文件绝对路径 = getParentAbsolutPath() + 得到文件名字(attachUrl);
 
-        boolean delete = new File(文件绝对路径).delete();
-        if(!delete) commonMsgthrow(msgList,"删除失败！附件无法删除");
-
+        if(p.exists(new File(文件绝对路径))) new File(文件绝对路径).delete();
 
     }
 

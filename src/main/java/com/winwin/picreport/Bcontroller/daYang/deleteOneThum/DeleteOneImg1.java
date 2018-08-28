@@ -33,6 +33,9 @@ public class DeleteOneImg1 {
     public @ResponseBody
     Msg deleteOneImage
     (@RequestParam(value = Cnst.imgUrl, required = false) String imgUrl) {
+        p.p("--------------------删除图片的url-----------------------------------");
+        p.p(imgUrl);
+        p.p("-------------------------------------------------------");
         List<String> msgList=new LinkedList<>();
         try {
             throwE(imgUrl,msgList);

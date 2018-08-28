@@ -31,7 +31,7 @@ public class DyDeleteOneImg {
         p.p(urlInDb);
         p.p("-------------------------------------------------------");
         String urlInDb无中括号=urlInDb;
-        if(urlInDb.contains("[")){
+        if(p.notEmpty(urlInDb)&&urlInDb.contains("[")){
             //老数据中的[无法是在数据库中做like处理
             urlInDb无中括号=urlInDb.substring(0,urlInDb.indexOf("["));
         }
@@ -48,19 +48,18 @@ public class DyDeleteOneImg {
             p.p("---------------------------thumStr1----------------------------");
             p.p(thumStr);
             p.p("-------------------------------------------------------");
+//            try {
+//                Thread.sleep(200);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             int k= cnst.manyTabSerch.updateThum(p.bfh+urlInDb+p.bfh,thumStr);
             if(k!=1)commonMsgthrow(msgList,"删除失败！有可能该url在数据库不唯一,检查数据库中来自老系统的url!");
         }
         String 文件绝对路径 = this.getParentAbsolutPath() + this.得到文件名字(imgUrl);
         File 要删除的thum=new File(文件绝对路径);
-        if(!要删除的thum.exists()){
-            //这里主要是解决原来2个人删除的时候的假象问题
-//            p.throwEAddToList("该图片已经删除！",msgList);
-        }else{
-            boolean delete = 要删除的thum.delete();
-        }
+        if(要删除的thum.exists())要删除的thum.delete();
 
-//        if(!delete) commonMsgthrow(msgList,"删除失败！图片无法删除或者根本不存在");
     }
 
 

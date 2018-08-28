@@ -31,9 +31,7 @@ public class DyInfoUpdate {
             method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    List<Msg>
-    infoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
+    public @ResponseBody List<Msg> infoEdit_ManyAttach(@RequestParam(value = "thum", required = false) MultipartFile thum,
                         @RequestParam(value = "attach1", required = false) MultipartFile attach1,
                         @RequestParam(value = "attach2", required = false) MultipartFile attach2,
                         @RequestParam(value = "attach3", required = false) MultipartFile attach3,

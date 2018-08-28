@@ -50,7 +50,7 @@ public class PicSearchPicUseBase64CLinZhan {
      * 这个后来应该不用了
      * */
 
-//    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="jieShouQianduanChuanGuoLaiDeYiZhangTuPian",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<SearchResult> jieShouQianduanChuanGuoLaiDeYiZhangTuPian
     (@RequestBody Base64Image base64Image){
         //将来用来装入 码隆的图片url信息和我们数据库的到的商品名和商品码

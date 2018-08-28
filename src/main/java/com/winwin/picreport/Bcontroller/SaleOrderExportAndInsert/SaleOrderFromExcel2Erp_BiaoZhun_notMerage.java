@@ -96,7 +96,7 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
         if(l1==0){e.setState("3");return;}
        int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()));
         //此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
-        if(k>=0)e.setState("1");
+        if(k>0)e.setState("1");
     }
 
     private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
