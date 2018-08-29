@@ -133,7 +133,10 @@ public class D1DaYangService {
             String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
 
             PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
-
+            if(p.empty(prdtSampOb.getFenLeiNo())) {
+                return MessageGenerate.generateMessage("保存失败",
+                        "保存失败", "前端传过来的分类编号fenLeiNo是空的!", "", "36");
+            }
             List <Msg> msgs1=this.isPrdCodeRepeat(prdtSampOb);
             if(p.notEmpty(msgs1)){
                return msgs1;
@@ -224,6 +227,7 @@ public class D1DaYangService {
             prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
             prdtSampOb.setAttach(attachmentUrl);
             prdtSampOb.setId(uuidstr);
+
             List<Msg> list = this.insertDaYang(prdtSampOb);
             return list;
 
@@ -248,6 +252,8 @@ public class D1DaYangService {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Transactional
     public List<Msg> insertDaYang(PrdtSamp0 prdtSamp) {
+
+
         Integer ii = null;
         List<Msg> list;
 //        try {
@@ -266,6 +272,18 @@ public class D1DaYangService {
             }
 
             ii = cnst.prdtSampMapper.insert(prdtSamp);
+
+
+
+
+        //再次检查prdt里面的分类,没有就更新进去  2018_8_29   weekday(3)   11:57:01
+        String idx1=cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(prdtSamp.getPrdNo());
+        p.p("---------------idx1是:"+idx1+"----------------------------------------");
+        p.p("----------------fenLeiNo是:"+prdtSamp.getFenLeiNo()+"---------------------------------------");
+        if(p.empty(idx1)&&p.notEmpty(prdtSamp.getFenLeiNo())){
+            int iii = cnst.a001TongYongMapper.updateIdx1(prdtSamp.getPrdNo(),prdtSamp.getFenLeiNo());
+        }
+
 //        } catch (Exception e) {
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~打样保存一条数据失败!~~~~~~~~~~~~~~~~~~~~~~~~");
 //            return MessageGenerate.generateMessage("保存失败", "保存失败", "数据库系统级别错误", "", "38");

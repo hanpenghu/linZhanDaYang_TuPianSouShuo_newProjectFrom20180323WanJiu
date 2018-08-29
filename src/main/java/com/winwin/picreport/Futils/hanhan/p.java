@@ -53,7 +53,7 @@ public strictfp class p {
     public final static  String dbTypeSqlserver="sqlserver";
     public final static String sqlServerDriver="com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public final static  String mysqlDriver="com.mysql.jdbc.Driver";
-    public static final long fuckIt=10*1000;
+    public static final long fuckIt=10000;
     public static final String fuckTime="2019-12-01";
     public static final String knownExceptionSign ="《已知异常》";
     public static final String gq="_____________________RuanJianGuoQi__________________________The software has expired, please contact the supplier_____________________RuanJianGuoQi__________________________";//过期提醒
@@ -239,6 +239,10 @@ public strictfp class p {
         }else{
             return false;
         }
+    }
+
+    public static boolean isNotDate(String s){
+        return !p.isDate(s);
     }
 
 

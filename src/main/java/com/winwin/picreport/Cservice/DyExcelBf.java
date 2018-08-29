@@ -182,10 +182,10 @@ public class DyExcelBf {
     }
 
     private void setPrdNo2pp(PrdtSamp pp, List<String>msgs, int 行计数器) {
-        String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
         if(p.empty(pp.getFenLeiName())){
             p.throwEAddToList(excel中有中类名称是空的+",在《"+行计数器+"》行附近,无法流水货号",msgs);
         }
+        String fenLeiNo=cnst.a001TongYongMapper.getIdxNoFromIdxName(pp.getFenLeiName());
         if(p.notEmpty(fenLeiNo)) {
             pp.setFenLeiNo(fenLeiNo);
         }else{
@@ -200,6 +200,13 @@ public class DyExcelBf {
             this.commonsThrow(msgs,s);
         }
         pp.setPrdNo(p0.getPrdNo());
+        //下面几行是检查在prdt中是否有分类no,如过没有就插入
+        String idx1=cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(p0.getPrdNo());
+        p.p("---------------idx1是:"+idx1+"----------------------------------------");
+        p.p("----------------fenLeiNo是:"+fenLeiNo+"---------------------------------------");
+        if(p.empty(idx1)&&p.notEmpty(p0.getFenLeiNo())){
+            int ii = cnst.a001TongYongMapper.updateIdx1(p0.getPrdNo(),fenLeiNo);
+        }
     }
 
     private void f封装插入数据库的集合和保存图片(List<ExcelTxtTemplate> list该行文本集,List<ExcelPicTemplate> list该行图片集,String uuid,PrdtSamp pp,List<String> msgs,int 行计数器,List<String> list异常后要删除的图片路径) throws IOException {

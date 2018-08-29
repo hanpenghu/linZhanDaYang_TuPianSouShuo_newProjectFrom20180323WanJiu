@@ -89,6 +89,15 @@ public class GPrdNo {
             int i = cnst.a001TongYongMapper.updateUtToPrdtUsePrdNo(prdtNo, mainUnit);
             p.p("===============7=================");
         }
+
+
+        //再次检查prdt里面的分类,没有就更新进去
+        String idx1=cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(prdtNo);
+        if(p.empty(idx1)&&p.notEmpty(prdtSamp.getFenLeiNo())){
+            int ii = cnst.a001TongYongMapper.updateIdx1(prdtNo,prdtSamp.getFenLeiNo());
+        }
+
+
     }
 
 

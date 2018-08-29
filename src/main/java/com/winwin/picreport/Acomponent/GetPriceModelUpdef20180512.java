@@ -108,23 +108,21 @@ public class GetPriceModelUpdef20180512 {
                 if(p.notEmpty(dingJiaGuanLian)){
                     UpDefMy01 u=new UpDefMy01();
 
-                    UpDefMy01 u0=
-                            cnst.a001TongYongMapper
-                                    .getUpDefMy20180512BuyOne
-                                            (prdNo,Cnst.buyPriceId,Cnst.buyBilTypeNoTrans,dingJiaGuanLian);//这个其实变成采购的了//2采购
+                    UpDefMy01 u0= cnst.a001TongYongMapper.getUpDefMy20180512BuyOne(prdNo,Cnst.buyPriceId,Cnst.buyBilTypeNoTrans,dingJiaGuanLian);//这个其实变成采购的了//2采购
 
                     UpDefMy01 u1=cnst.a001TongYongMapper.getUpDefMy20180512BuyOne(prdNo,Cnst.buyPriceId,Cnst.buyBilTypeHaveTrans,dingJiaGuanLian);
 
                     if(p.notEmpty(u0)){
                         BeanUtils.copyProperties(u0,u);
-                        setUpOfBuy(u,u0,u1);
+                        this.setUpOfBuy(u,u0,u1);
                     }
 
 
                     if(p.notEmpty(u1)){
                         BeanUtils.copyProperties(u1,u);
-                        setUpOfBuy(u,u0,u1);
+                        this.setUpOfBuy(u,u0,u1);
                     }
+                    u.setPrmNo(       p.sm(       p.notEmpty(    u0.getPrmNo()   ),  u0.getPrmNo() ,  u1.getPrmNo()        )    );
                     listUpdefMy01BuyToFront.add(u);
                 }
             }

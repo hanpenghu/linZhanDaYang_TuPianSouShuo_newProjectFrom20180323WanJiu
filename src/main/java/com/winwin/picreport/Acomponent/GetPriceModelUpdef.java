@@ -3,7 +3,6 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.hanhan.p;
-import org.apache.commons.io.CopyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

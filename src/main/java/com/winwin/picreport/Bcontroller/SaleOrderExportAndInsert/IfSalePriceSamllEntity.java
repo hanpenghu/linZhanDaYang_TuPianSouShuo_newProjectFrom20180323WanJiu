@@ -27,7 +27,38 @@ public class IfSalePriceSamllEntity {
     //在updef货号不存在的代号是 2, 蓝色背景
     //在updef对应销售定价不存在 用  点号 3,颜色待定
     private String state="0";
+     //2018_8_28   weekday(2)   15:44:47 如果货号是空的靠下面三个来找
+    //货号
+    private String prdName;
+    //对方货号
+    private String duiFangPrdNo;
+    //客户代码
+    private String cusNo;
 
+
+    public String getPrdName() {
+        return prdName;
+    }
+
+    public void setPrdName(String prdName) {
+        this.prdName = prdName;
+    }
+
+    public String getDuiFangPrdNo() {
+        return duiFangPrdNo;
+    }
+
+    public void setDuiFangPrdNo(String duiFangPrdNo) {
+        this.duiFangPrdNo = duiFangPrdNo;
+    }
+
+    public String getCusNo() {
+        return cusNo;
+    }
+
+    public void setCusNo(String cusNo) {
+        this.cusNo = cusNo;
+    }
 
     public String getRow() {
         return row;

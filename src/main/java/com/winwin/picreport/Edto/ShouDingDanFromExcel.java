@@ -375,7 +375,40 @@ public class ShouDingDanFromExcel {
     @Override
     public String toString() {
         return "ShouDingDanFromExcel{" +
-                "qty='" + qty + '\'' +
+                "wh='" + wh + '\'' +
+                ", osDd='" + osDd + '\'' +
+                ", estDd='" + estDd + '\'' +
+                ", taxId='" + taxId + '\'' +
+                ", osNo='" + osNo + '\'' +
+                ", cusOsNo='" + cusOsNo + '\'' +
+                ", saphh='" + saphh + '\'' +
+                ", remhead='" + remhead + '\'' +
+                ", sapph='" + sapph + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", sapwlm='" + sapwlm + '\'' +
+                ", cfdm='" + cfdm + '\'' +
+                ", prdName='" + prdName + '\'' +
+                ", curId='" + curId + '\'' +
+                ", excRto='" + excRto + '\'' +
+                ", qty='" + qty + '\'' +
+                ", unit='" + unit + '\'' +
+                ", up='" + up + '\'' +
+                ", amtn='" + amtn + '\'' +
+                ", tax='" + tax + '\'' +
+                ", amt='" + amt + '\'' +
+                ", taxRto='" + taxRto + '\'' +
+                ", remBody='" + remBody + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                ", caiGouNo='" + caiGouNo + '\'' +
+                ", maiTouNo='" + maiTouNo + '\'' +
+                ", ebNo='" + ebNo + '\'' +
+                ", luoHao='" + luoHao + '\'' +
+                ", gangHao='" + gangHao + '\'' +
+                ", realWidth='" + realWidth + '\'' +
+                ", realLength='" + realLength + '\'' +
+                ", salNo='" + salNo + '\'' +
+                ", duiFangPrdNo='" + duiFangPrdNo + '\'' +
+                ", bilType='" + bilType + '\'' +
                 '}';
     }
 

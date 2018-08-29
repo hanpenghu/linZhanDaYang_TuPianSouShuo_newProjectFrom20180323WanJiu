@@ -101,15 +101,62 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
 
     private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
         if(p.empty(ii))p.throwEAddToList("前端传过来的数组是空的",msg);
+
         for(IfSalePriceSamllEntity i:ii){
             p.p("-------------------------------------------------------");
             p.p(i.getUp());
             p.p("-------------------------------------------------------");
             if(!p.isBd(i.getUp()))p.throwEAddToList("第《"+i.getRow()+"》行单价不是数字",msg);
             if(p.empty(i.getRow()))p.throwEAddToList("前端传过来的行号有空的",msg);
-            if(p.empty(i.getPrdNo()))p.throwEAddToList("第《"+i.getRow()+"》行货号为空",msg);
+            if(p.empty(i.getPrdNo())){
+                this.prdNoSet(i);
+                if(p.empty(i.getPrdNo())){
+                    p.throwEAddToList("Excel第《"+i.getRow()+"》行货号是【空】的,根据【货品名称】和【客户代码+对方货号】在erp也找不到对应的 货号 ! ",msg);
+                }
+            }
             if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期为空,",msg);
-            if(!p.isDate(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期格式不对,",msg);
+            if(p.isNotDate(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期格式不对,",msg);
+
+        }
+    }
+
+    //得到货号
+    public void prdNoSet(IfSalePriceSamllEntity s) {
+
+        try {
+            //在使用货号之前如果是空的,先流水一下货号
+            if (p.empty(s.getPrdNo())) {
+                String prdNo = cnst.a001TongYongMapper.getPrdNoUsePrdName(s.getPrdName());
+                if (p.empty(prdNo)) {
+                    this.useOppPrdNoGetPrdNo(s);
+                }else {
+                    s.setPrdNo(prdNo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //根据对方货号和客户代码获得货号
+    private void useOppPrdNoGetPrdNo(IfSalePriceSamllEntity s) {
+        /**
+         * 3）	标准订单的导入格式里加一列对方品号（最好列次序不要固定，识别列名就可以）。
+         如果excel有品号按照品号，如果excel里无品号，有客户代码，
+         对方品号，按同时符合这两个条件的查出品号select
+         prd_no  from prdt_cus1 where  cus_no=客户代码 and sup_prd_no=对方品号
+         * */
+        try {
+            if(p.empty(s.getPrdNo())){
+                String prdNo=cnst.a001TongYongMapper.getPrdNoUseCus_noAndSup_prd_noFromPrdt_cus1(s.getCusNo(),s.getDuiFangPrdNo());
+                if(p.notEmpty(prdNo)){
+                    s.setPrdNo(prdNo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -161,10 +208,10 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
 
     private void isPriceIgll(List<ShouDingDanFromExcel> sss, List<Msg> listmsg) {
         if(p.empty(sss))this.commonThrow(listmsg,"前端传过来的数组是空的");
-        int i=2;//出去表头第2行开始是excel的数据
+        int i=1;//出去表头第2行开始是excel的数据
         for(ShouDingDanFromExcel s:sss){
             if(p.empty(s.getUp()))this.commonThrow(listmsg,"在第《"+i+"》行有单价为空的; ");
-            if(p.empty(s.getPrdNo()))this.commonThrow(listmsg,"在第《"+i+"》行有货号为空的; ");
+//            if(p.empty(s.getPrdNo()))this.commonThrow(listmsg,"在第《"+i+"》行有货号为空的; ");
             i=i+1;
         }
 
@@ -483,3 +530,14 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
+ 这是前端传过来的数据
+ [
+                ShouDingDanFromExcel{wh='1000', osDd='1535385600000',
+                estDd='1535385600000', taxId='', osNo='18LZ0164NEGCP',
+                cusOsNo='', saphh='', remhead='', sapph='', prdNo='', sapwlm='', cfdm='N',
+                prdName='WW-NEBML-NEC', curId='RMB', excRto='1', qty='234', unit='Pcs', up='0.15',
+                amtn='30', tax='5.1', amt='35.1', taxRto='16', remBody='', cusNo='C002', caiGouNo='',
+                maiTouNo='', ebNo='', luoHao='', gangHao='', realWidth='', realLength='', salNo='001',
+                duiFangPrdNo='BRZ002269', bilType='null'}
+                ]*/

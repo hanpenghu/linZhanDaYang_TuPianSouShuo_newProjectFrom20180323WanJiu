@@ -625,7 +625,7 @@ public class CommonDaoRuDBZhiQianZhengLi {
 
                 String prdNo=cnst.a001TongYongMapper
                         .getPrdNoUseCus_noAndSup_prd_noFromPrdt_cus1
-                                (s.getCusOsNo(),s.getDuiFangPrdNo());
+                                (s.getCusNo(),s.getDuiFangPrdNo());
 
 
                 if(p.notEmpty(prdNo)){

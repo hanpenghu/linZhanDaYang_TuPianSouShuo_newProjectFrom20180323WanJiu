@@ -21,7 +21,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
     ////////////////////当前页//////////徐勇页面,(改成所有页都调用一个接口,)/////////////////////////////////////////
     //    /d/dangqianyeData      {"dangQianYe":"1","meiYeXianShiShu":"1"}
-    @RequestMapping(value = InterFaceCnst.dangqianyeData,
+    @RequestMapping(value = "dangqianyeData",
             method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody//注意:增加一个request获得参数,所有数据库定价类型分类的参数
