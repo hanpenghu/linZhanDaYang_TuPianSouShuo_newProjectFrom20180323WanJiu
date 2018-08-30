@@ -375,7 +375,7 @@
         -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
     </sql>
     <sql id="exportExcelManyCondition">
-           p.id=p.id AND p.stopusedate is null
+           p.id=p.id -- AND p.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  p.insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -423,7 +423,7 @@
 
 
     <sql id="exportExcelManyCondition1">
-        p1.id=p1.id AND p1.stopusedate is null
+        p1.id=p1.id -- AND p1.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  p1.insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -521,7 +521,7 @@
             --//销售描述
             isnull(p.salemandesc,'')as salemandesc,
             --//    /停用时间/
-             isnull(convert(varchar(23),p.stopusedate),'')as stopusedate,
+             isnull(convert(varchar(23),p.stopusedate,120),'')as stopusedate,
             --//创建人的userName,实际上我传给徐勇的放在userEmail字段了
              isnull(p.user_Name,'') as userName,
             --//创建人所在的公司,
@@ -907,7 +907,7 @@
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
-        where a.stopusedate is null
+        where '1' = '1' -- a.stopusedate is null
         <if test=" ids != null and ids.size()>0 ">
             and    a.id in
             <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">

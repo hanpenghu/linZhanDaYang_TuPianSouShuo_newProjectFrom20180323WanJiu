@@ -106,8 +106,10 @@ public class ManyConditionSearchOfExportInfo2Excel {
         System.out.println("================p1.getFenLeiName()="+p1.getFenLeiName()+"==========================================");
         List<PrdtSampExcleExportManyCondition> prdtSampExcels;
         if(b){
+            //为了根据prd_code排序专门走这一步
             prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode(p1);
         }else{
+            //不能根据 prd_code排序走这一步
             prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcel(p1);
         }
 

@@ -13,6 +13,7 @@ import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /*
@@ -100,25 +101,35 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
     }
 
     private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
+        p.p("--------------------p.p(ii);-----------------------------------");
+        p.p(ii);
+        p.p("-------------------------------------------------------");
         if(p.empty(ii))p.throwEAddToList("前端传过来的数组是空的",msg);
 
         for(IfSalePriceSamllEntity i:ii){
             p.p("-------------------------------------------------------");
             p.p(i.getUp());
-            p.p("-------------------------------------------------------");
-            if(!p.isBd(i.getUp()))p.throwEAddToList("第《"+i.getRow()+"》行单价不是数字",msg);
+            p.p("----i.getUp()="+i.getUp()+"-----------p.isBd(i.getUp())==false------"+p.isBd(i.getUp())+"----------------------------------");
+
+            p.p("-------------------xxx------------------------------------");
+
+            if(!p.isBd(i.getUp()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行单价不是数字",msg);
+
             if(p.empty(i.getRow()))p.throwEAddToList("前端传过来的行号有空的",msg);
             if(p.empty(i.getPrdNo())){
                 this.prdNoSet(i);
                 if(p.empty(i.getPrdNo())){
-                    p.throwEAddToList("Excel第《"+i.getRow()+"》行货号是【空】的,根据【货品名称】和【客户代码+对方货号】在erp也找不到对应的 货号 ! ",msg);
+                    p.throwEAddToList("Excel第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行货号是【空】的,根据【货品名称】和【客户代码+对方货号】在erp也找不到对应的 货号 ! ",msg);
                 }
             }
-            if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期为空,",msg);
-            if(p.isNotDate(i.getOsDd()))p.throwEAddToList("第《"+i.getRow()+"》行订单日期格式不对,",msg);
+            if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行订单日期为空,",msg);
+            if(p.isNotDate(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行订单日期格式不对,",msg);
 
         }
     }
+
+
+
 
     //得到货号
     public void prdNoSet(IfSalePriceSamllEntity s) {

@@ -9,6 +9,7 @@ import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.p;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class InfoEdit_ManyAttach {
     @Autowired
     private Cnst cnst;
     @Transactional
-    public void infoEditOfManyAttach(MultipartFile thum, List<MultipartFile> attachList,String prdtSamp1, List<String> ms) throws Exception {
+    public void infoEditOfManyAttach(MultipartFile thum, List<MultipartFile> attachList,String prdtSamp1, List<String> ms,String prdCodeOrg) throws Exception {
 //        synchronized (this) {
         String uuid = p.timeAndRandom0_999NoHead_1();//给新的图片和缩略图的名字用,更新的时候并没有用这个uuid ,用的还是原来的
         String projectPath = SpringbootJarPath.JarLuJingGet();
@@ -38,7 +39,7 @@ public class InfoEdit_ManyAttach {
             prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
         }
         p.p("---------------------------222----------------------------");
-        this.prdtSampOb是否非法(prdtSampOb,ms);
+        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
         p.p("---------------------------333----------------------------");
         //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
@@ -84,14 +85,14 @@ public class InfoEdit_ManyAttach {
             return;
         }
         p.p("-------------------------------------------------------");
-        p.p("prdt表里的编码同步更新111");
+        p.p("prdt表里的编码同步更新1111111");
         p.p("-------------------------------------------------------");
         if(p.dy(prdtWithBLOBs.getName(),prdtSampOb.getPrdCode())){
             //此时一样不用更新
             return;
         }
         p.p("-------------------------------------------------------");
-        p.p("prdt表里的编码同步更新222");
+        p.p("prdt表里的编码同步更新2222222");
         p.p("-------------------------------------------------------");
         //此时不一样,将现在 编码放入货品名称
         PrdtWithBLOBs prdt=new PrdtWithBLOBs();
@@ -282,13 +283,34 @@ public class InfoEdit_ManyAttach {
 //
 //    }
     @Transactional
-    public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms) {
+    public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms,String prdCodeOrg) {
+        p.p("------------修改前的编码是:prdCodeOrg="+prdCodeOrg+"-------------------------------------------");
+        p.p("--------------修改后的编码是:prdCode="+prdtSampOb.getPrdCode()+"-----------------------------------------");
+        if(p.dy(prdCodeOrg,"yuan")){
+            p.p("--------------------徐勇调修改打样接口是原来的imageUpLoadAndDataSave_InfoEdit_ManyAttach而不是能判断编码重复的imageUpLoadAndDataSave_InfoEdit_ManyAttach001-----------------------------------");
+        }
+
         if (p.notEmpty(prdtSampOb)) {
             if (p.empty(prdtSampOb.getId())) {
                 p.throwEAddToList("前端没有传输过来唯一标志id",ms);
             }
         } else {
             p.throwEAddToList("前后端传输错误,prdtSamp这个参数后端接收不到",ms);
+        }
+        //此参数主要是兼容徐勇前后调用的不同接口
+        //此时不是原接口,需要判断是否重复
+        if(p.bdy(prdCodeOrg,"yuan")){
+            //此时修改前后修改后的编码不一样,证明客户修改过// 如果相等的话,不必判断重复,因为是原来的,肯定重复
+            if(p.bdy(prdCodeOrg,prdtSampOb.getPrdCode())){
+                PrdtSampExample ppp=new PrdtSampExample();
+                ppp.createCriteria().andPrdCodeEqualTo(prdtSampOb.getPrdCode());
+                long l = cnst.prdtSampMapper.countByExample(ppp);
+                if(l>0){
+                    //此时证明在数据库已经存在,该编码不能再用
+                    p.throwEAddToList("您修改后的打样编码在数据库已经存在,请更换！",ms);
+                }
+            }
+
         }
 
     }

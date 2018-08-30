@@ -172,7 +172,23 @@ public strictfp class p {
     private Map<String,Object>map=new HashMap<>();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /**
+     *将  yyyy-MM-dd这种字符串变成时间戳
+     * */
+    public String getSjc(String strSj){
+        if(p.empty(strSj)){
+            return null;
+        }else{
+            try {
+                //yyyy-MM-dd注意:写成yyyy-MM-dd hh:mm:ss.sss就会过于严格
+                Date d=new SimpleDateFormat("yyyy-MM-dd").parse(strSj);
+                strSj=String.valueOf(d.getTime());
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        return strSj;
+    }
     /**
      *是否是标准时间
      * 2017-01-09 12:23:33.333这种
@@ -406,6 +422,15 @@ public strictfp class p {
             return false;
         }
     }
+
+
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(isBd("0.120"));
+//        p.p(isBd(0.120));
+//        p.p("-------------------------------------------------------");
+//    }
+
     /**
      *写字节到文件
      * */

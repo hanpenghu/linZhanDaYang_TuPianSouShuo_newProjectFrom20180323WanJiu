@@ -37,7 +37,7 @@ public class IfSalePriceSamllEntity {
 
 
     public String getPrdName() {
-        return prdName;
+        return prdName==null?"":prdName.trim();
     }
 
     public void setPrdName(String prdName) {
@@ -45,7 +45,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getDuiFangPrdNo() {
-        return duiFangPrdNo;
+        return duiFangPrdNo==null?"":duiFangPrdNo.trim();
     }
 
     public void setDuiFangPrdNo(String duiFangPrdNo) {
@@ -53,7 +53,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getCusNo() {
-        return cusNo;
+        return cusNo==null?"":cusNo.trim();
     }
 
     public void setCusNo(String cusNo) {
@@ -61,7 +61,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getRow() {
-        return row;
+        return row==null?"":row.trim();
     }
 
     public void setRow(String row) {
@@ -69,7 +69,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getPrdNo() {
-        return prdNo;
+        return prdNo==null?"":prdNo.trim();
     }
 
     public void setPrdNo(String prdNo) {
@@ -77,7 +77,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getUp() {
-        return up;
+        return up==null?"":up.trim();
     }
 
     public void setUp(String up) {
@@ -85,7 +85,7 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getOsDd() {
-        return osDd;
+        return osDd==null?"":osDd.trim();
     }
 
     public void setOsDd(String osDd) {
@@ -93,10 +93,25 @@ public class IfSalePriceSamllEntity {
     }
 
     public String getState() {
-        return state;
+        return state==null?"":state.trim();
     }
 
     public void setState(String state) {
         this.state = state;
+    }
+
+
+    @Override
+    public String toString() {
+        return "IfSalePriceSamllEntity{" +
+                "row='" + row + '\'' +
+                ", prdNo='" + prdNo + '\'' +
+                ", up='" + up + '\'' +
+                ", osDd='" + osDd + '\'' +
+                ", state='" + state + '\'' +
+                ", prdName='" + prdName + '\'' +
+                ", duiFangPrdNo='" + duiFangPrdNo + '\'' +
+                ", cusNo='" + cusNo + '\'' +
+                '}';
     }
 }

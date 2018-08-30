@@ -129,12 +129,15 @@ public class DyExport2Thread {
             p.throwEAddToList("《您所选则的条件没有任何记录》得到时间获得的ids和前端传过来的ids之后,ids是null或者空", msg);
         }
 
-        BigDecimal bb = p.b(ids.size());
+//        BigDecimal bb = p.b(ids.size());
 //        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
 
         //线程里面传不进去ids,放到对象里穿进去
         Map<String,List<String>> mapids=new HashMap();
         mapids.put("ids",ids);
+        p.p("-------------------mapids.put(\"ids\",ids);------------------------------------");
+        p.p(ids);
+        p.p("-------------------------------------------------------");
 
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {
@@ -145,10 +148,17 @@ public class DyExport2Thread {
             p.p("进入线程");
             p.p("-------------------------------------------------------");
             try {
+                p.p("---------------------mapids.get(\"ids\").size()----------------------------------");
+                p.p(mapids.get("ids").size());
+                p.p("-------------------------------------------------------");
                 List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get("ids"));
+                p.p("-------------List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get(\"ids\"))------------------------------------------");
+                p.p(daoChus.size());
+                p.p("-------------------------------------------------------");
                 if (p.empty(daoChus)) {
                     p.throwEAddToList("《您所选则的条件没有任何记录》daoChus是null", msg);
                 }
+
                 //把字段写入excel
                 Map<String, String> m = this.a写入excel(daoChus, list导出头信息,excelName001);
                 File file = new File(m.get(this.excelPath));
@@ -257,6 +267,9 @@ public class DyExport2Thread {
         p.p(ids.size());
         p.p("-------------------------------------------------------");
         List<List<String>> lists = p.avgList(ids, 40);
+        p.p("---------------阿斯顿发骄傲了是大家--------------List<List<String>> lists = p.avgList(ids, 40)--------------------------");
+        p.p(lists);
+        p.p("-------------------------------------------------------");
         int iiii=1;
         for (List<String> ls : lists) {
             p.p("第《"+iiii+"》次得到daoChus");
@@ -408,7 +421,7 @@ public class DyExport2Thread {
 
 
     private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
-        a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
+       this.a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
         int i行计数器 = 1;//
         if (p.notEmpty(daoChus)) {
@@ -563,6 +576,9 @@ public class DyExport2Thread {
             }
             if ("样品卡寄出日期".equals(s)) {
                 cell.setCellValue(daoChu.getSampSend()); // 设置内容24
+            }
+            if ("停用日期".equals(s)) {
+                cell.setCellValue(daoChu.getStopusedate()); // 设置内容24
             }
             列计数器 = 列计数器 + 1;
         }
@@ -867,7 +883,7 @@ public class DyExport2Thread {
                         .a("NE Approval Person NE 确认人员")//confirmman--21
                         .a("Description 样品要求")//sampRequ---22
                         .a("Sample Date 打样日期")//sampMake--23
-                        .a("样品卡寄出日期").g();//sampSend--24
+                        .a("样品卡寄出日期").a("停用日期").g();//sampSend--24
         return daoChuExcelHeadList;
     }
 

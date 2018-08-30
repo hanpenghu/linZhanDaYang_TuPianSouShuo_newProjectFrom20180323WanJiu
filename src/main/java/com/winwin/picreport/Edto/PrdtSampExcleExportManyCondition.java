@@ -752,7 +752,8 @@ public class PrdtSampExcleExportManyCondition {
             return null;
         }else{
             try {
-                Date d=new SimpleDateFormat(p.d16).parse(strSj);
+                //yyyy-MM-dd注意:写成yyyy-MM-dd hh:mm:ss.sss就会过于严格
+                Date d=new SimpleDateFormat("yyyy-MM-dd").parse(strSj);
                 strSj=String.valueOf(d.getTime());
             } catch (ParseException e) {
                 return null;
