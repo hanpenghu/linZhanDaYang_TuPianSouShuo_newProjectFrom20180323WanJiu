@@ -122,7 +122,13 @@ public class GetPriceModelUpdef20180512 {
                         BeanUtils.copyProperties(u1,u);
                         this.setUpOfBuy(u,u0,u1);
                     }
-                    u.setPrmNo(       p.sm(       p.notEmpty(    u0.getPrmNo()   ),  u0.getPrmNo() ,  u1.getPrmNo()        )    );
+                    if(p.notEmpty(u0)){
+                        u.setPrmNo(       p.sm(       p.notEmpty(    u0.getPrmNo()   ),  u0.getPrmNo() ,  u1==null?"":u1.getPrmNo()        )    );
+                    }else if(p.notEmpty(u1)){
+                        u.setPrmNo(       p.sm(       p.notEmpty(    u1.getPrmNo()   ),  u1.getPrmNo() ,  u0==null?"":u0.getPrmNo()        )    );
+                    }
+
+
                     listUpdefMy01BuyToFront.add(u);
                 }
             }

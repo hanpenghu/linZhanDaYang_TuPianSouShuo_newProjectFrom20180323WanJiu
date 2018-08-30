@@ -26,7 +26,7 @@ public class ManyConditionSearchOfPrdtSamp {
      * //此接口已经用了动态sql,当不传入isConfirm 参数的时候,相当于查询所有符合条件的信息
      * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
      * */
-    @RequestMapping(value= InterFaceCnst.chanPinBianMaJianDangTiaoJianChaXun, method = RequestMethod.POST)
+    @RequestMapping(value= "chanPinBianMaJianDangTiaoJianChaXun", method = RequestMethod.POST)
     public @ResponseBody FenYe f(@RequestBody FenYe fenYe,@RequestParam(value="ifGetPrice",required =false)String ifGetPrice){
         if(fenYe==null){
             FenYe f=new FenYe();

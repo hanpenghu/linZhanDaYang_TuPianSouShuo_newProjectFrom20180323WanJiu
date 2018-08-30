@@ -35,30 +35,55 @@ public class D1DaYangS {
     //dingJiaType//传过来"yiJingCaiGouDingJiaDanWeiXiaoShouDingJia"的时候
     //代表 已经采购定价但未销售定价的所有数据
     public FenYe dangqianyeData(FenYe fenYe, String dingJiaType,String ifGetPrice) {
+//        p.p("-----------------------------111--------------------------");
         fenYe.setZongJiLuShu(cnst.manyTabSerch.dangYangZongJiLuShu());
+//        p.p("-----------------------------222--------------------------");
         fenYe.setZongYeShu();
+//        p.p("-----------------------------333--------------------------");
         List<PrdtSamp0> prdtSampList = new ArrayList<>();
+//        p.p("-----------------------------444--------------------------");
         List<String> idList = new ArrayList<String>();
+//        p.p("-----------------------------555--------------------------");
         ////这种用于显示在: 页面的<销售定价>那一栏
         if (p.dy(已经采购定价但未销售定价标记, dingJiaType)) {
+//            p.p("----------------------------666--------------------------");
             idList = this.f已经采购定价并且审核完成但未销售定价的idList(fenYe);
+//            p.p("-----------------------------777--------------------------");
         } else {
+//            p.p("-----------------------------888--------------------------");
             idList = cnst.manyTabSerch.selectDangQianYeSuoYouId(fenYe.getDangQianYe(), fenYe.getMeiYeXianShiShu());
+//            p.p("-----------------------------999--------------------------");
         }
         for (String id : idList) {
+//            p.p("-----------------------------101010--------------------------");
             PrdtSamp prdtSampX1 = cnst.prdtSampMapper.selectByPrimaryKey(id);
+//            p.p("-----------------------------kkk--------------------------");
             this.mainUnitSet(prdtSampX1);
+//            p.p("-----------------------------ooo--------------------------");
             //设置创建时间和价格和修改记录
+//            p.p("-----------------------------ifGetPrice="+ifGetPrice+"--------------------------");
+//            p.p("-----------------prdtSampX1开始打印--------------------------------------");
+//            p.p(prdtSampX1);
+//            p.p("-----------------------prdtSampX1结束打印--------------------------------");
             PrdtSamp0 prdtSampX = this.setCreateTimeAndPriceAndAlterRec(prdtSampX1,ifGetPrice);
+//            p.p("-----------------------------pppp--------------------------");
             prdtSampList.add(prdtSampX);
+//            p.p("-----------------------------zzz-------------------------");
         }
         fenYe.setPrdtSampList(prdtSampList);
+//        p.p("-----------------------------ttt--------------------------");
         if (p.dy(已经采购定价但未销售定价标记, dingJiaType)) {
+//            p.p("-----------------------------qqq-------------------------");
             this.f设置fenYe的已经采购定价但未销售并且已经审核定价的总记录数(fenYe);
+//            p.p("-----------------------------fff--------------------------");
         } else {
+//            p.p("-----------------------------ccc--------------------------");
             fenYe.setZongJiLuShu(cnst.manyTabSerch.getCountOfAll());
+//            p.p("-----------------------------vvv--------------------------");
             fenYe.setZongYeShu();
+//            p.p("----------------------------bbb--------------------------");
         }
+//        p.p("-----------------------------nnn--------------------------");
         return fenYe;
     }
 
@@ -78,28 +103,42 @@ public class D1DaYangS {
 
 
     public PrdtSamp0 setCreateTimeAndPriceAndAlterRec(PrdtSamp prdtSampX1初始,String ifGetPrice) {
+//        p.p("-----------------------------a1-------------------------");
         PrdtSamp0 prdtSampX完美 = new PrdtSamp0();
+//        p.p("-----------------------------a2-------------------------");
         BeanUtils.copyProperties(prdtSampX1初始, prdtSampX完美);
+//        p.p("-----------------------------a3-------------------------");
         Date insertdate = prdtSampX完美.getInsertdate();
+//        p.p("-----------------------------a4-------------------------");
         try {
+//            p.p("-----------------------------a5-------------------------");
             prdtSampX完美.setInsertdateStr(p.dtoStr(insertdate, p.d2));
+//            p.p("-----------------------------a6-------------------------");
             //添加价格模块//经过下一个方法,就会自动赋予一个模块
         } catch (Exception e) {
             //        System.out.println("有一个insertdate无法format成insertdateStr,对应的id是："+id);
         }
         if(p.bdy(不要价格模块,ifGetPrice)){
+//            p.p("-----------------------------a7-------------------------");
             //插入价格模块,走一遍这个模块就插入了
             //        cnst.getPriceModelUpdef.GetPriceModel(prdtSampX);
-            cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX完美);
 
+            cnst.getPriceModelUpdef20180512.getPriceModel(prdtSampX完美);
+//            p.p("-----------------------------a8-------------------------");
             String prdtSampUuid = prdtSampX完美.getId();
+//            p.p("-----------------------------a9-------------------------");
             //插入修改记录
             List<AlterPriceRecToFront> saleAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,sale);
+//            p.p("-----------------------------a10-------------------------");
             prdtSampX完美.setSaleAlterRecList(saleAlterRecList);
+//            p.p("-----------------------------a11-------------------------");
             List<AlterPriceRecToFront> buyAlterRecList = cnst.a001TongYongMapper.selectTop20AlterPriceRec(prdtSampUuid,buy);
+//            p.p("-----------------------------a12-------------------------");
             prdtSampX完美.setBuyAlterRecList(buyAlterRecList);
+//            p.p("-----------------------------a13-------------------------");
             //处理时间为1970的为NULL
             MakeDate1970Null.make1970null(prdtSampX完美);
+//            p.p("-----------------------------a14-------------------------");
         }
         return prdtSampX完美;
     }

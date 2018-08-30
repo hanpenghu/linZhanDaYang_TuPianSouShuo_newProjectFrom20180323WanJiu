@@ -5,6 +5,7 @@ import com.winwin.picreport.AllConstant.InterFaceCnst;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.hanhan.p;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,12 +59,14 @@ public class DyBaseContrller {
      * 得到当前分类的所有商品
      * 传参数{"idxName":"idxNo"}
      * 我传给前端的是加了  private List<String> prdCodeList=new ArrayList<>();    之后的CategoryNameCode
-     */
-    @RequestMapping(value = InterFaceCnst.currentCategoryPrdtList, method = RequestMethod.POST,
+     * /d/currentCategoryPrdtList
+     * */
+    @RequestMapping(value = "currentCategoryPrdtList", method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
-    CategoryNameCode currentCategoryPrdtList
-    (@RequestBody CategoryNameCode categoryNameCode) {
+    CategoryNameCode currentCategoryPrdtList(@RequestBody CategoryNameCode categoryNameCode) {
+        p.p("-----------categoryNameCode.getIdxName()="+categoryNameCode.getIdxName()+"--------------------------------------------");
+        p.p("------穿过来----------categoryNameCode.getIdxNo()="+categoryNameCode.getIdxNo()+"------应该是(来自数据库)----"+cnst.manyTabSerch.selectIdxNoUseName(categoryNameCode.getIdxName())+"-----------------------------");
         List<String> codeList = cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
         return categoryNameCode.setPrdCodeList(codeList);
     }

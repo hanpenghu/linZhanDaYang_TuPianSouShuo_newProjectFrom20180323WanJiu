@@ -319,5 +319,9 @@ public interface ManyTabSerch {
     int updateThum(@Param("urlInDb") String urlInDb,@Param("thum") String thum);
 
 
+    @Select({"select idx_no from indx where name=#{s}"})
+    String selectIdxNoUseName(@Param("s") String idxName);
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

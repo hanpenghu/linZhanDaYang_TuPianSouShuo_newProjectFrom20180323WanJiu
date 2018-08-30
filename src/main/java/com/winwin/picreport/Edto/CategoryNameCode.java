@@ -1,5 +1,7 @@
 package com.winwin.picreport.Edto;
 
+import com.winwin.picreport.Futils.hanhan.p;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +10,32 @@ public class CategoryNameCode {
     private List<CategoryNameCode> childs;
 
     private List<String> prdCodeList=new ArrayList<>();//就是prdt中的name
+    //2018_8_29   weekday(3)   17:22:05因为后期客户要求界面添加编码建档的时候选择分类只蹦出一个编码,所以我这里添加一个字段实现
+    private String prdCode;
+    private String idxName;//用于分类名称(小范围)
 
-    private String idxName;//分类名称
+    private String idxNo;//用于分类编号(小范围)
 
-    private String idxNo;//分类编号
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    public String getPrdCode() {
+        for(String s:prdCodeList){
+            if(s.startsWith("WW-NE-"))prdCode=s;
+        }
+        if(p.empty(prdCode)&&p.notEmpty(prdCodeList))prdCode=prdCodeList.get(0);
+        if(p.empty(prdCode))prdCode="WW-NE-";
+        return prdCode;
+    }
+
+    public void setPrdCode(String prdCode) {
+        this.prdCode = prdCode;
+    }
+
     public List<String> getPrdCodeList() {
         return prdCodeList;
     }

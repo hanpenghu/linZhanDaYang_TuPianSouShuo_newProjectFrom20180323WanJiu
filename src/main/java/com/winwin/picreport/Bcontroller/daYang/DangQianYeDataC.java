@@ -34,7 +34,9 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
         //这种用于显示在: 页面的销售定价那一栏
 //        }
         // /d/dangqianyeData?dingJiaType=yiJingCaiGouDingJiaDanWeiXiaoShouDingJia  此时证明你调的接口是为了在页面上的(销售定价的显示)
-
+        p.p("-------------------------------------------------------");
+        p.p("当前页接口开始");
+        p.p("-------------------------------------------------------");
         return cnst.fenLei.dangqianyeData(fenYe,dingJiaType,ifGetPrice);//主要传过来当前页和每页显示数量
     }
 
