@@ -26,6 +26,7 @@ public class IfSalePriceSamllEntity {
     //有单价低于销售定价的行,紫色背景 代号 1
     //在updef货号不存在的代号是 2, 蓝色背景
     //在updef对应销售定价不存在 用  点号 3,颜色待定
+    //后期是0的过滤掉, 不返回给徐勇了,只返回有问题的
     private String state="0";
      //2018_8_28   weekday(2)   15:44:47 如果货号是空的靠下面三个来找
     //货号
@@ -35,6 +36,17 @@ public class IfSalePriceSamllEntity {
     //客户代码
     private String cusNo;
 
+//    人民币传RMB  美元USD
+    private String curId;
+
+
+    public String getCurId() {
+        return curId;
+    }
+
+    public void setCurId(String curId) {
+        this.curId = curId;
+    }
 
     public String getPrdName() {
         return prdName==null?"":prdName.trim();

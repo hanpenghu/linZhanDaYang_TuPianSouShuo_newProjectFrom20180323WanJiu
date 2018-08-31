@@ -24,16 +24,12 @@ public class CategoryNameCode {
 
 
     public String getPrdCode() {
-        for(String s:prdCodeList){
-            if(s.startsWith("WW-NE-"))prdCode=s;
-        }
-        if(p.empty(prdCode)&&p.notEmpty(prdCodeList))prdCode=prdCodeList.get(0);
-        if(p.empty(prdCode))prdCode="WW-NE-";
         return prdCode;
     }
 
-    public void setPrdCode(String prdCode) {
+    public CategoryNameCode setPrdCode(String prdCode) {
         this.prdCode = prdCode;
+        return this;
     }
 
     public List<String> getPrdCodeList() {

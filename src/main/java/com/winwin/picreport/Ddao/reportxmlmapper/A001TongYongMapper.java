@@ -431,6 +431,10 @@ public interface A001TongYongMapper {
     @Update({"update prdt set idx1=#{fenLeiNo} where prd_no=#{prdNo}"})
     int updateIdx1(@Param("prdNo") String prdNo, @Param("fenLeiNo") String fenLeiNo);
 
-    @Select({"select count(*) from up_def where prd_no=#{prdNo} and price_id=#{salPriceId} and s_dd<=#{osDd} and #{up}<up"})
-    int countPriceOfSmallThenUpdef(@Param("osDd") String osDd, @Param("prdNo")String prdNo, @Param("salPriceId")String salPriceId, @Param("up")BigDecimal up);
+    @Select({"select count(*) from up_def where prd_no=#{prdNo} and price_id=#{salPriceId} and cur_id=#{curId} and s_dd<=#{osDd} and #{up}<up"})
+    int countPriceOfSmallThenUpdef(@Param("osDd") String osDd, @Param("prdNo")String prdNo, @Param("salPriceId")String salPriceId, @Param("up")BigDecimal up,@Param("curId") String curId);
+
+//    @Select({"select * from prdt_samp where insertdate >='2018-08-31' and prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) and fen_lei_name is not null and prd_no is not null and prd_code is not null"})
+    @Select({"select fen_lei_name as fenLeiName,fen_Lei_No as fenLeiNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where insertdate >='2018-08-31' and prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) and fen_lei_name is not null and prd_no is not null and prd_code is not null"})
+    List<PrdtSamp> getAllNoFenLeiNo();
 }

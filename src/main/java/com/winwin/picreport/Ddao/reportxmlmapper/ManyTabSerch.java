@@ -323,5 +323,9 @@ public interface ManyTabSerch {
     String selectIdxNoUseName(@Param("s") String idxName);
 
 
+    @Select({"select top 1 name from prdt where idx1=#{idxNo} ORDER BY name desc"})
+    String getOneBiggerCode(@Param("idxNo") String idxNo);
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

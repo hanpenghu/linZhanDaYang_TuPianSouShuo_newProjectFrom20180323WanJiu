@@ -59,6 +59,7 @@ public class DyInfoUpdate {
         try {
             cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms,"yuan");
         } catch (Exception e) {
+            e.printStackTrace();
             if(ms.contains(e.getMessage())){
                 return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(e.getMessage()).setOtherMsg(e.getMessage())).g();
             }else{

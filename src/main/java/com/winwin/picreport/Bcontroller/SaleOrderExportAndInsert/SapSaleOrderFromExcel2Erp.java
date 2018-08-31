@@ -294,6 +294,7 @@ public class SapSaleOrderFromExcel2Erp {
     }
 
     private void f前端穿过来的数据是否非法_扣税类别之类(List<ShouDingDanFromExcel> ss, List<Msg> msgs) {
+
         if (p.empty(ss)) {
             commonThrow(msgs, "前端传过来的参数对象为null");
         }
@@ -309,6 +310,7 @@ public class SapSaleOrderFromExcel2Erp {
         }
 
         for(ShouDingDanFromExcel s:ss){
+            if(p.empty(s.getPrdNo()))commonThrow(msgs, "有货号为空");;
             this.excel中扣税类别taxId和客户号cusNo不能同时空的(s,msgs);
             this.f检查扣税类别如果没有就从Cust取(s,msgs);
         }
@@ -347,6 +349,7 @@ public class SapSaleOrderFromExcel2Erp {
                 p.p("---danhao--<" + s.getOsNo() + ">-----huohao--<" + s.getPrdNo() + ">---chengfen---<" + s.getCfdm() + ">--biaoshen beizhu-----<" + s.getRemBody() + ">-----------------------");
             }
         }
+//        p.p(ss);
         p.p("-------------------hebing danhao+huohao+chengfen+biaoshenbeizhu  daoru xitong (sap)-------end------------------------------------");
     }
 

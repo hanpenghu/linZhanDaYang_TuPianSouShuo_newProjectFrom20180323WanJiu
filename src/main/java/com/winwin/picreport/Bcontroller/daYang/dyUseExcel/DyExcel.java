@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang.prdtSampInsertExcelManyRequestVersion;
+package com.winwin.picreport.Bcontroller.daYang.dyUseExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by Administrator on 2018/5/17.
@@ -59,7 +58,11 @@ public class DyExcel {
         try {
             this.throwE(excel,request,msgs);
             cnst.dyExcelBf.f(excel, request, msgs);
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:44
+            cnst.genFenLeiNo.f();
         } catch (Exception e) {
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:47
+            cnst.genFenLeiNo.f();
             return exceptionReturn(msgs, e);
         }
         return rightReturn(msgs);

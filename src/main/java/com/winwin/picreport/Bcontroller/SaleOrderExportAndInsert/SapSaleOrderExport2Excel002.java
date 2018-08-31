@@ -59,7 +59,7 @@ public class SapSaleOrderExport2Excel002 {
                 sa.setQty(   p.bsub(   sa.getQtyDouble(),s.getQtyDouble()     )  );
                 break;
             }else{
-                当前拆行备份s.setQty(    p.bsub(   s.getQty()  ,  sa.getQty()  ).toString()  );
+                当前拆行备份s.setQty(    String.valueOf(   p.bsub(   s.getQty()  ,  sa.getQty()  )    )  );
                 s.setQty(    sa.getQty().toString()   );
                 this.sCommonSet(s,sa);
                 all.add(s);

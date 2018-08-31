@@ -2,7 +2,7 @@ package com.winwin.picreport.Cservice;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Bcontroller.daYang.prdtSampInsertExcelManyRequestVersion.CC;
+import com.winwin.picreport.Bcontroller.daYang.dyUseExcel.CC;
 import com.winwin.picreport.Ddao.reportxmlmapper.PrdtUtMapper;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.excelHan.Excel2007;
@@ -148,7 +148,9 @@ public class DyExcelBf {
     }
 
     private void ifPrdCodeRepeat(List<PrdtSamp> prdtSamps将要入数据库, List<String> msgs) {
+
         Set<PrdtSamp> set=new TreeSet<PrdtSamp>(Comparator.comparing(PrdtSamp::getPrdCode));
+
         set.addAll(prdtSamps将要入数据库);
         if(prdtSamps将要入数据库.size()!=set.size()){
             this.commonsThrow(msgs,"excel里有编码重复,prdCode有重复");

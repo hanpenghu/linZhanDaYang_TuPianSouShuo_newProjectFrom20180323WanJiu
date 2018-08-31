@@ -61,12 +61,15 @@ public class DaYangFromHtml {
             System.out.println();System.out.println();System.out.println(projectPath);System.out.println();System.out.println();
             //将来用作数据库一条数据的唯一标识
 
+
             return cnst.d1DaYangService.ImageUpLoadAndDataSave002OfManyAttach
                     (projectPath, thum, attachList,request,
                             cnst.daYangSuoLueTuAndFuJianZongPath,cnst.dirUrl,
                             cnst.suoLueTuWenJianJia,cnst.fuJianWenJianJia);
 
         } catch (Exception e) {
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错 2018_8_31   weekday(5)   21:03:26
+            cnst.genFenLeiNo.f();
             e.printStackTrace();
         }
         return MessageGenerate.generateMessage

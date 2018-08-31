@@ -1,6 +1,7 @@
 package com.winwin.picreport.AllConstant;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef;
 import com.winwin.picreport.Acomponent.GetPriceModelUpdef20180512;
+import com.winwin.picreport.Acomponent.JieJue20180831YiHouDaYangFenLeiNoBuChanShengWenTi.GenFenLeiNo;
 import com.winwin.picreport.Acomponent.SapsoChongfu;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonDaoRuDBZhiQianZhengLi;
 import com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert.servicesBatchRefactor.OrderToErp.CommonOrderBatchToDb;
@@ -110,6 +111,9 @@ public class Cnst {
        return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
 
+
+    @Autowired
+    public GenFenLeiNo genFenLeiNo;
 
     @Autowired
     public A12 a12;

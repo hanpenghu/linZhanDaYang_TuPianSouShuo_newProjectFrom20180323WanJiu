@@ -95,9 +95,9 @@ public class Interceptor001 implements HandlerInterceptor {
         }
         long time = new Date().getTime();
         long kk = time - time00;
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~打发大厦~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~yi jing deng lu shi jian hao miao shu~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println(kk);
-//        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~打法是否~~~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Long shiXiaoTime;//token 默认失效时间8小时
         //根据公司id得到给公司的令牌有效时间
         try {//失效时间先从数据库取,取不到,使用application配置文件的,配置文件的有异常,使用默认的代码写死8小时

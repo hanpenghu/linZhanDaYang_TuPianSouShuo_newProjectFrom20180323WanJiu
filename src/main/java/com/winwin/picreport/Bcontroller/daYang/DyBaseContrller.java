@@ -68,7 +68,11 @@ public class DyBaseContrller {
         p.p("-----------categoryNameCode.getIdxName()="+categoryNameCode.getIdxName()+"--------------------------------------------");
         p.p("------穿过来----------categoryNameCode.getIdxNo()="+categoryNameCode.getIdxNo()+"------应该是(来自数据库)----"+cnst.manyTabSerch.selectIdxNoUseName(categoryNameCode.getIdxName())+"-----------------------------");
         List<String> codeList = cnst.manyTabSerch.getCodeList(categoryNameCode.getIdxNo());
-        return categoryNameCode.setPrdCodeList(codeList);
+        String s=cnst.manyTabSerch.getOneBiggerCode(categoryNameCode.getIdxNo());
+        p.p("-------1最大的编码是："+s+"----------------------");
+        CategoryNameCode categoryNameCode1 = categoryNameCode.setPrdCodeList(codeList).setPrdCode(s);
+        p.p("-------2最大的编码是："+categoryNameCode1.getPrdCode()+"----------------------");
+        return categoryNameCode1;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

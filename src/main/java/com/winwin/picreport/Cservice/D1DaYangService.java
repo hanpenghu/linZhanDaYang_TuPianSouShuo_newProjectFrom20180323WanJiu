@@ -133,6 +133,9 @@ public class D1DaYangService {
             String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
 
             PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
+        p.p("---------------------------前端穿过来的分类编号是----------------------------");
+        p.p(prdtSampOb.getFenLeiNo());
+        p.p("-------------------------------------------------------");
             if(p.empty(prdtSampOb.getFenLeiNo())) {
                 return MessageGenerate.generateMessage("保存失败",
                         "保存失败", "前端传过来的分类编号fenLeiNo是空的!", "", "36");
@@ -229,6 +232,8 @@ public class D1DaYangService {
             prdtSampOb.setId(uuidstr);
 
             List<Msg> list = this.insertDaYang(prdtSampOb);
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:22
+            cnst.genFenLeiNo.f();
             return list;
 
 
@@ -274,6 +279,13 @@ public class D1DaYangService {
             ii = cnst.prdtSampMapper.insert(prdtSamp);
 
 
+       /*
+
+       检查是否有idx1在prdt里面是空的语句
+       select fen_lei_no,prd_no,prd_code,insertdate,sal_name,'=========',* from prdt_samp where prd_no in
+                (
+                        select prd_no from prdt where isnull(idx1,'')=''
+                ) and insertdate> ='2018-08-29'*/
 
 
         //再次检查prdt里面的分类,没有就更新进去  2018_8_29   weekday(3)   11:57:01

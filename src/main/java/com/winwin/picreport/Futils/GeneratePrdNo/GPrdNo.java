@@ -91,6 +91,11 @@ public class GPrdNo {
         }
 
 
+
+     /*   select prd_no,insertdate,fen_lei_no,fen_lei_name,*  from PRDT_SAMP where
+      prd_code in (
+                select name from prdt where idx1='' or  idx1=NULL or idx1 is NULL)*/
+
         //再次检查prdt里面的分类,没有就更新进去
         String idx1=cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(prdtNo);
         if(p.empty(idx1)&&p.notEmpty(prdtSamp.getFenLeiNo())){
@@ -130,7 +135,7 @@ public class GPrdNo {
 
     //找到idxNo的所有上下级 idxNp
     @Transactional
-    public synchronized String   getAllUpAndDownIdxNo(String fenLeiNo){
+    public  String   getAllUpAndDownIdxNo(String fenLeiNo){
         //在prdt里面找到相同的indx1的prdNo流水最大的那个
         String maxPrdNoSecond= cnst.a001TongYongMapper.selectTop1MaxPrdtNo(fenLeiNo);
         if(p.empty(maxPrdNoSecond)){

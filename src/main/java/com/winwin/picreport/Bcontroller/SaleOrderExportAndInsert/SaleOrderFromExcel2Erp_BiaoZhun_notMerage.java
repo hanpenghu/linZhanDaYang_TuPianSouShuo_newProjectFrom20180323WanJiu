@@ -91,11 +91,12 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
         //货号在up_def不存在  蓝色背景
         if(l==0){e.setState("2");return;}
         UpDefExample ue1=new UpDefExample();
-        ue1.createCriteria().andPrdNoEqualTo(e.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId).andUpIsNotNull();
+        ue1.createCriteria().andPrdNoEqualTo(e.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId).andCurIdEqualTo(e.getCurId()).andUpIsNotNull();
         long l1 = cnst.upDefMapper.countByExample(ue1);
-        //销售定价在up_def不存在
+        //该币别的销售定价在up_def不存在
         if(l1==0){e.setState("3");return;}
-       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()));
+        //找到符合条件的该币别该销售的低于up_def的价格
+       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()),e.getCurId());
         //此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
         if(k>0)e.setState("1");
     }
@@ -119,11 +120,11 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
             if(p.empty(i.getPrdNo())){
                 this.prdNoSet(i);
                 if(p.empty(i.getPrdNo())){
-                    p.throwEAddToList("Excel第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行货号是【空】的,根据【货品名称】和【客户代码+对方货号】在erp也找不到对应的 货号 ! ",msg);
+                    p.throwEAddToList("Excel第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),2):"")+"》行货号是【空】的,根据【货品名称】和【客户代码+对方货号】在erp也找不到对应的 货号 ! ",msg);
                 }
             }
-            if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行订单日期为空,",msg);
-            if(p.isNotDate(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),1):"")+"》行订单日期格式不对,",msg);
+            if(p.empty(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),2):"")+"》行订单日期为空,",msg);
+            if(p.isNotDate(i.getOsDd()))p.throwEAddToList("第《"+(p.isBd(i.getRow())?p.badd(i.getRow(),2):"")+"》行订单日期格式不对,",msg);
 
         }
     }
