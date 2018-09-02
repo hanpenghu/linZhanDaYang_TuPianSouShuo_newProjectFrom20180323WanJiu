@@ -1,0 +1,4 @@
+2018-09-02 13:17:59,508 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 8112 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-02 13:17:59,521 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-02 13:18:06,281 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-02 13:18:08,359 INFO (StartupInfoLogger.java:57)- Started ATests in 9.452 seconds (JVM running for 10.563)

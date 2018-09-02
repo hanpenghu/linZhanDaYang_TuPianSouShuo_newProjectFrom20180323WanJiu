@@ -52,9 +52,12 @@ public class GenFenLeiNo {//2018_8_31   weekday(5)   21:03:36
             pe.createCriteria().andPrdNoEqualTo(ps.getPrdNo()).andNameEqualTo(ps.getPrdCode()).andIdx1IsNull();
             long l = cnst.prdtMapper.countByExample(pe);
             p.p("-------------------------GenFenLeiNo10------------------------------");
+
             PrdtExample pe1=new PrdtExample();
             pe1.createCriteria().andPrdNoEqualTo(ps.getPrdNo()).andNameEqualTo(ps.getPrdCode()).andIdx1EqualTo("");
             long l1 = cnst.prdtMapper.countByExample(pe1);
+
+
             p.p("-------------------------GenFenLeiNo11------------------------------");
             if(l==0&&l1==0)continue;
             p.p("-------------------------GenFenLeiNo2------------------------------");

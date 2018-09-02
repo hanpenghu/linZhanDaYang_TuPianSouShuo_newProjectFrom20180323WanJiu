@@ -18,13 +18,14 @@ import java.io.File;
 @EnableScheduling
 @MapperScan(InterFaceCnst.daoCnst)
 public class A {
-	protected static final Logger logger = LoggerFactory.getLogger(A.class);
+//	private static  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(A.class.getName());
 	//过期时间通过application配置到拦截器
 	public static void main(String[] args) {
-		logger.info("--------SpringBoot kaishi jiazai---------");
+//		l.info(l);
+//		l.info("--------SpringBoot kaishi jiazai---------");
 		SpringApplication.run(A.class, args);
 		p.Del(new File("down"));
-		logger.info("-------SpringBoot jiazai wanbi---------");
+//		l.info("-------SpringBoot jiazai wanbi---------");
 	}
 
 

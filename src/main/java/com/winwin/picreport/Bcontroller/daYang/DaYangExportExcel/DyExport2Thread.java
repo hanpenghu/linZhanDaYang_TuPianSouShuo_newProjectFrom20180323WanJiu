@@ -143,6 +143,8 @@ public class DyExport2Thread {
         if (p.notEmpty(前端穿过来要显示的fields)) {
             this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
+        //超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
+        this.igllManyPicOutOfMerory(ids,msg,list导出头信息);
         new Thread(() -> {
             p.p("-------------------------------------------------------");
             p.p("进入线程");
@@ -176,6 +178,12 @@ public class DyExport2Thread {
             p.p("-------------------------------------------------------");
         }).start();
 
+    }
+
+    private void igllManyPicOutOfMerory(List<String> ids, List<String> msg,List<String> list导出头信息) {
+        //此时不用管,随便导出excel
+        if(!list导出头信息.contains("Product Photo 打样产品照片或图籍"))return;
+        if(ids!=null&&ids.size()>2000)p.throwEAddToList("您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项",msg);
     }
 
 //    private void downCountSubstract(BigDecimal bb) {
@@ -887,17 +895,19 @@ public class DyExport2Thread {
         return daoChuExcelHeadList;
     }
 
-//    public static void main(String[] args) throws Exception {
-//        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
-//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
-//        s = URLEncoder.encode(s, "UTF-8");
-//        p.p("-------------------------------------------------------");
-//        p.p(s);
-//        s = URLDecoder.decode(s);
-//        p.p(s);
-//        p.p("-------------------------------------------------------");
-//    }
+    public static void main(String[] args) throws Exception {
+        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
+       s="{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+        s = URLEncoder.encode(s, "UTF-8");
+        p.p("-------------------------------------------------------");
+        p.p(s);
+        p.p("\n");
+        s = URLDecoder.decode(s);
+        p.p(s);
+        p.p("-------------------------------------------------------");
+    }
 
 
 }

@@ -38,7 +38,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
 
 public  void nativePic2MaLong(){
-    l.info("----------------kaiShi tongBu wenJianJia de tuPian-dao-MaLong---------------");
+
     try {
         //得到图片路径前半身 比如:http://61.177.44.218:8070/suoLueTuWenJianJia/
         //注意这个半身路径最后是有一个斜杠的
@@ -57,7 +57,7 @@ public  void nativePic2MaLong(){
         String suoLueTuWenJianJia = cnstO.suoLueTuWenJianJia;
         //得到缩略图文件夹路径   ./daYangSuoLueTuAndFuJianZongPath/suoLueTuWenJianJia/
         String suoLueTuWenJianJiaPath=daYangSuoLueTuAndFuJianZongPath+suoLueTuWenJianJia;
-        l.info("-----------suoLueTuWenJianJiaPath:"+suoLueTuWenJianJiaPath+"------------------------------");
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //下面是得到所有图片集的模块
@@ -79,9 +79,9 @@ public  void nativePic2MaLong(){
             if(p.isPic(s)){
                 //此时是图片
                 fileNames.add(s);
-                l.info("-----------shi tuPian  keYiShangChuan----------------");
+
             }else{
-                l.info("---buShi tuPian-------------------------");
+
             }
         }
 
@@ -91,7 +91,7 @@ public  void nativePic2MaLong(){
         for(String fileName:fileNames){
             //得到记录已经上传图片名字的文本
             String havenUpRecPath = daYangSuoLueTuAndFuJianZongPath+"havenUpRec.json";
-            l.info("----jiLu shangChuan TuPian de wenBen LuJing----"+havenUpRecPath+"------------------------");
+
             /**
              *判断当前图片名字是否在文本中,在的话就不用上传了
              * */
@@ -133,7 +133,7 @@ public  void nativePic2MaLong(){
             //上传单条数据的例子
             DataSetModifyResponse res = g.run(client, Cnst.image_set_idOfWinWinPrdtSamp,url);
             if(null!=res){
-                l.info("-----shangChuan--maLong--fanHui--xinXi-----"+res.getMessage()+"--------------------");
+
             }
 
 
