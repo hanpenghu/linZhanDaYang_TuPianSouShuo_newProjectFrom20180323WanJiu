@@ -4,19 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.CustExample;
 import com.winwin.picreport.Edto.CustWithBLOBs;
-import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.pp;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
@@ -25,10 +24,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/1.
@@ -36,17 +34,12 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 @CrossOrigin
 @RestController
-public class DyExport2Thread {
-private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
+public class DyExportAllNoPicResponseUrl {
+    private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Cnst cnst;
-    private String jarPath;
 
-    //导出所有用下面这个(带图片导出)
-//    http://47.98.45.100:8070/dyExportExcel2Thread?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
-    // {"ids":[],"fields":["salName","thum","cusName","cust.nm_eng","prdCode","idxName","fenLeiName","category","teamname","colour","size","mainUnit","noTransUpSaleBenBi","haveTransUpSaleBenBi","noTransUpSaleWaiBi","haveTransUpSaleWaiBi","financestartsellcount","financelittleorderprice","confirmtimestr","confirmman","sampRequ","sampMake","sampSend"]}
-   //不带图片的导出(fields里面的thum去掉)
-//    http://47.98.45.100:8070/dyExportExcel2Thread?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
+    private String jarPath;
     /**
      * param后面跟上一个URLEncode的json
      * http://localhost:8070/dyExportExcel?param=%7B%22ids%22%3A%5B%220000e1a2-ec00-4b06-94da-db80628473eb%22%2C%2200013fb7-ba16-4ad2-9ca6-7257c660f9a3%22%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22prdCode%22%2C%22mainUnit%22%2C%22haveTransUpSaleBenBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22noTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%5D%2C%22confirmtimestr%22%3A%222018-06-11%22%2C%22confirmtimestrEnd%22%3A%222018-06-20%22%7D
@@ -72,283 +65,85 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
      */
 
-    @RequestMapping(value = "dyExportExcel2Thread", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
-    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail) {
-       log.info("《《《《《《《《打样产品导出 接口 dyExportExcel2Thread 开始》》》tenantId:{}》userEmail：{}》》param: {}》》》》",tenantId,userEmail,param);
-        List<String> msg = new LinkedList<String>();
+    @RequestMapping(value = "dyExportExcelAllNoPic")//注意,下面这个param这玩意会自动解码decode
+    public String 打样产品导出所有不带图片(@Param("param") String param) throws Exception {
         try {
-            this.isIgll(tenantId, userEmail, msg);
-            this.mainF(param, tenantId, userEmail, msg);
-        } catch (Exception e) {
-            String message = e.getMessage();
-            if (msg.contains(message)) {
-                return Msg.gmg().setStatus("0").setMsg("失败!" + message);
-            } else {
-                return Msg.gmg().setStatus("0").setMsg("失败!未知异常！" + message);
-            }
-        }
-        return Msg.gmg().setStatus("1").setMsg("正在下载,下载完成后移至下载中心下载到本地！");
-    }
-
-    private void isIgll(String tenantId, String userEmail, List<String> msg) {
-        if (p.empty(tenantId) || p.empty(userEmail)) {
-            p.throwEAddToList("前端传过来的公司id或者用户名是空的", msg);
-        }
-    }
-
-    private void mainF(String param, String tenantId, String userEmail, List<String> msg) throws Exception {
-        String dateStr = p.sjc2StrDate(p.getTimeStamp());
-        String excelName001 = p.ra3o();
-        jarPath = p.springBootJarPath();
-        //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
-        //        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
-        //        p.p(param);
-        //        p.p("-------------------------------------------------------");
-        ExportXlsParam ep = this.formatJsonFromFront(param);
-        if (null == ep) {
-            log.info("前端传过来的参数是null  ep  {}",ep);
-            p.throwEAddToList("前端传过来的参数是null", msg);
-        }
-        List<String> idsFromConfirmTime = this.idsFromManyConditionSearch(ep);
-        //        p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
-        //        p.p(idsFromConfirmTime);
-        //        p.p("-------------------------------------------------------");
-        List<String> list导出头信息 = this.f得到完整导出头信息();
-        //注意  ep  是 空的,会直接报错给前端,不用管
-        List<String> ids = ep.getIds();
-        //为了装入 idsFromManyConditionSearch
-        if (null == ids) {
-            ids = new LinkedList<String>();
-        }
-        //下载的总条数是否超过6万
-//        BigDecimal bbb=this.isDownLoadCountOverIgll(msg);
-        //将确认时间得到的id放入  全局id集合
-        this.perfectIds(ids, idsFromConfirmTime);
-        if (p.empty(ids)) {
-            p.throwEAddToList("《您所选则的条件没有任何记录》得到时间获得的ids和前端传过来的ids之后,ids是null或者空", msg);
-        }
-
-//        BigDecimal bb = p.b(ids.size());
-//        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
-
-        //线程里面传不进去ids,放到对象里穿进去
-        Map<String, List<String>> mapids = new HashMap();
-        mapids.put("ids", ids);
-        log.info("《《《《《《《把所有ids放入map准备给组装excle的线程, ids总共有  {}  个》》》》》》》",ids.size());
-        //超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
-        this.igllManyPicOutOfMerory(ids, msg, list导出头信息);
-
-
-        List<String> 前端穿过来要显示的fields = ep.getFields();
-        if (p.notEmpty(前端穿过来要显示的fields)) {
-            this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
-        }
-
-        new Thread(() -> {
-            log.error("《《《《《《《下载线程开始》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
+            jarPath = p.springBootJarPath();
+            //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
+//        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
+//        p.p(param);
+//        p.p("-------------------------------------------------------");
+            log.info("《《类: 打样产品导出所有不带图片《《《《接口: dyExportExcelAllNoPic》前端穿过来参数是》param》{}》》》》",param);
+            ExportXlsParam ep = null;
             try {
-               log.info("《《《《《《《要导出的所有的数据的个数是》{}》》》》》》",mapids.get("ids").size());
-                List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get("ids"));
-                if (p.empty(daoChus)) {
-                    p.throwEAddToList("《您所选则的条件没有任何记录》daoChus是null", msg);
-                }
-
-                log.info("《《《《《写入excel开始-》tenantId:{}》》userEmail:{}》》》",tenantId,userEmail);
-                //把字段写入excel
-                Map<String, String> m = this.a写入excel(daoChus, list导出头信息, excelName001);
-                File file = new File(m.get(this.excelPath));
-                file.createNewFile();
-                //将创建的excel情况放入数据库
-                this.dbRec(tenantId, userEmail, m, dateStr);
-                log.info("《《《《《写入excel结束-》tenantId:{}》》userEmail:{}》》》",tenantId,userEmail);
-//                this.downCountSubstract( bb );
+                ep = this.formatJsonFromFront(param);
             } catch (Exception e) {
-                //如果组装excel异常在数据库记录一个下载失败的对象
-                this.recErrorDownLoad(tenantId, userEmail, dateStr);
-//                    this.downCountSubstract(bb);
+                e.printStackTrace();
+                log.info("《《《《《《《《《《前端传过来的参数无法格式化成ExportXlsParam对象  param: 》{}》》》》》》》",param);
+                log.info("《《《《《《《《前端传过来的参数无法格式化成ExportXlsParam对象.txt》》》》》》》");
+    //           return pp.returnBrowserFileToDownLoad(p.createNewFile("前端传过来的参数无法格式化成ExportXlsParam对象.txt"));
+                return "前端传过来的参数无法格式化成ExportXlsParam对象.txt";
             }
-            log.info("《《《《《《《下载线程结束》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
-        }).start();
-
-    }
-
-    private void igllManyPicOutOfMerory(List<String> ids, List<String> msg, List<String> list导出头信息) {
-        //此时不用管,随便导出excel
-        if (!list导出头信息.contains("Product Photo 打样产品照片或图籍")) return;
-        if (ids != null && ids.size() > 2000){
-            log.info("《《《《《《《《《《《《《您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项》》》》》》》》》》》》");
-            p.throwEAddToList("您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项", msg);
-        }
-    }
-
-//    private void downCountSubstract(BigDecimal bb) {
-//        File file = new File(down);
-//        String s = p.readAllTxt(file.getAbsolutePath());
-//        if(p.b(s).compareTo(p.b(0))==1){
-//            BigDecimal sb = p.b(s).subtract(bb);
-//            if(sb.compareTo(p.b(0))==-1){
-//                sb=p.b(0);
-//            }
-//            p.writeToTxt(String.valueOf(sb),new File(down).getAbsolutePath());
-//        }
-//    }
-
-    private String down = "down";
-//    private void writeThisDownCountIntoFile(BigDecimal bbb) {
-//        p.writeToTxt(String.valueOf(bbb),new File(down).getAbsolutePath());
-//    }
-
-//    private BigDecimal isDownLoadCountOverIgll(List<String> msg) throws Exception {
-//        File file = new File(down);
-//        if(p.notExists(file)){
-//            file.createNewFile();
-//        }
-//        String s = p.readAllTxt(file.getAbsolutePath());
-//        if(p.notEmpty(s)){
-//            if(!p.isBd(s)){
-//                p.throwEAddToList("统计后台下载数目不是数字",msg);
-//            }else{
-//                if(p.b(s).compareTo(p.b(59999))==1){
-//                    p.throwEAddToList("已有超过6万条数据正在下载，请稍后重试",msg);
-//                }
-//            }
-//        }else{
-//            s="0";
-//        }
-//        return p.b(s);
-//    }
-
-//
-//    public static void main(String[]args){
-//        p.p("-------------------------------------------------------");
-//        p.p(p.b(9999).compareTo(p.b(999000)));
-//        p.p("-------------------------------------------------------");
-//    }
-
-
-    private void dbRec(String tenantId, String userEmail, Map<String, String> m, String dateStr) {
-        String down = cnst.a001TongYongMapper.selectDown(tenantId, userEmail);
-        List<GetDownLoadCenterEntity> list;
-        if (p.empty(down)) {
-            list = new LinkedList<GetDownLoadCenterEntity>();
-        } else {
-            list = JSON.parseArray(down, GetDownLoadCenterEntity.class);
-        }
-        GetDownLoadCenterEntity g = new GetDownLoadCenterEntity();
-        g.setUrl(m.get(this.excelName));
-        g.setStatus("1");
-        g.setTime(dateStr);
-        list.add(g);
-        int i = cnst.a001TongYongMapper.updateDown(tenantId, userEmail, JSON.toJSONString(list));
-    }
-
-
-    private void recErrorDownLoad(String tenantId, String userEmail, String dateStr) {
-        String down = cnst.a001TongYongMapper.selectDown(tenantId, userEmail);
-        List<GetDownLoadCenterEntity> list;
-        if (p.empty(down)) {
-            list = new LinkedList<GetDownLoadCenterEntity>();
-        } else {
-            list = JSON.parseArray(down, GetDownLoadCenterEntity.class);
-        }
-        GetDownLoadCenterEntity g = new GetDownLoadCenterEntity();
-        g.setUrl("下载失败");
-        g.setStatus("0");
-        g.setTime(dateStr);
-        list.add(g);
-        int i = cnst.a001TongYongMapper.updateDown(tenantId, userEmail, JSON.toJSONString(list));
-    }
-
-
-    private List<DaoChu> ids分批得到DaoChu(List<String> ids) {
-        log.info("|<<<<<<<<ids分批得到DaoChu开始>>>>>>>>>|");
-        List<DaoChu> daoChus = new LinkedList<DaoChu>();
-        log.info("《《《《《《《《《《《《《《分批得到DaoChus该批的数量：》{}》》》》》》》》",ids.size());
-
-        log.info("《《《《将所有ids的集合平均分成40分分别得到DaoChu》》》》");
-        List<List<String>> lists = p.avgList(ids, 40);
-        int iiii = 1;
-        for (List<String> ls : lists) {
-            log.info("<<<<<<<<<<<第《{}》次得到daoChus开始>>>>>>>>>>>",iiii);
-            log.info("《《《《《《开始得到daoChus》》》》》》》》");
-            //当ls是空的时候就会导出所有的
-            List<DaoChu> daoChus1 = cnst.a001TongYongMapper.getDaoChus(ls);
-            log.info("《《《《《《《该批的daoChus集合的长度》{}》》》》》",daoChus1.size());
-            daoChus.addAll(daoChus1);
-            log.info("<<<<<<<<<<<第《{}》次得到daoChus结束>>>>>>>>>>>",iiii);
-            iiii = iiii + 1;
-        }
-        log.info("|<<<<<<<<ids分批得到DaoChu结束>>>>>>>>>|");
-        return daoChus;
-    }
-
-
-    //完善ids,主要是从传入时间也得到的ids放进来
-    private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-        //        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
-        //        p.p("---perfectIds()---ids=" + ids + "----------------");
-        if (p.notEmpty(ids)) {
-            //            l.error("----3---前端穿过来的ids不为空----------------");
-        }
-        if (ids != null && ids.size() == 0 && idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
-            ids.addAll(idsFromConfirmTime);
-        }
-        if (p.notEmpty(ids)) {
-            //            l.error("-----4------最终得到的ids不为空--------------");
-        }
-        p.removeNull(ids);
-    }
-
-
-    private List<String> idsFromManyConditionSearch(ExportXlsParam ep) {
-        List<ExportXlsParam> epList = new LinkedList<ExportXlsParam>();
-        if (p.empty(ep.getFenLeiName())) {
-            epList.add(ep);
-        } else {
-            List<String> fenLeiNameList = cnst.a001TongYongMapper.diGuiFenLeiName(ep.getFenLeiName());
-            if (p.notEmpty(fenLeiNameList)) {
-                for (String s : fenLeiNameList) {
-                    if (p.notEmpty(s)) {
-                        ExportXlsParam e = new ExportXlsParam();
-                        BeanUtils.copyProperties(ep, e);
-                        e.setFenLeiName(s);
-                        epList.add(e);
-                    }
-                }
+            if (null == ep) {
+                log.info("《《《《《《《《《《null == ep》前端传过来的参数是null》》》》》》》》》");
+                log.info("《《《《《《《《前端传过来的参数是null.txt》》》》》》》》");
+    //           return pp.returnBrowserFileToDownLoad(p.createNewFile("前端传过来的参数是null.txt"));
+                return "前端传过来的参数是null.txt";
             }
-        }
 
-        List<String> ids来自多条件查询 = new LinkedList<>();
-        for (ExportXlsParam ee : epList) {
-            List<String> idList一次查询 = this.f得到一次多条件的ids(ee);
-            if (p.notEmpty(idList一次查询)) {
-                ids来自多条件查询.addAll(idList一次查询);
+            List<String> list导出头信息 = this.f得到完整导出头信息();
+
+            List<String> 前端穿过来要显示的fields = ep.getFields();
+            //不再导出图片,把图片的头信息删掉
+            if(p.notEmpty(前端穿过来要显示的fields)&&前端穿过来要显示的fields.contains("thum")){
+                //确定不要显示thum
+                前端穿过来要显示的fields.remove("thum");
             }
-        }
+            if (p.notEmpty(前端穿过来要显示的fields)) {
+                this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
+            }
 
-        return ids来自多条件查询;
+
+            log.info("《《{}《《《《从数据库拿到所有daoChus对象开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+            List<DaoChu> daoChus= cnst.a001TongYongMapper.getDaoChusOfAllNoPic();
+            log.info("《《《{}《《《从数据库拿到所有daoChus对象结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+
+
+            if (   p.empty(daoChus)   ) {
+                p.p("====daoChus是null=========");
+                return null;
+            }
+
+            log.info("《《{}《《《《把所有字段写入excel开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+            //把字段写入excel
+            String excel路径 = this.a写入excel(daoChus,list导出头信息);
+            log.info("《《{}《《《《把所有字段写入excel结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+
+            log.info("《《{}《《《《把excel写入服务器硬盘开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+            File file = new File(excel路径);
+            log.info("《《{}《《《《把excel写入服务器硬盘结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+
+
+            return cnst.dirUrl+Cnst.saveExcelTemp+"/"+file.getName();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage(),e);
+            return "e.getMessage()";
+        }
     }
 
-    private List<String> f得到一次多条件的ids(ExportXlsParam ep) {
-//        p.p("---------idsFromManyConditionSearch--------------ExportXlsParam--------------------------------");
-//        p.p(ep);
+
+//    public static void main(String[]args) throws IOException {
 //        p.p("-------------------------------------------------------");
-        List<String> ids来自多条件查询 = null;
-        //起止时间有一个非空才取id//注意,sql限制最多取出500个
-        //通过确认时间过得id
-//        if(this.f多条件查询成立条件(ep)){
-        ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
-        if (p.notEmpty(ids来自多条件查询)) {
-            //                l.error("--2----起止时间得到的ids不为空----------");
-        } else {
-            //                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
-        }
-        //            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-        //            p.p(ids来自多条件查询);
-        //            p.p("-------------------------------------------------------");
-//        }
-        return ids来自多条件查询;
-    }
+//        p.p(p.createNewFile("111.txt").getName());
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+
+
+
+
 
 
     private ExportXlsParam formatJsonFromFront(String param) {
@@ -377,22 +172,29 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     }
 
 
-    private String excelPath = "excelPath";
-    private String excelName = "excelName";
+    private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
+        //一个sheet最大支持65536行,
+        if(p.notEmpty(daoChus)&&daoChus.size()<=65535){
+                return lessThan65535(daoChus,list导出头信息);
+        }else{
+            return moreThan65535(daoChus,list导出头信息);
+        }
 
-    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息, String excelName001) {
-        String excelName = Cnst.SampExport + excelName001 + ".xls";
+    }
+
+    private String moreThan65535(List<DaoChu> daoChus, List<String> list导出头信息) {
+        List<DaoChu> daoChus1 = daoChus.subList(0, 65535);
+        List<DaoChu> daoChus2 = daoChus.subList(65535, daoChus.size());
+        String excelName = "SampExport" + p.sj() + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
+        log.info("《《《《《《《《《《《保存excel的路径是》{}》》》》》》》》》》》》",excelPath);
         FileOutputStream fileOut = null;
         try {
             //创建excel
             HSSFWorkbook wb = new HSSFWorkbook();
-            //创建sheet1
-            HSSFSheet sheet1 = wb.createSheet("sheet1");
-            HSSFCellStyle cellStyle = wb.createCellStyle();  //创建设置EXCEL表格样式对象 cellStyle
-            cellStyle.setWrapText(true);//设置自动换行
-            this.a写行列(daoChus, sheet1, cellStyle, wb, list导出头信息);
+            this.createSheetAndWrite(wb,daoChus1,list导出头信息,"sheet1");
+            this.createSheetAndWrite(wb,daoChus2,list导出头信息,"sheet2");
             //此时文件不存在会自动创建
             fileOut = new FileOutputStream(excelPath);
             // 输出文件
@@ -403,15 +205,60 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Map<String, String> map = new LinkedHashMap<String, String>();
-        map.put(this.excelPath, excelPath);
-        map.put(this.excelName, excelName);
-        return map;
+
+        return excelPath;
+
+
+    }
+
+//    public static void main(String[]args){
+//        List<String>list1=new ArrayList<>();
+//        list1.add("1");list1.add("2");list1.add("3");list1.add("4");
+//        list1.add("5");
+//        List<String> strings = list1.subList(0, 3);
+//        List<String> strings1 = list1.subList(3, 5);
+//        p.p("-------------------------------------------------------");
+//        p.p(strings);
+//        p.p(strings1);
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+    private String lessThan65535(List<DaoChu> daoChus, List<String> list导出头信息) {
+        String excelName = "SampExport" + p.sj() + ".xls";
+        String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
+        String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
+        log.info("《《《《《《《《《《《保存excel的路径是》{}》》》》》》》》》》》》",excelPath);
+        FileOutputStream fileOut = null;
+        try {
+            //创建excel
+            HSSFWorkbook wb = new HSSFWorkbook();
+            this.createSheetAndWrite(wb,daoChus,list导出头信息,"sheet1");
+            //此时文件不存在会自动创建
+            fileOut = new FileOutputStream(excelPath);
+            // 输出文件
+            wb.write(fileOut);
+            wb.close();
+            fileOut.flush();
+            fileOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return excelPath;
+    }
+
+    private void createSheetAndWrite(HSSFWorkbook wb, List<DaoChu> daoChus, List<String> list导出头信息,String sheetNo) {
+        //创建sheet1
+        HSSFSheet sheet1 = wb.createSheet(sheetNo);
+        HSSFCellStyle cellStyle = wb.createCellStyle();  //创建设置EXCEL表格样式对象 cellStyle
+        cellStyle.setWrapText(true);//设置自动换行
+        this.a写行列(daoChus, sheet1, cellStyle, wb, list导出头信息);
     }
 
 
     private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
-        this.a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
+        a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
         int i行计数器 = 1;//
         if (p.notEmpty(daoChus)) {
@@ -470,13 +317,12 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
                 cell.setCellValue(""); // 设置内容 7
             }
             if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
-//                p.p("=================设置照片=================================");
 //                    cell.setCellValue(""); // 设置内容 8
 //                p.p2(daoChu.getThum());
                 try {
                     this.a设置照片(daoChu.getThum(), sheet1, row, wb, 列计数器, i行计数器);
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
             if ("Category Name".equals(s)) {
@@ -567,54 +413,59 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
             if ("样品卡寄出日期".equals(s)) {
                 cell.setCellValue(daoChu.getSampSend()); // 设置内容24
             }
-            if ("停用日期".equals(s)) {
-                cell.setCellValue(daoChu.getStopusedate()); // 设置内容24
+            if("停用日期".equals(s)){
+                cell.setCellValue(daoChu.getStopusedate());
             }
             列计数器 = 列计数器 + 1;
         }
     }
 
 
-    private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) throws IOException {
+    private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) {
 
         BufferedImage bufferImg = null;
-        if(p.empty(thum))return ;
-        //此try可以达到有缩略图的用缩略图,无缩略图的不用缩略图,避免了一堆复杂判断
-        //用try是因为可能有很多截取出错的地方
-        thum = jarPath
-                + (
-                cnst.daYangSuoLueTuAndFuJianZongPath.substring(2)
-                        + p.chaiFenZuHeFenGeFu(thum.replace(";", p.zuHeFenGeFu)).get(0)
-        ).replace("/", File.separator);
-        File thumFile=new File(thum);
-        if (p.notExists(thumFile)) return;
-        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-        //加载图片
-        bufferImg = ImageIO.read(new File(thum));
+        try {
+            try {
+                //此try可以达到有缩略图的用缩略图,无缩略图的不用缩略图,避免了一堆复杂判断
+                //用try是因为可能有很多截取出错的地方
+                thum = jarPath
+                        + (
+                        cnst.daYangSuoLueTuAndFuJianZongPath.substring(2)
+                                + p.chaiFenZuHeFenGeFu(thum.replace(";", p.zuHeFenGeFu)).get(0)
+                ).replace("/", File.separator);
+            } catch (Exception e) {
+//                p.p1("wufa jiequ thum zifuchuan  ,keneng shi kongde,ye keneng shi null");
+            }
+            if(p.notExists(new File(thum)))return;
+            ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+            //加载图片
+            bufferImg = ImageIO.read(new File(thum));
 
-        //图片行高不在这里设置,避免出现太高的情况
+            //图片行高不在这里设置,避免出现太高的情况
             /*int height = bufferImg.getHeight();
             int width = bufferImg.getWidth();
             sheet1.setColumnWidth(a行计数器, width);
             row.setHeightInPoints(height);*/
 
-        ImageIO.write(bufferImg, "jpg", byteArrayOut);
-        //创建一个图片
-        HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
-        //制造图片的位置参数
-        HSSFClientAnchor anchor = new HSSFClientAnchor
-                (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
-        //插入图片
-        patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
+            ImageIO.write(bufferImg, "jpg", byteArrayOut);
+            //创建一个图片
+            HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
+            //制造图片的位置参数
+            HSSFClientAnchor anchor = new HSSFClientAnchor
+                    (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
+            //插入图片
+            patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 
-        if (p.notEmpty(bufferImg)) {
-            bufferImg.flush();
+            if (p.notEmpty(bufferImg)) {
+                bufferImg.flush();
+            }
+            if (p.notEmpty(byteArrayOut)) {
+                byteArrayOut.flush();
+                byteArrayOut.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (p.notEmpty(byteArrayOut)) {
-            byteArrayOut.flush();
-            byteArrayOut.close();
-        }
-
     }
 
 
@@ -721,47 +572,6 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         return file.getAbsolutePath();
     }
 
-
-    //对于销售定价,每次找到up_def中最近s_dd的一个
-    private List<DaoChu> a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(List<String> ids) {
-        List<DaoChu> daoChuList = new LinkedList<DaoChu>();
-//        p.p("------------a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径   的ids-------------------------------------------");
-//        p.p(ids);
-//        p.p("-------------------------------------------------------");
-        for (String id : ids) {
-            DaoChu daoChu = new DaoChu();
-            //得到 haveTransUpSaleBenBi
-            DaoChu daoChu1 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.benBi, Cnst.salPriceId, id);
-//            p.p("---------------------------daoChu1.getMainUnit()----------------------------");
-            if (null != daoChu1) {
-//                p.p(daoChu1.getMainUnit());
-            }
-//            p.p("-------------------------------------------------------");
-            //haveTransUpSaleWaiBi
-            DaoChu daoChu2 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.USD, Cnst.salPriceId, id);
-            //noTransUpSaleBenBi
-            DaoChu daoChu3 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.benBi, Cnst.salPriceId, id);
-            //noTransUpSaleWaiBi
-            DaoChu daoChu4 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.USD, Cnst.salPriceId, id);
-
-//            p.p("------------------------所有价格-------------------------------");
-//            p.p(daoChu1.getUp());
-//            p.p(daoChu2.getUp());
-//            p.p(daoChu3.getUp());
-//            p.p(daoChu4.getUp());
-//            p.p("-------------------------------------------------------");
-            this.a复制daoChu对象(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
-            this.a设置daoChu对象的各种价格(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
-            daoChu.setUp("");
-            p.strValeOfNullSpace(daoChu);
-            String thum = this.a缩略图全路径生成(daoChu);
-            daoChu.setThum(thum);
-            this.NmEngSet(daoChu);
-            daoChuList.add(daoChu);
-
-        }
-        return daoChuList;
-    }
 
     private void NmEngSet(DaoChu daoChu) {
         if (p.empty(daoChu.getNmEng())) {
@@ -872,25 +682,17 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         return daoChuExcelHeadList;
     }
 
-    public static void main(String[] args) throws Exception {
-        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
-        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
-        s = "{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-       //带图片导出
-        s="{\"ids\":[],\"fields\":[\"salName\",\"thum\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
-
-        //不带图片导出,fields里面没有thum
-        s="{\"ids\":[],\"fields\":[\"salName\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
-        s="{\"ids\":[],\"fields\":[]}";
-        s = URLEncoder.encode(s, "UTF-8");
-        p.p("-------------------------------------------------------");
-        p.p(s);
-        p.p("\n");
-        s = URLDecoder.decode(s);
-        p.p(s);
-        p.p("-------------------------------------------------------");
-    }
+//    public static void main(String[]args) throws UnsupportedEncodingException {
+//        String s="%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+//       s="{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+//
+//       s=URLEncoder.encode(s,"UTF-8");
+//        p.p("-------------------------------------------------------");
+//        p.p(s);
+//        s=URLDecoder.decode(s);
+//        p.p(s);
+//        p.p("-------------------------------------------------------");
+//    }
 
 
 }

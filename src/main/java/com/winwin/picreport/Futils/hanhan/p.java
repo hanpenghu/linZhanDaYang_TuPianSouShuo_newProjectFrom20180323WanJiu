@@ -2497,10 +2497,10 @@ public static BigDecimal b(Object o){
             //此时没法截取,因为不包含要 截取的头或者尾部
             return "";
         } else{
-            p.p("-------------------------我曹------------------------------");
+            p.p("-------------------------strCutNoHeadNoTail------------------------------");
             p.p2(p.strIndxTail(originalStr,startNotHave));
             p.p2(originalStr.indexOf(endNotHave));
-            p.p("-----------------我曹--------------------------------------");
+            p.p("-----------------strCutNoHeadNoTail--------------------------------------");
 
             return originalStr.substring(p.strIndxTail(originalStr,startNotHave)+1,originalStr.indexOf(endNotHave));
         }

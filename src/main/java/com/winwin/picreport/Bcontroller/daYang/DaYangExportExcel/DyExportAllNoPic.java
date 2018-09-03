@@ -68,7 +68,7 @@ public class DyExportAllNoPic {
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
      */
 
-    @RequestMapping(value = "dyExportExcelAllNoPic")//注意,下面这个param这玩意会自动解码decode
+    @RequestMapping(value = "dyExportExcelAllNoPic不用了")//注意,下面这个param这玩意会自动解码decode
     public ResponseEntity<byte[]> 打样产品导出所有不带图片(@Param("param") String param) throws Exception {
         jarPath = p.springBootJarPath();
         //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
