@@ -130,7 +130,7 @@
     <!--</sql>-->
 
     <sql id="productProofWithManyCondition">
-        id=id
+        '1'='1'
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -165,6 +165,9 @@
         <if test=" cusName != null and cusName  != '' ">
             <![CDATA[ AND cus_Name LIKE  #{ cusName }  ]]>
         </if>
+
+
+
 
     </sql>
 
@@ -255,6 +258,7 @@
             <include refid="productProofWithManyCondition"/>
         ORDER BY insertdate DESC
     </select>
+
     <!-- 产品打样列表多条件查询 按照prd_code从大到小排列-->
     <select id="chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC" resultMap="PrdtSampBaseResultMap">
         SELECT
@@ -273,13 +277,23 @@
             WHERE
             <!-- 产品打样列表多条件查询的条件-->
             <include refid="productProofWithManyCondition"/>
-            ORDER BY prd_code DESC
+            <if test=" prdCode != null and prdCode != '' ">
+                AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            </if>
+            ORDER BY insertdate DESC
         )
         AND
         <!-- 产品打样列表多条件查询的条件-->
         <include refid="productProofWithManyCondition"/>
-        ORDER BY prd_code DESC
+        <if test=" prdCode != null and prdCode != '' ">
+            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+        </if>
+        ORDER BY insertdate DESC
     </select>
+
+
+
+
 
     <!--林展多条件查询接口 -->
 
@@ -842,6 +856,8 @@
 
 
 
+
+    <!-- 用于先得到id 然后分批得到 该批的id对应的数据-->
     <select id="getDaoChus" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
         select
         isnull(a.id,'') as id,
@@ -915,9 +931,87 @@
             </foreach>
         </if>
             order by u.s_dd desc
-
-
     </select>
+
+
+    <!-- 导出所有不带图片的-->
+    <select id="getDaoChusOfAllNoPic" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
+        select
+        isnull(a.id,'') as id,
+        isnull(a.prd_code,'') as prdCode,
+        isnull(a.idx_name,'') as idxName,
+        isnull(a.idx_no,'') as idxNo,
+        isnull(a.fen_lei_no,'') as fenLeiNo,
+        isnull(a.fen_lei_name,'') as  fenLeiName,
+        isnull(a.mark_name,'') as markName,
+        isnull(a.mark_no,'') as markNo,
+        isnull(a.colour,'')as colour,
+        isnull(a.size,'') as size,
+        isnull(a.sal_name,'') as salName,
+        isnull(a.sal_No,'') as salNo,
+        isnull(a.cus_no,'') as cusNo,
+        isnull(a.cus_name,'') as cusName,
+        isnull(a.isfenjie,'') as isfenjie,
+        isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
+        isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
+        isnull(a.samp_requ,'') as sampRequ,
+        isnull(a.samp_desc,'') as sampDesc,
+        isnull(a.thum,'') as thum,
+        isnull(a.attach,'') as attach,
+        isnull(convert(varchar(36),a.insertdate,120),'') as insertdate,
+        isnull(a.confirmman,'') as confirmman,
+        isnull(a.confirmtimestr,'') as confirmtimestr,
+        isnull(convert(varchar(2),a.isconfirm),'') as isconfirm,
+        isnull(a.category,'')as category,
+        isnull(a.teamname,'') as teamname,
+        isnull(a.confirmrem,'')as confirmrem,
+        isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as unit,
+        isnull(a.businessdesc,'')as businessdesc,
+        isnull(a.financedesc,'') as financedesc ,
+        isnull(convert(varchar(36),a.startsellcount),'')as startsellcount ,
+        isnull(convert(varchar(36),a.modelcost),'')as modelcost,
+        isnull(convert(varchar(36),a.estimateprice),'')as estimateprice,
+        isnull(convert(varchar(36),a.littleorderprice),'')as littleorderprice,
+        isnull(a.modelcostinvoiceno,'')as modelcostinvoiceno,
+        isnull(convert(varchar(36),a.financestartsellcount),'')as financestartsellcount,
+        isnull( convert(varchar(36),a.financemodelcost),'')as financemodelcost,
+        isnull(convert(varchar(36),a.financelittleorderprice),'')as financelittleorderprice,
+        isnull(a.buyerdesc,'')as buyerdesc,
+        isnull(a.prd_No,'') as prdNo,
+        isnull(a.salemandesc,'')salemandesc,
+        isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
+        isnull(a.cus_No_Give,'') as   cusNoGive,
+        isnull(a.cus_Name_Give,'') as cusNameGive,
+        isnull(a.user_Name,'') as userName,
+        isnull(a.tenant_Id,'') as  tenantId,
+        isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as mainUnit ,
+        -- //含运费本币销售价格
+        isnull(convert(varchar(100),u1.up),'') as haveTransUpSaleBenBi,
+        --//含运费单价销售外币价格
+        isnull(convert(varchar(100),u3.up),'')as haveTransUpSaleWaiBi,
+        -- //无运费单价销售本币
+        isnull(convert(varchar(100),u.up),'') as noTransUpSaleBenBi,
+        -- //无运费单价销售WaiBi
+        isnull(convert(varchar(100),u2.up),'') as noTransUpSaleWaiBi,
+        isnull(x.nm_eng,'') as  nmEng
+        FROM prdt_samp a
+        LEFT JOIN UP_DEF u  ON   a.prd_no=u.prd_no and u.bil_type='1' and u.cur_id='RMB' and u.price_id='1'
+        LEFT JOIN UP_DEF u1  ON   a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and u1.olefield=u.olefield
+        LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
+        LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
+        LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
+        order by u.s_dd desc
+    </select>
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -145,6 +145,22 @@ public class ExportXlsParam {
         this.fields = fields;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "ExportXlsParam{" +
+                "ids=" + ids +
+                ", fields=" + fields +
+                ", confirmtimestr='" + confirmtimestr + '\'' +
+                ", confirmtimestrEnd='" + confirmtimestrEnd + '\'' +
+                ", insertdateStr='" + insertdateStr + '\'' +
+                ", insertdateStrEnd='" + insertdateStrEnd + '\'' +
+                ", idxName='" + idxName + '\'' +
+                ", fenLeiName='" + fenLeiName + '\'' +
+                ", prdCode='" + prdCode + '\'' +
+                ", salName='" + salName + '\'' +
+                ", isconfirm='" + isconfirm + '\'' +
+                ", isCheckOut='" + isCheckOut + '\'' +
+                ", cusName='" + cusName + '\'' +
+                '}';
+    }
 }

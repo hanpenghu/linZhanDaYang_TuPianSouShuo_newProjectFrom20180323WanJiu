@@ -7,16 +7,12 @@ import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
-import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
+
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
@@ -41,12 +37,16 @@ import java.util.*;
 @CrossOrigin
 @RestController
 public class DyExport2Thread {
-
+private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Cnst cnst;
-
     private String jarPath;
 
+    //导出所有用下面这个(带图片导出)
+//    http://47.98.45.100:8070/dyExportExcel2Thread?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
+    // {"ids":[],"fields":["salName","thum","cusName","cust.nm_eng","prdCode","idxName","fenLeiName","category","teamname","colour","size","mainUnit","noTransUpSaleBenBi","haveTransUpSaleBenBi","noTransUpSaleWaiBi","haveTransUpSaleWaiBi","financestartsellcount","financelittleorderprice","confirmtimestr","confirmman","sampRequ","sampMake","sampSend"]}
+   //不带图片的导出(fields里面的thum去掉)
+//    http://47.98.45.100:8070/dyExportExcel2Thread?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
     /**
      * param后面跟上一个URLEncode的json
      * http://localhost:8070/dyExportExcel?param=%7B%22ids%22%3A%5B%220000e1a2-ec00-4b06-94da-db80628473eb%22%2C%2200013fb7-ba16-4ad2-9ca6-7257c660f9a3%22%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22prdCode%22%2C%22mainUnit%22%2C%22haveTransUpSaleBenBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22noTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%5D%2C%22confirmtimestr%22%3A%222018-06-11%22%2C%22confirmtimestrEnd%22%3A%222018-06-20%22%7D
@@ -73,10 +73,8 @@ public class DyExport2Thread {
      */
 
     @RequestMapping(value = "dyExportExcel2Thread", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
-    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail){
-        p.p("-------------------------------------------------------");
-        p.p("dyExportExcel2Thread");
-        p.p("-------------------------------------------------------");
+    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail) {
+       log.info("《《《《《《《《打样产品导出 接口 dyExportExcel2Thread 开始》》》tenantId:{}》userEmail：{}》》param: {}》》》》",tenantId,userEmail,param);
         List<String> msg = new LinkedList<String>();
         try {
             this.isIgll(tenantId, userEmail, msg);
@@ -108,6 +106,7 @@ public class DyExport2Thread {
         //        p.p("-------------------------------------------------------");
         ExportXlsParam ep = this.formatJsonFromFront(param);
         if (null == ep) {
+            log.info("前端传过来的参数是null  ep  {}",ep);
             p.throwEAddToList("前端传过来的参数是null", msg);
         }
         List<String> idsFromConfirmTime = this.idsFromManyConditionSearch(ep);
@@ -133,57 +132,49 @@ public class DyExport2Thread {
 //        this.writeThisDownCountIntoFile(  bbb.add(bb)   );
 
         //线程里面传不进去ids,放到对象里穿进去
-        Map<String,List<String>> mapids=new HashMap();
-        mapids.put("ids",ids);
-        p.p("-------------------mapids.put(\"ids\",ids);------------------------------------");
-        p.p(ids);
-        p.p("-------------------------------------------------------");
-
+        Map<String, List<String>> mapids = new HashMap();
+        mapids.put("ids", ids);
+        log.info("《《《《《《《把所有ids放入map准备给组装excle的线程, ids总共有  {}  个》》》》》》》",ids.size());
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {
             this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
         //超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
-        this.igllManyPicOutOfMerory(ids,msg,list导出头信息);
+        this.igllManyPicOutOfMerory(ids, msg, list导出头信息);
         new Thread(() -> {
-            p.p("-------------------------------------------------------");
-            p.p("进入线程");
-            p.p("-------------------------------------------------------");
+            log.error("《《《《《《《下载线程开始》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
             try {
-                p.p("---------------------mapids.get(\"ids\").size()----------------------------------");
-                p.p(mapids.get("ids").size());
-                p.p("-------------------------------------------------------");
+               log.info("《《《《《《《要导出的所有的数据的个数是》{}》》》》》》",mapids.get("ids").size());
                 List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get("ids"));
-                p.p("-------------List<DaoChu> daoChus = this.ids分批得到DaoChu(mapids.get(\"ids\"))------------------------------------------");
-                p.p(daoChus.size());
-                p.p("-------------------------------------------------------");
                 if (p.empty(daoChus)) {
                     p.throwEAddToList("《您所选则的条件没有任何记录》daoChus是null", msg);
                 }
 
+                log.info("《《《《《写入excel开始-》tenantId:{}》》userEmail:{}》》》",tenantId,userEmail);
                 //把字段写入excel
-                Map<String, String> m = this.a写入excel(daoChus, list导出头信息,excelName001);
+                Map<String, String> m = this.a写入excel(daoChus, list导出头信息, excelName001);
                 File file = new File(m.get(this.excelPath));
                 file.createNewFile();
                 //将创建的excel情况放入数据库
-                this.dbRec(tenantId,userEmail,m,dateStr);
+                this.dbRec(tenantId, userEmail, m, dateStr);
+                log.info("《《《《《写入excel结束-》tenantId:{}》》userEmail:{}》》》",tenantId,userEmail);
 //                this.downCountSubstract( bb );
-               } catch (Exception e) {
+            } catch (Exception e) {
                 //如果组装excel异常在数据库记录一个下载失败的对象
-                    this.recErrorDownLoad(tenantId,userEmail,dateStr);
+                this.recErrorDownLoad(tenantId, userEmail, dateStr);
 //                    this.downCountSubstract(bb);
             }
-            p.p("-------------------------------------------------------");
-            p.p("线程结束");
-            p.p("-------------------------------------------------------");
+            log.info("《《《《《《《下载线程结束》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
         }).start();
 
     }
 
-    private void igllManyPicOutOfMerory(List<String> ids, List<String> msg,List<String> list导出头信息) {
+    private void igllManyPicOutOfMerory(List<String> ids, List<String> msg, List<String> list导出头信息) {
         //此时不用管,随便导出excel
-        if(!list导出头信息.contains("Product Photo 打样产品照片或图籍"))return;
-        if(ids!=null&&ids.size()>2000)p.throwEAddToList("您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项",msg);
+        if (!list导出头信息.contains("Product Photo 打样产品照片或图籍")) return;
+        if (ids != null && ids.size() > 2000)
+            log.info("《《《《《《《《《《《《《您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项》》》》》》》》》》》》");
+            p.throwEAddToList("您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项", msg);
     }
 
 //    private void downCountSubstract(BigDecimal bb) {
@@ -198,7 +189,7 @@ public class DyExport2Thread {
 //        }
 //    }
 
-    private String down="down";
+    private String down = "down";
 //    private void writeThisDownCountIntoFile(BigDecimal bbb) {
 //        p.writeToTxt(String.valueOf(bbb),new File(down).getAbsolutePath());
 //    }
@@ -229,7 +220,6 @@ public class DyExport2Thread {
 //        p.p(p.b(9999).compareTo(p.b(999000)));
 //        p.p("-------------------------------------------------------");
 //    }
-
 
 
     private void dbRec(String tenantId, String userEmail, Map<String, String> m, String dateStr) {
@@ -267,36 +257,24 @@ public class DyExport2Thread {
 
 
     private List<DaoChu> ids分批得到DaoChu(List<String> ids) {
-        p.p("-------------------------------------------------------");
-        p.p("ids分批得到DaoChu开始");
-        p.p("-------------------------------------------------------");
+        log.info("|<<<<<<<<ids分批得到DaoChu开始>>>>>>>>>|");
         List<DaoChu> daoChus = new LinkedList<DaoChu>();
-        p.p("-----------------------ids.size()--------------------------------");
-        p.p(ids.size());
-        p.p("-------------------------------------------------------");
+        log.info("《《《《《《《《《《《《《《分批得到DaoChus该批的数量：》{}》》》》》》》》",ids.size());
+
+        log.info("《《《《将所有ids的集合平均分成40分分别得到DaoChu》》》》");
         List<List<String>> lists = p.avgList(ids, 40);
-        p.p("---------------阿斯顿发骄傲了是大家--------------List<List<String>> lists = p.avgList(ids, 40)--------------------------");
-        p.p(lists);
-        p.p("-------------------------------------------------------");
-        int iiii=1;
+        int iiii = 1;
         for (List<String> ls : lists) {
-            p.p("第《"+iiii+"》次得到daoChus");
-            p.p("-------------------------------------------------------");
-            p.p("开始得到daoChus");
-            p.p("-------------------------------------------------------");
+            log.info("<<<<<<<<<<<第《{}》次得到daoChus开始>>>>>>>>>>>",iiii);
+            log.info("《《《《《《开始得到daoChus》》》》》》》》");
+            //当ls是空的时候就会导出所有的
             List<DaoChu> daoChus1 = cnst.a001TongYongMapper.getDaoChus(ls);
-            p.p("----------------daoChus1---------------------------------------");
-            p.p(daoChus1.size());
-            p.p("-------------------------------------------------------");
+            log.info("《《《《《《《该批的daoChus集合的长度》{}》》》》》",daoChus1.size());
             daoChus.addAll(daoChus1);
-            p.p("-------------------------------------------------------");
-            p.p("结束得到daoChus");
-            p.p("-------------------------------------------------------");
-            iiii=iiii+1;
+            log.info("<<<<<<<<<<<第《{}》次得到daoChus结束>>>>>>>>>>>",iiii);
+            iiii = iiii + 1;
         }
-        p.p("-------------------------------------------------------");
-        p.p("ids分批得到DaoChu结束");
-        p.p("-------------------------------------------------------");
+        log.info("|<<<<<<<<ids分批得到DaoChu结束>>>>>>>>>|");
         return daoChus;
     }
 
@@ -398,7 +376,7 @@ public class DyExport2Thread {
     private String excelPath = "excelPath";
     private String excelName = "excelName";
 
-    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息,String excelName001) {
+    private Map<String, String> a写入excel(List<DaoChu> daoChus, List<String> list导出头信息, String excelName001) {
         String excelName = Cnst.SampExport + excelName001 + ".xls";
         String a临时目录不带杠绝对路径 = f创建存储excel的临时目录不带杠();
         String excelPath = a临时目录不带杠绝对路径 + File.separator + excelName;
@@ -429,7 +407,7 @@ public class DyExport2Thread {
 
 
     private void a写行列(List<DaoChu> daoChus, HSSFSheet sheet1, HSSFCellStyle cellStyle, HSSFWorkbook wb, List<String> list导出头信息) {
-       this.a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
+        this.a写行头(sheet1.createRow(0), sheet1, cellStyle, list导出头信息);//第0行写成行头
         //以下是写内容行
         int i行计数器 = 1;//
         if (p.notEmpty(daoChus)) {
@@ -488,13 +466,13 @@ public class DyExport2Thread {
                 cell.setCellValue(""); // 设置内容 7
             }
             if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
-                p.p("=================设置照片=================================");
+//                p.p("=================设置照片=================================");
 //                    cell.setCellValue(""); // 设置内容 8
 //                p.p2(daoChu.getThum());
                 try {
                     this.a设置照片(daoChu.getThum(), sheet1, row, wb, 列计数器, i行计数器);
                 } catch (Exception e) {
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
             if ("Category Name".equals(s)) {
@@ -593,51 +571,46 @@ public class DyExport2Thread {
     }
 
 
-    private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) {
+    private void a设置照片(String thum, HSSFSheet sheet1, HSSFRow row, HSSFWorkbook wb, int a图所在列, int a行计数器) throws IOException {
 
         BufferedImage bufferImg = null;
-        try {
-            try {
-                //此try可以达到有缩略图的用缩略图,无缩略图的不用缩略图,避免了一堆复杂判断
-                //用try是因为可能有很多截取出错的地方
-                thum = jarPath
-                        + (
-                        cnst.daYangSuoLueTuAndFuJianZongPath.substring(2)
-                                + p.chaiFenZuHeFenGeFu(thum.replace(";", p.zuHeFenGeFu)).get(0)
-                ).replace("/", File.separator);
-            } catch (Exception e) {
-//                p.p1("wufa jiequ thum zifuchuan  ,keneng shi kongde,ye keneng shi null");
-            }
-            if(!new File(thum).exists())return;
-            ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-            //加载图片
-            bufferImg = ImageIO.read(new File(thum));
+        if(p.empty(thum))return ;
+        //此try可以达到有缩略图的用缩略图,无缩略图的不用缩略图,避免了一堆复杂判断
+        //用try是因为可能有很多截取出错的地方
+        thum = jarPath
+                + (
+                cnst.daYangSuoLueTuAndFuJianZongPath.substring(2)
+                        + p.chaiFenZuHeFenGeFu(thum.replace(";", p.zuHeFenGeFu)).get(0)
+        ).replace("/", File.separator);
+        File thumFile=new File(thum);
+        if (p.notExists(thumFile)) return;
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        //加载图片
+        bufferImg = ImageIO.read(new File(thum));
 
-            //图片行高不在这里设置,避免出现太高的情况
+        //图片行高不在这里设置,避免出现太高的情况
             /*int height = bufferImg.getHeight();
             int width = bufferImg.getWidth();
             sheet1.setColumnWidth(a行计数器, width);
             row.setHeightInPoints(height);*/
 
-            ImageIO.write(bufferImg, "jpg", byteArrayOut);
-            //创建一个图片
-            HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
-            //制造图片的位置参数
-            HSSFClientAnchor anchor = new HSSFClientAnchor
-                    (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
-            //插入图片
-            patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
+        ImageIO.write(bufferImg, "jpg", byteArrayOut);
+        //创建一个图片
+        HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
+        //制造图片的位置参数
+        HSSFClientAnchor anchor = new HSSFClientAnchor
+                (0, 0, 0, 0, (short) a图所在列, a行计数器, (short) (a图所在列 + 1), a行计数器 + 1);
+        //插入图片
+        patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));
 
-            if (p.notEmpty(bufferImg)) {
-                bufferImg.flush();
-            }
-            if (p.notEmpty(byteArrayOut)) {
-                byteArrayOut.flush();
-                byteArrayOut.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (p.notEmpty(bufferImg)) {
+            bufferImg.flush();
         }
+        if (p.notEmpty(byteArrayOut)) {
+            byteArrayOut.flush();
+            byteArrayOut.close();
+        }
+
     }
 
 
@@ -899,7 +872,13 @@ public class DyExport2Thread {
         String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
         s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
         s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
-       s="{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+        s = "{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+       //带图片导出
+        s="{\"ids\":[],\"fields\":[\"salName\",\"thum\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
+
+        //不带图片导出,fields里面没有thum
+        s="{\"ids\":[],\"fields\":[\"salName\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
+        s="{\"ids\":[],\"fields\":[]}";
         s = URLEncoder.encode(s, "UTF-8");
         p.p("-------------------------------------------------------");
         p.p(s);

@@ -172,6 +172,24 @@ public strictfp class p {
     private Map<String,Object>map=new HashMap<>();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *创建一个文件, 不存在再创建
+     * */
+
+    public static File createNewFile(String filePath) throws IOException {
+        File f=new File(filePath);
+        if(!f.exists()){
+            f.createNewFile();
+        }
+        //如果创造过之后还不存在,就返回null
+        if(!f.exists()){
+            f=null;
+        }
+        return f;
+    }
+
+
     /**
      *将  yyyy-MM-dd这种字符串变成时间戳
      * */

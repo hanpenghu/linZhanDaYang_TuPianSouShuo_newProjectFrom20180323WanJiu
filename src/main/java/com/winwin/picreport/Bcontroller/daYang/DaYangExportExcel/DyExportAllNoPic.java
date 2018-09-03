@@ -2,9 +2,11 @@ package com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel;
 
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
-import com.winwin.picreport.Edto.*;
+import com.winwin.picreport.Edto.CustExample;
+import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.pp;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.usermodel.*;
@@ -16,17 +18,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/6/1.
@@ -34,8 +37,8 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 @CrossOrigin
 @RestController
-public class DyExport {
-
+public class DyExportAllNoPic {
+    private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Cnst cnst;
 
@@ -65,155 +68,70 @@ public class DyExport {
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
      */
 
-    @RequestMapping(value = "dyExportExcel")//注意,下面这个param这玩意会自动解码decode
-    public ResponseEntity<byte[]> 打样产品导出(@Param("param") String param) throws Exception {
+    @RequestMapping(value = "dyExportExcelAllNoPic")//注意,下面这个param这玩意会自动解码decode
+    public ResponseEntity<byte[]> 打样产品导出所有不带图片(@Param("param") String param) throws Exception {
         jarPath = p.springBootJarPath();
         //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
 //        p.p("----1-------------打样产品导出 excel, 刚进入接口 dyExportExcel 的参数 param 如下--------------------------------------");
 //        p.p(param);
 //        p.p("-------------------------------------------------------");
-        ExportXlsParam ep = this.formatJsonFromFront(param);
+        log.info("《《类: 打样产品导出所有不带图片《《《《接口: dyExportExcelAllNoPic》前端穿过来参数是》param》{}》》》》",param);
+        ExportXlsParam ep = null;
+        try {
+            ep = this.formatJsonFromFront(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("《《《《《《《《《《前端传过来的参数无法格式化成ExportXlsParam对象  param: 》{}》》》》》》》",param);
+            log.info("《《《《《《《《前端传过来的参数无法格式化成ExportXlsParam对象.txt》》》》》》》");
+           return pp.returnBrowserFileToDownLoad(p.createNewFile("前端传过来的参数无法格式化成ExportXlsParam对象.txt"));
+        }
         if (null == ep) {
-            return null;
+            log.info("《《《《《《《《《《null == ep》前端传过来的参数是null》》》》》》》》》");
+            log.info("《《《《《《《《前端传过来的参数是null.txt》》》》》》》》");
+           return pp.returnBrowserFileToDownLoad(p.createNewFile("前端传过来的参数是null.txt"));
         }
-        List<String> idsFromConfirmTime = this.idsFromManyConditionSearch(ep);
-//        p.p("--------------------this.idsFromManyConditionSearch(ep, idsFromManyConditionSearch);-----------------------------------");
-//        p.p(idsFromConfirmTime);
-//        p.p("-------------------------------------------------------");
-        List<String> list导出头信息 = this.f得到完整导出头信息();
-        //注意  ep  是 空的,会直接报错给前端,不用管
-        List<String> ids = ep.getIds();
-        //为了装入 idsFromManyConditionSearch
-        if (null == ids) {
-            ids = new LinkedList<String>();
-        }
-        //将确认时间得到的id放入  全局id集合
-        this.perfectIds(ids, idsFromConfirmTime);
 
-        if (p.empty(ids)) {
-            p.p("#######得到时间获得的ids之后 ids是null或者空######");
-            return null;
-        }
+        List<String> list导出头信息 = this.f得到完整导出头信息();
+
         List<String> 前端穿过来要显示的fields = ep.getFields();
+        //不再导出图片,把图片的头信息删掉
+        if(p.notEmpty(前端穿过来要显示的fields)&&前端穿过来要显示的fields.contains("thum")){
+            //确定不要显示thum
+            前端穿过来要显示的fields.remove("thum");
+        }
         if (p.notEmpty(前端穿过来要显示的fields)) {
             this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
         }
 
 
+        log.info("《《{}《《《《从数据库拿到所有daoChus对象开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+        List<DaoChu> daoChus= cnst.a001TongYongMapper.getDaoChusOfAllNoPic();
+        log.info("《《《{}《《《从数据库拿到所有daoChus对象结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
 
-//        List<DaoChu> daoChus =
-//                this.a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径
-//                    (ids);
-
-        Long timeStamp1 = p.getTimeStamp();
-        l.error("==========start search=========="+p.getDate()+"===="+timeStamp1+"====================");
-        List<DaoChu> daoChus =this.ids分批得到DaoChu(ids);
-        Long timeStamp2 = p.getTimeStamp();
-        l.error("======end search=============="+p.getDate()+"===="+timeStamp2+"====================");
-        l.error("====================database search use time===="+(timeStamp2-timeStamp1)/1000+"=s==="+(timeStamp2-timeStamp1)/1000/60+"==min==============");
 
         if (   p.empty(daoChus)   ) {
             p.p("====daoChus是null=========");
             return null;
         }
 
-        //分级价格显示
-        //2018_7_18   weekday(3)   11:45:05  after add
-
-        Long timeStamp3 = p.getTimeStamp();
-        l.error("=======kai shi zu zhuang excel============="+p.getDate()+"===="+timeStamp3+"====================");
+        log.info("《《{}《《《《把所有字段写入excel开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
         //把字段写入excel
-        String excel路径 = this.a写入excel(daoChus, list导出头信息);
+        String excel路径 = this.a写入excel(daoChus,list导出头信息);
+        log.info("《《{}《《《《把所有字段写入excel结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
+
+        log.info("《《{}《《《《把excel写入服务器硬盘开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
         File file = new File(excel路径);
-        Long timeStamp4 = p.getTimeStamp();
-        l.error("============zu zhuang excel end========"+p.getDate()+"===="+timeStamp4+"====================");
-        l.error("====================zu zhuang EXCEL xiao hao shi jian===="+(timeStamp4-timeStamp3)/1000+"=s==="+(timeStamp4-timeStamp3)/1000/60+"==min==============");
+        log.info("《《{}《《《《把excel写入服务器硬盘结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("UTF-8"), "iso-8859-1"));
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
-    }
-
-    private List<DaoChu>  ids分批得到DaoChu(List<String> ids) {
-        List<DaoChu>daoChus=new LinkedList<DaoChu>();
-        //平均分成40分
-        List<List<String>> lists = p.avgList(ids, 40);
-        for(List<String> ls:lists){
-            List<DaoChu> daoChus1 = cnst.a001TongYongMapper.getDaoChus(ls);
-            daoChus.addAll(daoChus1);
-        }
-        return daoChus;
+        return pp.returnBrowserFileToDownLoad(file);
     }
 
 
-    //完善ids,主要是从传入时间也得到的ids放进来
-    private void perfectIds(List<String> ids, List<String> idsFromConfirmTime) {
-            //        p.p("--perfectIds()----idsFromManyConditionSearch=" + idsFromConfirmTime + "----------------");
-            //        p.p("---perfectIds()---ids=" + ids + "----------------");
-        if (p.notEmpty(ids)) {
-            //            l.error("----3---前端穿过来的ids不为空----------------");
-        }
-        if (ids != null && ids.size()==0&&idsFromConfirmTime != null && idsFromConfirmTime.size() > 0) {
-            ids.addAll(idsFromConfirmTime);
-        }
-        if (p.notEmpty(ids)) {
-            //            l.error("-----4------最终得到的ids不为空--------------");
-        }
-        p.removeNull(ids);
-    }
 
 
-    private List<String> idsFromManyConditionSearch(ExportXlsParam ep) {
-        List<ExportXlsParam> epList = new LinkedList<ExportXlsParam>();
-        if (p.empty(ep.getFenLeiName())) {
-            epList.add(ep);
-        } else {
-            List<String> fenLeiNameList = cnst.a001TongYongMapper.diGuiFenLeiName(ep.getFenLeiName());
-            if (p.notEmpty(fenLeiNameList)) {
-                for (String s : fenLeiNameList) {
-                    if (p.notEmpty(s)) {
-                        ExportXlsParam e = new ExportXlsParam();
-                        BeanUtils.copyProperties(ep, e);
-                        e.setFenLeiName(s);
-                        epList.add(e);
-                    }
-                }
-            }
-        }
 
-        List<String> ids来自多条件查询 = new LinkedList<>();
-        for (ExportXlsParam ee : epList) {
-            List<String> idList一次查询 = this.f得到一次多条件的ids(ee);
-            if (p.notEmpty(idList一次查询)) {
-                ids来自多条件查询.addAll(idList一次查询);
-            }
-        }
 
-        return ids来自多条件查询;
-    }
 
-    private List<String> f得到一次多条件的ids(ExportXlsParam ep) {
-//        p.p("---------idsFromManyConditionSearch--------------ExportXlsParam--------------------------------");
-//        p.p(ep);
-//        p.p("-------------------------------------------------------");
-        List<String> ids来自多条件查询 = null;
-        //起止时间有一个非空才取id//注意,sql限制最多取出500个
-        //通过确认时间过得id
-//        if(this.f多条件查询成立条件(ep)){
-        ids来自多条件查询 = cnst.a001TongYongMapper.getIdUseConfirmTime(ep);
-        if (p.notEmpty(ids来自多条件查询)) {
-                //                l.error("--2----起止时间得到的ids不为空----------");
-        } else {
-                //                l.error("--2----起止时间得到的ids为null---idsFromManyConditionSearch=" + ids来自多条件查询 + "-------");
-        }
-            //            p.p("--idsFromManyConditionSearch= cnst.a001TongYongMapper.getIdUseConfirmTime-----------------------------------------------------");
-            //            p.p(ids来自多条件查询);
-            //            p.p("-------------------------------------------------------");
-//        }
-        return ids来自多条件查询;
-    }
 
 
 
@@ -448,7 +366,7 @@ public class DyExport {
             } catch (Exception e) {
 //                p.p1("wufa jiequ thum zifuchuan  ,keneng shi kongde,ye keneng shi null");
             }
-
+            if(p.notExists(new File(thum)))return;
             ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
             //加载图片
             bufferImg = ImageIO.read(new File(thum));
@@ -584,47 +502,6 @@ public class DyExport {
         return file.getAbsolutePath();
     }
 
-
-    //对于销售定价,每次找到up_def中最近s_dd的一个
-    private List<DaoChu> a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径(List<String> ids) {
-        List<DaoChu> daoChuList = new LinkedList<DaoChu>();
-//        p.p("------------a根据id找到对应的要导出的来自打样主表的excel信息_主要是销售的定价和缩略图的绝对路径   的ids-------------------------------------------");
-//        p.p(ids);
-//        p.p("-------------------------------------------------------");
-        for (String id : ids) {
-            DaoChu daoChu = new DaoChu();
-            //得到 haveTransUpSaleBenBi
-            DaoChu daoChu1 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.benBi, Cnst.salPriceId, id);
-//            p.p("---------------------------daoChu1.getMainUnit()----------------------------");
-            if (null != daoChu1) {
-//                p.p(daoChu1.getMainUnit());
-            }
-//            p.p("-------------------------------------------------------");
-            //haveTransUpSaleWaiBi
-            DaoChu daoChu2 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeHaveTrans, Cnst.USD, Cnst.salPriceId, id);
-            //noTransUpSaleBenBi
-            DaoChu daoChu3 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.benBi, Cnst.salPriceId, id);
-            //noTransUpSaleWaiBi
-            DaoChu daoChu4 = cnst.a001TongYongMapper.getPrdtSamp002(Cnst.saleBilTypeNoTrans, Cnst.USD, Cnst.salPriceId, id);
-
-//            p.p("------------------------所有价格-------------------------------");
-//            p.p(daoChu1.getUp());
-//            p.p(daoChu2.getUp());
-//            p.p(daoChu3.getUp());
-//            p.p(daoChu4.getUp());
-//            p.p("-------------------------------------------------------");
-            this.a复制daoChu对象(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
-            this.a设置daoChu对象的各种价格(daoChu, daoChu1, daoChu2, daoChu3, daoChu4);
-            daoChu.setUp("");
-            p.strValeOfNullSpace(daoChu);
-            String thum = this.a缩略图全路径生成(daoChu);
-            daoChu.setThum(thum);
-            this.NmEngSet(daoChu);
-            daoChuList.add(daoChu);
-
-        }
-        return daoChuList;
-    }
 
     private void NmEngSet(DaoChu daoChu) {
         if (p.empty(daoChu.getNmEng())) {

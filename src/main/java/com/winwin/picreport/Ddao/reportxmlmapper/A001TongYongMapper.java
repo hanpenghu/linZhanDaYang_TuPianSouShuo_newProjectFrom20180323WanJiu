@@ -412,6 +412,11 @@ public interface A001TongYongMapper {
 
     List<DaoChu> getDaoChus(@Param("ids") List<String> ids);
 
+
+    List<DaoChu> getDaoChusOfAllNoPic();
+
+
+
     @Select({"select down from users u inner join tenant t on u.tenantid=t.tenantid where u.tenantid=#{tenantId} and (u.userEmail=#{userEmail} or u.user_name=#{userEmail} or u.phone_no=#{userEmail})"})
     String selectDown(@Param("tenantId") String tenantId, @Param("userEmail") String userEmail);
 
