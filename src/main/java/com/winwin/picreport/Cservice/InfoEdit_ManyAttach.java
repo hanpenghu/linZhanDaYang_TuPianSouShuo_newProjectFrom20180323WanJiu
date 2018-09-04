@@ -43,6 +43,8 @@ public class InfoEdit_ManyAttach {
         p.p("---------------------------333----------------------------");
         //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
+        //等到最下面从新更新fenLeiNo用
+        String id = prdtSampOb.getId();
         p.p("-----------------------prdtSamp--------------------------------");
         p.p(prdtSamp);
         p.p("-------------------------------------------------------");
@@ -59,10 +61,14 @@ public class InfoEdit_ManyAttach {
         this.prdt表里的编码同步更新(prdtSampOb);
         //把商品表prdt里的idx1分类(fen_lei_no)也更新了
         this.prdtTabIdx1Update(prdtSampOb);
+        cnst.genFenLeiNo.upDateTimeOfPrdtSamp(id);
+        //根据prdt_samp的id来更新fenLeiNo(prdt_samp和prdt)中的 2018_9_4   weekday(2)   14:00:58
+        cnst.genFenLeiNo.g(id);
     }
 
     //把商品表prdt里的idx1分类也更新了
-    private void prdtTabIdx1Update(PrdtSamp0 prdtSampOb) {
+    @Transactional
+    public void prdtTabIdx1Update(PrdtSamp0 prdtSampOb) {
         if(p.empty(prdtSampOb.getFenLeiNo())){
             //通过分类name到indx里面找到分类no
             prdtSampOb.setFenLeiNo(cnst.a001TongYongMapper.getFenLeiNoUseFenLeiName(prdtSampOb.getFenLeiName()));

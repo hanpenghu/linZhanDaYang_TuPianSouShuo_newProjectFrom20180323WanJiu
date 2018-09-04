@@ -259,7 +259,7 @@
         ORDER BY insertdate DESC
     </select>
 
-    <!-- 产品打样列表多条件查询 按照prd_code从大到小排列-->
+    <!-- 产品打样列表多条件查询 按照prd_code从大到小排列,后来改为按insertdate排序并且按编码规则查询带编码条件的-->
     <select id="chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC" resultMap="PrdtSampBaseResultMap">
         SELECT
         TOP
@@ -278,7 +278,12 @@
             <!-- 产品打样列表多条件查询的条件-->
             <include refid="productProofWithManyCondition"/>
             <if test=" prdCode != null and prdCode != '' ">
-                AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+                AND (
+                        isnull(prd_Code,'') =  #{prdCode}
+                        OR
+                        isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+                )
+
             </if>
             ORDER BY insertdate DESC
         )
@@ -286,7 +291,11 @@
         <!-- 产品打样列表多条件查询的条件-->
         <include refid="productProofWithManyCondition"/>
         <if test=" prdCode != null and prdCode != '' ">
-            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            AND (
+                    isnull(prd_Code,'') =  #{prdCode}
+                    OR
+                    isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            )
         </if>
         ORDER BY insertdate DESC
     </select>

@@ -13,6 +13,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class ManyConditionSearchOfPrdtSamp {
+    private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Autowired
     private Cnst cnst;
@@ -28,6 +29,7 @@ public class ManyConditionSearchOfPrdtSamp {
      * */
     @RequestMapping(value= "chanPinBianMaJianDangTiaoJianChaXun", method = RequestMethod.POST)
     public @ResponseBody FenYe f(@RequestBody FenYe fenYe,@RequestParam(value="ifGetPrice",required =false)String ifGetPrice){
+        log.info("-----chanPinBianMaJianDangTiaoJianChaXun  jieKou----ifGetPirce PARAM:----{}------",ifGetPrice);
         if(fenYe==null){
             FenYe f=new FenYe();
             ArrayList<PrdtSamp0> prdtSamps = new ArrayList<>();
@@ -55,9 +57,7 @@ public class ManyConditionSearchOfPrdtSamp {
     private FenYe manyConditionSearchOfPrdtFiltList(FenYe f,String ifGetPrice) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
         boolean b = this.conditionOnlyPrdCode(p1);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换前多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        p.p(p1);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        log.info("~~~~~jieKou :chanPinBianMaJianDangTiaoJianChaXun~~~~~~~~~~~~zhuanHuanQianDuoTiaoJianChaXun TEST~~~~~start~~~~qianDuanChuanGuoLaiDe condition: {}~~~~~~~~~~~~~~~",p1);
         //注意,Select,不用写在service里面也可以
         //得到创建开始时间时间戳
         String insertdateStr = p1.getInsertdateStr();
@@ -99,15 +99,24 @@ public class ManyConditionSearchOfPrdtSamp {
             p1.setDangQianYe(f.getDangQianYe());
         }
 
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~转换后多条件的条件实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        p.p(p1);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
+        log.info("~~~~~jieKou :chanPinBianMaJianDangTiaoJianChaXun~~~~~~~~~~~~zhuanHuanHouDuoTiaoJianChaXun TEST~~~~~start~~~~qianDuanChuanGuoLaiDe condition: {}~~~~~~~~~~~~~~~",p1);
 
 
 
         List<PrdtSamp0> prdtSampListOrg;
+        //此时是带编码的查询, 要设置特定规则(根据编码规则),所以单走一直
+        //带编码的查询起初是insertdate排序,后来被改为prdCode排序,所以我这里走一分支,再后来,
+        //又恢复insertdate排序,但是要按照(编码规则)查询,
         if(b){
-            prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(p1);
+            //由于老郑规定产品编码建档的使用该规则,其他模块的不使用改规则,经过
+            //我测试,徐勇只有"产品编码建档"里面把ifGetPrice传过来参数"noPriceModel"了,我
+            //暂时拿该参数当做产品编码建档的标记,如果以后还有传过来  noPriceModel的模块,肯定
+            //要换另外一个标记, 因为老郑只是规定产品编码建档查询适合他说的编码规则,其他模块保持不变
+            if(p.dy(ifGetPrice,不要价格模块)){//此时确定是产品编码建档模块传过来的查询
+                prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(p1);
+            }else{
+                prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+            }
         }else{
             prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
         }

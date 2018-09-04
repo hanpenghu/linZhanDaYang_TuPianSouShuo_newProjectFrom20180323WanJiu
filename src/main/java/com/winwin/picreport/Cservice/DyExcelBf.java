@@ -121,12 +121,14 @@ public class DyExcelBf {
     }
 
     private PrdtSamp f设置pp(String uuid, PrdtSampCreateUser usr) {
+        Date dbDate = cnst.getDbDate();
         PrdtSamp pp=new PrdtSamp();
         pp.setId(uuid);
-        pp.setInsertdate(cnst.getDbDate());
+        pp.setInsertdate(dbDate);
         pp.setUserName(usr.getUserName());
         pp.setTenantId(usr.getTenantId());
         pp.setIsconfirm(0);
+        pp.setUpdateDate(dbDate);
         return pp;
     }
 

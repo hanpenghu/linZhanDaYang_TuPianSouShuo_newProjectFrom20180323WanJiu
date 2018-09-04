@@ -362,6 +362,63 @@ public strictfp class p {
     }
 
 
+    /**
+     *用subList把原来的list分成至多有  mostCountInOneSubList个数元素的集合
+     * mostCountInOneSubList是每个list里尽量并且至多能存的个数,
+     * mostCountInOneSubList是分完后每个list里存的平均个数,
+     * 当然,不能整除的时候最后一个放入的余数小于mostCountInOneSubList
+     * */
+
+    public static <T>List<List<T>> avgSubList(List<T>sourceList,int mostCountInOneSubList){
+        if(null==sourceList){
+            return null;
+        }else{
+            int totalListSize = sourceList.size();
+            //能不能整除都按不能整除算, 整除的时候会多加一个空集合,判空一下不add就行了
+            //余数
+            int yuShu = totalListSize % mostCountInOneSubList;
+            //商
+            int shang=totalListSize / mostCountInOneSubList;
+            //先把整除的放进去
+            List<List<T>> lists = new LinkedList<List<T>>();
+            //用于计算余数最后的subList的k起始值
+            int k=0;
+            for(int i=0;i<shang;i++){
+                lists.add(sourceList.subList(i * mostCountInOneSubList, (i + 1) * mostCountInOneSubList));
+                if(i==shang-1){
+                    k=(i + 1) * mostCountInOneSubList;
+                }
+            }
+            if(yuShu!=0){
+                lists.add(sourceList.subList(k, k + yuShu));
+            }
+            return lists;
+        }
+    }
+
+
+
+
+//    public static void main(String[]args){
+//            List<Integer>list=new ArrayList<Integer>();
+////            list.add(1);
+////            list.add(2);
+////            list.add(3);
+////            list.add(4);
+////            list.add(5);
+////            list.add(6);
+////            list.add(7);
+////            list.add(8);
+////            list.add(9);
+//            p.p(avgSubList(list,3));
+//
+//    }
+
+
+
+
+
+
 //    public static void main(String[]args){
 //        List<String> g = new linklistT<String>().a("1")
 //                .a("2")

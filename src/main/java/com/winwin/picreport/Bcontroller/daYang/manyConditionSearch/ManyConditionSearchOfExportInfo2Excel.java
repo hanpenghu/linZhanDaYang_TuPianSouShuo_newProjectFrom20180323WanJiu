@@ -106,7 +106,9 @@ public class ManyConditionSearchOfExportInfo2Excel {
         System.out.println("================p1.getFenLeiName()="+p1.getFenLeiName()+"==========================================");
         List<PrdtSampExcleExportManyCondition> prdtSampExcels;
         if(b){
-            //为了根据prd_code排序专门走这一步
+            //为了根据prd_code排序专门走这一步,后来改成按insertdate排序又按老郑说的编码规则查询
+            //只用于
+            //昨天说了只改产品编码建档里的查询，销售定价，样品确认模块里怎么受影响了 2018_9_4   weekday(2)   9:29:34 by 老郑
             prdtSampExcels = cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode(p1);
         }else{
             //不能根据 prd_code排序走这一步

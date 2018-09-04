@@ -1,6 +1,9 @@
 package com.winwin.picreport.Bcontroller.daYang;
+import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
+import com.winwin.picreport.Edto.PrdtSamp;
+import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Futils.ListUtils.ListUtils;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
 import com.winwin.picreport.Futils.hanhan.linklistT;
@@ -16,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/d")
 public class DyInfoUpdate {
+    private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Cnst cnst;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,22 +47,17 @@ public class DyInfoUpdate {
                         @RequestParam(value = "attach9", required = false) MultipartFile attach9,
                         @RequestParam(value = "attach10", required = false) MultipartFile attach10,
                         HttpServletRequest request) {
-        List<String>ms=new LinkedList<String>();
+        List<String>ms=new LinkedList<String>( );
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-        p.p("-----------------prdtSamp1--------------------------------------");
-        p.p(prdtSamp1);
-        p.p("-------------------------------------------------------");
+        this.UpdateUpdateTimeSetFront(prdtSamp1);
         List<MultipartFile> attachList =new LinkedList<MultipartFile>();new ListUtils<MultipartFile>().add(attach1,attachList).add(attach2,attachList).add(attach3,attachList).add(attach4,attachList).add(attach5,attachList).add(attach6,attachList).add(attach7,attachList).add(attach8,attachList).add(attach9,attachList).add(attach10,attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~1~~~~~~~~~~~~~~~~~~~");
-        System.out.println(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        p.removeNull(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~~2~~~remvoeNull~~~~~~~~~~~~~~~");
-        System.out.println(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
             cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms,"yuan");
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错 2018_9_4   weekday(2)   12:47:28
+            cnst.genFenLeiNo.f();
         } catch (Exception e) {
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错 2018_9_4   weekday(2)   12:47:28
+            cnst.genFenLeiNo.f();
             e.printStackTrace();
             if(ms.contains(e.getMessage())){
                 return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(e.getMessage()).setOtherMsg(e.getMessage())).g();
@@ -66,6 +65,7 @@ public class DyInfoUpdate {
                 return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg("《未知异常》").setOtherMsg("《未知异常》")).g();
             }
         }
+
         return new linklistT<Msg>().a(Msg.gmg().setStatus("37").setMsg("成功").setOtherMsg("成功")).g();
     }
 
@@ -93,20 +93,16 @@ public class DyInfoUpdate {
                                                        HttpServletRequest request) {
         List<String>ms=new LinkedList<String>();
         String prdtSamp1 = request.getParameter("prdtSamp");//文本信息
-        p.p("-----------------prdtSamp1--------------------------------------");
-        p.p(prdtSamp1);
-        p.p("-------------------------------------------------------");
+        log.info("<<<<<<<<<<<<<<<<daYangXiuGaiJieKou>qianDuanChuanGuoLaiDeWenBenShi>>{}>>>>>>>>>>>>>",prdtSamp1);
         List<MultipartFile> attachList =new LinkedList<MultipartFile>();new ListUtils<MultipartFile>().add(attach1,attachList).add(attach2,attachList).add(attach3,attachList).add(attach4,attachList).add(attach5,attachList).add(attach6,attachList).add(attach7,attachList).add(attach8,attachList).add(attach9,attachList).add(attach10,attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~1~~~~~~~~~~~~~~~~~~~");
-        System.out.println(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
-        p.removeNull(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验imageUpLoadAndDataSave_InfoEdit_ManyAttach~~~~~~2~~~remvoeNull~~~~~~~~~~~~~~~");
-        System.out.println(attachList);
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~实验~~~~~~~~~~~~~~~~~~~~~~~~");
         try {
+            this.UpdateUpdateTimeSetFront(prdtSamp1);
             cnst.infoEditOfManyAttach.infoEditOfManyAttach(thum,attachList,prdtSamp1,ms,prdCodeOrg);
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错 2018_9_4   weekday(2)   12:47:28
+            cnst.genFenLeiNo.f();
         } catch (Exception e) {
+            //弥补分类编号在prdt_samp 和prdt里面不产生的过错 2018_9_4   weekday(2)   12:47:32
+            cnst.genFenLeiNo.f();
             if(ms.contains(e.getMessage())){
                 return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg(e.getMessage()).setOtherMsg(e.getMessage())).g();
             }else{
@@ -114,6 +110,14 @@ public class DyInfoUpdate {
             }
         }
         return new linklistT<Msg>().a(Msg.gmg().setStatus("37").setMsg("成功").setOtherMsg("成功")).g();
+    }
+
+    private void UpdateUpdateTimeSetFront(String prdtSamp1) {
+
+        try {
+            PrdtSamp prdtSamp = JSON.parseObject(prdtSamp1, PrdtSamp.class);
+            cnst.genFenLeiNo.upDateTimeOfPrdtSamp(prdtSamp.getId());
+        } catch (Exception e) {}
     }
 
 /////////////////////////////////////////////////////////////////////////

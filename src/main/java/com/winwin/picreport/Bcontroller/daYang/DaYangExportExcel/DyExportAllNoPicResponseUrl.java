@@ -41,28 +41,8 @@ public class DyExportAllNoPicResponseUrl {
 
     private String jarPath;
     /**
-     * param后面跟上一个URLEncode的json
-     * http://localhost:8070/dyExportExcel?param=%7B%22ids%22%3A%5B%220000e1a2-ec00-4b06-94da-db80628473eb%22%2C%2200013fb7-ba16-4ad2-9ca6-7257c660f9a3%22%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22prdCode%22%2C%22mainUnit%22%2C%22haveTransUpSaleBenBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22noTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%5D%2C%22confirmtimestr%22%3A%222018-06-11%22%2C%22confirmtimestrEnd%22%3A%222018-06-20%22%7D
-     * 传参：
-     * {"ids":["id1","id2","id3"],"fields":["field1","field2","field3"]}
-     * 第一个list是确定下载那些行
-     * 第二个列表是确定下载那些列
-     * js请求:
-     * Content-Type    application/json
-     * //        List<DaoChu> prdtSamp001s = cnst.a001TongYongMapper.getPrdtSamp001(ids);
-     *
-     * @RequestBody ExportXlsParam ep
-     * <p>
-     * 0009c584-ff12-4c86-9392-8f5319df12cf  thum有东西
-     * <p>
-     * 0000436d-0797-4e7b-9d8d-3ff0a30ea5c0   thum是null或者""
-     * <p>
-     * 这种方式并不完美,完美的方式是返回一个url给前端下载,
-     * <p>
-     * 注意,这个方法还存在单位 mainUnit的问题,  因为我们的单位在界面是保存在up_def
-     * 的hj_no中  ,  比如   主:pcs  副:pcs    这种
-     * ,但是我现在取出的是  prdt中的ut主单位,   这就有点问题了,因为当时定价的单位是保存在up_def的hj_no的,虽然也检查了
-     * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
+     * 导出所有
+     http://47.98.45.100:8070/dyExportExcelAllNoPic?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
      */
 
     @RequestMapping(value = "dyExportExcelAllNoPic")//注意,下面这个param这玩意会自动解码decode
@@ -126,9 +106,8 @@ public class DyExportAllNoPicResponseUrl {
 
             return cnst.dirUrl+Cnst.saveExcelTemp+"/"+file.getName();
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage(),e);
-            return "e.getMessage()";
+            log.error("《《《《《《《《dyExportExcelAllNoPic导出所有打样价格接口发生未知异常》》{}》》》》》》",e.getMessage());
+            return "《《《《《《《《dyExportExcelAllNoPic导出所有打样价格接口发生未知异常》》"+e.getMessage()+"》》》》》》";
         }
     }
 

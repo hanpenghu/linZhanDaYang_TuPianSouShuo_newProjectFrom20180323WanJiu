@@ -40,8 +40,8 @@ public class D1DaYangService {
             String imageThumUrl = "";
             String attachmentUrl = "";
             *//**
-             *下面是保存缩略图和附件
-             * *//*
+     *下面是保存缩略图和附件
+     * *//*
 
             if (thum != null) {
                 String thumImg = thum.getOriginalFilename();
@@ -95,14 +95,16 @@ public class D1DaYangService {
 
 
             *//**suoLueTuWenJianJia=suoLueTuWenJianJia/
-             *   @Value("${suoLueTuWenJianJia}") private String suoLueTuWenJianJia;
+     *   @Value("${suoLueTuWenJianJia}") private String suoLueTuWenJianJia;
 
-             @Value("${fuJianWenJianJia}") private String fuJianWenJianJia;
-              * *//*
+     @Value("${fuJianWenJianJia}") private String fuJianWenJianJia;
+      * *//*
 
-            *//**
-             *下面是插入数据库数据用的
-             * *//*
+            */
+
+    /**
+     * 下面是插入数据库数据用的
+     *//*
             String prdtSamp = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
             PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp, PrdtSamp0.class);
             //注意,产品建档的时候直接插入缩略图url字段,将来update的时候得到原来的加上去
@@ -117,139 +119,137 @@ public class D1DaYangService {
         return MessageGenerate.generateMessage("保存失败", "保存失败",
                 "数据库系统级别错误", "", "38");
     }*/
-
-
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Msg> ImageUpLoadAndDataSave002OfManyAttach
-            (String projectPath, MultipartFile thum, List<MultipartFile> attachList,
-             HttpServletRequest request, String daYangSuoLueTuAndFuJianZongPath,
-             String dirUrl, String suoLueTuWenJianJia, String fuJianWenJianJia) throws Exception {
+    (String projectPath, MultipartFile thum, List<MultipartFile> attachList,
+     HttpServletRequest request, String daYangSuoLueTuAndFuJianZongPath,
+     String dirUrl, String suoLueTuWenJianJia, String fuJianWenJianJia) throws Exception {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //下面主要是判断产品编码是否存在,存在就return
+        //下面主要是判断产品编码是否存在,存在就return
 
-            String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
+        String prdtSamp0 = request.getParameter("prdtSamp");//得到其他的text数据(PrdtSamp)
 
-            PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
+        PrdtSamp0 prdtSampOb = JSON.parseObject(prdtSamp0, PrdtSamp0.class);
         p.p("---------------------------前端穿过来的分类编号是----------------------------");
         p.p(prdtSampOb.getFenLeiNo());
         p.p("-------------------------------------------------------");
-            if(p.empty(prdtSampOb.getFenLeiNo())) {
-                return MessageGenerate.generateMessage("保存失败",
-                        "保存失败", "前端传过来的分类编号fenLeiNo是空的!", "", "36");
-            }
-            List <Msg> msgs1=this.isPrdCodeRepeat(prdtSampOb);
-            if(p.notEmpty(msgs1)){
-               return msgs1;
-            }
+        if (p.empty(prdtSampOb.getFenLeiNo())) {
+            return MessageGenerate.generateMessage("保存失败",
+                    "保存失败", "前端传过来的分类编号fenLeiNo是空的!", "", "36");
+        }
+        List<Msg> msgs1 = this.isPrdCodeRepeat(prdtSampOb);
+        if (p.notEmpty(msgs1)) {
+            return msgs1;
+        }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            String uuidstr = p.sj();
-            String imageThumUrl = "";
-            String attachmentUrl = "";
-            /**
-             *下面是保存缩略图和附件
-             * */
-            if (thum != null) {
-                String thumImg = thum.getOriginalFilename().replace("#","_jh_")
-                        .replace(";","_fh_")
-                        .replace("!","_gth_")
-                        .replace("[","_zzkh_")
-                        .replace("]","_yzkh_");
-                //缩略图和附件不能包含截取字符串的符号
-                if (thumImg.contains("!") || thumImg.contains(";")) {
-                    return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号",
-                            "您的图片不能包含有!符号或者;符号", "", "34");
-                } else {
+        String uuidstr = p.sj();
+        String imageThumUrl = "";
+        String attachmentUrl = "";
+        /**
+         *下面是保存缩略图和附件
+         * */
+        if (thum != null) {
+            String thumImg = thum.getOriginalFilename().replace("#", "_jh_")
+                    .replace(";", "_fh_")
+                    .replace("!", "_gth_")
+                    .replace("[", "_zzkh_")
+                    .replace("]", "_yzkh_");
+            //缩略图和附件不能包含截取字符串的符号
+            if (thumImg.contains("!") || thumImg.contains(";")) {
+                return MessageGenerate.generateMessage("您的图片不能包含有!符号或者;符号",
+                        "您的图片不能包含有!符号或者;符号", "", "34");
+            } else {
 
-                    thumImg = uuidstr + "!" + thumImg;
-                }
-                //将缩略图保存在指定的目录
-                thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, thumImg));
-                //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
+                thumImg = uuidstr + "!" + thumImg;
+            }
+            //将缩略图保存在指定的目录
+            thum.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace(".", "") + suoLueTuWenJianJia, thumImg));
+            //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
 //                imageThumUrl=dirUrl+suoLueTuWenJianJia+thumImg+";";//分号是分隔符
-                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                imageThumUrl = suoLueTuWenJianJia + thumImg + ";";
+            //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+            imageThumUrl = suoLueTuWenJianJia + thumImg + ";";
+            if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace
+                    (".", "") + suoLueTuWenJianJia, thumImg).exists()) {
+                return MessageGenerate.generateMessage("保存失败", "保存失败",
+                        "缩略图没有保存成功导致所有数据没保存!", "", "35");
+            }
+
+        }
+
+        for (MultipartFile attach : attachList) {
+            if (attach != null) {
+                String attachment = attach.getOriginalFilename().replace("#", "_jh_")
+                        .replace(";", "_fh_")
+                        .replace("!", "_gth_")
+                        .replace("[", "_zzkh_")
+                        .replace("]", "_yzkh_");
+                //缩略图和附件不能包含截取字符串的符号
+                if (attachment.contains("!") || attachment.contains(";")) {
+                    return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号",
+                            "您的附件不能包含有!符号或者;符号", "", "34");
+                } else {
+                    attachment = uuidstr + "!" + attachment;
+                }
+                //将附件保存在指定的目录
+                attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath
+                        .replace(".", "") + fuJianWenJianJia, attachment));
+
                 if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace
-                        (".", "") + suoLueTuWenJianJia, thumImg).exists()) {
-                    return MessageGenerate.generateMessage("保存失败", "保存失败",
-                            "缩略图没有保存成功导致所有数据没保存!", "", "35");
+                        (".", "") + fuJianWenJianJia, attachment).exists()) {
+                    return MessageGenerate.generateMessage("保存失败",
+                            "保存失败", "附件没有保存成功导致所有数据没保存!", "", "36");
                 }
-
-            }
-
-            for (MultipartFile attach : attachList) {
-                if (attach != null) {
-                    String attachment = attach.getOriginalFilename().replace("#","_jh_")
-                            .replace(";","_fh_")
-                            .replace("!","_gth_")
-                            .replace("[","_zzkh_")
-                            .replace("]","_yzkh_");
-                    //缩略图和附件不能包含截取字符串的符号
-                    if (attachment.contains("!") || attachment.contains(";")) {
-                        return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号",
-                                "您的附件不能包含有!符号或者;符号", "", "34");
-                    } else {
-                        attachment = uuidstr + "!" + attachment;
-                    }
-                    //将附件保存在指定的目录
-                    attach.transferTo(new File(projectPath + daYangSuoLueTuAndFuJianZongPath
-                            .replace(".", "") + fuJianWenJianJia, attachment));
-
-                    if (!new File(projectPath + daYangSuoLueTuAndFuJianZongPath.replace
-                            (".", "") + fuJianWenJianJia, attachment).exists()) {
-                        return MessageGenerate.generateMessage("保存失败",
-                                "保存失败", "附件没有保存成功导致所有数据没保存!", "", "36");
-                    }
-                    //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
+                //将缩略图在springboot中的资源定位url搞出来,将来给徐勇用于显示在页面,暂时保存在数据库
 //                attachmentUrl=dirUrl+fuJianWenJianJia+attachment+";";//分号是分隔符
-                    //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
-                    attachmentUrl = attachmentUrl + fuJianWenJianJia + attachment + ";";
-                }
+                //新思路,数据库不再存路径,只存名字,返回给前端的时候加上路径dirUrl
+                attachmentUrl = attachmentUrl + fuJianWenJianJia + attachment + ";";
             }
+        }
 
 
-            /**suoLueTuWenJianJia=suoLueTuWenJianJia/
-             *   @Value("${suoLueTuWenJianJia}") private String suoLueTuWenJianJia;
+        /**suoLueTuWenJianJia=suoLueTuWenJianJia/
+         *   @Value("${suoLueTuWenJianJia}") private String suoLueTuWenJianJia;
 
-             @Value("${fuJianWenJianJia}") private String fuJianWenJianJia;
-              * */
+         @Value("${fuJianWenJianJia}") private String fuJianWenJianJia;
+          * */
 
-            /**
-             *下面是插入数据库数据用的
-             * */
+        /**
+         *下面是插入数据库数据用的
+         * */
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
 //            p.p("                   ");p.p("                   ");p.p("                   ");
 
 //            p.p(prdtSampOb);
 //            p.p("                   ");p.p("                   ");p.p("                   ");
 //            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~测试时间戳~~~~~~~~~~~~~~~~~~~~~~~~");
-            //注意,产品建档的时候直接插入缩略图url字段,将来update的时候得到原来的加上去
-            prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
-            prdtSampOb.setAttach(attachmentUrl);
-            prdtSampOb.setId(uuidstr);
+        //注意,产品建档的时候直接插入缩略图url字段,将来update的时候得到原来的加上去
+        prdtSampOb.setThum(imageThumUrl);//所有的缩略图都放在一个字段,将来分隔字符串拿到所有
+        prdtSampOb.setAttach(attachmentUrl);
+        prdtSampOb.setId(uuidstr);
 
-            List<Msg> list = this.insertDaYang(prdtSampOb);
-            //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:22
-            cnst.genFenLeiNo.f();
-            return list;
 
+        List<Msg> list = this.insertDaYang(prdtSampOb);
+        //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:22
+        cnst.genFenLeiNo.f();
+        return list;
 
 
     }
 
     @Transactional
     public List<Msg> isPrdCodeRepeat(PrdtSamp0 prdtSampOb) {
-        PrdtSampExample ppp=new PrdtSampExample();
+        PrdtSampExample ppp = new PrdtSampExample();
         ppp.createCriteria().andPrdCodeEqualTo(prdtSampOb.getPrdCode());
         long l = cnst.prdtSampMapper.countByExample(ppp);
-        if(l>0){
-            String s="您的编码(prd_code="+prdtSampOb.getPrdCode()+")在数据库已经存在,请更换编码再试";
+        if (l > 0) {
+            String s = "您的编码(prd_code=" + prdtSampOb.getPrdCode() + ")在数据库已经存在,请更换编码再试";
             //注意,只有37是成功
-            return  MessageGenerate.generateMessage(s,s, "", "34");
-        }else{
+            return MessageGenerate.generateMessage(s, s, "", "34");
+        } else {
             return null;
         }
     }
@@ -262,21 +262,21 @@ public class D1DaYangService {
         Integer ii = null;
         List<Msg> list;
 //        try {
-
-
-            prdtSamp.setInsertdate(new Date());//该条记录创建时间
-            prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
-            //获取prdNo//下面是void方法的暗地修改
-            p.p("-----------------------货号前--------------------------------");
-            cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
-            p.p("------------------------货号后-------------------------------");
+        Date dbDate = cnst.getDbDate();
+        prdtSamp.setUpdateDate(dbDate);
+        prdtSamp.setInsertdate(dbDate);//该条记录创建时间
+        prdtSamp.setIsconfirm(0);//0是没有进行确认的意思
+        //获取prdNo//下面是void方法的暗地修改
+        p.p("-----------------------货号前--------------------------------");
+        cnst.gPrdNo.prdtSampObjGetPrdNo(prdtSamp);
+        p.p("------------------------货号后-------------------------------");
 //            this.prdtSampObjGetPrdNo(prdtSamp);
-            //如果时间没有,直接设置当前时间
-            if (prdtSamp.getSampMake() == null || !p.isFirstDateBig(prdtSamp.getSampMake(), "1986/12/26")) {
-                prdtSamp.setSampMake(new Date());
-            }
+        //如果时间没有,直接设置当前时间
+        if (prdtSamp.getSampMake() == null || !p.isFirstDateBig(prdtSamp.getSampMake(), "1986/12/26")) {
+            prdtSamp.setSampMake(new Date());
+        }
 
-            ii = cnst.prdtSampMapper.insert(prdtSamp);
+        ii = cnst.prdtSampMapper.insert(prdtSamp);
 
 
        /*
@@ -289,11 +289,11 @@ public class D1DaYangService {
 
 
         //再次检查prdt里面的分类,没有就更新进去  2018_8_29   weekday(3)   11:57:01
-        String idx1=cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(prdtSamp.getPrdNo());
-        p.p("---------------idx1是:"+idx1+"----------------------------------------");
-        p.p("----------------fenLeiNo是:"+prdtSamp.getFenLeiNo()+"---------------------------------------");
-        if(p.empty(idx1)&&p.notEmpty(prdtSamp.getFenLeiNo())){
-            int iii = cnst.a001TongYongMapper.updateIdx1(prdtSamp.getPrdNo(),prdtSamp.getFenLeiNo());
+        String idx1 = cnst.a001TongYongMapper.selectIdx1ByPrdNoFromPrdt(prdtSamp.getPrdNo());
+        p.p("---------------idx1是:" + idx1 + "----------------------------------------");
+        p.p("----------------fenLeiNo是:" + prdtSamp.getFenLeiNo() + "---------------------------------------");
+        if (p.empty(idx1) && p.notEmpty(prdtSamp.getFenLeiNo())) {
+            int iii = cnst.a001TongYongMapper.updateIdx1(prdtSamp.getPrdNo(), prdtSamp.getFenLeiNo());
         }
 
 //        } catch (Exception e) {
@@ -309,16 +309,16 @@ public class D1DaYangService {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Transactional//37成功,38失败
-    public Msg getOneRecordFromAId(String id,String ifGetPrice) {
+    public Msg getOneRecordFromAId(String id, String ifGetPrice) {
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(id);
-        if(p.empty(prdtSamp)){
+        if (p.empty(prdtSamp)) {
             return Msg.gmg().setStatus(StatusCnst.dbMistakeCausePrdtSampFalse)
                     .setMsg("获取一条信息失败").setChMsg("getOneRecordFromAId这个方法获取一条信息失败!");
         }
 
 
-        List<Object> prdtSampList=new ArrayList<>();
-        PrdtSamp0 p0 = cnst.fenLei.setCreateTimeAndPriceAndAlterRec(prdtSamp,ifGetPrice);
+        List<Object> prdtSampList = new ArrayList<>();
+        PrdtSamp0 p0 = cnst.fenLei.setCreateTimeAndPriceAndAlterRec(prdtSamp, ifGetPrice);
         prdtSampList.add(p0);
         return Msg.gmg().setData(Data.gD().setObjs(prdtSampList))
                 .setStatus(StatusCnst.prdtSampSaveOneDataSucc)
@@ -326,42 +326,6 @@ public class D1DaYangService {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

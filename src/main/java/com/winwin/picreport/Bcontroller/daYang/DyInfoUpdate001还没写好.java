@@ -20,7 +20,7 @@ import java.util.Date;
 
 @RestController
 @CrossOrigin
-public class DyInfoUpdate001 {
+public class DyInfoUpdate001还没写好 {
 
 
     @RequestMapping(value="dyInfoUpdate001",method= RequestMethod.POST,produces = {"application/json;charset=utf-8"})

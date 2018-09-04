@@ -96,5 +96,6 @@
         <!--<table tableName="model_users_spc"></table>-->
        <!-- <table tableName="prdt_ut"></table>-->
        <!-- <table tableName="TF_POS_Z"></table>-->
+
     </context>
 </generatorConfiguration>
