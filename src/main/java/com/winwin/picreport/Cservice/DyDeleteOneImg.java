@@ -43,6 +43,9 @@ public class DyDeleteOneImg {
         p.p("---------------------------thumStr----------------------------");
         p.p(thumStr);
         p.p("-------------------------------------------------------");
+        if(p.empty(thumStr)){
+            commonMsgthrow(msgList,"前端传过来的图片地址在数据库不存在");
+        }
         if(thumStr.contains(urlInDb)){
             thumStr=thumStr.replace(urlInDb,"");
             p.p("---------------------------thumStr1----------------------------");

@@ -36,10 +36,14 @@ public class InfoEdit_ManyAttach {
         p.p("----------------------111---------------------------------");
         PrdtSamp0 prdtSampOb = null;
         if (prdtSamp1 != null && !"".equals(prdtSamp1)) {
+            if(p.empty(prdtSamp1)){
+                p.throwEAddToList("前端传过来的PrdtSamp1是空的",ms);
+            }
             prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
         }
         p.p("---------------------------222----------------------------");
-        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
+        //会影响单独  上传图片或者附件,判断留给前端判断  2018_9_6   weekday(4)   10:16:53
+//        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
         p.p("---------------------------333----------------------------");
         //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
@@ -183,12 +187,43 @@ public class InfoEdit_ManyAttach {
         }
         prdtSampOb.setThum(imageThumUrl);
 //        prdtSampOb.setAttach(attachmentUrl);//在这里不再更新附件,因为附件有多个,放在最后单独更新
-        prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
+//        prdtSampOb = this.prdtSampWhereSpaceToNull(prdtSampOb);//把""变成null,避免不必要的更新
         prdtSampOb.setIsconfirm(null);
         prdtSampOb.setIsCheckOut(Cnst.weiTiJiao);
 
-        //Selective是不更新null
+
+//        if(p.dy(baoKuoDelPicAttach,"baoKuoDelPicAttach")){
+//            cnst.prdtSampMapper.updateByPrimaryKey(prdtSampOb);
+//        }else{
+//            //兼容老接口徐勇调的
+//            cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
+//        }
         cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
+       this.time2null(prdtSampOb);
+
+
+    }
+
+    @Transactional
+    public void time2null(PrdtSamp0 prdtSampOb) {
+        if(p.isSmallOrEqMybirth(prdtSampOb.getStopusedate())){
+            int  i=cnst.a001TongYongMapper.upDateStopUseDateNull(prdtSampOb.getId());
+        }
+        if(p.isSmallOrEqMybirth(prdtSampOb.getSampMake())){
+            int  i=cnst.a001TongYongMapper.upDateSampMakeNull(prdtSampOb.getId());
+        }
+
+        if(p.isSmallOrEqMybirth(prdtSampOb.getSampSend())){
+            int  i=cnst.a001TongYongMapper.upDateSampSendNull(prdtSampOb.getId());
+        }
+
+        if(p.dy(prdtSampOb.getConfirmtimestr(),"")||p.dy(prdtSampOb.getConfirmtimestr(),"0")){
+            PrdtSamp pp=new PrdtSamp();
+            pp.setId(prdtSampOb.getId());
+            pp.setConfirmtimestr("");
+            cnst.prdtSampMapper.updateByPrimaryKeySelective(pp);
+        }
+
     }
 
 
@@ -224,10 +259,19 @@ public class InfoEdit_ManyAttach {
             prdtSampO.setId(prdtSampOb.getId());
             //只更新附件
             prdtSampO.setAttach(attachmentUr);//在这里不再更新附件,因为附件有多个,放在最后单独更新
-            prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
+//            prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
             prdtSampO.setIsconfirm(null);//不更新这个
-            //Selective是不更新null
+
+//            if(p.dy(baoKuoDelPicAttach,"baoKuoDelPicAttach")){
+//                //2018_9_5   weekday(3)   11:01:31
+//                cnst.prdtSampMapper.updateByPrimaryKey(prdtSampO);
+//            }else{
+//                //兼容老接口徐勇调的
+//                //Selective是不更新null
+//                cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
+//            }
             cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
+            this.time2null(prdtSampOb);
             if (attach != null && !new File(s1, uid + "!" + originalFilename).exists()) {
                 p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);
             }
@@ -288,8 +332,50 @@ public class InfoEdit_ManyAttach {
 //        }
 //
 //    }
+
+
+    //会影响单独  上传图片或者附件
     @Transactional
     public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms,String prdCodeOrg) {
+        if(p.empty(prdtSampOb)){
+            p.throwEAddToList("前端穿过来的更新对象prdtSampOb是空的",ms);
+        }
+        p.p("1");
+        if(p.empty(prdtSampOb.getPrdCode())){
+            p.p("2");
+            p.throwEAddToList("产品编码prdCode不能为空",ms);
+        }
+        p.p("3");
+        if(p.empty(prdtSampOb.getFenLeiName())){
+            p.p("4");
+            p.throwEAddToList("产品分类名字fenLeiName不能为空",ms);
+        }
+        p.p("5");
+        if(p.empty(prdtSampOb.getFenLeiNo())){
+            p.p("6");
+            p.throwEAddToList("产品分类名编号fenLeiNo不能为空",ms);
+        }
+        p.p("7");
+        if(p.empty(prdtSampOb.getIdxName())){
+            p.p("8");
+            p.throwEAddToList("产品名称idxName不能为空",ms);
+        }
+        p.p("9");
+        if(p.empty(prdtSampOb.getIdxNo())){
+            p.p("10");
+            p.throwEAddToList("产品编号不idxNo能为空",ms);
+        }
+        p.p("11");
+        if(p.empty(prdtSampOb.getSalNo())){
+            p.p("12");
+            p.throwEAddToList("产品负责人编号salNo不能为空",ms);
+        }
+        p.p("13");
+        if(p.empty(prdtSampOb.getSalName())){
+            p.p("14");
+            p.throwEAddToList("产品负责人名字salName不能为空",ms);
+        }
+        p.p("15");
         p.p("------------修改前的编码是:prdCodeOrg="+prdCodeOrg+"-------------------------------------------");
         p.p("--------------修改后的编码是:prdCode="+prdtSampOb.getPrdCode()+"-----------------------------------------");
         if(p.dy(prdCodeOrg,"yuan")){
@@ -326,7 +412,7 @@ public class InfoEdit_ManyAttach {
 
 //        return MessageGenerate.generateMessage("保存失败", "保存失败", "附件没有保存成功导致所有数据没保存！", "", "36");
 //    }
-
+//
     @Transactional
     public PrdtSamp0 prdtSampWhereSpaceToNull(PrdtSamp0 prdtSamp) {
         if ("".equals(prdtSamp.getPrdCode())) {

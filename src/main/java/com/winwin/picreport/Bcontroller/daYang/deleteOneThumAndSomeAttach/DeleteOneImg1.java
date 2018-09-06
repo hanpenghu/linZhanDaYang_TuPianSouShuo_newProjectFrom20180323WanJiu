@@ -1,4 +1,4 @@
-package com.winwin.picreport.Bcontroller.daYang.deleteOneThum;
+package com.winwin.picreport.Bcontroller.daYang.deleteOneThumAndSomeAttach;
 
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.AllConstant.InterFaceCnst;
@@ -42,12 +42,12 @@ public class DeleteOneImg1 {
             cnst.dyDeleteOneImg.f(imgUrl,msgList);
         } catch (Exception e) {
             if(msgList.contains(e.getMessage())){
-                return Msg.gmg().setMsg("删除失败！").setStatus("0");
+                return Msg.gmg().setMsg("图片删除失败！"+e.getMessage()).setStatus("0");
             }else{
-                return Msg.gmg().setMsg("删除失败！未知异常").setStatus("0");
+                return Msg.gmg().setMsg("图片删除失败！未知异常"+e.getMessage()).setStatus("0");
             }
         }
-        return Msg.gmg().setMsg("删除成功").setStatus("1");
+        return Msg.gmg().setMsg("图片删除成功").setStatus("1");
     }
 
     private void throwE(String attachUrl,List<String> msgList){

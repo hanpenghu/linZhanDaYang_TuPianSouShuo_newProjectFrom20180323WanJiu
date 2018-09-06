@@ -41,6 +41,12 @@ public class DyDeleteOneAttach {
         }
         String attachsStr=cnst.manyTabSerch.selectAttachsUse_urlInDb(p.bfh+urlInDb无中括号+p.bfh);
 
+        p.p("-------------------------attachsStr------------------------------");
+        p.p(attachsStr);
+        p.p("-------------------------------------------------------");
+        if(p.empty(attachsStr)){
+            commonMsgthrow(msgList,"前端传过来的附件地址有一个在数据库不存在!");
+        }
         attachsStr=attachsStr.replace(urlInDb,"");
 
 //        try {

@@ -29,7 +29,8 @@ public strictfp class p {
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
 
-
+    public static final String bjTimezone="GMT+8";
+    public static final String unixTimeOri="1970-01-01 08:00:00.000";
     private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };//md5用
 
@@ -1461,8 +1462,19 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
         if(date==null){
             return null;
         }
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        String format = null;
+        try {
+            format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        } catch (Exception e) {
+            format= null;
+            e.printStackTrace();
+        }
+        return format;
     }
+
+
+
+
     public String  dtoStrs(Date date) {
         if(date==null){
             return null;

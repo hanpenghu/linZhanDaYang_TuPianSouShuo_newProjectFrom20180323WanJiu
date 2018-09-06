@@ -43,6 +43,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         .excludePathPatterns("/dyInfoUpdate001").excludePathPatterns("/websocket")
         .excludePathPatterns("/han1").excludePathPatterns("/han2").excludePathPatterns("/han3")
         .excludePathPatterns("/dyExportExcelAllNoPic").excludePathPatterns("/saveExcelTemp/*")
+        .excludePathPatterns("/date001").excludePathPatterns("/d/imageUpLoadAndDataSave_InfoEdit_ManyAttach002")
         ;
 //        registry.addWebRequestInterceptor();
         super.addInterceptors(registry);

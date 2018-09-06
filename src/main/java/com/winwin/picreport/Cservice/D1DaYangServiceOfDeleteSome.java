@@ -64,9 +64,17 @@ public class D1DaYangServiceOfDeleteSome {
             strs="    编码为: "+strs+" 的记录因为已经存在定价记录, 导致没有删除该记录,请先删除价格,再删除编码！    ";
         }
 /////////////////////////////~~~~~~~~~~for结束~~~~~~~~~~~~~////////////////////////////////////////////
-      return MessageGenerate.generateMessage
-                 ("删除成功", "删除成功,   "+strs+"   ",
-                         "共删除"+jiShuQi+"条记录", "", "43");
+
+        if(strs.contains("的记录因为已经存在定价记录")){
+            return MessageGenerate.generateMessage
+                    ("删除失败,   "+strs+"   ", "删除失败,   "+strs+"   ",
+                            "共删除"+jiShuQi+"条记录", "", "42");
+        }else{
+            return MessageGenerate.generateMessage
+                    ("删除成功", "删除成功,   "+strs+"   ",
+                            "共删除"+jiShuQi+"条记录", "", "43");
+        }
+
 
 ///////////////deleteSomeRecode方法结束///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }

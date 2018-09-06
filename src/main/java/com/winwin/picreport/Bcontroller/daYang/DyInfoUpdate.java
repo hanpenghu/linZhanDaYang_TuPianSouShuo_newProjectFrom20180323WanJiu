@@ -109,7 +109,7 @@ public class DyInfoUpdate {
                 return new linklistT<Msg>().a(Msg.gmg().setStatus("0").setMsg("《未知异常》").setOtherMsg("《未知异常》")).g();
             }
         }
-        return new linklistT<Msg>().a(Msg.gmg().setStatus("37").setMsg("成功").setOtherMsg("成功")).g();
+        return new linklistT<Msg>().a(Msg.gmg().setStatus("37").setMsg("修改成功").setOtherMsg("修改成功")).g();
     }
 
     private void UpdateUpdateTimeSetFront(String prdtSamp1) {
