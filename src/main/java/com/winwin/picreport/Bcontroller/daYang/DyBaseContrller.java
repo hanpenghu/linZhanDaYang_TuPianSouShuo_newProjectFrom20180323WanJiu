@@ -48,7 +48,8 @@ public class DyBaseContrller {
     }
 
 
-    @RequestMapping(value = InterFaceCnst.allfenlei, method = RequestMethod.POST,
+//    /d/allfenlei
+    @RequestMapping(value = "allfenlei", method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
     CategoryNameCode allfenlei() {
@@ -60,6 +61,11 @@ public class DyBaseContrller {
      * 传参数{"idxName":"idxNo"}
      * 我传给前端的是加了  private List<String> prdCodeList=new ArrayList<>();    之后的CategoryNameCode
      * /d/currentCategoryPrdtList
+     *
+
+     select top 1 name from prdt where idx1=
+     (select idx_no from indx where name='钉脚金属章')
+     ORDER BY name desc
      * */
     @RequestMapping(value = "currentCategoryPrdtList", method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})

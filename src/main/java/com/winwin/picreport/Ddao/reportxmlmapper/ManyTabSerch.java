@@ -135,7 +135,7 @@ public interface ManyTabSerch {
     /**
      * 得到下一级的分类,有多个
      */
-    @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where idx_up=#{indxNo}")
+    @Select("select isnull(idx_no,'') as 'idxNo',name as 'idxName' from indx where (stop_dd is null or stop_dd<'1971-01-01')  and idx_up=#{indxNo}")
     List<CategoryNameCode> getChildCategoryNameCode(@Param("indxNo") String indxNo);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
