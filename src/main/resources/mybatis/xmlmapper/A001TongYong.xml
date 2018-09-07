@@ -282,6 +282,8 @@
                         isnull(prd_Code,'') =  #{prdCode}
                         OR
                         isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+                        OR
+                        isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
                 )
 
             </if>
@@ -295,6 +297,8 @@
                     isnull(prd_Code,'') =  #{prdCode}
                     OR
                     isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+                    OR
+                    isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
             )
         </if>
         ORDER BY insertdate DESC
@@ -1201,6 +1205,48 @@
         )
         select name as fenLeiName from cet1
     </select>
+
+
+
+
+
+
+
+
+
+    <update id="testMybatisUpdate">
+  UPDATE Prdt_samp
+  <set>
+      id=id,
+
+      <!--miniOrderAmt是bigdecimal -->
+      <if  test= "     miniOrderAmt !=null  and  miniOrderAmt == -1 ">
+          mini_order_amt=null,
+      </if>
+
+      <if  test= "     stopusedate !=null  and  stopusedate == stopusedateBiJiao ">
+          stopusedate=null,
+      </if>
+  </set>
+    where id='0000436d-0797-4e7b-9d8d-3ff0a30ea5c0'
+</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
 

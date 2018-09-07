@@ -1,7 +1,7 @@
 package com.winwin.picreport.Bcontroller.SaleOrderExportAndInsert;
 
 
-
+import com.winwin.picreport.Bcontroller.PicSearchPic.utils.Cnst;
 
 /**
  * Created by Administrator on 2018/8/24.
@@ -39,6 +39,21 @@ public class IfSalePriceSamllEntity {
 //    人民币传RMB  美元USD
     private String curId;
 
+    //运费别(销售的)有运费2,无运费1
+    private String bilType;
+
+
+
+
+
+
+    public String getBilType() {
+        return bilType;
+    }
+
+    public void setBilType(String bilType) {
+        this.bilType = bilType;
+    }
 
     public String getCurId() {
         return curId;

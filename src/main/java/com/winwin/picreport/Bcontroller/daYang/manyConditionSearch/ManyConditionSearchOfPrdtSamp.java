@@ -18,7 +18,10 @@ public class ManyConditionSearchOfPrdtSamp {
     @Autowired
     private Cnst cnst;
     //传过来这个默认不要价格模块,不传默认要加个模块
-    private final String 不要价格模块="noPriceModel";
+    private final static String 不要价格模块="noPriceModel";
+
+    private final static String 启动特殊查询="yes";
+
     /**
      *根据条件查询产品编码建档
      * sql
@@ -26,9 +29,17 @@ public class ManyConditionSearchOfPrdtSamp {
      * 此接口时间默认传时间戳(str格式)
      * //此接口已经用了动态sql,当不传入isConfirm 参数的时候,相当于查询所有符合条件的信息
      * 当传入isConfirm参数是0的时候,会查询所有未打样的符合条件的信息
+     * ifGetPrice="noPriceModel"表示不要价格模块
+     * ifSpecificSearch=yes 表示特殊查询(老郑让符合编码规律的查询,在sql里做, 现在只有产品编码建档立用这个),传过来这个yes就是说需要特殊查询
+
+     *
      * */
     @RequestMapping(value= "chanPinBianMaJianDangTiaoJianChaXun", method = RequestMethod.POST)
-    public @ResponseBody FenYe f(@RequestBody FenYe fenYe,@RequestParam(value="ifGetPrice",required =false)String ifGetPrice){
+    public @ResponseBody FenYe f(@RequestBody FenYe fenYe,
+                                 @RequestParam(value="ifGetPrice",required =false)String ifGetPrice,
+                                 @RequestParam(value="ifSpecificSearch",required =false)String ifSpecificSearch
+
+    ){
         log.info("-----chanPinBianMaJianDangTiaoJianChaXun  jieKou----ifGetPirce PARAM:----{}------",ifGetPrice);
         if(fenYe==null){
             FenYe f=new FenYe();
@@ -37,7 +48,7 @@ public class ManyConditionSearchOfPrdtSamp {
             return f;
         }else{
             try {
-                return  this.manyConditionSearchOfPrdtFiltList(fenYe,ifGetPrice);
+                return  this.manyConditionSearchOfPrdtFiltList(fenYe,ifGetPrice,ifSpecificSearch);
             } catch (IllegalAccessException e) {
                 FenYe f1=new FenYe();
                 ArrayList<PrdtSamp0> prdtSamps1 = new ArrayList<>();
@@ -54,7 +65,7 @@ public class ManyConditionSearchOfPrdtSamp {
     /**
      *多条件产品打样列表
      * */
-    private FenYe manyConditionSearchOfPrdtFiltList(FenYe f,String ifGetPrice) throws IllegalAccessException {
+    private FenYe manyConditionSearchOfPrdtFiltList(FenYe f,String ifGetPrice,String ifSpecificSearch) throws IllegalAccessException {
         PrdtSamp1 p1 = f.getPrdtSamp1();
         boolean b = this.conditionOnlyPrdCode(p1);
         log.info("~~~~~jieKou :chanPinBianMaJianDangTiaoJianChaXun~~~~~~~~~~~~zhuanHuanQianDuoTiaoJianChaXun TEST~~~~~start~~~~qianDuanChuanGuoLaiDe condition: {}~~~~~~~~~~~~~~~",p1);
@@ -112,7 +123,8 @@ public class ManyConditionSearchOfPrdtSamp {
             //我测试,徐勇只有"产品编码建档"里面把ifGetPrice传过来参数"noPriceModel"了,我
             //暂时拿该参数当做产品编码建档的标记,如果以后还有传过来  noPriceModel的模块,肯定
             //要换另外一个标记, 因为老郑只是规定产品编码建档查询适合他说的编码规则,其他模块保持不变
-            if(p.dy(ifGetPrice,不要价格模块)){//此时确定是产品编码建档模块传过来的查询
+            //2018_9_6   weekday(4)   17:50:14  又改成特殊的 标记,不管哪个模块, 只要传过来这个 yes,就 启动特殊查询
+            if(p.dy(ifSpecificSearch,启动特殊查询)){
                 prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(p1);
             }else{
                 prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);

@@ -88,17 +88,17 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
         UpDefExample ue=new UpDefExample();
         ue.createCriteria().andPrdNoEqualTo(e.getPrdNo());
         long l = cnst.upDefMapper.countByExample(ue);
-        //货号在up_def不存在  蓝色背景
-        if(l==0){e.setState("2");return;}
+        //2   货号在up_def不存在  蓝色背景(没有对应价格就是蓝色,  2和3都显示蓝色)
+        if(l==0){e.setState(Cnst.salePriceColorOfNoPrdNo);return;}
         UpDefExample ue1=new UpDefExample();
-        ue1.createCriteria().andPrdNoEqualTo(e.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId).andCurIdEqualTo(e.getCurId()).andUpIsNotNull();
+        ue1.createCriteria().andPrdNoEqualTo(e.getPrdNo()).andPriceIdEqualTo(Cnst.salPriceId).andCurIdEqualTo(e.getCurId()).andBilTypeEqualTo(e.getBilType()).andUpIsNotNull();
         long l1 = cnst.upDefMapper.countByExample(ue1);
-        //该币别的销售定价在up_def不存在
-        if(l1==0){e.setState("3");return;}
+        //3   该币别该运费的销售定价在up_def不存在
+        if(l1==0){e.setState(Cnst.salePriceColorOfNoThisCurIdAndBilType);return;}
         //找到符合条件的该币别该销售的低于up_def的价格
-       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()),e.getCurId());
-        //此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
-        if(k>0)e.setState("1");
+       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()),e.getCurId(),e.getBilType());
+        //1    此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
+        if(k>0)e.setState(Cnst.salePriceColorOfSmall);
     }
 
     private void igll(List<IfSalePriceSamllEntity> ii, List<String> msg) {
@@ -108,6 +108,14 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
         if(p.empty(ii))p.throwEAddToList("前端传过来的数组是空的",msg);
 
         for(IfSalePriceSamllEntity i:ii){
+
+            if(p.empty(i.getBilType())){
+                p.throwEAddToList("前端穿过来的运费代号是空,应该是"+Cnst.saleBilTypeNoTrans+"(无运费)"+Cnst.saleBilTypeHaveTrans+"(含运费)其中之一",msg);
+            }
+            if(p.bdy(Cnst.saleBilTypeHaveTrans,i.getBilType())&&p.bdy(Cnst.saleBilTypeNoTrans,i.getBilType())){
+                p.throwEAddToList("前端传过来的bilType既不是"+Cnst.saleBilTypeHaveTrans+"也不是"+Cnst.saleBilTypeNoTrans,msg);
+            }
+
             p.p("-------------------------------------------------------");
             p.p(i.getUp());
             p.p("----i.getUp()="+i.getUp()+"-----------p.isBd(i.getUp())==false------"+p.isBd(i.getUp())+"----------------------------------");

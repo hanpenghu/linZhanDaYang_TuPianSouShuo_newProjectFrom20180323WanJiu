@@ -28,8 +28,14 @@ public strictfp class p {
     /*public static void main(String[]args){
             p.p(p.gp().sad(p.dexhx).sad("年后").sad(p.dexhx).gad());
     }*/
+    //unix元年 格林威治
+    String unixTimeOriGMT="1970-01-01 00:00:00.000";
 
+    //unix元年 中国
+    String unixTimeOriCh="1970-01-01 08:00:00.000";
     public static final String bjTimezone="GMT+8";
+
+    //unix元年 中国
     public static final String unixTimeOri="1970-01-01 08:00:00.000";
     private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };//md5用
@@ -2163,27 +2169,26 @@ public static BigDecimal b(Object o){
         }
     }
 
-
     /**
      * BigDecimal
      *前面比后面大
      * */
-    public static Boolean bbig(Object o1,Object o2){
+    public static boolean bbig(Object o1,Object o2){
         if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
             return p.b(o1).compareTo(p.b(o2))==1;
         }else{
-            return null;
+            return false;
         }
     }
     /**
      * BigDecimal
      *前面比后面小
      * */
-    public static Boolean bsml(Object o1,Object o2){
+    public static boolean bsml(Object o1,Object o2){
         if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
             return p.b(o1).compareTo(p.b(o2))==-1;
         }else{
-            return null;
+            return false;
         }
     }
 
@@ -2191,11 +2196,11 @@ public static BigDecimal b(Object o){
      * BigDecimal
      *两数字相等
      * */
-    public static Boolean beql(Object o1,Object o2){
+    public static boolean beql(Object o1,Object o2){
         if(p.notEmpty(o1)&&p.notEmpty(o2)&&p.isBd(o1)&&p.isBd(o2) ){
             return p.b(o1).compareTo(p.b(o2))==0;
         }else{
-            return null;
+            return false;
         }
     }
     /**

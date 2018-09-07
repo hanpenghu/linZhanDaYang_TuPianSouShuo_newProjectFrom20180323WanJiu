@@ -19,11 +19,34 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Order(2)
 @Component("cnst")
 public class Cnst {
+
+
+    //数字数据库置空标记
+    public static final BigDecimal toNullFlagNum=new BigDecimal(-1);
+    //日期数据库置空标记
+    public static final String toNullFlagDate="1970-01-01 08:00:00.000";
+
+
+
+    public static final String returnException="0";
+    public static final String returnRight="1";
+
+
+    //此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
+    public static final String salePriceColorOfSmall="1";
+    //货号在up_def不存在  蓝色背景(没有对应价格就是蓝色,  2和3都显示蓝色)
+    public static final String salePriceColorOfNoPrdNo="2";
+    //该币别该运费的销售定价在up_def不存在(显示蓝色)
+    public static final String salePriceColorOfNoThisCurIdAndBilType="3";
+
+
+
     public static final String saveExcelTemp="saveExcelTemp";
     //保留小数位数
     public static final int pointAfter=4;

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper   namespace="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper3">
+
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.PrdtSamp3">
+    update PRDT_SAMP
+    <set>
+
+      <if test="prdCode != null">
+        prd_code = #{prdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="idxName != null">
+        idx_name = #{idxName,jdbcType=VARCHAR},
+      </if>
+      <if test="idxNo != null">
+        idx_no = #{idxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="markName != null">
+        mark_name = #{markName,jdbcType=VARCHAR},
+      </if>
+      <if test="markNo != null">
+        mark_no = #{markNo,jdbcType=VARCHAR},
+      </if>
+      <if test="colour != null">
+        colour = #{colour,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="salName != null">
+        sal_name = #{salName,jdbcType=VARCHAR},
+      </if>
+      <if test="salNo != null">
+        sal_no = #{salNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNo != null">
+        cus_no = #{cusNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusName != null">
+        cus_name = #{cusName,jdbcType=VARCHAR},
+      </if>
+      <if test="isfenjie != null">
+        isFenJie = #{isfenjie,jdbcType=VARCHAR},
+      </if>
+      <if test="sampMake != null and sampMake != sampMakeBj ">
+        samp_make = #{sampMake,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampMake != null and sampMake == sampMakeBj ">
+        samp_make =null,
+      </if>
+      <if test="sampSend != null and sampSend != sampSendBj">
+        samp_send = #{sampSend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampSend != null and sampSend == sampSendBj">
+        samp_send = null,
+      </if>
+      <if test="sampRequ != null">
+        samp_requ = #{sampRequ,jdbcType=VARCHAR},
+      </if>
+      <if test="sampDesc != null">
+        samp_desc = #{sampDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="thum != null">
+        thum = #{thum,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null">
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="insertdate != null">
+        insertdate = #{insertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prdNo != null">
+        prd_no = #{prdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmman != null">
+        confirmMan = #{confirmman,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtimestr != null and confirmtimestr != confirmtimestrBj ">
+        confirmTimeStr = #{confirmtimestr,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmtimestr != null and confirmtimestr == confirmtimestrBj ">
+        confirmTimeStr = null,
+      </if>
+
+      <if test="isconfirm != null">
+        isConfirm = #{isconfirm,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        Category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="teamname != null">
+        TeamName = #{teamname,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmrem != null">
+        confirmRem = #{confirmrem,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="financestartsellcount != null and financestartsellcount != financestartsellcountBj">
+        financeStartSellCount = #{financestartsellcount,jdbcType=NUMERIC},
+      </if>
+
+      <if test="financestartsellcount != null and financestartsellcount == financestartsellcountBj">
+        financeStartSellCount = null,
+      </if>
+
+
+
+      <if test="startsellcount != null and startsellcount != startsellcountBj">
+        startSellCount = #{startsellcount,jdbcType=NUMERIC},
+      </if>
+      <if test="startsellcount != null and startsellcount == startsellcountBj">
+        startSellCount = null,
+      </if>
+
+
+
+      <if test="modelcostinvoiceno != null">
+        modelCostInvoiceNo = #{modelcostinvoiceno,jdbcType=VARCHAR},
+      </if>
+      <if test="modelcost != null and modelcost !=modelcostBj">
+        modelCost = #{modelcost,jdbcType=NUMERIC},
+      </if>
+      <if test="modelcost != null and modelcost ==modelcostBj">
+        modelCost = null,
+      </if>
+
+
+      <if test="financemodelcost != null and financemodelcost!=financemodelcostBj">
+        financeModelCost = #{financemodelcost,jdbcType=NUMERIC},
+      </if>
+      <if test="financemodelcost != null and financemodelcost==financemodelcostBj">
+        financeModelCost =null,
+      </if>
+
+
+
+      <if test="estimateprice != null and estimateprice!=estimatepriceBj">
+        estimatePrice = #{estimateprice,jdbcType=NUMERIC},
+      </if>
+
+
+      <if test="estimateprice != null and estimateprice==estimatepriceBj">
+        estimatePrice = null,
+      </if>
+
+
+
+
+
+      <if test="littleorderprice != null and littleorderprice !=littleorderpriceBj">
+        littleOrderPrice = #{littleorderprice,jdbcType=NUMERIC},
+      </if>
+
+      <if test="littleorderprice != null and littleorderprice ==littleorderpriceBj">
+        littleOrderPrice = null,
+      </if>
+
+
+
+      <if test="financelittleorderprice != null and financelittleorderprice!=financelittleorderpriceBj">
+        financeLittleOrderPrice = #{financelittleorderprice,jdbcType=NUMERIC},
+      </if>
+
+
+      <if test="financelittleorderprice != null and financelittleorderprice==financelittleorderpriceBj">
+        financeLittleOrderPrice = null,
+      </if>
+
+
+
+
+
+      <if test="businessdesc != null">
+        businessDesc = #{businessdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="financedesc != null">
+        financeDesc = #{financedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="salemandesc != null">
+        saleManDesc = #{salemandesc,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerdesc != null">
+        buyerdesc = #{buyerdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="stopusedate != null and stopusedate!=stopusedateBj">
+        stopUseDate = #{stopusedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopusedate != null and stopusedate==stopusedateBj">
+        stopUseDate = null,
+      </if>
+
+
+
+      <if test="cusNoGive != null">
+        cus_no_give = #{cusNoGive,jdbcType=VARCHAR},
+      </if>
+      <if test="cusNameGive != null">
+        cus_name_give = #{cusNameGive,jdbcType=VARCHAR},
+      </if>
+      <if test="fenLeiNo != null">
+        fen_lei_no = #{fenLeiNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fenLeiName != null">
+        fen_lei_name = #{fenLeiName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit != null">
+        main_unit = #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheckOut != null">
+        is_check_out = #{isCheckOut,jdbcType=VARCHAR},
+      </if>
+      <if test="checkOutOpinion != null">
+        check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="miniOrderAmt != null and miniOrderAmt!=miniOrderAmtBj">
+        Mini_Order_Amt = #{miniOrderAmt,jdbcType=NUMERIC},
+      </if>
+      <if test="miniOrderAmt != null and miniOrderAmt==miniOrderAmtBj">
+        Mini_Order_Amt =null,
+      </if>
+
+
+      <if test="fiMiniOrderAmt != null and fiMiniOrderAmt!=fiMiniOrderAmtBj">
+        fi_Mini_Order_Amt = #{fiMiniOrderAmt,jdbcType=NUMERIC},
+      </if>
+      <if test="fiMiniOrderAmt != null and fiMiniOrderAmt==fiMiniOrderAmtBj">
+        fi_Mini_Order_Amt = null,
+      </if>
+
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate == null">
+        update_date = update_date,
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

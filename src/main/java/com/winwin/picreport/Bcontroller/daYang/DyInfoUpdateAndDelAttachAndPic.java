@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -111,10 +114,9 @@ public class DyInfoUpdateAndDelAttachAndPic {
 
 
 
-    public static void main(String[]args) throws UnsupportedEncodingException {
-        p.p("-------------------------------------------------------");
-        p.p(URLEncoder.encode("http://47.98.45.100:8070/suoLueTuAndFuJian/18-09-05 13_28_53_656 248!塔兰1.jpg","UTF-8"));
-        p.p("-------------------------------------------------------");
-    }
+//    public static void main(String[]args) throws UnsupportedEncodingException {
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss").format(new Date(0)));
+////        System.out.println(LocalDateTime.);
+//    }
 /////////////////////////////////////////////////////////////////////////
 }

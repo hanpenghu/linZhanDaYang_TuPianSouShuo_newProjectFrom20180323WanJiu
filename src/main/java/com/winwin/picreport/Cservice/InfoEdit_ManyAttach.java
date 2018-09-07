@@ -3,6 +3,7 @@ package com.winwin.picreport.Cservice;
 import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 
+import com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper3;
 import com.winwin.picreport.Edto.*;
 import com.winwin.picreport.Futils.*;
 import com.winwin.picreport.Futils.MsgGenerate.MessageGenerate;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -198,32 +200,62 @@ public class InfoEdit_ManyAttach {
 //            //兼容老接口徐勇调的
 //            cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
 //        }
-        cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampOb);
-       this.time2null(prdtSampOb);
+
+        PrdtSamp3 prdtSamp3=new PrdtSamp3();
+        BeanUtils.copyProperties(prdtSampOb,prdtSamp3);
+        p.p("----------------tu---------------------------------------");
+        p.p(prdtSamp3.getMiniOrderAmt());
+        p.p("-------------------------------------------------------");
+        prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
+//       this.time2null(prdtSampOb);
 
 
     }
 
+    @Autowired
+    PrdtSampMapper3 prdtSampMapper3;
+
     @Transactional
-    public void time2null(PrdtSamp0 prdtSampOb) {
+    public void time2null(PrdtSamp0 prdtSampOb)   {
+
+        if(p.beql(prdtSampOb.getStartsellcount(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Startsellcount",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getFinancestartsellcount(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Financestartsellcount",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getMiniOrderAmt(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Mini_Order_Amt",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getFiMiniOrderAmt(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Fi_Mini_Order_Amt",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getModelcost(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Modelcost",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getFinancemodelcost(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Financemodelcost",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getEstimateprice(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Estimateprice",prdtSampOb.getId());
+        }
+        if(p.beql(prdtSampOb.getFinancelittleorderprice(),Cnst.toNullFlagNum)){
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("financelittleorderprice",prdtSampOb.getId());
+        }
+
+
         if(p.isSmallOrEqMybirth(prdtSampOb.getStopusedate())){
-            int  i=cnst.a001TongYongMapper.upDateStopUseDateNull(prdtSampOb.getId());
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("stopusedate",prdtSampOb.getId());
         }
         if(p.isSmallOrEqMybirth(prdtSampOb.getSampMake())){
-            int  i=cnst.a001TongYongMapper.upDateSampMakeNull(prdtSampOb.getId());
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("samp_Make",prdtSampOb.getId());
         }
-
         if(p.isSmallOrEqMybirth(prdtSampOb.getSampSend())){
-            int  i=cnst.a001TongYongMapper.upDateSampSendNull(prdtSampOb.getId());
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Samp_Send",prdtSampOb.getId());
         }
-
         if(p.dy(prdtSampOb.getConfirmtimestr(),"")||p.dy(prdtSampOb.getConfirmtimestr(),"0")){
-            PrdtSamp pp=new PrdtSamp();
-            pp.setId(prdtSampOb.getId());
-            pp.setConfirmtimestr("");
-            cnst.prdtSampMapper.updateByPrimaryKeySelective(pp);
+            int i=cnst.a001TongYongMapper.upDateWhuColumnNull("Confirmtimestr",prdtSampOb.getId());
         }
-
     }
 
 
@@ -270,8 +302,13 @@ public class InfoEdit_ManyAttach {
 //                //Selective是不更新null
 //                cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
 //            }
-            cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
-            this.time2null(prdtSampOb);
+            PrdtSamp3 prdtSamp3=new PrdtSamp3();
+            BeanUtils.copyProperties(prdtSampOb,prdtSamp3);
+            p.p("----------------fu---------------------------------------");
+            p.p(prdtSamp3.getMiniOrderAmt());
+            p.p("-------------------------------------------------------");
+            prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
+//            this.time2null(prdtSampOb);
             if (attach != null && !new File(s1, uid + "!" + originalFilename).exists()) {
                 p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);
             }

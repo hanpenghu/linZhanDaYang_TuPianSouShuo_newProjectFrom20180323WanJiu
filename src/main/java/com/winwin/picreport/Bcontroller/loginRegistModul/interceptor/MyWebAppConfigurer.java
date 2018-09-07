@@ -38,7 +38,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         .excludePathPatterns("/tokenAndRoleGet")
         .excludePathPatterns("/schh001")
         .excludePathPatterns("/fuck")
-        .excludePathPatterns("/salePriceGet")
+        .excludePathPatterns("/salePriceGet").excludePathPatterns("/v1")
                 .excludePathPatterns("/allUnit").excludePathPatterns("/checkSalePrice")
         .excludePathPatterns("/dyInfoUpdate001").excludePathPatterns("/websocket")
         .excludePathPatterns("/han1").excludePathPatterns("/han2").excludePathPatterns("/han3")
