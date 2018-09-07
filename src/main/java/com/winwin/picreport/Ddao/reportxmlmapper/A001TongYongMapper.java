@@ -467,4 +467,9 @@ public interface A001TongYongMapper {
 
     @Update({"update prdt set nouse_dd = null where prd_no=#{s}"})
     int prdtDate2Null(@Param("s")String prdNo);
+
+
+
+    @Update({"${s}"})
+    int updateTest(@Param("s")String sql);
 }

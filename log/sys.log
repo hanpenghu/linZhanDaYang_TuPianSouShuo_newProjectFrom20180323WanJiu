@@ -30,3 +30,30 @@
 2018-09-07 13:08:45,005 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
 2018-09-07 13:08:50,212 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
 2018-09-07 13:08:51,886 INFO (StartupInfoLogger.java:57)- Started ATests in 7.326 seconds (JVM running for 8.239)
+2018-09-07 13:40:46,470 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 7692 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-07 13:40:46,475 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-07 13:40:50,809 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-07 13:40:51,990 INFO (StartupInfoLogger.java:57)- Started A in 5.944 seconds (JVM running for 6.591)
+2018-09-07 13:47:46,065 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 7364 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-07 13:47:46,069 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-07 13:47:50,249 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-07 13:47:51,415 INFO (StartupInfoLogger.java:57)- Started A in 5.79 seconds (JVM running for 6.417)
+2018-09-07 13:56:14,499 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 6616 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-07 13:56:14,503 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-07 13:56:18,898 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-07 13:56:19,991 INFO (StartupInfoLogger.java:57)- Started A in 5.856 seconds (JVM running for 6.41)
+2018-09-07 13:57:09,298 ERROR (AllExceptionHandler.java:17)- 
+### Error updating database.  Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 'Sep' 附近有语法错误。
+### The error may involve com.winwin.picreport.Ddao.reportxmlmapper.A001TongYongMapper.updateTest-Inline
+### The error occurred while setting parameters
+### SQL: update prdt_samp set prd_code='BBB', stopusedate=Fri Sep 07 13:57:09 CST 2018 where id= '0000436d-0797-4e7b-9d8d-3ff0a30ea5c0'
+### Cause: com.microsoft.sqlserver.jdbc.SQLServerException: 'Sep' 附近有语法错误。
+; uncategorized SQLException for SQL []; SQL state [S0001]; error code [102]; 'Sep' 附近有语法错误。; nested exception is com.microsoft.sqlserver.jdbc.SQLServerException: 'Sep' 附近有语法错误。
+2018-09-07 13:58:19,845 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 6404 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-07 13:58:19,849 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-07 13:58:24,209 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-07 13:58:25,445 INFO (StartupInfoLogger.java:57)- Started A in 5.988 seconds (JVM running for 6.514)
+2018-09-07 14:01:27,208 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 1408 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-07 14:01:27,212 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-07 14:01:31,513 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-07 14:01:32,643 INFO (StartupInfoLogger.java:57)- Started A in 5.813 seconds (JVM running for 6.373)
