@@ -162,6 +162,9 @@ public interface A001TongYongMapper {
    Integer getCountOfDuoTiaoJianChaXunZongJiLuShu(PrdtSamp1 p1);
 
 
+    Integer getCountOfDuoTiaoJianChaXunZongJiLuShuaSpecific(PrdtSamp1 p1);
+
+
     Integer getCountOfDuoTiaoJianChaXunZongJiLuShuExportExcel(PrdtSamp1 p1);
 
 
@@ -462,4 +465,6 @@ public interface A001TongYongMapper {
 
 
 
+    @Update({"update prdt set nouse_dd = null where prd_no=#{s}"})
+    int prdtDate2Null(@Param("s")String prdNo);
 }

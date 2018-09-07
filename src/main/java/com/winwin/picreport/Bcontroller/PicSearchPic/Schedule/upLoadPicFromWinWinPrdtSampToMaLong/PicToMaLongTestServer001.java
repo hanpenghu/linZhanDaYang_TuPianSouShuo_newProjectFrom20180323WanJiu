@@ -31,7 +31,7 @@ private  org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.
 
     }
 
-    @Scheduled(cron="0 0 1 * * ?")//每天凌晨一点执行
+//    @Scheduled(cron="0 0 1 * * ?")//每天凌晨一点执行
     public void meiTian_dingShi_zhiXing(){
         this.nativePic2MaLong();
     }

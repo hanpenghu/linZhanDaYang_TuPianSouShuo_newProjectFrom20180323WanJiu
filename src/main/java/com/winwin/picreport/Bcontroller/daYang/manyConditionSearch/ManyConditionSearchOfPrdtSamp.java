@@ -126,11 +126,14 @@ public class ManyConditionSearchOfPrdtSamp {
             //2018_9_6   weekday(4)   17:50:14  又改成特殊的 标记,不管哪个模块, 只要传过来这个 yes,就 启动特殊查询
             if(p.dy(ifSpecificSearch,启动特殊查询)){
                 prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXunPrdCodeDESC(p1);
+                f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShuaSpecific(p1));
             }else{
                 prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+                f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
             }
         }else{
             prdtSampListOrg=cnst.a001TongYongMapper.chanPinBianMaJianDangTiaoJianChaXun(p1);
+            f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
         }
 
 
@@ -161,7 +164,7 @@ public class ManyConditionSearchOfPrdtSamp {
 //        p.p(prdtSampList);
         f.setPrdtSampList(prdtSampList);
         //我在这个方法中顺便调了setZongYeShu()方法
-        f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
+//        f.setZongJiLuShu(cnst.a001TongYongMapper.getCountOfDuoTiaoJianChaXunZongJiLuShu(p1));
         return f;
 
 

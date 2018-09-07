@@ -268,10 +268,17 @@ public class InfoEdit_ManyAttach {
                     .replace("!","_gth_")
                     .replace("[","_zzkh_")
                     .replace("]","_yzkh_");
+
+            p.p("--------------originalFilename-----------------------------------------");
+            p.p(originalFilename);
+            p.p("-------------------------------------------------------");
             PrdtSamp0 prdtSampO = new PrdtSamp0();
             //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
             PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
             String attachmentUr = prdtsa.getAttach();
+            p.p("-------------PrdtSamp prdtsa = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());------------------------------------------");
+            p.p(attachmentUr);
+            p.p("-------------------------------------------------------");
             String uid =p.sj();
             ////////////////////////////////////////////////for开始/////////////////////////////////////////////////////
 //            this.f附件不能包含四种符号(attach,ms);
@@ -283,14 +290,28 @@ public class InfoEdit_ManyAttach {
                 if (!new File(s1,ss).exists()) {p.throwEAddToList("附件没有保存成功导致所有数据没保存！",ms);}
                 if (attachmentUr == null) {attachmentUr = "";}//第一次没上传任何东西可能是空
                 attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + "!" + originalFilename + ";";
+                p.p("-------------------------- attachmentUr = attachmentUr + cnst.fuJianWenJianJia + uid + \"!\" + originalFilename + \";\";-----------------------------");
+                p.p(attachmentUr);
+                p.p("-------------------------------------------------------");
             }
+            p.p("----------------fuck1111---------------------------------------");
+            p.p(attachmentUr);
+            p.p("-------------------------------------------------------");
             if ("".equals(attachmentUr)) {
                 //为了是null的时候不更新这个字段
                 attachmentUr = null;
             }
             prdtSampO.setId(prdtSampOb.getId());
+
+            p.p("------------------55555-------------------------------------");
+            p.p(attachmentUr);
+            p.p("-------------------------------------------------------");
             //只更新附件
             prdtSampO.setAttach(attachmentUr);//在这里不再更新附件,因为附件有多个,放在最后单独更新
+
+            p.p("------------------66666-------------------------------------");
+            p.p(prdtSampO.getAttach());
+            p.p("-------------------------------------------------------");
 //            prdtSampO = this.prdtSampWhereSpaceToNull(prdtSampO);//把""变成null,避免不必要的更新
             prdtSampO.setIsconfirm(null);//不更新这个
 
@@ -303,9 +324,11 @@ public class InfoEdit_ManyAttach {
 //                cnst.prdtSampMapper.updateByPrimaryKeySelective(prdtSampO);
 //            }
             PrdtSamp3 prdtSamp3=new PrdtSamp3();
-            BeanUtils.copyProperties(prdtSampOb,prdtSamp3);
+            BeanUtils.copyProperties(prdtSampO,prdtSamp3);
             p.p("----------------fu---------------------------------------");
+            p.p(prdtSampO.getAttach());
             p.p(prdtSamp3.getMiniOrderAmt());
+            p.p(prdtSamp3.getAttach());
             p.p("-------------------------------------------------------");
             prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
 //            this.time2null(prdtSampOb);
@@ -316,11 +339,24 @@ public class InfoEdit_ManyAttach {
     }
 
 
+//    public static void main(String[]args){
+//        p.p("-------------------------------------------------------");
+//        p.p(new Date(0));
+//        p.p(new Date(0).equals(p.tod("1970-01-01 08:00:00.000",p.d16)));
+//        p.p("-------------------------------------------------------");
+//    }
+
     @Transactional
     public void f更新商品主库的停用时间(PrdtSamp0 prdtSampO) {
         Date stopusedate = prdtSampO.getStopusedate();
         if(null!=stopusedate){
             String prdNo=prdtSampO.getPrdNo();
+            if(new Date(0).equals(stopusedate)){
+                //此时停用时间要置空
+               int i= cnst.a001TongYongMapper.prdtDate2Null(prdNo);
+                return;
+            }
+
             if(p.empty(prdNo)){
                prdNo = cnst.manyTabSerch.getPrdNoFromPrdtSamp(prdtSampO.getId());
             }

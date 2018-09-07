@@ -318,6 +318,30 @@
         <include refid="productProofWithManyCondition"/>
     </select>
 
+
+
+
+    <!--林展多条件查询接口 -->
+
+    <select id="getCountOfDuoTiaoJianChaXunZongJiLuShuaSpecific" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND (
+            isnull(prd_Code,'') =  #{prdCode}
+            OR
+            isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            OR
+            isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
+            )
+
+        </if>
+    </select>
+
+
 <!-- =================================================================================================================== -->
 
     <!-- 产品打样列表多条件查询导出excel-->
