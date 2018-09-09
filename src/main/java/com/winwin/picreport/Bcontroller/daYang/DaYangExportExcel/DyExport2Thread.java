@@ -135,15 +135,15 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         Map<String, List<String>> mapids = new HashMap();
         mapids.put("ids", ids);
         log.info("《《《《《《《把所有ids放入map准备给组装excle的线程, ids总共有  {}  个》》》》》》》",ids.size());
-        //超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
-        this.igllManyPicOutOfMerory(ids, msg, list导出头信息);
+
 
 
         List<String> 前端穿过来要显示的fields = ep.getFields();
         if (p.notEmpty(前端穿过来要显示的fields)) {
             this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
-
+//超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
+        this.igllManyPicOutOfMerory(ids, msg, list导出头信息);
         new Thread(() -> {
             log.error("《《《《《《《下载线程开始》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
             try {
@@ -175,7 +175,7 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     private void igllManyPicOutOfMerory(List<String> ids, List<String> msg, List<String> list导出头信息) {
         //此时不用管,随便导出excel
         if (!list导出头信息.contains("Product Photo 打样产品照片或图籍")) return;
-        if (ids != null && ids.size() > 2000){
+        if (list导出头信息.contains("Product Photo 打样产品照片或图籍")&&ids != null && ids.size() > 2000){
             log.info("《《《《《《《《《《《《《您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项》》》》》》》》》》》》");
             p.throwEAddToList("您导出的excel带图片并且大于2000条,会导致jvm堆栈溢出,如果您真的要导出大于2000条的excel,建议设置不要选取图片选项", msg);
         }
@@ -266,7 +266,8 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         log.info("《《《《《《《《《《《《《《分批得到DaoChus该批的数量：》{}》》》》》》》》",ids.size());
 
         log.info("《《《《将所有ids的集合平均分成40分分别得到DaoChu》》》》");
-        List<List<String>> lists = p.avgList(ids, 40);
+//        List<List<String>> lists = p.avgList(ids, 40);
+        List<List<String>> lists = p.avgSubList(ids,2000);
         int iiii = 1;
         for (List<String> ls : lists) {
             log.info("<<<<<<<<<<<第《{}》次得到daoChus开始>>>>>>>>>>>",iiii);

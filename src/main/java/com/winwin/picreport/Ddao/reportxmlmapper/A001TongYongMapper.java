@@ -472,4 +472,20 @@ public interface A001TongYongMapper {
 
     @Update({"${s}"})
     int updateTest(@Param("s")String sql);
+
+
+
+
+
+
+//    @Select({"select count(*) from indx where (stop_dd is not null or stop_dd>'1970-01-01') and idx_no=#{s} "})
+    int isFenLeiNameNotUse(@Param("allShangJi") List<String> allShangJi);
+
+    List<String> allShangJiFenLeiName(@Param("fenLeiName") String fenLeiName);
+
+
+
+
+
+
 }

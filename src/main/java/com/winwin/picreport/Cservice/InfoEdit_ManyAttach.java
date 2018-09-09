@@ -43,6 +43,7 @@ public class InfoEdit_ManyAttach {
             }
             prdtSampOb = JSON.parseObject(prdtSamp1, PrdtSamp0.class);
         }
+        this.isIgll(prdtSampOb,ms);
         p.p("---------------------------222----------------------------");
         //会影响单独  上传图片或者附件,判断留给前端判断  2018_9_6   weekday(4)   10:16:53
 //        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
@@ -568,16 +569,30 @@ public class InfoEdit_ManyAttach {
     }
 
 
-    private List<Msg> isIgll(PrdtSamp0 prdtSamp0) {
-        if (p.empty(prdtSamp0)) {
-            return MessageGenerate.generateMessage("保存失败", "保存失败",
-                    "前端传过来的参数是空的", "", "39");
-        }
-        if (p.empty(prdtSamp0.getId())) {
+    private void isIgll(PrdtSamp0 prdtSamp0,List<String> msg) {
+//        p.p("--------------da yang bian ji FenLeiNo--------------"+prdtSamp0.getFenLeiNo()+"---------------------------");
+//        p.p("----------da yang bian ji FenLeiName--------------"+prdtSamp0.getFenLeiName()+"-------------------------------");
+//
+//        //得到当前分类的自己和所有上级
+//        List<String>allShangJi=cnst.a001TongYongMapper.allShangJiFenLeiName(prdtSamp0.getFenLeiName());
+//
+//        //判断该中类是否已经停用
+//       int i=cnst.a001TongYongMapper.isFenLeiNameNotUse(allShangJi);
+//
+//       if(i>0){
+//           p.throwEAddToList("前端传过来的要更新的中类"+prdtSamp0.getFenLeiName()+"("+prdtSamp0.getFenLeiNo()+")已经停用！",msg);
+//       }
 
-            return MessageGenerate.generateMessage("保存失败", "保存失败",
-                    "前端传过来的id是空的", "", "39");
-        }
+
+//        if (p.empty(prdtSamp0)) {
+//            return MessageGenerate.generateMessage("保存失败", "保存失败",
+//                    "前端传过来的参数是空的", "", "39");
+//        }
+//        if (p.empty(prdtSamp0.getId())) {
+//
+//            return MessageGenerate.generateMessage("保存失败", "保存失败",
+//                    "前端传过来的id是空的", "", "39");
+//        }
         /*if(p.empty(prdtSamp0.getStartsellcount())){
             return MessageGenerate.generateMessage("保存失败", "保存失败",
                     "前端传过来的起订量startsellcount是空的", "", "39");
@@ -598,7 +613,6 @@ public class InfoEdit_ManyAttach {
                     "该商品还没有采购定价", "", "39");
         }*/
 
-        return null;
     }
 
     //是否已经采购定价

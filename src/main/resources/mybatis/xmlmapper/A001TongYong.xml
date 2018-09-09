@@ -1230,9 +1230,28 @@
         select name as fenLeiName from cet1
     </select>
 
+    <select id="allShangJiFenLeiName" resultType="java.lang.String">
+        with cet1
+        AS
+        (
+        -- 基本语句,
+        select c.idx_no,c.idx_up,c.name from indx c where c.name = #{fenLeiName} -- 递归出来 idx_no=9 的所有下级
 
+        union all
+        --  递归语句
+        select a.idx_no,a.idx_up,a.name from
+        indx a
+        inner join  cet1 b on a.idx_no=b.idx_up
+        )
+        select name as fenLeiName from cet1
+    </select>
 
-
+<select id="isFenLeiNameNotUse" resultType="java.lang.Integer">
+    select count(*) from indx where (stop_dd is not null or stop_dd>'1971-01-01') and name  in
+    <foreach collection="allShangJi" index="index" item="name" open="(" separator="," close=")">
+        #{name}
+    </foreach>
+</select>
 
 
 

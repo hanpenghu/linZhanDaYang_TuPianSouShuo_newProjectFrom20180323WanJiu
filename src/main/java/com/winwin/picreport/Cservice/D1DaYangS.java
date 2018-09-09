@@ -268,7 +268,7 @@ public class D1DaYangS {
 
     public CategoryNameCode getChildAndSetCode(CategoryNameCode cnc) {
         //找到所有的下级
-        List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
+        List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCodeNoStopDd(cnc.getIdxNo());
         //用一个新的list替换所有下级集合 来 搜集   装好 code的  所有下级
         List<CategoryNameCode> ccncListChild = new ArrayList<>();
         if (p.notEmpty(ccnc)) {
@@ -290,9 +290,15 @@ public class D1DaYangS {
      * 找到某个CategoryNameCode的下级的下级,并封装商品编码(名字)进来
      */
 
-    public CategoryNameCode getChildAndNotSetCode(CategoryNameCode cnc) {
+    public CategoryNameCode getChildAndNotSetCode(CategoryNameCode cnc,String isContainStopDd,String 需要停用时间这个条件) {
         //找到所有的下级
-        List<CategoryNameCode> ccnc = cnst.manyTabSerch.getChildCategoryNameCode(cnc.getIdxNo());
+        List<CategoryNameCode> ccnc = null;
+        if(需要停用时间这个条件.equals(isContainStopDd)){
+            ccnc = cnst.manyTabSerch.getChildCategoryNameCodeHaveStopDd(cnc.getIdxNo());
+        }else{
+            ccnc = cnst.manyTabSerch.getChildCategoryNameCodeNoStopDd(cnc.getIdxNo());
+        }
+
         //放入所有下级,不再放入商品
         return cnc.setChilds(ccnc);
     }
@@ -318,14 +324,14 @@ public class D1DaYangS {
      * 得到所有层级,使用递归,得到不带商品的
      */
 
-    public CategoryNameCode getAllLayerUtilUseRecursionNotGetPrdt(CategoryNameCode top) {
+    public CategoryNameCode getAllLayerUtilUseRecursionNotGetPrdt(CategoryNameCode top,String isContainStopDd,String 需要停用时间这个条件) {
         //设置该top的child
-        top = this.getChildAndNotSetCode(top);
+        top = this.getChildAndNotSetCode(top,isContainStopDd,需要停用时间这个条件);
         List<CategoryNameCode> childs = top.getChilds();
         if (p.notEmpty(childs)) {
             //寻找该childs里面的所有child的childs
             for (CategoryNameCode c : childs) {
-                this.getAllLayerUtilUseRecursionNotGetPrdt(c);
+                this.getAllLayerUtilUseRecursionNotGetPrdt(c,isContainStopDd,需要停用时间这个条件);
             }
         }
         return top;
@@ -342,9 +348,13 @@ public class D1DaYangS {
     }
 
 
-    public CategoryNameCode getAllLayerNotHavePrdt() {
+    public CategoryNameCode getAllLayerNotHavePrdt(String isContainStopDd,String 需要停用时间这个条件) {
         Date date = new Date();
-        CategoryNameCode allLayerUtilUseRecursionNotGetPrdt = this.getAllLayerUtilUseRecursionNotGetPrdt(this.getCommonderNoPrdt());
+        CategoryNameCode allLayerUtilUseRecursionNotGetPrdt =
+                this.getAllLayerUtilUseRecursionNotGetPrdt(this.getCommonderNoPrdt(), isContainStopDd, 需要停用时间这个条件);
+
+
+
         return allLayerUtilUseRecursionNotGetPrdt;
 
 

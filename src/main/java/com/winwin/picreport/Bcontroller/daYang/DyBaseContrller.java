@@ -48,12 +48,19 @@ public class DyBaseContrller {
     }
 
 
+
+
+    private static final  String 需要停用时间这个条件="yes";
+
 //    /d/allfenlei
     @RequestMapping(value = "allfenlei", method = RequestMethod.POST,
             produces = {InterFaceCnst.ContentTypeJsonAndCharsetUtf8})
     public @ResponseBody
-    CategoryNameCode allfenlei() {
-        return cnst.fenLei.getAllLayerNotHavePrdt();
+    CategoryNameCode allfenlei(@RequestParam(value="isContainStopDd",required = false)String isContainStopDd) {
+        p.p("----------jin ru allfenlei  jie kou --------isContainStopDd="+isContainStopDd+"-------------------------------------");
+
+
+        return cnst.fenLei.getAllLayerNotHavePrdt(isContainStopDd,需要停用时间这个条件);
     }
 
     /**
