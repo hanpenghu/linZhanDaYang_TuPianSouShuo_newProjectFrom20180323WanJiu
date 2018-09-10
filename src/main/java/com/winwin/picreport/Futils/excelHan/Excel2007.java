@@ -16,6 +16,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -35,32 +36,103 @@ public class Excel2007 {
     private final static String emf="image/x-emf";
     private final static String xlsx="xlsx";
     private final static String excelVersionNotRight="你的xlsx不是2007以上版本或者根本不是excel";
-    public static void main(String[]args) throws IOException {
+//    public static void main(String[]args) throws IOException {
+//        Excel2007 g = Excel2007.g();
+//        String s="E:\\image87.emf";
+//     s="E:\\2.emf";
+//        EMFInputStream inputStream = new EMFInputStream(new FileInputStream(s), EMFInputStream.DEFAULT_VERSION);
+//        byte[] bytes = g.emfToPng(inputStream);
+//        System.out.println(bytes);
+//        p.writeByteToFile(bytes,new File("E:/12.jpg"));
+////        File file=new File("E:/打样上传模板20180310.xlsx");
+////        File file=new File(s);
+////        List<ExcelPicTxtTemplate> excelPicTxt = g.getExcelPicTxt(file);
+////        for(ExcelPicTxtTemplate e:excelPicTxt){
+////            PictureData pictureData = e.getTxtRowPicDataList().get(0).getPictureData();
+////            if(emf.equals(pictureData.getMimeType())){
+//////                g.emfToPng(new ByteArrayInputStream(pictureData.getData()));
+////            }else{
+////                System.out.println(pictureData.getMimeType());
+////            }
+////        }
+//
+//    }
 
 
 
-        Excel2007 g = Excel2007.g();
-        String s="E:\\image87.emf";
-     s="E:\\2.emf";
-        EMFInputStream inputStream = new EMFInputStream(new FileInputStream(s), EMFInputStream.DEFAULT_VERSION);
-        byte[] bytes = g.emfToPng(inputStream);
-        System.out.println(bytes);
-        p.writeByteToFile(bytes,new File("E:/12.jpg"));
-//        File file=new File("E:/打样上传模板20180310.xlsx");
-//        File file=new File(s);
-//        List<ExcelPicTxtTemplate> excelPicTxt = g.getExcelPicTxt(file);
-//        for(ExcelPicTxtTemplate e:excelPicTxt){
-//            PictureData pictureData = e.getTxtRowPicDataList().get(0).getPictureData();
-//            if(emf.equals(pictureData.getMimeType())){
-////                g.emfToPng(new ByteArrayInputStream(pictureData.getData()));
-//            }else{
-//                System.out.println(pictureData.getMimeType());
-//            }
-//        }
 
+    /**
+     *下面是2个excel时间处理工具
+     * */
+
+    public static Date todAll(String strDate) {
+        if(strDate==null){
+            return null;
+        }
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(strDate);
+        } catch (ParseException e) {
+            try {
+                return  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").parse(strDate);
+            } catch (ParseException e1) {
+                try {
+                    return  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
+                } catch (ParseException e2) {
+                    try {
+                        return  new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+                    } catch (ParseException e3) {
+                        try {
+                            return  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS").parse(strDate);
+                        } catch (ParseException e4) {
+                            try {
+                                return  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(strDate);
+                            } catch (ParseException e5) {
+                                try {
+                                    return  new SimpleDateFormat("yyyy/MM/dd").parse(strDate);
+                                } catch (ParseException e6) {
+                                    return null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     *将excel里面的距离1900/1/1的时间转为
+     * unix标准时间,
+     * excelDayNumStr就是excel里的时间 比如  43333  就是距离 1900-01-01   43333天的时间
+     * */
+    public static Date excelData2Date(String excelDayNumStr) throws ParseException {
+        try {
+            //得到excel起始值计算的毫秒数
+            long time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse("1900-1-1 00:00:00.000").getTime();
+            //得到excel中的毫秒数
+            BigDecimal b = new BigDecimal(excelDayNumStr).multiply(new BigDecimal(24)).multiply(new BigDecimal(3600)).multiply(new BigDecimal(1000));
+            BigDecimal add = b.add(new BigDecimal(time)).subtract(new BigDecimal(2*24*3600*1000));//不知道为啥多了2天,后面减掉2天
+            if(String.valueOf(add).contains(".")){
+                return  new Date(new Long(String.valueOf(add).substring(0,String.valueOf(add).indexOf("."))));
+            }else{
+                return  new Date(new Long(String.valueOf(add)));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
     //建造者
     public static Excel2007 g(){
