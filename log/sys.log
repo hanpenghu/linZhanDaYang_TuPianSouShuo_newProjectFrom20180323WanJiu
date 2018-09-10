@@ -1,16 +1,8 @@
-2018-09-08 22:49:37,668 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 6508 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-08 22:49:37,704 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-08 22:49:46,637 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-08 22:49:49,533 INFO (StartupInfoLogger.java:57)- Started ATests in 13.318 seconds (JVM running for 15.049)
-2018-09-08 22:50:27,533 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 7028 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-08 22:50:27,535 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-08 22:50:32,440 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-08 22:50:34,069 INFO (StartupInfoLogger.java:57)- Started ATests in 6.985 seconds (JVM running for 7.968)
-2018-09-08 23:32:09,568 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 6656 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-08 23:32:09,570 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-08 23:32:14,965 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-08 23:32:16,758 INFO (StartupInfoLogger.java:57)- Started ATests in 7.657 seconds (JVM running for 8.614)
-2018-09-08 23:43:49,548 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 2080 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-08 23:43:49,550 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-08 23:43:54,481 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-08 23:43:56,103 INFO (StartupInfoLogger.java:57)- Started ATests in 6.986 seconds (JVM running for 7.89)
+2018-09-10 09:28:12,297 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 7988 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-10 09:28:12,321 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-10 09:28:23,265 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-10 09:28:25,625 INFO (StartupInfoLogger.java:57)- Started A in 14.594 seconds (JVM running for 15.791)
+2018-09-10 09:41:03,973 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 7416 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-10 09:41:03,977 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-10 09:41:08,775 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-10 09:41:09,949 INFO (StartupInfoLogger.java:57)- Started A in 6.356 seconds (JVM running for 6.991)

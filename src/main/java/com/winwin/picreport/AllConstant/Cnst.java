@@ -27,6 +27,8 @@ import java.util.Date;
 public class Cnst {
 
 
+
+
     //数字数据库置空标记
     public static final BigDecimal toNullFlagNum=new BigDecimal(-1);
     //日期数据库置空标记
@@ -134,6 +136,9 @@ public class Cnst {
        return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
 
+
+    @Autowired
+    public PrdtUtMapper prdtUtMapper;
 
     @Autowired
     public GenFenLeiNo genFenLeiNo;

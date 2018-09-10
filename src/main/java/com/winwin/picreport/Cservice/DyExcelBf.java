@@ -43,8 +43,16 @@ import java.util.List;
 public class DyExcelBf {
     @Autowired
     private Cnst cnst;
-    private String excel中有中类名称是空的="excel中有中类名称是空的";
-
+    @Autowired
+    private SqlSessionTemplate sqlSessionTemplate;
+    private final static String excel中有中类名称是空的="excel中有中类名称是空的";
+    private final static String insertInterface="com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.insertSelective";
+    private final static String orderBatchFail="订单批处理失败！";
+    private final static String haveRepeatPrdCode ="excel里有编码重复,prdCode有重复";
+    private final static String sampMakeNotDateFormat ="导入的Excel打样时间不是日期格式！但是已经跳过！";
+    private final static String 点=".";
+    private final static String png="png";
+    private final String emf="image/x-emf";
     public void f(MultipartFile excel, HttpServletRequest r,List<String> msgs) throws IOException {
         PrdtSampCreateUser usr= this.f获得当前操作者(r,msgs);
         File excelFile = this.f将excel保存在本地的excelTemp文件夹(msgs, excel);
@@ -82,15 +90,14 @@ public class DyExcelBf {
         excelFile.delete();
     }
 
-    @Autowired
-    private PrdtUtMapper prdtUtMapper;
+
 
     private void prdtUtNotExsitThisUt(PrdtSamp pp ,List<String>msgs) {
         if(p.notEmpty(pp.getMainUnit())){
             PrdtUtExample pe=new PrdtUtExample();
             //我从excel里拿出来的主单位放在MainUt里了
             pe.createCriteria().andUtEqualTo(pp.getMainUnit());
-            long l = prdtUtMapper.countByExample(pe);
+            long l = cnst.prdtUtMapper.countByExample(pe);
             if(l==0){
                 String s="excel中编码为《"+pp.getPrdCode()+"》" +
                         "的货品单位《"+pp.getMainUnit()+"》" +
@@ -155,13 +162,12 @@ public class DyExcelBf {
 
         set.addAll(prdtSamps将要入数据库);
         if(prdtSamps将要入数据库.size()!=set.size()){
-            this.commonsThrow(msgs,"excel里有编码重复,prdCode有重复");
+            this.commonsThrow(msgs,haveRepeatPrdCode);
         }
     }
 
 
-    @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+
     @Transactional
     private void saveData(List<PrdtSamp> prdtSamps将要入数据库,List<String> msgs) {
         if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){
@@ -170,7 +176,7 @@ public class DyExcelBf {
         SqlSession session =sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
         try{
             for(PrdtSamp pp:prdtSamps将要入数据库){
-                session.insert("com.winwin.picreport.Ddao.reportxmlmapper.PrdtSampMapper.insertSelective",pp);
+                session.insert(insertInterface,pp);
             }
             session.commit();
             //清理缓存，防止溢出
@@ -179,7 +185,7 @@ public class DyExcelBf {
             session.rollback();
             session.close();
             e.printStackTrace();
-            commonsThrow(msgs,"订单批处理失败！");
+            commonsThrow(msgs,orderBatchFail);
         }finally {
             session.close();
         }
@@ -253,7 +259,10 @@ public class DyExcelBf {
                 pp.setSize(ee.getTxt());
             }
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),打样时间)){
-                try {pp.setSampMake(p.tod(ee.getTxt(),p.d16)); } catch (Exception e1) { p.p("导入的EXcel打样时间不是日期格式！！");e1.printStackTrace();}
+                if(p.notEmpty(ee.getTxt())){
+                    try {pp.setSampMake(p.tod(ee.getTxt(),p.d16)); } catch (Exception e1) { p.p(sampMakeNotDateFormat);e1.printStackTrace();}
+                }
+
             }
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),Category)){
                 pp.setCategory(ee.getTxt());
@@ -273,8 +282,7 @@ public class DyExcelBf {
         }
     }
 
-    private final String 点=".";
-    private final String png="png";
+
     private String savePic(List<ExcelPicTemplate> list该行图片集,String uuid,List<String> list异常后要删除的图片路径) throws IOException {
         String thum="";
         if(p.notEmpty(list该行图片集)){
@@ -312,7 +320,7 @@ public class DyExcelBf {
         return thum;
     }
 
-    private final String emf="image/x-emf";
+
     private PrdtSampCreateUser f获得当前操作者(HttpServletRequest r,List<String> msgs) {
         String user = r.getParameter("user");
         if(p.empty(user)){
@@ -333,18 +341,20 @@ public class DyExcelBf {
         return prdtSampCreateUser;
     }
 
-
+    private static final String excelSaveLocalFail="excel保存到本地失败!";
+    private static final String excel2Erp="excel2Erp";
+    private static final String createTempExcelFileFail="创建存储excel的临时文件夹失败！";
     private File f将excel保存在本地的excelTemp文件夹(List<String> msgs, MultipartFile excel) throws IOException {
-        File dir = new File("excel2Erp");
+        File dir = new File(excel2Erp);
         if(!dir.exists()){dir.mkdir();}
         if(!dir.exists()){
-            commonsThrow(msgs,"创建存储excel的临时文件夹失败");
+            commonsThrow(msgs,createTempExcelFileFail);
         }
         String tmepDirAbsolutePath = dir.getAbsolutePath();//无杠
         String s = tmepDirAbsolutePath +File.separator+p.uuid()+excel.getOriginalFilename();
         File excelFile = new File(s);
         boolean b = excelFile.createNewFile();
-        if(!b)commonsThrow(msgs,"excel保存到本地失败");
+        if(!b)commonsThrow(msgs,excelSaveLocalFail);
         excel.transferTo(excelFile);
         return excelFile;
     }

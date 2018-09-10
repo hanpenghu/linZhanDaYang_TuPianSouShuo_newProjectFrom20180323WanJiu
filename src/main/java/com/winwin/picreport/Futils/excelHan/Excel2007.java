@@ -33,6 +33,8 @@ import java.util.List;
  * */
 public class Excel2007 {
     private final static String emf="image/x-emf";
+    private final static String xlsx="xlsx";
+    private final static String excelVersionNotRight="你的xlsx不是2007以上版本或者根本不是excel";
     public static void main(String[]args) throws IOException {
 
 
@@ -106,10 +108,10 @@ public class Excel2007 {
         InputStream input = new FileInputStream(excelFile);
         // 获取文件后缀名(不带点)
         String fileExt =  excelFile.getName().substring(excelFile.getName().lastIndexOf(".") + 1);
-        if ("xlsx".equals(fileExt)) {
+        if (xlsx.equals(fileExt)) {
             //继续,不做任何处理
         }else{
-            throw new RuntimeException("你的xlsx不是2007以上版本或者根本不是excel");
+            throw new RuntimeException(excelVersionNotRight);
         }
 
         // 创建Workbook,就是整个excel

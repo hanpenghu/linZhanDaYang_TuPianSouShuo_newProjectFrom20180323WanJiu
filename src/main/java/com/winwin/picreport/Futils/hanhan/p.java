@@ -3847,6 +3847,13 @@ public static BigDecimal b(Object o){
 //    public static void main(String[]args){
 //            p(new BigDecimal("0.10000"));
 //    }
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public	final	static	int	n0	=	0	;
     public	final	static	int	n1	=	1	;
