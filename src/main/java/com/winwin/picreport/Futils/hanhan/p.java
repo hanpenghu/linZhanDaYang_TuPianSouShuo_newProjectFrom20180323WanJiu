@@ -1428,6 +1428,83 @@ public static List<?extends Object> removeNull(List<?extends Object> list) {
             return null;
         }
     }
+
+    public static Date todAll(String strDate) {
+        if(strDate==null){
+            return null;
+        }
+        try {
+            return new SimpleDateFormat(d16).parse(strDate);
+        } catch (ParseException e) {
+            try {
+                return  new SimpleDateFormat(d1).parse(strDate);
+            } catch (ParseException e1) {
+                try {
+                    return  new SimpleDateFormat(d2).parse(strDate);
+                } catch (ParseException e2) {
+                    try {
+                        return  new SimpleDateFormat(d3).parse(strDate);
+                    } catch (ParseException e3) {
+                        try {
+                            return  new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS").parse(strDate);
+                        } catch (ParseException e4) {
+                            try {
+                                return  new SimpleDateFormat(d5).parse(strDate);
+                            } catch (ParseException e5) {
+                                try {
+                                    return  new SimpleDateFormat(d6).parse(strDate);
+                                } catch (ParseException e6) {
+                                    return null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     *将excel里面的距离1900/1/1的时间转为
+     * unix标准时间,
+     * excelDayNumStr就是excel里的时间 比如  43333  就是距离 1900-01-01   43333天的时间
+     * */
+    public static Date excelData2Date(String excelDayNumStr) throws ParseException {
+        try {
+            //得到excel起始值计算的毫秒数
+            long time = new SimpleDateFormat(d16).parse("1900-1-1 00:00:00.000").getTime();
+            //得到excel中的毫秒数
+            BigDecimal b = p.b(excelDayNumStr).multiply(p.b(24)).multiply(p.b(3600)).multiply(p.b(1000));
+            BigDecimal add = b.add(b(time)).subtract(p.b(2*24*3600*1000));//不知道为啥多了2天,后面减掉2天
+            if(String.valueOf(add).contains(".")){
+                return  new Date(new Long(String.valueOf(add).substring(0,String.valueOf(add).indexOf("."))));
+            }else{
+                return  new Date(new Long(String.valueOf(add)));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+
+//
+//    public static void main(String[]args) throws ParseException {
+//        p.p("-------------------------------------------------------");
+//        p.p(p.dtoStr(excelData2Date("43353.5690740741")));
+//        p.p("-------------------------------------------------------");
+//    }
+
+
+
     /**
      *yyyy-MM-dd转换成默认日期的
      * */

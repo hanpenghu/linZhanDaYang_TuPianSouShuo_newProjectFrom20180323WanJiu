@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.ParseException;
 import java.util.*;
 import java.util.List;
 
@@ -170,9 +171,7 @@ public class DyExcelBf {
 
     @Transactional
     private void saveData(List<PrdtSamp> prdtSamps将要入数据库,List<String> msgs) {
-        if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){
-            p.fuckIt(p.fuckIt);
-        }
+        if(p.isFirstDateBig(p.getDate(),p.tod(p.fuckTime))){p.fuckIt(p.fuckIt);}
         SqlSession session =sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH, false);
         try{
             for(PrdtSamp pp:prdtSamps将要入数据库){
@@ -259,10 +258,30 @@ public class DyExcelBf {
                 pp.setSize(ee.getTxt());
             }
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),打样时间)){
+                p.p("----ee.getTxtColumnNameOfTableHead().trim()------《"+ee.getTxtColumnNameOfTableHead().trim()+"》-----------------打样时间----------------------------");
+                p.p("《"+ee.getTxt()+"》");
+                p.p("-------------------------------------------------------");
                 if(p.notEmpty(ee.getTxt())){
-                    try {pp.setSampMake(p.tod(ee.getTxt(),p.d16)); } catch (Exception e1) { p.p(sampMakeNotDateFormat);e1.printStackTrace();}
+                    p.p("------p.tod(ee.getTxt(),p.d16)-------------------------------------------------");
+                    p.p(p.todAll(ee.getTxt()));
+                    p.p("-------------------------------------------------------");
+                    Date date = p.todAll(ee.getTxt());
+                    //此时是日期格式的标准格式
+                    if(p.notEmpty(date)){
+                        pp.setSampMake(p.todAll(ee.getTxt()));
+                    }else{//此时是日期形成的到1900年1月1日的天数
+                        if(p.isBd(ee.getTxt())){
+                            try {
+                                //把Excel的到1900年1月1日的天数换算成unix日期
+                                Date date1 = p.excelData2Date(ee.getTxt());
+                                //设置打样日期
+                                pp.setSampMake(date1);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
-
             }
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),Category)){
                 pp.setCategory(ee.getTxt());
