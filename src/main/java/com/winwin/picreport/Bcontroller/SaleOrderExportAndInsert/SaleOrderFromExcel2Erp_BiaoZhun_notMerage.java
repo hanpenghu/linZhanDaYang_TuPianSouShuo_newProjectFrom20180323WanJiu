@@ -96,7 +96,7 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
         //3   该币别该运费的销售定价在up_def不存在
         if(l1==0){e.setState(Cnst.salePriceColorOfNoThisCurIdAndBilType);return;}
         //找到符合条件的该币别该销售的低于up_def的价格
-       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()),e.getCurId(),e.getBilType());
+       int k= cnst.a001TongYongMapper.countPriceOfSmallThenUpdef(e.getOsDd(),e.getPrdNo(),Cnst.salPriceId,p.b(e.getUp()),e.getCurId(),e.getBilType(),e.getQty());
         //1    此时是  1  紫色背景   //对比 up_def,有单价低于销售定价的行,紫色背景 代号 1
         if(k>0)e.setState(Cnst.salePriceColorOfSmall);
     }

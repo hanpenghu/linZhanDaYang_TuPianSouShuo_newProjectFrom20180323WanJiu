@@ -42,6 +42,9 @@ public class IfSalePriceSamllEntity {
     //运费别(销售的)有运费2,无运费1
     private String bilType;
 
+    //加入 数量对比 2018_9_12   weekday(3)   14:25:05
+    private String qty;
+
 
 
 
@@ -127,6 +130,13 @@ public class IfSalePriceSamllEntity {
         this.state = state;
     }
 
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
 
     @Override
     public String toString() {

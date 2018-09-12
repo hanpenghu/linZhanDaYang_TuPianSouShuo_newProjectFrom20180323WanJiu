@@ -5,6 +5,7 @@ import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.CustExample;
 import com.winwin.picreport.Edto.CustWithBLOBs;
 import com.winwin.picreport.Futils.MsgGenerate.Msg;
+import com.winwin.picreport.Futils.hanhan.link;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import org.apache.ibatis.annotations.Param;
@@ -42,6 +43,17 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     private Cnst cnst;
     private String jarPath;
 
+
+
+    //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
+    @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
+    public void a定时清空excel临时目录的内容() {
+        try {
+            new File(f创建存储excel的临时目录不带杠()).delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //导出所有用下面这个(带图片导出)
 //    http://47.98.45.100:8070/dyExportExcel2Thread?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
     // {"ids":[],"fields":["salName","thum","cusName","cust.nm_eng","prdCode","idxName","fenLeiName","category","teamname","colour","size","mainUnit","noTransUpSaleBenBi","haveTransUpSaleBenBi","noTransUpSaleWaiBi","haveTransUpSaleWaiBi","financestartsellcount","financelittleorderprice","confirmtimestr","confirmman","sampRequ","sampMake","sampSend"]}
@@ -367,15 +379,7 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     }
 
 
-    //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
-    @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
-    public void a定时清空excel临时目录的内容() {
-        try {
-            new File(f创建存储excel的临时目录不带杠()).delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
     private String excelPath = "excelPath";
@@ -462,13 +466,13 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
                 cell.setCellValue(daoChu.getFenLeiName()); // 设置内容  4
             }
             if ("产品大中类（英文）".equals(s)) {
-                cell.setCellValue(""); // 设置内容  5
+                cell.setCellValue(daoChu.getFenLeiNameE()); // 设置内容  5
             }
             if ("产品子中类（中文）".equals(s)) {
                 cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
             }
             if ("产品子中类（英文）".equals(s)) {
-                cell.setCellValue(""); // 设置内容 7
+                cell.setCellValue(daoChu.getIdxNameE()); // 设置内容 7
             }
             if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
 //                p.p("=================设置照片=================================");
@@ -644,19 +648,22 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         if (!a前端传过来需要显示的fields.contains("prdCode")) {
             daoChuExcelHeadList.remove("Win Win Model# WinWin编号");
         }
-        if (!a前端传过来需要显示的fields.contains("idxName")) {
-            daoChuExcelHeadList.remove("产品大中类（中文）");
-        }
-        if (!a前端传过来需要显示的fields.contains("idxNameE")) {
-            daoChuExcelHeadList.remove("产品大中类（英文）");
-        }
-
-        if (!a前端传过来需要显示的fields.contains("fenLeiName")) {
+        if (!a前端传过来需要显示的fields.contains("idxName")) {//名字  大范围
             daoChuExcelHeadList.remove("产品子中类（中文）");
         }
-        if (!a前端传过来需要显示的fields.contains("fenLeiNameE")) {
-            daoChuExcelHeadList.remove("产品子中类（英文）");
+        if (!a前端传过来需要显示的fields.contains("fenLeiName")) {//分类  小范围
+            daoChuExcelHeadList.remove("产品大中类（中文）");
         }
+
+        //暂时先不移除,直接导出来这2项,因为徐勇没有传入这2项后期加的东西
+
+//        if (!a前端传过来需要显示的fields.contains("idxNameE")) {//名字 大范围
+//            daoChuExcelHeadList.remove("产品子中类（英文）");
+//        }
+//        if (!a前端传过来需要显示的fields.contains("fenLeiNameE")) {//分类 小范围
+//            daoChuExcelHeadList.remove("产品大中类（英文）");
+//        }
+
 
         if (!a前端传过来需要显示的fields.contains("thum")) {
             daoChuExcelHeadList.remove("Product Photo 打样产品照片或图籍");
@@ -839,6 +846,10 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
 //    }
 
 
+
+
+
+
     private org.apache.log4j.Logger l = org.apache.log4j.LogManager.getLogger(this.getClass().getName());
 
     @SuppressWarnings("unchecked")
@@ -849,10 +860,10 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
                         .a("Inquiry Source 帽厂/NE")//cusName    1
                         .a("NE CODE NE编码")//   2   x.nm_eng
                         .a("Win Win Model# WinWin编号")//prdCode  3
-                        .a("产品大中类（中文）")//4
-                        .a("产品大中类（英文）")//5
-                        .a("产品子中类（中文）")//idxName    6
+                        .a("产品子中类（中文）")//idxName    6//产品名称
+                        .a("产品大中类（中文）")//4//产品中类 fenLeiName
                         .a("产品子中类（英文）")//7
+                        .a("产品大中类（英文）")//5
                         .a("Product Photo 打样产品照片或图籍")//  8 thum
                         .a("Category Name")//category   9
                         .a("Team Name")//teamname  10
@@ -874,23 +885,29 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     }
 
     public static void main(String[] args) throws Exception {
-        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
-        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
-        s = "{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
-       //带图片导出
-        s="{\"ids\":[],\"fields\":[\"salName\",\"thum\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
+//        String s = "%7B\"ids\"%3A%5B\"0000e1a2-ec00-4b06-94da-db80628473eb\"%2C\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"%5D%2C\"fields\"%3A%5B\"salName\"%2C\"thum\"%2C\"prdCode\"%2C\"mainUnit\"%2C\"haveTransUpSaleBenBi\"%2C\"haveTransUpSaleWaiBi\"%2C\"noTransUpSaleBenBi\"%2C\"noTransUpSaleWaiBi\"%5D%7D";
+//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+//        s = "{\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"]}";
+//        s = "{\"ids\"：[],\"fields\":[\"thum\",\"prdCode\",\"idxName\",\"noTransUpSaleWaiBi\"],\"confirmtimestr\":\"2018-06-11\",\"confirmtimestrEnd\":\"2018-06-20\"}";
+//       //带图片导出
+//        s="{\"ids\":[],\"fields\":[\"salName\",\"thum\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
+//
+//        //不带图片导出,fields里面没有thum
+//        s="{\"ids\":[],\"fields\":[\"salName\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
+//        s="{\"ids\":[],\"fields\":[]}";
+//        s = URLEncoder.encode(s, "UTF-8");
+//        p.p("-------------------------------------------------------");
+//        p.p(s);
+//        p.p("\n");
+//        s = URLDecoder.decode(s);
+//        p.p(s);
+//        p.p("-------------------------------------------------------");
 
-        //不带图片导出,fields里面没有thum
-        s="{\"ids\":[],\"fields\":[\"salName\",\"cusName\",\"cust.nm_eng\",\"prdCode\",\"idxName\",\"fenLeiName\",\"category\",\"teamname\",\"colour\",\"size\",\"mainUnit\",\"noTransUpSaleBenBi\",\"haveTransUpSaleBenBi\",\"noTransUpSaleWaiBi\",\"haveTransUpSaleWaiBi\",\"financestartsellcount\",\"financelittleorderprice\",\"confirmtimestr\",\"confirmman\",\"sampRequ\",\"sampMake\",\"sampSend\"]}";
-        s="{\"ids\":[],\"fields\":[]}";
-        s = URLEncoder.encode(s, "UTF-8");
-        p.p("-------------------------------------------------------");
-        p.p(s);
-        p.p("\n");
-        s = URLDecoder.decode(s);
-        p.p(s);
-        p.p("-------------------------------------------------------");
+
+
+
+
+
     }
 
 

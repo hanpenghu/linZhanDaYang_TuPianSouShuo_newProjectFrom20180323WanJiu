@@ -903,6 +903,8 @@
         isnull(a.idx_no,'') as idxNo,
         isnull(a.fen_lei_no,'') as fenLeiNo,
         isnull(a.fen_lei_name,'') as  fenLeiName,
+        isnull(i1.rem,'') as fenLeiNameE,
+        isnull(i2.rem,'') as idxNameE,
         isnull(a.mark_name,'') as markName,
         isnull(a.mark_no,'') as markNo,
         isnull(a.colour,'')as colour,
@@ -960,6 +962,8 @@
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
+        LEFT JOIN INDX i1    ON   i1.idx_no=a.fen_lei_no
+        LEFT JOIN INDX i2    ON   i2.idx_no=a.idx_no
         where '1' = '1' -- a.stopusedate is null
         <if test=" ids != null and ids.size()>0 ">
             and    a.id in
@@ -980,6 +984,8 @@
         isnull(a.idx_no,'') as idxNo,
         isnull(a.fen_lei_no,'') as fenLeiNo,
         isnull(a.fen_lei_name,'') as  fenLeiName,
+          isnull(i1.rem,'') as fenLeiNameE,
+        isnull(i2.rem,'') as idxNameE,
         isnull(a.mark_name,'') as markName,
         isnull(a.mark_no,'') as markNo,
         isnull(a.colour,'')as colour,
@@ -1037,6 +1043,8 @@
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
+            LEFT JOIN INDX i1    ON   i1.idx_no=a.fen_lei_no
+        LEFT JOIN INDX i2    ON   i2.idx_no=a.idx_no
         order by u.s_dd desc
     </select>
 

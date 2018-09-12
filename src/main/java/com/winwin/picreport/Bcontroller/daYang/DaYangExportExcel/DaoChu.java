@@ -22,12 +22,16 @@ public class DaoChu {
     //原来徐勇的界面上改了框里面的东西,其他地方不用改,前端的分类框中填范围小的,前端的名称框放范围 大的
     private String idxName;//产品名称
 
+    private String idxNameE;//产品名称
+
     private String idxNo;//产品的no
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //下面2个用于界面上产品分类那一栏//注意,存的时候不存,只是返回的时候返回给前端
     private String fenLeiNo;
 
     private String fenLeiName;
+
+    private String fenLeiNameE;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String markName;//品牌
 
@@ -577,12 +581,21 @@ public class DaoChu {
     }
 
 
+    public String getIdxNameE() {
+        return idxNameE;
+    }
 
+    public void setIdxNameE(String idxNameE) {
+        this.idxNameE = idxNameE;
+    }
 
+    public String getFenLeiNameE() {
+        return fenLeiNameE;
+    }
 
-
-
-
+    public void setFenLeiNameE(String fenLeiNameE) {
+        this.fenLeiNameE = fenLeiNameE;
+    }
 
     @Override
     public String toString() {

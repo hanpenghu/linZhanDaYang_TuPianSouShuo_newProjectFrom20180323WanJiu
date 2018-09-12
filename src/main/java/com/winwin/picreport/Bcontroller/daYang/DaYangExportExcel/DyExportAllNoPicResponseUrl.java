@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.CustExample;
 import com.winwin.picreport.Edto.CustWithBLOBs;
+import com.winwin.picreport.Futils.hanhan.link;
 import com.winwin.picreport.Futils.hanhan.linklistT;
 import com.winwin.picreport.Futils.hanhan.p;
 import com.winwin.picreport.Futils.hanhan.pp;
@@ -140,15 +141,6 @@ public class DyExportAllNoPicResponseUrl {
     }
 
 
-    //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
-    @Scheduled(cron = "0 0 23 * * ?")//每天23点执行
-    public void a定时清空excel临时目录的内容() {
-        try {
-            new File(f创建存储excel的临时目录不带杠()).delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     private String a写入excel(List<DaoChu> daoChus, List<String> list导出头信息) {
@@ -287,13 +279,13 @@ public class DyExportAllNoPicResponseUrl {
                 cell.setCellValue(daoChu.getFenLeiName()); // 设置内容  4
             }
             if ("产品大中类（英文）".equals(s)) {
-                cell.setCellValue(""); // 设置内容  5
+                cell.setCellValue(daoChu.getFenLeiNameE()); // 设置内容  5
             }
             if ("产品子中类（中文）".equals(s)) {
                 cell.setCellValue(daoChu.getIdxName()); // 设置内容 6
             }
             if ("产品子中类（英文）".equals(s)) {
-                cell.setCellValue(""); // 设置内容 7
+                cell.setCellValue(daoChu.getIdxNameE()); // 设置内容 7
             }
             if ("Product Photo 打样产品照片或图籍".equals(s)) {//设置照片
 //                    cell.setCellValue(""); // 设置内容 8
@@ -476,16 +468,15 @@ public class DyExportAllNoPicResponseUrl {
         if (!a前端传过来需要显示的fields.contains("idxName")) {
             daoChuExcelHeadList.remove("产品大中类（中文）");
         }
-        if (!a前端传过来需要显示的fields.contains("idxNameE")) {
-            daoChuExcelHeadList.remove("产品大中类（英文）");
-        }
-
         if (!a前端传过来需要显示的fields.contains("fenLeiName")) {
             daoChuExcelHeadList.remove("产品子中类（中文）");
         }
-        if (!a前端传过来需要显示的fields.contains("fenLeiNameE")) {
-            daoChuExcelHeadList.remove("产品子中类（英文）");
-        }
+//        if (!a前端传过来需要显示的fields.contains("idxNameE")) {
+//            daoChuExcelHeadList.remove("产品大中类（英文）");
+//        }
+//        if (!a前端传过来需要显示的fields.contains("fenLeiNameE")) {
+//            daoChuExcelHeadList.remove("产品子中类（英文）");
+//        }
 
         if (!a前端传过来需要显示的fields.contains("thum")) {
             daoChuExcelHeadList.remove("Product Photo 打样产品照片或图籍");
@@ -632,15 +623,15 @@ public class DyExportAllNoPicResponseUrl {
     @SuppressWarnings("unchecked")
     private List<String> f得到完整导出头信息() {
         List<String> daoChuExcelHeadList =
-                new linklistT<String>()
+                         link.b()
                         .a("Win Win Merchandiser WinWin 负责业务员")//salName   0
                         .a("Inquiry Source 帽厂/NE")//cusName    1
                         .a("NE CODE NE编码")//   2   x.nm_eng
                         .a("Win Win Model# WinWin编号")//prdCode  3
-                        .a("产品大中类（中文）")//4
-                        .a("产品大中类（英文）")//5
                         .a("产品子中类（中文）")//idxName    6
-                        .a("产品子中类（英文）")//7
+                        .a("产品大中类（中文）")//4 fenLeiName
+                        .a("产品子中类（英文）")//7  idxNameE
+                        .a("产品大中类（英文）")//5 fenLeiNameE
                         .a("Product Photo 打样产品照片或图籍")//  8 thum
                         .a("Category Name")//category   9
                         .a("Team Name")//teamname  10
