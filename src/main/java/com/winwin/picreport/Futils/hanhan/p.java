@@ -186,9 +186,306 @@ public strictfp class p {
 //            p.p(s.matches("[1-9]\\d*.\\d*|0\\.\\d*[1-9]\\d*"));
 //            p.p(new Double(s));
 //    }
+    /**
+     *替换掉文件名中的特殊字符和中文
+     * */
+    public static String urlSpecialSignReplace(String s){
+        if(p.empty(s)){return s;}
+        if(s.contains("%")){
+            s=s.replace("%","_baiFenHao_");
+        }if(s.contains("[")){
+            s=s.replace("[","_zuoZhongKuoHao_");
+        }if(s.contains("]")){
+            s=s.replace("]","_youZhongKuoHao_");
+        }if(s.contains(";")){
+            s=s.replace(";","_fenHao_");
+        } if(s.contains("!")){
+            s=s.replace("!","_ganTanHao_");
+        } if(s.contains("&")){
+            s=s.replace("&","_quDiZhiFuHao_");
+        } if(s.contains("|")){
+            s=s.replace("|","_luoJiHuo_");
+        } if(s.contains("=")){
+            s=s.replace("=","_dengYuHao_");
+        } if(s.contains("/")){
+            s=s.replace("/","_xieGang_");
+        } if(s.contains("\\")){
+            s=s.replace("\\","_fanXieGang_");
+        } if(s.contains("@")){
+            s=s.replace("@","_aiTaFuHao_");
+        } if(s.contains("^")){
+            s=s.replace("^","_ciFangFuHao_");
+        } if(s.contains("\"")){
+            s=s.replace("\"","_shuangYinHao_");
+        } if(s.contains("(")){
+            s=s.replace("(","_zuoXiaoKuoHao_");
+        } if(s.contains(")")){
+            s=s.replace(")","_youXiaoKuoHao_");
+        } if(s.contains("+")){
+            s=s.replace("+","_jiaHao_");
+        } if(s.contains("?")){
+            s=s.replace("?","_wenHao_");
+        } if(s.contains("#")){
+            s=s.replace("#","_jingHao_");
+        } if(s.contains("$")){
+            s=s.replace("$","_meiYuanFuHao_");
+        } if(s.contains("¥")){
+            s=s.replace("¥","_RMBFuHao_");
+        } if(s.contains("~")){
+            s=s.replace("~","_wanZhiHao_");
+        } if(s.contains("·")){
+            s=s.replace("·","_zhongDianHao_");
+        } if(s.contains("*")){
+            s=s.replace("*","_xingHao_");
+        } if(s.contains("-")){
+            s=s.replace("-","_jianHao_");
+        } if(s.contains(",")){
+            s=s.replace(",","_douHao_");
+        } if(s.contains(":")){
+            s=s.replace(":","_maoHao_");
+        } if(s.contains("<")){
+            s=s.replace("<","_xiaoYuHao_");
+        } if(s.contains(">")){
+            s=s.replace(">","_daYuHao_");
+        } if(s.contains(".")){
+            s=s.replace(".","_juHao_");
+        } if(s.contains("{")){
+            s=s.replace("{","_zuoDaKuoHao_");
+        } if(s.contains("}")){
+            s=s.replace("}","_youDaKuoHao_");
+        } if(s.contains("'")){
+            s=s.replace("'","_danYinHao_");
+        }if(p.isContainCh(s)){
+            s=p.filterCh2Fix(s);
+        }
+        return s;
+    }
 
 
 
+
+    /**
+     * 判断字符串中是否包含中文
+     * @param str
+     * 待校验字符串
+     * @return 是否为中文
+     * @warn 不能校验是否为中文标点符号
+     */
+    public static boolean isContainCh(String str) {
+        if(p.empty(str))return false;
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
+
+
+//    public static void main(String[]args){
+//        p.p(filterCh2Fix("sadfasdlaskdf了加上端口冷风机"));
+//    }
+
+
+    public static String filterCh2Fix(String str) {
+        if(p.empty(str))return str;
+        // 用于返回结果
+        String result = str;
+        boolean flag = isContainCh(str);
+        if (flag) {// 包含中文
+            // 用于拼接过滤中文后的字符
+            StringBuffer sb = new StringBuffer();
+            // 用于校验是否为中文
+            boolean flag2 = false;
+            // 用于临时存储单字符
+            char chinese = 0;
+            // 5.去除掉文件名中的中文
+            // 将字符串转换成char[]
+            char[] charArray = str.toCharArray();
+            // 过滤到中文及中文字符
+            for (int i = 0; i < charArray.length; i++) {
+                chinese = charArray[i];
+                flag2 = isChinese(chinese);
+                if (!flag2) {// 不是中日韩文字及标点符号
+                    sb.append(chinese);
+                }else{
+                    sb.append("_CH_");
+                }
+            }
+            result = sb.toString();
+        }
+        return result;
+    }
+
+    public static String filterCh2Want(String str,String sss) {
+        if(p.empty(str))return str;
+        // 用于返回结果
+        String result = str;
+        boolean flag = isContainCh(str);
+        if (flag) {// 包含中文
+            // 用于拼接过滤中文后的字符
+            StringBuffer sb = new StringBuffer();
+            // 用于校验是否为中文
+            boolean flag2 = false;
+            // 用于临时存储单字符
+            char chinese = 0;
+            // 5.去除掉文件名中的中文
+            // 将字符串转换成char[]
+            char[] charArray = str.toCharArray();
+            // 过滤到中文及中文字符
+            for (int i = 0; i < charArray.length; i++) {
+                chinese = charArray[i];
+                flag2 = isChinese(chinese);
+                if (!flag2) {// 不是中日韩文字及标点符号
+                    sb.append(chinese);
+                }else{
+                    sb.append(sss);
+                }
+            }
+            result = sb.toString();
+        }
+        return result;
+    }
+
+
+    /**
+     * 过滤掉中文
+     * @param str 待过滤中文的字符串
+     * @return 过滤掉中文后字符串
+     */
+    public static String filterChinese(String str) {
+        if(p.empty(str))return str;
+        // 用于返回结果
+        String result = str;
+        boolean flag = isContainCh(str);
+        if (flag) {// 包含中文
+            // 用于拼接过滤中文后的字符
+            StringBuffer sb = new StringBuffer();
+            // 用于校验是否为中文
+            boolean flag2 = false;
+            // 用于临时存储单字符
+            char chinese = 0;
+            // 5.去除掉文件名中的中文
+            // 将字符串转换成char[]
+            char[] charArray = str.toCharArray();
+            // 过滤到中文及中文字符
+            for (int i = 0; i < charArray.length; i++) {
+                chinese = charArray[i];
+                flag2 = isChinese(chinese);
+                if (!flag2) {// 不是中日韩文字及标点符号
+                    sb.append(chinese);
+                }
+            }
+            result = sb.toString();
+        }
+        return result;
+    }
+
+
+
+
+
+    /**
+     * 校验一个字符是否是汉字
+     *
+     * @param c
+     *  被校验的字符
+     * @return true代表是汉字
+     */
+    public static boolean isChineseChar(char c) {
+        try {
+            return String.valueOf(c).getBytes("UTF-8").length > 1;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 验证字符串内容是否包含下列非法字符<br>
+     * `~!#%^&*=+\\|{};:'\",<>/?○●★☆☉♀♂※¤╬の〆
+     *
+     * @param content
+     *  字符串内容
+     * @return 't'代表不包含非法字符，otherwise代表包含非法字符。
+     */
+    public static char validateLegalString(String content) {
+        String illegal = "`~!#%^&*=+\\|{};:'\",<>/?○●★☆☉♀♂※¤╬の〆";
+        char isLegalChar = 't';
+        L1: for (int i = 0; i < content.length(); i++) {
+            for (int j = 0; j < illegal.length(); j++) {
+                if (content.charAt(i) == illegal.charAt(j)) {
+                    isLegalChar = content.charAt(i);
+                    break L1;
+                }
+            }
+        }
+        return isLegalChar;
+    }
+
+    /**
+     * 验证是否是汉字或者0-9、a-z、A-Z
+     *
+     * @param c
+     *  被验证的char
+     * @return true代表符合条件
+     */
+    public static boolean isRightChar(char c) {
+        return isChinese(c) || isWord(c);
+    }
+
+    /**
+     * 校验某个字符是否是a-z、A-Z、_、0-9
+     *
+     * @param c
+     *  被校验的字符
+     * @return true代表符合条件
+     */
+    public static boolean isWord(char c) {
+        String regEx = "[\\w]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher("" + c);
+        return m.matches();
+    }
+
+    /**
+     * 判定输入的是否是汉字
+     *
+     * @param c
+     *  被校验的字符
+     * @return true代表是汉字
+     */
+    public static boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 校验String是否全是中文
+     *
+     * @param name
+     *  被校验的字符串
+     * @return true代表全是汉字
+     */
+    public static boolean checkNameChese(String name) {
+        boolean res = true;
+        char[] cTemp = name.toCharArray();
+        for (int i = 0; i < name.length(); i++) {
+            if (!isChinese(cTemp[i])) {
+                res = false;
+                break;
+            }
+        }
+        return res;
+    }
     /**
      *创建一个文件, 不存在再创建
      * */

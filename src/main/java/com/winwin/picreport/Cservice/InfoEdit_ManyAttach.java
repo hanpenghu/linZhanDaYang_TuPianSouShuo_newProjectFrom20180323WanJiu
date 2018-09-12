@@ -172,11 +172,7 @@ public class InfoEdit_ManyAttach {
 
         String imageThumUrl = prdtSamp.getThum();
         if (thum != null&&thum.getSize()>0) {
-            String originalFilename = thum.getOriginalFilename().replace("#","_jh_")
-                    .replace(";","_fh_")
-                    .replace("!","_gth_")
-                    .replace("[","_zzkh_")
-                    .replace("]","_yzkh_");
+            String originalFilename = p.urlSpecialSignReplace(thum.getOriginalFilename());
             String s = projectPath + cnst.daYangSuoLueTuAndFuJianZongPath.replace(".", "") + cnst.suoLueTuWenJianJia+uuid+"!"+ originalFilename;
             thum.transferTo(new File(s));
             if (!new File(s).exists()) {p.throwEAddToList("缩略图没有保存成功导致所有数据没保存",ms);}
@@ -207,14 +203,13 @@ public class InfoEdit_ManyAttach {
         p.p("----------------tu---------------------------------------");
         p.p(prdtSamp3.getMiniOrderAmt());
         p.p("-------------------------------------------------------");
-        prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
+        cnst.prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
 //       this.time2null(prdtSampOb);
 
 
     }
 
-    @Autowired
-    PrdtSampMapper3 prdtSampMapper3;
+
 
     @Transactional
     public void time2null(PrdtSamp0 prdtSampOb)   {
@@ -264,11 +259,7 @@ public class InfoEdit_ManyAttach {
     public void f保存多个附件(List<MultipartFile> attachList, PrdtSamp0 prdtSampOb, String projectPath, List<String> ms) throws IOException {
         for (MultipartFile attach : attachList) {
             if(attach==null) continue;
-            String originalFilename = attach.getOriginalFilename().replace("#","_jh_")
-                    .replace(";","_fh_")
-                    .replace("!","_gth_")
-                    .replace("[","_zzkh_")
-                    .replace("]","_yzkh_");
+            String originalFilename = p.urlSpecialSignReplace(attach.getOriginalFilename());
 
             p.p("--------------originalFilename-----------------------------------------");
             p.p(originalFilename);
@@ -331,7 +322,7 @@ public class InfoEdit_ManyAttach {
             p.p(prdtSamp3.getMiniOrderAmt());
             p.p(prdtSamp3.getAttach());
             p.p("-------------------------------------------------------");
-            prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
+            cnst.prdtSampMapper3.updateByPrimaryKeySelective(prdtSamp3);
 //            this.time2null(prdtSampOb);
             if (attach != null && !new File(s1, uid + "!" + originalFilename).exists()) {
                 p.throwEAddToList("附件没有保存成功导致所有数据没保存",ms);

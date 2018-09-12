@@ -120,6 +120,9 @@ public class Cnst {
     public static final String dingJiaXiuGaiSale="dingJiaXiuGaiSale";
     public static final String ADMIN="ADMIN";
     public static final String SampExport="SampExport";
+    public static final String projectPath=getProjectPath();
+
+
 
     //    E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable  这种最后无杠的
     public static String getProjectPath(){
@@ -131,10 +134,18 @@ public class Cnst {
         return jarPath;
     }
 
+
+
     //这个路径是springbootjar运行后深入到缩略图文件夹中的路径最后带个/
     public  String getSpringbootJarSuoLueTuFilePath(){
-       return  Cnst.getProjectPath()+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
+       return  projectPath+daYangSuoLueTuAndFuJianZongPath.replace(Cnst.dian, Cnst.emptyStr)+suoLueTuWenJianJia;
     }
+
+
+
+
+    @Autowired
+    public PrdtSampMapper3 prdtSampMapper3;
 
 
     @Autowired
