@@ -1,12 +1,4 @@
-2018-09-12 09:02:49,848 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 7068 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-12 09:02:49,889 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-12 09:03:00,824 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-12 09:03:04,152 INFO (StartupInfoLogger.java:57)- Started ATests in 15.829 seconds (JVM running for 20.197)
-2018-09-12 17:57:40,797 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 8564 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-12 17:57:40,803 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-12 17:57:45,362 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-12 17:57:46,522 INFO (StartupInfoLogger.java:57)- Started A in 6.257 seconds (JVM running for 6.866)
-2018-09-12 17:58:42,086 INFO (StartupInfoLogger.java:48)- Starting A on SC-201805130817 with PID 6580 (E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable\target\classes started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
-2018-09-12 17:58:42,089 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-09-12 17:58:46,539 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
-2018-09-12 17:58:47,705 INFO (StartupInfoLogger.java:57)- Started A in 6.01 seconds (JVM running for 6.608)
+2018-09-13 11:13:58,107 INFO (StartupInfoLogger.java:48)- Starting ATests on SC-201805130817 with PID 3516 (started by Administrator in E:\1\work_space\LINZHAN\LinZhan_Picture_ReportTable)
+2018-09-13 11:13:58,192 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-09-13 11:14:22,563 INFO (SpringUtil.java:23)- --------------------springUtils init success--------------/工具类初始化成功...
+2018-09-13 11:14:28,383 INFO (StartupInfoLogger.java:57)- Started ATests in 32.736 seconds (JVM running for 36.808)

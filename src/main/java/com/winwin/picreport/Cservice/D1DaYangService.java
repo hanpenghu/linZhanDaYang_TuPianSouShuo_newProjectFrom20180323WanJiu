@@ -178,7 +178,9 @@ public class D1DaYangService {
 
         for (MultipartFile attach : attachList) {
             if (attach != null) {
+                p.p("=1==attach.getOriginalFilename()==========="+attach.getOriginalFilename()+"==============================================");
                 String attachment = p.urlSpecialSignReplace(attach.getOriginalFilename());
+                p.p("=2==attachment==========="+attachment+"==============================================");
                 //缩略图和附件不能包含截取字符串的符号
                 if (attachment.contains("!") || attachment.contains(";")) {
                     return MessageGenerate.generateMessage("您的附件不能包含有!符号或者;符号",

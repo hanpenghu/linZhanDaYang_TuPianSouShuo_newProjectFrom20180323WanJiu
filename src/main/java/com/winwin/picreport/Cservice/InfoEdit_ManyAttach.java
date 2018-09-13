@@ -259,9 +259,14 @@ public class InfoEdit_ManyAttach {
     public void f保存多个附件(List<MultipartFile> attachList, PrdtSamp0 prdtSampOb, String projectPath, List<String> ms) throws IOException {
         for (MultipartFile attach : attachList) {
             if(attach==null) continue;
+
+            p.p("-1-------------originalFilename-----------------------------------------");
+            p.p(attach.getOriginalFilename());
+            p.p("-------------------------------------------------------");
+
             String originalFilename = p.urlSpecialSignReplace(attach.getOriginalFilename());
 
-            p.p("--------------originalFilename-----------------------------------------");
+            p.p("-2-------------originalFilename-----------------------------------------");
             p.p(originalFilename);
             p.p("-------------------------------------------------------");
             PrdtSamp0 prdtSampO = new PrdtSamp0();
