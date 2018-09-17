@@ -28,6 +28,19 @@ import java.util.*;
   select sapwlm as 'SAP物料名',saphh as 'SAP行号',SAPPH as 'SAP品号',cfdm as '成分代码',* from tf_pos_z
 *
 * */
+
+
+
+/**
+ select up,amt,amtn,tax,tax_rto,qty,* from tf_pos where os_no='EBNEK18004JY20561'
+ select * from tf_pos_z where os_no='EBNEK18004JY20561'
+ select * from mf_pos where os_no='EBNEK18004JY20561'
+
+
+ delete from tf_pos where os_no='EBNEK18004JY20561'
+ delete from tf_pos_z where os_no='EBNEK18004JY20561'
+ delete from mf_pos where os_no='EBNEK18004JY20561'
+ * */
 @CrossOrigin
 @RestController
 @RequestMapping("/a")
@@ -121,6 +134,19 @@ public class SapSaleOrderFromExcel2Erp {
      * excel中可以没有税率,一旦有税率必须跟erp中cust表中的  rto_tax一致,否则会报错无法导入,税率不一致
      * amt金额,amtn未税金额以及税额tax都是根据   qty和up和rtoTax税率    使用公式 计算出来的
      */
+
+
+
+    /**
+     select up,amt,amtn,tax,tax_rto,qty,* from tf_pos where os_no='EBNEK18004JY20561'
+     select * from tf_pos_z where os_no='EBNEK18004JY20561'
+     select * from mf_pos where os_no='EBNEK18004JY20561'
+
+
+     delete from tf_pos where os_no='EBNEK18004JY20561'
+     delete from tf_pos_z where os_no='EBNEK18004JY20561'
+     delete from mf_pos where os_no='EBNEK18004JY20561'
+     * */
     ///////////////////////////////////////////////////////////////////////////////////
     //其实现在要求同一excel必须单号相同
     public Map<String, List> f合并同一单号下货号成分表身备注相同的qty并根据价格数量税率计算amtn_tax_amt(List<ShouDingDanFromExcel> list相同osno, List<Msg> listmsg, Double taxRto来自erp) {
@@ -152,26 +178,78 @@ public class SapSaleOrderFromExcel2Erp {
             ///税率是taxRto
             double taxRtoAdd1 = taxRto来自erp + 1;
             //amtn=amt-amt/1.17*0.17;//后来是1.16
-            amtn = amt - amt / taxRtoAdd1 * taxRto来自erp;//taxRto是税率//这种计算可以避免除以0
+//            amtn = amt - amt / taxRtoAdd1 * taxRto来自erp;//taxRto是税率//这种计算可以避免除以0
+
+            //2018_9_17   weekday(1)   14:53:22
+//            金额amt：如果来源Excel该列不为空取Excel，如果为空=数量X单价；
+            //原来 amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+//            现在2018_9_17   weekday(1)   15:31:02  未税金额amtn：如果来源Excel该列不为空取Excel，如果为空=数量X单价X汇率-ROUND( (数量X单价X汇率/(1+这个客户cust.rto_tax*0.01)*cust.rto_tax*0.01), 2)；
+            amtn=this.newAmtnCalculateAndExcRtoSet(amt,ss将来插入MfPos的对象,listmsg,taxRtoAdd1,taxRto来自erp);//设置amtn并且设置汇率excRto
             //tax=amt/1.17*0.17;
             tax = amt / taxRtoAdd1 * taxRto来自erp;
+            //2018_9_17   weekday(1)   16:43:24
+            this.isMoneyIgll(listmsg,ss将来插入MfPos的对象);//必须放在下面三句话前面,因为这里事先判断设置了结果金额
             ///////////////////////////////////////////////////////////////////////////////////////////
             ss将来插入MfPos的对象.setQty(String.valueOf(qty));
-            ss将来插入MfPos的对象.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn, 2));
-            ss将来插入MfPos的对象.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax, 2));
-            ss将来插入MfPos的对象.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt, 2));
+            ss将来插入MfPos的对象.setAmtn(p.notEmpty(ss将来插入MfPos的对象.getAmtn())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(ss将来插入MfPos的对象.getAmtn()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn, 2));
+            ss将来插入MfPos的对象.setTax(p.notEmpty(ss将来插入MfPos的对象.getTax())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(ss将来插入MfPos的对象.getTax()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax, 2));
+            ss将来插入MfPos的对象.setAmt(p.notEmpty(ss将来插入MfPos的对象.getAmt())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(ss将来插入MfPos的对象.getAmt()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt, 2));
             list合并后集合入mfPos等.add(ss将来插入MfPos的对象);//合并后放入list//用于合并后放入系统表的
         }
         map传入service层的介质.put(s合并后的list, list合并后集合入mfPos等);//合并后的放入系统表的
         map传入service层的介质.put(s未合并的list, list未合并集合入sapso);//未合并的放入sapso的
         return map传入service层的介质;
     }
+
     private final String s未合并的list = "samePrdNoList";
     private final String s合并后的list = "samePrdNoMeraged";
 
 
 
+    //设置未税金额amtn和汇率excRto
+    private double newAmtnCalculateAndExcRtoSet(double amt, ShouDingDanFromExcel s, List<Msg> listmsg, double taxRtoAdd1, Double taxRto) {
+        s.setExcRto(s.getExcRto()==null?null:s.getExcRto().replace(" ","").replace(",",""));//设置汇率
+        if(p.notEmpty(s.getExcRto())&&!p.isBigDecimal(s.getExcRto())){
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有汇率excRto不为空且汇率不是数字 《后端已经去除空格和千分符》"));
+            p.throwE("无法导入,excel中有汇率excRto不为空且汇率不是数字 《后端已经去除空格和千分符》");
+        }
+        //汇率默认为1,是1的意思就是人民币,不进行美元和人民币 的转换
+        double excRto=1;
+        if(p.notEmpty(s.getExcRto())){
+            excRto=new Double(s.getExcRto());
+        }else{
+            //excRto为空的时候默认为人民币不转换,excRto=1
+            s.setExcRto("1");
+        }
+        //原来 amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+        // 现在2018_9_17   weekday(1)   15:31:02           未税金额amtn：如果来源Excel该列不为空取Excel，如果为空=数量X单价X汇率-ROUND( (数量X单价X汇率/(1+这个客户cust.rto_tax*0.01)*cust.rto_tax*0.01), 2)；
+        //注意,我这里的数值已经乘过0.01
+        return amt*excRto-(amt*excRto/taxRtoAdd1*taxRto);
+    }
 
+    private void isMoneyIgll(List<Msg> listmsg, ShouDingDanFromExcel s) {
+        s.setAmt(s.getAmt()==null?null:s.getAmt().replace(" ","").replace(",",""));
+        s.setAmtn(s.getAmtn()==null?null:s.getAmtn().replace(" ","").replace(",",""));
+        s.setTax(s.getTax()==null?null:s.getTax().replace(" ","").replace(",",""));
+        if(p.notEmpty(s.getAmt())){
+            if(!p.isBigDecimal(s.getAmt())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有金额amt不为空且金额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有金额amt不为空且金额不是数字");
+            }
+        }
+        if(p.notEmpty(s.getAmtn())){
+            if(!p.isBigDecimal(s.getAmtn())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有未税金额amtn不为空且未税金额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有未税金额amtn不为空且未税金额不是数字");
+            }
+        }
+        if(p.notEmpty(s.getTax())){
+            if(!p.isBigDecimal(s.getTax())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有税额tax不为空且税额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有税额tax不为空且税额不是数字");
+            }
+        }
+    }
     private void controller最终异常(List<Msg> msgs, Exception e) {
         if (p.empty(msgs)) {//此时没有走到数据插入成功那一步并且在service层发生了未知异常,此时listmsg是空的
             //有异常的话肯定不能导入excel的

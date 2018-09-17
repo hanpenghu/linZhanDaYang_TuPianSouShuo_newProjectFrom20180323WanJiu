@@ -349,10 +349,16 @@ public class Cnst {
     public static final String cusNameExportExcel = "Inquiry Source 帽厂/NE";
     public static final String xPOINTnm_engExportExcel = "NE CODE NE编码";
     public static final String prdCodeExportExcel = "Win Win Model# WinWin编号";
-    public static final String idxNameExportExcel = "产品子中类（中文）";
-    public static final String fenLeiNameExportExcel = "产品大中类（中文）";
-    public static final String idxNameEExportExcel = "产品子中类（英文）";
-    public static final String fenLeiNameEExportExcel = "产品大中类（英文）";
+//    public static final String idxNameExportExcel = "产品子中类（中文）";
+//    public static final String fenLeiNameExportExcel = "产品大中类（中文）";
+//    public static final String idxNameEExportExcel = "产品子中类（英文）";
+//    public static final String fenLeiNameEExportExcel = "产品大中类（英文）";
+    public static final String idxNameExportExcel = "产品名称（中文）";
+    public static final String fenLeiNameExportExcel = "产品分类（中文）";
+    public static final String idxNameEExportExcel = "产品名称（英文）";
+    public static final String fenLeiNameEExportExcel = "产品分类（英文）";
+
+
     public static final String thumExportExcel = "Product Photo 打样产品照片或图籍";//  8 thum
     public static final String categoryExportExcel = "Category Name";//category   9
     public static final String teamnameExportExcel = "Team Name";//teamname  10

@@ -46,7 +46,7 @@ public class InfoEdit_ManyAttach {
         this.isIgll(prdtSampOb,ms);
         p.p("---------------------------222----------------------------");
         //会影响单独  上传图片或者附件,判断留给前端判断  2018_9_6   weekday(4)   10:16:53
-//        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
+        this.prdtSampOb是否非法(prdtSampOb,ms,prdCodeOrg);
         p.p("---------------------------333----------------------------");
         //得到这个prdtSamp只为了得到当前主键下面的缩略图路径thum字段和附件字段attach
         PrdtSamp prdtSamp = cnst.prdtSampMapper.selectByPrimaryKey(prdtSampOb.getId());
@@ -407,7 +407,7 @@ public class InfoEdit_ManyAttach {
     //会影响单独  上传图片或者附件
     @Transactional
     public void prdtSampOb是否非法(PrdtSamp0 prdtSampOb,List<String>ms,String prdCodeOrg) {
-        if(p.empty(prdtSampOb)){
+      /*  if(p.empty(prdtSampOb)){
             p.throwEAddToList("前端穿过来的更新对象prdtSampOb是空的",ms);
         }
         p.p("1");
@@ -447,7 +447,7 @@ public class InfoEdit_ManyAttach {
         }
         p.p("15");
         p.p("------------修改前的编码是:prdCodeOrg="+prdCodeOrg+"-------------------------------------------");
-        p.p("--------------修改后的编码是:prdCode="+prdtSampOb.getPrdCode()+"-----------------------------------------");
+        p.p("--------------修改后的编码是:prdCode="+prdtSampOb.getPrdCode()+"-----------------------------------------");*/
         if(p.dy(prdCodeOrg,"yuan")){
             p.p("--------------------徐勇调修改打样接口是原来的imageUpLoadAndDataSave_InfoEdit_ManyAttach而不是能判断编码重复的imageUpLoadAndDataSave_InfoEdit_ManyAttach001-----------------------------------");
         }

@@ -2511,6 +2511,62 @@ public static BigDecimal b(Object o){
         }
     }
 
+    public static boolean isBigDecimal(String str){
+        if(null==str||"".equals(str)||str.contains(" ")){return false;}
+        if(str.contains("-")){
+            if(str.indexOf("-")!=str.lastIndexOf("-")){
+                //含有多个负号
+                return false;
+            }else if(str.indexOf("-")!=0){
+                //负号不在第一位
+                return false;
+            }
+            return  whenNoPlusOrMinus(str.replace("-",""));
+        }else if(str.contains("+")){
+            if(str.indexOf("+")!=str.lastIndexOf("+")){
+                //含有多个负号
+                return false;
+            }else if(str.indexOf("+")!=0){
+                //负号不在第一位
+                return false;
+            }
+            return  whenNoPlusOrMinus(str.replace("+",""));
+        }else{
+            return  whenNoPlusOrMinus(str);
+        }
+    }
+
+    private static boolean whenNoPlusOrMinus(String str){
+        if(str.contains(".")){
+            //开始和结尾有.是可以做小数点的
+            /*if(str.startsWith(".")||str.endsWith(".")){
+                //不应该在开头或者结束有小数点
+                return false;
+            }*/
+            //当最后一个点和最前面一个点不是一个点的时候,说明有2个点,不是数字
+            if(str.indexOf(".")!=str.lastIndexOf(".")){
+                //此时有2个或者2个以上小数点,明显不是数字
+                return false;
+            }else{
+                String strTemp = str.replace(".", "");
+                //有一个点的时候考虑去掉点后是不是全都是数字
+                for (int i = strTemp.length();--i>=0;){
+                    if (!Character.isDigit(strTemp.charAt(i))){
+                        return false;
+                    }
+                }
+            }
+        }else{
+            for (int i = str.length();--i>=0;){
+                if (!Character.isDigit(str.charAt(i))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     /**
      *BigDecimal相加
      * */

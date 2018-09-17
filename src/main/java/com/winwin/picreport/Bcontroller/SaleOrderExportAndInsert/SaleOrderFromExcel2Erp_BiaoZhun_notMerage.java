@@ -39,7 +39,16 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
     @Autowired
     private Cnst cnst;
 
+    /**
+     select up,amt,amtn,tax,tax_rto,qty,* from tf_pos where os_no='EBNEK18004JY20561'
+     select * from tf_pos_z where os_no='EBNEK18004JY20561'
+     select * from mf_pos where os_no='EBNEK18004JY20561'
 
+
+     delete from tf_pos where os_no='EBNEK18004JY20561'
+     delete from tf_pos_z where os_no='EBNEK18004JY20561'
+     delete from mf_pos where os_no='EBNEK18004JY20561'
+     * */
 
 
     /**
@@ -256,6 +265,20 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
     }
 
 
+
+
+    /**
+     select up,amt,amtn,tax,tax_rto,qty,* from tf_pos where os_no='EBNEK18004JY20561'
+     select * from tf_pos_z where os_no='EBNEK18004JY20561'
+     select * from mf_pos where os_no='EBNEK18004JY20561'
+
+
+     delete from tf_pos where os_no='EBNEK18004JY20561'
+     delete from tf_pos_z where os_no='EBNEK18004JY20561'
+     delete from mf_pos where os_no='EBNEK18004JY20561'
+     * */
+
+
     //////////////////////////由于这个单子不合并了,所以这里删除了合并的代码,但是继续沿用这个方法而已/////////////////////////////////////////////////////////
     public Map<String, List> f计算amtn_tax_amt(List<ShouDingDanFromExcel> list3同一单号集合, List<Msg> listmsg, Double taxRto) {
         Map<String, List> map = new HashMap();
@@ -282,18 +305,73 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
             ///税率,
             double taxRtoAdd1 = taxRto + 1;
             //            amtn=amt-amt/1.17*0.17;
-            amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+//            amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+
+            //2018_9_17   weekday(1)   14:53:22
+//            金额amt：如果来源Excel该列不为空取Excel，如果为空=数量X单价；
+            //原来 amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+//            现在2018_9_17   weekday(1)   15:31:02  未税金额amtn：如果来源Excel该列不为空取Excel，如果为空=数量X单价X汇率-ROUND( (数量X单价X汇率/(1+这个客户cust.rto_tax*0.01)*cust.rto_tax*0.01), 2)；
+            amtn=this.newAmtnCalculateAndExcRtoSet(amt,s,listmsg,taxRtoAdd1,taxRto);//设置amtn并且设置汇率excRto
             //            tax=amt/1.17*0.17;
             tax = amt / taxRtoAdd1 * taxRto;
-            s.setAmtn(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn, 2));
-            s.setTax(BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax, 2));
-            s.setAmt(BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt, 2));
+            this.isMoneyIgll(listmsg,s);//必须放在下面三句话前面,因为这里事先判断设置了结果金额
+            s.setAmtn(p.notEmpty(s.getAmtn())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(s.getAmtn()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(amtn, 2));
+            s.setTax(p.notEmpty(s.getTax())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(s.getTax()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(tax, 2));
+            s.setAmt(p.notEmpty(s.getAmt())?BaoLiuXiaoShu.m3SiSheWuRuBianStr(new Double(s.getAmt()),2):BaoLiuXiaoShu.m3SiSheWuRuBianStr(amt, 2));
+
+            p.p("--------------------汇率-----------------------------------");
+            p.p(s.getExcRto());
+            p.p("-------------------------------------------------------");
         }
 
         //老郑让这个玩意不用合并了,所以,放入同一个东西
         map.put("samePrdNoMeraged", list3同一单号集合);
         map.put("samePrdNoList", null);//不用了
         return map;
+    }
+
+    private double newAmtnCalculateAndExcRtoSet(double amt, ShouDingDanFromExcel s, List<Msg> listmsg, double taxRtoAdd1, Double taxRto) {
+        s.setExcRto(s.getExcRto()==null?null:s.getExcRto().replace(" ","").replace(",",""));//设置汇率
+        if(p.notEmpty(s.getExcRto())&&!p.isBigDecimal(s.getExcRto())){
+            listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有汇率excRto不为空且汇率不是数字 《后端已经去除空格和千分符》"));
+            p.throwE("无法导入,excel中有汇率excRto不为空且汇率不是数字 《后端已经去除空格和千分符》");
+        }
+        //汇率默认为1,是1的意思就是人民币,不进行美元和人民币 的转换
+        double excRto=1;
+        if(p.notEmpty(s.getExcRto())){
+            excRto=new Double(s.getExcRto());
+        }else{
+            //excRto为空的时候默认为人民币不转换,excRto=1
+            s.setExcRto("1");
+        }
+        //原来 amtn = amt - amt / taxRtoAdd1 * taxRto;//taxRto是税率
+        // 现在2018_9_17   weekday(1)   15:31:02           未税金额amtn：如果来源Excel该列不为空取Excel，如果为空=数量X单价X汇率-ROUND( (数量X单价X汇率/(1+这个客户cust.rto_tax*0.01)*cust.rto_tax*0.01), 2)；
+       //注意,我这里的数值已经乘过0.01
+        return amt*excRto-(amt*excRto/taxRtoAdd1*taxRto);
+    }
+
+    private void isMoneyIgll(List<Msg> listmsg, ShouDingDanFromExcel s) {
+        s.setAmt(s.getAmt()==null?null:s.getAmt().replace(" ","").replace(",",""));
+        s.setAmtn(s.getAmtn()==null?null:s.getAmtn().replace(" ","").replace(",",""));
+        s.setTax(s.getTax()==null?null:s.getTax().replace(" ","").replace(",",""));
+        if(p.notEmpty(s.getAmt())){
+            if(!p.isBigDecimal(s.getAmt())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有金额amt不为空且金额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有金额amt不为空且金额不是数字");
+            }
+        }
+        if(p.notEmpty(s.getAmtn())){
+            if(!p.isBigDecimal(s.getAmtn())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有未税金额amtn不为空且未税金额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有未税金额amtn不为空且未税金额不是数字");
+            }
+        }
+        if(p.notEmpty(s.getTax())){
+            if(!p.isBigDecimal(s.getTax())){
+                listmsg.addAll(new MessageGenerate().generateMessage("无法导入,excel中有税额tax不为空且税额不是数字《后端已经去除空格和千分符》"));
+                p.throwE("无法导入,excel中有税额tax不为空且税额不是数字");
+            }
+        }
     }
 
     private double f计算up并验证是否非法(ShouDingDanFromExcel s, List<Msg> listmsg) {
@@ -342,13 +420,12 @@ public class SaleOrderFromExcel2Erp_BiaoZhun_notMerage {
                 d = Double.valueOf(s.getTaxRto());
             } catch (Exception e) {
                 e.printStackTrace();
-                String ss = "无法导入,,税率taxRto不为空且不为数字,如果不需要税率请设置为空";
+                String ss = "无法导入,excel中有税率taxRto不为空且不为数字,如果不需要税率请设置为空";
                 listmsg.addAll(new MessageGenerate().generateMessage(ss));
                 p.throwE(ss);
             }
-
-
-            if (Math.abs(d * 0.01 - taxRto) > 0.00001) {//意思是相差太大
+            if(d!=0&&d>=1){d=d*0.01;}
+            if (Math.abs(d - taxRto) > 0.00001) {//意思是相差太大
                 String ss = "无法导入,excel中的税率和系统厂商对应的税率不一致";
                 listmsg.addAll(new MessageGenerate().generateMessage(ss));
                 p.throwE(ss);
