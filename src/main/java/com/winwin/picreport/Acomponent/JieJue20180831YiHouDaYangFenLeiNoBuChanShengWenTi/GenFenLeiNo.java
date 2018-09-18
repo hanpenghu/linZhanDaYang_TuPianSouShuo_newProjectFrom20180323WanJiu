@@ -21,13 +21,13 @@ public class GenFenLeiNo {//2018_8_31   weekday(5)   21:03:36
     @Autowired
     private Cnst cnst;
 
-    private final long fixedDelay=30000;
+    private final long fixedDelay=60000;
 
     /**
      *定时任务,每30秒检查一次, 2018-08-31后更新的数据有没有fenLeiNo
      * */
 
-    @Scheduled(initialDelay = 15000,fixedDelay =fixedDelay )
+    @Scheduled(initialDelay = 20000,fixedDelay =fixedDelay )
     public void updateFenLeiNoWhereNull20180831(){
         p.p("{"+fixedDelay+"} hao miao yi ci , geng xin null de fenLeiNo 1 ci start");
         this.f();

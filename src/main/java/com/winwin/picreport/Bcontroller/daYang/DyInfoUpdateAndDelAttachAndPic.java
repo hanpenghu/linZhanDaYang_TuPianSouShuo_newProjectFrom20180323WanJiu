@@ -62,7 +62,8 @@ public class DyInfoUpdateAndDelAttachAndPic {
            @RequestParam(value = "attach10", required = false) MultipartFile attach10) {
         log.info("qianDuanChuanGuoLaiYaoDeleteDeAttachUrlsShi : {}",attachUrls);
         List<String>ms=new LinkedList<String>();
-        log.info("<<<<<<<<<<<<daYangXiuGaiJieKou>qianDuanChuanGuoLaiDeWenBenShi>>{}>>>>>>>>>>>>>",prdtSamp);
+        log.info("===========xiu gai bian ma jie kou=============daYangXiuGaiJieKou>qianDuanChuanGuoLaiDeWenBenShi=================={}======================",prdtSamp);
+        log.info("=======xiu gai bian ma jie kou=====daYangXiuGaiJieKou>yong lai pan duan xiu gai hou de bianMa shiFou shi tongYiGe prdCodeOrg======={}=======",prdCodeOrg);
         List<MultipartFile> attachList =new LinkedList<MultipartFile>();new ListUtils<MultipartFile>().add(attach1,attachList).add(attach2,attachList).add(attach3,attachList).add(attach4,attachList).add(attach5,attachList).add(attach6,attachList).add(attach7,attachList).add(attach8,attachList).add(attach9,attachList).add(attach10,attachList);
         String str="";
         try {
