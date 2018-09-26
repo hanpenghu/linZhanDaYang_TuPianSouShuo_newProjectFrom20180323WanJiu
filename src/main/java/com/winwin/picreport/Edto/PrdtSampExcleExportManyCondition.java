@@ -94,14 +94,31 @@ public class PrdtSampExcleExportManyCondition {
 
     private String financedesc;//财务描述
 
+
+
+
+
+
     //        private BigDecimal startsellcount;//采购起订数量//json可以直接转换输出给外部//起订量
-    private String startsellcount;
+    private String startsellcount;//采购起订量
     //        private BigDecimal modelcost;//模具费
-    private String modelcost;//模具费
+    private String modelcost;//采购模具费
+    //采购起订金额
+//        private BigDecimal miniOrderAmt;
+    private String miniOrderAmt;
+
+    //        private BigDecimal littleorderprice;//小单费
+    private String littleorderprice;//采购小单费小单费
+
+
+
+
+
+
+
     //        private BigDecimal estimateprice;//预估价
     private String estimateprice;//预估价
-    //        private BigDecimal littleorderprice;//小单费
-    private String littleorderprice;//小单费
+
     private String modelcostinvoiceno;//模具费用发票号
     //财务起订量
 //        private BigDecimal financestartsellcount;
@@ -144,9 +161,7 @@ public class PrdtSampExcleExportManyCondition {
     //审核意见
     private String checkOutOpinion;
 
-    //起订金额
-//        private BigDecimal miniOrderAmt;
-    private String miniOrderAmt;
+
     //财务起订金额
 //        private BigDecimal fiMiniOrderAmt;
 
@@ -163,6 +178,11 @@ public class PrdtSampExcleExportManyCondition {
     private String noTransUpSaleWaiBi;//
     //含运费单价销售价格外币//up_def中bil_type!=01
     private String haveTransUpSaleWaiBi;//
+
+
+    private  String  noTransUpBuyBenBi;
+    private  String haveTransUpBuyBenBi;
+
 
     //该条记录的所有缩略图路径的集合,用上面的dirUrl来拼接
     private  List<String> thumUrlList=new ArrayList<>();
@@ -281,8 +301,27 @@ public class PrdtSampExcleExportManyCondition {
     }
 
 
+    public String getNoTransUpBuyBenBi() {
+        if(p.notEmpty(noTransUpBuyBenBi)){
+            noTransUpBuyBenBi=p.del0(noTransUpBuyBenBi);
+        }
+        return noTransUpBuyBenBi;
+    }
 
+    public void setNoTransUpBuyBenBi(String noTransUpBuyBenBi) {
+        this.noTransUpBuyBenBi = noTransUpBuyBenBi;
+    }
 
+    public String getHaveTransUpBuyBenBi() {
+        if(p.notEmpty(haveTransUpBuyBenBi)){
+            haveTransUpBuyBenBi=p.del0(haveTransUpBuyBenBi);
+        }
+        return haveTransUpBuyBenBi;
+    }
+
+    public void setHaveTransUpBuyBenBi(String haveTransUpBuyBenBi) {
+        this.haveTransUpBuyBenBi = haveTransUpBuyBenBi;
+    }
 
     public String getId() {
         return id;
@@ -550,6 +589,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getStartsellcount() {
+        if(p.notEmpty(startsellcount)){
+            startsellcount=p.del0(startsellcount);
+        }
         return startsellcount;
     }
 
@@ -558,6 +600,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getModelcost() {
+        if(p.notEmpty(modelcost)){
+            modelcost=p.del0(modelcost);
+        }
         return modelcost;
     }
 
@@ -574,6 +619,9 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getLittleorderprice() {
+        if(p.notEmpty(littleorderprice)) {
+            littleorderprice=p.del0(littleorderprice);
+        }
         return littleorderprice;
     }
 
@@ -590,16 +638,25 @@ public class PrdtSampExcleExportManyCondition {
     }
 
     public String getFinancestartsellcount() {
+        if(p.notEmpty(financestartsellcount)){
+            financestartsellcount=p.del0(financestartsellcount);
+        }
         return financestartsellcount;
     }
+
 
     public void setFinancestartsellcount(String financestartsellcount) {
         this.financestartsellcount = financestartsellcount;
     }
 
     public String getFinancemodelcost() {
+        if(p.notEmpty(financemodelcost)){
+            financemodelcost=p.del0(financemodelcost);
+        }
         return financemodelcost;
     }
+
+
 
     public void setFinancemodelcost(String financemodelcost) {
         this.financemodelcost = financemodelcost;

@@ -33,6 +33,11 @@ import java.util.*;
 
 /**
  * Created by Administrator on 2018/6/1.
+ *
+ *
+ *
+ *
+ *
  */
 @SuppressWarnings("unchecked")
 @CrossOrigin
@@ -42,7 +47,7 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
     @Autowired
     private Cnst cnst;
     private String jarPath;
-
+    private String 可以看到6个字段="yes";
 
 
     //    @Scheduled(initialDelay = 7200000,fixedDelay = 7200000)//2小时一次
@@ -82,15 +87,40 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
      * 的hj_no中  ,  比如   主:pcs  副:pcs    这种
      * ,但是我现在取出的是  prdt中的ut主单位,   这就有点问题了,因为当时定价的单位是保存在up_def的hj_no的,虽然也检查了
      * prdt是否有单位,但是 到时候要看  客户要哪个了, 这是一开始系统跟erp系统融合后主副单位 不统一用prdt还是up_def表而导致的
+     *
+     *
+     * isCanSee6Column=yes,
+     * 表示该用户可以导出下面6个字段,否则不导出
+     *
+     *
+     * startsellcount  采购起订量
+    littleorderprice 采购小单费
+    modelcost  采购模具费
+    miniOrderAmt 采购起订金额
+    采购含运费    haveTransBuyBenBi
+    采购不含运费  noTransBuyBenBi
+     *
+     *
+     *
+     *
+     *
+     *
+     * 设置所有人除三个人之外都不能导出6个指定字段
+     * Insert into model_users_spc(users_uuid,ctrl_id,spc_id,rem,model_uuid)
+    select uuid,'exportExcelCanSee','F','信息导出6个字段不显示','10'
+    from users where user_name not in('013','014','hanpenghu')
+
+
+    select * from model_users_spc where rem ='信息导出6个字段不显示'
      */
 
     @RequestMapping(value = "dyExportExcel2Thread", method = RequestMethod.GET)//注意,下面这个param这玩意会自动解码decode
-    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail) {
+    public Msg 打样产品导出(@Param("param") String param, @Param("tenantId") String tenantId, @Param("userEmail") String userEmail,@Param("isCanSee6Column") String isCanSee6Column) {
        log.info("《《《《《《《《打样产品导出 接口 dyExportExcel2Thread 开始》》》tenantId:{}》userEmail：{}》》param: {}》》》》",tenantId,userEmail,param);
         List<String> msg = new LinkedList<String>();
         try {
             this.isIgll(tenantId, userEmail, msg);
-            this.mainF(param, tenantId, userEmail, msg);
+            this.mainF(param, tenantId, userEmail, msg,isCanSee6Column);
         } catch (Exception e) {
             String message = e.getMessage();
             if (msg.contains(message)) {
@@ -108,7 +138,7 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         }
     }
 
-    private void mainF(String param, String tenantId, String userEmail, List<String> msg) throws Exception {
+    private void mainF(String param, String tenantId, String userEmail, List<String> msg,String isCanSee6Column) throws Exception {
         String dateStr = p.sjc2StrDate(p.getTimeStamp());
         String excelName001 = p.ra3o();
         jarPath = p.springBootJarPath();
@@ -154,6 +184,15 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         if (p.notEmpty(前端穿过来要显示的fields)) {
             this.a干掉excel中不需要的字段(list导出头信息, 前端穿过来要显示的fields);
         }
+
+        try {
+            log.info("前端传过来的关于6个字段是否可见的标识符是:{}",isCanSee6Column);
+            //如果不是yes就干掉要显示的6个字段
+            if(可以看到6个字段.equals(isCanSee6Column)){
+                this.add6Column(list导出头信息);
+            }
+        } catch (Exception e) {log.info(e.getMessage(),e);}
+
 //超过2000条数据就会超过200M的图片, 会出问题, 每个图片按100K算
         this.igllManyPicOutOfMerory(ids, msg, list导出头信息);
         new Thread(() -> {
@@ -182,6 +221,15 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
             log.info("《《《《《《《下载线程结束》tenantId:{}》》》userEmail:{}》》》》",tenantId,userEmail);
         }).start();
 
+    }
+
+    private  void add6Column(List<String> list导出头信息) {
+        list导出头信息.add(Cnst.modelcostExportExcel);
+        list导出头信息.add(Cnst.startsellcountExportExcel);
+        list导出头信息.add(Cnst.littleorderpriceExportExcel);
+        list导出头信息.add(Cnst.miniOrderAmtExportExcel);
+        list导出头信息.add(Cnst.haveTransUpBuyBenBiExportExcel);
+        list导出头信息.add(Cnst.noTransUpBuyBenBiExportExcel);
     }
 
     private void igllManyPicOutOfMerory(List<String> ids, List<String> msg, List<String> list导出头信息) {
@@ -506,6 +554,73 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
         if (Cnst.mainUnitExportExcel.equals(s)) {                          ///////////////////////////////
             cell.setCellValue(daoChu.getMainUnit()); // 设置内容13
         }
+
+
+
+
+
+        //一下6个新增字段2018_9_21   weekday(5)   17:08:32 给老板和少说人看的
+        if (Cnst.modelcostExportExcel.equals(s)) {///////////////////////////////
+            String modelcost = daoChu.getModelcost();
+            if(p.notEmpty(modelcost)){
+                modelcost=p.del0(modelcost);
+            }
+            cell.setCellValue(modelcost); // 设置内容13
+        }
+        if (Cnst.startsellcountExportExcel.equals(s)) {                          ///////////////////////////////
+            String startsellcount = daoChu.getStartsellcount();
+            if(p.notEmpty(startsellcount)){
+                startsellcount=p.del0(startsellcount);
+            }
+            cell.setCellValue(startsellcount); // 设置内容13
+        }
+        if (Cnst.littleorderpriceExportExcel.equals(s)) {                          ///////////////////////////////
+            String littleorderprice = daoChu.getLittleorderprice();
+            if(p.notEmpty(littleorderprice)){
+                littleorderprice=p.del0(littleorderprice);
+            }
+            cell.setCellValue(littleorderprice); // 设置内容13
+        }
+        if (Cnst.miniOrderAmtExportExcel.equals(s)) {                          ///////////////////////////////
+            String miniOrderAmt = daoChu.getMiniOrderAmt();
+            if(p.notEmpty(miniOrderAmt)){
+                miniOrderAmt=p.del0(miniOrderAmt);
+            }
+            cell.setCellValue(miniOrderAmt); // 设置内容13
+        }
+
+
+        if (Cnst.haveTransUpBuyBenBiExportExcel.equals(s)) {                          ///////////////////////////////
+            String haveTransUpBuyBenBi = daoChu.getHaveTransUpBuyBenBi();
+            if(p.notEmpty(haveTransUpBuyBenBi)){
+                haveTransUpBuyBenBi=p.del0(haveTransUpBuyBenBi);
+                haveTransUpBuyBenBi = p.rmb + haveTransUpBuyBenBi;
+            }
+            cell.setCellValue(haveTransUpBuyBenBi); // 设置内容13
+        }
+
+        if (Cnst.noTransUpBuyBenBiExportExcel.equals(s)) {                          ///////////////////////////////
+            String noTransUpBuyBenBi = daoChu.getNoTransUpBuyBenBi();
+            if (p.notEmpty(noTransUpBuyBenBi)) {
+                noTransUpBuyBenBi = p.del0(noTransUpBuyBenBi);
+                noTransUpBuyBenBi = p.rmb + noTransUpBuyBenBi;
+            }
+            cell.setCellValue(noTransUpBuyBenBi); // 设置内容--14
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (Cnst.noTransUpSaleWaiBiExportExcel.equals(s)) {
             String noTransUpSaleWaiBi = daoChu.getNoTransUpSaleWaiBi();
 //                p.p("------------------noTransUpSaleWaiBi-------------------------------------");
@@ -887,6 +1002,13 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
                         .a(Cnst.sampMakeExportExcel)//sampMake--23
                         .a(Cnst.sampSendExportExcel)////sampSend--24
                         .a(Cnst.stopUseDateExportExcel)//stopUseDate
+                        //下面是增加的给老板和少数人看的6个字段
+//                        .a(Cnst.modelcostExportExcel)
+//                        .a(Cnst.startsellcountExportExcel)
+//                        .a(Cnst.littleorderpriceExportExcel)
+//                        .a(Cnst.miniOrderAmtExportExcel)
+//                        .a(Cnst.haveTransUpBuyBenBiExportExcel)
+//                        .a(Cnst.noTransUpBuyBenBiExportExcel)
                         .g();
         return daoChuExcelHeadList;
     }

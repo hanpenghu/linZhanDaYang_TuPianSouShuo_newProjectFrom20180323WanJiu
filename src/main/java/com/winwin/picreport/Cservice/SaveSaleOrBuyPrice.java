@@ -1,14 +1,18 @@
 package com.winwin.picreport.Cservice;
+
 import com.winwin.picreport.AllConstant.Cnst;
 import com.winwin.picreport.Edto.PrdtSamp;
 import com.winwin.picreport.Edto.PrdtSamp0;
 import com.winwin.picreport.Edto.UpDef;
 import com.winwin.picreport.Edto.UpDefMy01;
 import com.winwin.picreport.Futils.hanhan.p;
+import com.winwin.picreport.Futils.hanhan.sbd;
+import com.winwin.picreport.Futils.hanhan.stra;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -38,17 +42,20 @@ public class SaveSaleOrBuyPrice {
     }
 
     public void saveSaleOrBuyPrice(UpDefMy01 up, List<String> msgs) {
-        up.setCusNo(p.sm(p.empty(up.getCusNo()),p.space,up.getCusNo()));
-        up.setQty(p.sm(p.empty(up.getQty()),p.b(p.n0),up.getQty()));
-        up.setCurId(p.sm(p.empty(up.getCurId()),p.space,up.getCurId()));
+        up.setCusNo(p.sm(p.empty(up.getCusNo()), p.space, up.getCusNo()));
+        up.setQty(p.sm(p.empty(up.getQty()), p.b(p.n0), up.getQty()));
+        up.setCurId(p.sm(p.empty(up.getCurId()), p.space, up.getCurId()));
         //前端传过来的备注
         up.setRem(up.getRemFront());
         //单位
         this.f前端传过来的主副单位确定(up);
-        if (p.empty(up.getCurId())) {p.throwEAddToList("curId 币别代号没有传过来", msgs);}
-        String prdNo=this.f货号流水模块_把流水后的货号放入PrdtSamp(up, msgs);
-        this.f插入主副单位到prdt表中(up,prdNo);
-        this.f主对象设置货号并保存数据(up,prdNo,msgs);
+        if (p.empty(up.getCurId())) {
+            p.throwEAddToList("curId 币别代号没有传过来", msgs);
+        }
+        //最终货号是空的会报异常
+        String prdNo = this.f货号流水模块_把流水后的货号放入PrdtSamp(up, msgs);
+        this.f插入主副单位到prdt表中(up, prdNo);
+        this.f主对象设置货号并保存数据(up, prdNo, msgs);
     }
 
     private void f主对象设置货号并保存数据(UpDefMy01 up, String prdNo, List<String> msgs) {
@@ -71,12 +78,11 @@ public class SaveSaleOrBuyPrice {
     }
 
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //采购的价格入库
     private void saveAsBuyer(UpDefMy01 up, List<String> msgs) {
         UpDef upDef = new UpDef();
-        this.f采购给UpDef赋值(up,upDef);
+        this.f采购给UpDef赋值(up, upDef);
         /////////含运费和不含运费依次根据程序顺序入库/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //采购含运费入库
         if (p.notEmpty(up.getHaveTransUpBuy())) {
@@ -117,7 +123,7 @@ public class SaveSaleOrBuyPrice {
     //销售的价格入库
     private void saveAsSaler(UpDefMy01 up, List<String> msgs) {
         UpDef upDef = new UpDef();
-        this.f销售给upDef赋值(up,upDef);
+        this.f销售给upDef赋值(up, upDef);
 
         //销售含运费入库
         if (p.notEmpty(up.getHaveTransUpSale())) {
@@ -155,19 +161,7 @@ public class SaveSaleOrBuyPrice {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    private void f插入主副单位到prdt表中(UpDefMy01 up,String prdNo) {
+    private void f插入主副单位到prdt表中(UpDefMy01 up, String prdNo) {
         /**
          *插入主单位到prdt中,条件是prdt中prdno对应ut主单位字段是空的并且前端
          * 传过来的unitZhu不是空的
@@ -175,13 +169,13 @@ public class SaveSaleOrBuyPrice {
         //找到该prdNo对应的ut(就是存的主单位)//如果是空的并且前端传过来的主单位不是空的,就给他插入当前前端传过来的单位
         String ut = cnst.manyTabSerch.selectUtFromPrdt(prdNo);
         if (p.empty(ut) && p.notEmpty(up.getUnitZhu())) {
-            p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt(主单位空)startInsert").sad(p.dexhx).gad());
+            p.p(sbd.b().a(p.dexhx).a("prdtTabHaveNoUt(主单位空)startInsert").a(p.dexhx).g());
             //如果是空的,证明prdt表中没有该ut,需要插入该unit
             Integer tt = cnst.manyTabSerch.insertUnitToUtOfPrdt(up.getUnitZhu(), prdNo);
             if (p.notEmpty(tt) && tt > 0) {
-                p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位成功").sad(p.dexhx).gad());
+                p.p(sbd.b().a(p.dexhx).a("prdt对应的记录更新ut主单位成功").a(p.dexhx).g());
             } else {
-                p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut主单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
+                p.p(sbd.b().a(p.dexhx).a("prdt对应的记录更新ut主单位失败,更新条件达到,但是没有更新成功").a(p.dexhx).g());
             }
         }
         /**
@@ -191,26 +185,19 @@ public class SaveSaleOrBuyPrice {
         //找到该prdNo对应的ut1(就是存的副单位)//如果是空的并且前端传过来的副单位不是空的,就给他插入当前前端传过来的单位
         String ut1 = cnst.manyTabSerch.selectUt1FromPrdt(prdNo);
         if (p.empty(ut1) && p.notEmpty(up.getUnitFu())) {
-            p.p(p.gp().sad(p.dexhx).sad("prdtTabHaveNoUt1(副单位空)startInsert").sad(p.dexhx).gad());
+            p.p(sbd.b().a(p.dexhx).a("prdtTabHaveNoUt1(副单位空)startInsert").a(p.dexhx).g());
             //如果是空的,证明prdt表中没有该ut,需要插入该unit
             Integer tt1 = cnst.manyTabSerch.insertUnitToUt1OfPrdt(up.getUnitFu(), prdNo);
             if (p.notEmpty(tt1) && tt1 > 0) {
-                p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位成功").sad(p.dexhx).gad());
+                p.p(sbd.b().a(p.dexhx).a("prdt对应的记录更新ut1副单位成功").a(p.dexhx).g());
             } else {
-                p.p(p.gp().sad(p.dexhx).sad("prdt对应的记录更新ut1副单位失败,更新条件达到,但是没有更新成功").sad(p.dexhx).gad());
+                p.p(sbd.b().a(p.dexhx).a("prdt对应的记录更新ut1副单位失败,更新条件达到,但是没有更新成功").a(p.dexhx).g());
             }
         }
     }
 
 
-
-
-
-
-
-
-
-    private String  f货号流水模块_把流水后的货号放入PrdtSamp(UpDefMy01 up, List<String> msgs) {
+    private String f货号流水模块_把流水后的货号放入PrdtSamp(UpDefMy01 up, List<String> msgs) {
         //获得uuid对应的prdt_no
         String prdNo = cnst.manyTabSerch.selectPrdNoFromPrdtSamp(up.getUuid());
         if (p.empty(prdNo)) {
@@ -218,33 +205,35 @@ public class SaveSaleOrBuyPrice {
             //2018_5_14   weekday(1)   17:23:11
             prdNo = cnst.a001TongYongMapper.selectTop1PrdtNo(prdtSamp.getPrdCode());
             if (p.empty(prdNo)) {//注意这边没有分类,无法帮  他流水,需要客户自己去prdt表注册商品的到品号
-                this.f给pp装上货号(prdtSamp,msgs);
+                this.f给pp装上货号(prdtSamp, msgs);
 //                p.p("-------------------------------------------------------");
 //                p.p("此名称在ERP中无对应品号，不能定价，请完善资料！ci mingCheng zai erp zhong wu duiying pinhao ,buneng dingJia  ,qing WanShan ZiLiao");
 //                p.p("-------------------------------------------------------");
 //                p.throwEAddToList("此名称在ERP中无对应品号，不能定价，请完善资料！", msgs);
-            } else {
-                //此时prdt表中有货号,把这个货号放入打样表中
-                cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(),prdNo);
+                prdNo = prdtSamp.getPrdNo();
             }
+            if (p.empty(prdNo)) {
+                String s = "prdtSamp里面货号为空,而且在prdt里根据prdCode《"+prdtSamp.getPrdCode()+"》找不到对应货号,并且无法根据fenLeiNo《"+prdtSamp.getFenLeiNo()+"》流水货号";
+                p.throwEAddToList(s, msgs);
+            }
+            //此时prdt表中有货号,把这个货号放入打样表中
+            cnst.a001TongYongMapper.updatePrdNoByUuid(up.getUuid(), prdNo);
         }
         return prdNo;
     }
 
 
-    private void f给pp装上货号(PrdtSamp pp,List<String>msgs) {
-        PrdtSamp0 p0=new PrdtSamp0();
-        BeanUtils.copyProperties(pp,p0);
+    private void f给pp装上货号(PrdtSamp pp, List<String> msgs) {
+        PrdtSamp0 p0 = new PrdtSamp0();
+        BeanUtils.copyProperties(pp, p0);
         //给当前的prdtSamp流水一个货号
         cnst.gPrdNo.prdtSampObjGetPrdNo(p0);
-        if(p.empty(p0.getPrdNo())){
-            String s="产品编码为：《" +p0.getPrdCode() +"》对应的产品中类《" +p0.getFenLeiName()+"》不存在,请手动录入该中类！所有数据未导入！";
-            p.throwEAddToList(s,msgs);
+        if (p.empty(p0.getPrdNo())) {
+            String s = "产品编码为：《" + p0.getPrdCode() + "》对应的产品中类《" + p0.getFenLeiName() + "》不存在,请手动录入该中类！所有数据未导入！";
+            p.throwEAddToList(s, msgs);
         }
         pp.setPrdNo(p0.getPrdNo());
     }
-
-
 
 
     private void f采购给UpDef赋值(UpDefMy01 up, UpDef upDef) {
@@ -318,7 +307,7 @@ public class SaveSaleOrBuyPrice {
 
 
     private void f前端传过来的主副单位确定(UpDefMy01 up) {
-        String unit="";
+        String unit = "";
         //注意:后来加了主单位和副单位,
         //进入up_def之后都存在了OLEFIELD字段中,取出来的时候也取这个
         //但是老郑还要求了,单位分主副进入prdt中

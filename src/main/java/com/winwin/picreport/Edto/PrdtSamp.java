@@ -81,7 +81,7 @@ public class PrdtSamp {
 
     protected BigDecimal estimateprice;//预估价
 
-    protected BigDecimal littleorderprice;//小单费
+    protected BigDecimal littleorderprice;//小单费//采购小单费
 
     protected String modelcostinvoiceno;//模具费用发票号
     //财务起订量

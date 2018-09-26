@@ -6,6 +6,18 @@ package com.winwin.picreport.Bcontroller.loginRegistModul.auth.dto.columnAuth;
  */
 public class ModelParent {
 
+//insert into model_users_spc values('DB2535F4-9DA6-4F1C-B9BE-563E3A403D20','exportExcelCanSee','F','商品信息导出6个字段不可见',10)
+    //增加一个控制 点位,该点位暂时只在产品信息excel导出模块起作用
+    //用来控制以下几个点位
+//    startsellcount  采购起订量
+//    littleorderprice 采购小单费
+//    modelcost  采购模具费
+//    miniOrderAmt 采购起订金额
+//    采购含运费    haveTransBuyBenBi
+//    采购不含运费  noTransBuyBenBi
+    protected String exportExcelCanSee="1";
+
+
     //操作
     protected String operate="1";
     //查看信息
@@ -145,6 +157,14 @@ public class ModelParent {
     //审核意见
     protected String checkOutOpinion="1";
 
+
+    public String getExportExcelCanSee() {
+        return exportExcelCanSee;
+    }
+
+    public void setExportExcelCanSee(String exportExcelCanSee) {
+        this.exportExcelCanSee = exportExcelCanSee;
+    }
 
     public String getBuyPrice() {
         return buyPrice;

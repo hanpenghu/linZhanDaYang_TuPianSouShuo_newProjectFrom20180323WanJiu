@@ -88,13 +88,27 @@ public class DaoChu {
 
     private String financedesc;//财务描述
 
-    private String startsellcount;//起订数量//json可以直接转换输出给外部
 
-    private String modelcost;//模具费
+    //采购的
+    private String startsellcount;//采购起订数量//json可以直接转换输出给外部
+    private String modelcost;//采购模具费
+    private String littleorderprice;//采购小单费
+    private String miniOrderAmt;//采购起订金额
+    private String haveTransUpBuyBenBi;//采购有运费本币价格
+    private String noTransUpBuyBenBi;//采购无运费本币价格
+
+
+
+
+
+
+
+
+
 
     private String estimateprice;//预估价
 
-    private String littleorderprice;//小单费
+
 
     private String modelcostinvoiceno;//模具费用发票号
 
@@ -143,6 +157,22 @@ public class DaoChu {
     //无运费单价销售WaiBi
     private String noTransUpSaleWaiBi;
 
+
+    public String getHaveTransUpBuyBenBi() {
+        return haveTransUpBuyBenBi;
+    }
+
+    public void setHaveTransUpBuyBenBi(String haveTransUpBuyBenBi) {
+        this.haveTransUpBuyBenBi = haveTransUpBuyBenBi;
+    }
+
+    public String getNoTransUpBuyBenBi() {
+        return noTransUpBuyBenBi;
+    }
+
+    public void setNoTransUpBuyBenBi(String noTransUpBuyBenBi) {
+        this.noTransUpBuyBenBi = noTransUpBuyBenBi;
+    }
 
     public String getNoTransUpSaleWaiBi() {
 
@@ -595,6 +625,15 @@ public class DaoChu {
 
     public void setFenLeiNameE(String fenLeiNameE) {
         this.fenLeiNameE = fenLeiNameE;
+    }
+
+
+    public String getMiniOrderAmt() {
+        return miniOrderAmt;
+    }
+
+    public void setMiniOrderAmt(String miniOrderAmt) {
+        this.miniOrderAmt = miniOrderAmt;
     }
 
     @Override

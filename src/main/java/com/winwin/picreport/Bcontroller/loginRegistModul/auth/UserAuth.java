@@ -166,7 +166,7 @@ public class UserAuth {
 
 
     private final String salesorder = "salesorder";
-    private final String productMsgExport = "productMsgExport";
+    private final String productMsgExport = "productMsgExport";//信息导出模块
     private final String pricingCheck = "pricingCheck";
     private final String salesorderForSAP = "salesorderForSAP";
     private final String uploadImg = "uploadImg";
@@ -179,6 +179,9 @@ public class UserAuth {
     private final String salesPrice = "salesPrice";
     private final String sampleConfirm = "sampleConfirm";
 
+
+
+    //模块设置
     private void usersColumnAuthset(List<ModelUsersSpc> modelUsersSpcList, ColumnAuth columnAuth) {
         if (p.notEmpty(modelUsersSpcList)) {
             Salesorder salesOrder1 = new Salesorder();
@@ -243,6 +246,7 @@ public class UserAuth {
     }
 
 
+    //某个模块内的控制点位设置
     private void columnAuthSet1(ModelParent modelParent, ModelUsersSpc m) {
         try {
             List<p.FieldContent> modelParentFields = p.getField(modelParent);
@@ -367,6 +371,11 @@ public class UserAuth {
     private final String isCheckOut = "isCheckOut";
     //审核意见
     private final String checkOutOpinion = "checkOutOpinion";
+
+
+
+
+
 
     private boolean hanhanCanAccess(LoginInfo info) {
         if (p.notEmpty(info) && "hanhanhan".equals(info.getTenantId()) && "hanhanhan".equals(info.getUserEmail()) && "hanhanhan".equals(info.getUserPswd())) {

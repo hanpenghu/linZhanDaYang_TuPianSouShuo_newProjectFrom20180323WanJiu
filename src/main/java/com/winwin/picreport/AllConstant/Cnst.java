@@ -378,9 +378,21 @@ public class Cnst {
     public static final String sampSendExportExcel = "样品卡寄出日期";
     public static final String stopUseDateExportExcel = "停用日期";//--24
 
+    //2018_9_21   weekday(5)   15:36:44
+    public static final String modelcostExportExcel = "采购模具费";//
+    public static final String startsellcountExportExcel = "采购起订数量";//
+    public static final String littleorderpriceExportExcel = "采购小单费";//
+    public static final String miniOrderAmtExportExcel = "采购起订金额";//
+    public static final String haveTransUpBuyBenBiExportExcel = "采购有运费本币";//
+    public static final String noTransUpBuyBenBiExportExcel = "采购无运费本币";//
+
     /**
      *下面是导出excel前端传过来导出那些的字段的标记
      * */
+
+
+
+    //以前
     public static final String salNameSign="salName";
     public static final String cusNameSign="cusName";
     public static final String xPOINTnm_engSign="cust.nm_eng";

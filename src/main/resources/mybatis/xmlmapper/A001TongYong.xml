@@ -410,20 +410,20 @@
 
 
     <sql id="leftJoinOfExportExcel">
-        left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='2' -- 2是有运费
-        left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='1' and u2.olefield=u1.olefield
+        left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='1' -- 1是无运费
+        left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='2' and u2.olefield=u1.olefield
         left join up_def u3 on p.prd_no=u3.prd_no and u3.price_id='1' and u3.cur_id='USD' and u3.bil_type='2' and u3.olefield=u1.olefield
         left join up_def u4 on p.prd_no=u4.prd_no and u4.price_id='1' and u4.cur_id='USD' and u4.bil_type='1' and u4.olefield=u1.olefield
-        -- left join up_def u5 on p.prd_no=u5.prd_no and u5.price_id='2' and u5.cur_id='RMB' and u5.bil_type='1' and u5.prm_no=u4.prm_no -- 无运费
-        -- left join up_def u6 on p.prd_no=u6.prd_no and u6.price_id='2' and u6.cur_id='RMB' and u6.bil_type='' and u6.olefield=u5.olefield -- 有运费
+        left join up_def u5 on p.prd_no=u5.prd_no and u5.price_id='2' and u5.cur_id='RMB' and u5.bil_type='1' and u5.prm_no=u1.prm_no -- 无运费
+        left join up_def u6 on p.prd_no=u6.prd_no and u6.price_id='2' and u6.cur_id='RMB' and u6.bil_type='' and u6.prm_no=u1.prm_no -- 有运费
     </sql>
     <sql id="leftJoinOfExportExcel1">
-        left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='2' -- 2是有运费
-        left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='1' and u22.olefield=u11.olefield
+        left join up_def u11 on p1.prd_no=u11.prd_no and u11.price_id='1' and u11.cur_id='RMB' and u11.bil_type='1' -- 对于销售2是有运费,1是 无运费
+        left join up_def u22 on p1.prd_no=u22.prd_no and u22.price_id='1' and u22.cur_id='RMB' and u22.bil_type='2' and u22.olefield=u11.olefield
         left join up_def u33 on p1.prd_no=u33.prd_no and u33.price_id='1' and u33.cur_id='USD' and u33.bil_type='2' and u33.olefield=u11.olefield
         left join up_def u44 on p1.prd_no=u44.prd_no and u44.price_id='1' and u44.cur_id='USD' and u44.bil_type='1' and u44.olefield=u11.olefield
-        -- left join up_def u55 on p.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u44.prm_no -- 无运费
-        -- left join up_def u66 on p.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.olefield=u55.olefield -- 有运费
+        left join up_def u55 on p1.prd_no=u55.prd_no and u55.price_id='2' and u55.cur_id='RMB' and u55.bil_type='1' and u55.prm_no=u11.prm_no -- 无运费
+        left join up_def u66 on p1.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.prm_no=u11.prm_no -- 有运费
     </sql>
     <sql id="exportExcelManyCondition">
            p.id=p.id -- AND p.stopusedate is null
@@ -591,15 +591,19 @@
             --//财务起订金额
             isnull(convert(varchar(23),convert(decimal(23,4),p.fi_Mini_Order_Amt)),'') as fiMiniOrderAmt ,
             --//不含运费单价的销售价格//up_def中bil_type=01
-            isnull(convert(varchar(23),convert(decimal(23,4),u2.up)),'') as noTransUpSale,--//
+            isnull(convert(varchar(23),convert(decimal(23,4),u1.up)),'') as noTransUpSale,--//
            -- //含运费单价销售价格//up_def中bil_type!=01
-           isnull(convert(varchar(23),convert(decimal(23,4),u1.up)),'') as haveTransUpSale,--//
+           isnull(convert(varchar(23),convert(decimal(23,4),u2.up)),'') as haveTransUpSale,--//
             --//注意:采购只有本币
            -- //由于销售价格有本币和外币区别,所以加2个字段区分//然后上面2个作为本币销售
            -- //不含运费单价的销售价格外币
             isnull(convert(varchar(23),convert(decimal(23,4),u4.up)),'') as noTransUpSaleWaiBi,
             --//含运费单价销售价格外币//up_def中bil_type!=01
              isnull(convert(varchar(23),convert(decimal(23,4),u3.up)),'') as haveTransUpSaleWaiBi,
+
+             isnull(convert(varchar(23),convert(decimal(23,4),u5.up)),'') as noTransUpBuyBenBi,
+             isnull(convert(varchar(23),convert(decimal(23,4),u6.up)),'') as haveTransUpBuyBenBi,
+
              --//主单位,由于2018_3_10   weekday(6)   19:34:05老郑让打样的excel中添加一个主单位
              isnull(p.main_Unit,isnull(u1.hj_no,'')) as mainUnit,  --prdt_samp里的主单位,来源于第一次导excel进来的时候
              isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,isnull(u4.hj_no,'')))) as unit,     --- 单位,来自up_def表 ,后来决定在导出 excel中的取这个
@@ -947,6 +951,12 @@
         isnull(a.user_Name,'') as userName,
         isnull(a.tenant_Id,'') as  tenantId,
         isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as mainUnit ,
+
+
+        isnull(CONVERT(varchar(36),a.mini_Order_Amt),'') as  miniOrderAmt, -- 采购起订金额
+        isnull(CONVERT (VARCHAR (36),u4.up),'') as  haveTransBuyBenBi,
+        isnull(CONVERT (VARCHAR (36),u5.up),'') as  noTransBuyBenBi,
+
         -- //含运费本币销售价格
         isnull(convert(varchar(100),u1.up),'') as haveTransUpSaleBenBi,
         --//含运费单价销售外币价格
@@ -961,6 +971,10 @@
         LEFT JOIN UP_DEF u1  ON   a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and u1.olefield=u.olefield
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
+        -- 采购有运费
+        LEFT JOIN UP_DEF u4  ON   a.prd_no=u4.prd_no and u4.bil_type='' and u4.cur_id='RMB' and u4.price_id='2' and u4.prm_no=u.prm_no
+        -- 采购无运费
+        LEFT JOIN UP_DEF u5  ON   a.prd_no=u5.prd_no and u5.bil_type='1' and u5.cur_id='RMB' and u5.price_id='2' and u5.prm_no=u.prm_no
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
         LEFT JOIN INDX i1    ON   i1.idx_no=a.fen_lei_no
         LEFT JOIN INDX i2    ON   i2.idx_no=a.idx_no
@@ -1028,6 +1042,13 @@
         isnull(a.user_Name,'') as userName,
         isnull(a.tenant_Id,'') as  tenantId,
         isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as mainUnit ,
+
+
+        isnull(CONVERT(varchar(36),a.mini_Order_Amt),'') as  miniOrderAmt, -- 采购起订金额
+        isnull(CONVERT (VARCHAR (36),u4.up),'') as  haveTransUpBuyBenBi,
+        isnull(CONVERT (VARCHAR (36),u5.up),'') as  noTransUpBuyBenBi,
+
+
         -- //含运费本币销售价格
         isnull(convert(varchar(100),u1.up),'') as haveTransUpSaleBenBi,
         --//含运费单价销售外币价格
@@ -1042,6 +1063,12 @@
         LEFT JOIN UP_DEF u1  ON   a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and u1.olefield=u.olefield
         LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
         LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
+        -- 采购有运费
+         LEFT JOIN UP_DEF u4  ON   a.prd_no=u4.prd_no and u4.bil_type='' and u4.cur_id='RMB' and u4.price_id='2' and u4.prm_no=u.prm_no
+
+         -- 采购无运费
+         LEFT JOIN UP_DEF u5  ON   a.prd_no=u5.prd_no and u5.bil_type='1' and u5.cur_id='RMB' and u5.price_id='2' and u5.prm_no=u.prm_no
+
         LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
             LEFT JOIN INDX i1    ON   i1.idx_no=a.fen_lei_no
         LEFT JOIN INDX i2    ON   i2.idx_no=a.idx_no

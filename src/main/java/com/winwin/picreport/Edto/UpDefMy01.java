@@ -17,6 +17,9 @@ public class UpDefMy01 extends UpDefMy {
     String remFront;
     //加一个uuid字段,让徐勇传过来保存新的单价,这个uuid就是prdtSamp表里面的唯一标识
     String  uuid;
+
+
+
     //不含运费单价的采购价格//up_def中bil_type=01
     BigDecimal noTransUpBuy;//
     //含运费单价采购价格//up_def中bil_type!=01

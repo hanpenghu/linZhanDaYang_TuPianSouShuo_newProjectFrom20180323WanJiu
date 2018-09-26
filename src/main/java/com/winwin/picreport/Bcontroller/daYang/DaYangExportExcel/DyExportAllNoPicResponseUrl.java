@@ -36,6 +36,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class DyExportAllNoPicResponseUrl {
+    private String 可以看到6个字段="yes";
     private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Cnst cnst;
@@ -45,9 +46,29 @@ public class DyExportAllNoPicResponseUrl {
      * 导出所有
      http://47.98.45.100:8070/dyExportExcelAllNoPic?tenantId=ipace&userEmail=hanpenghu&param=%7B%22ids%22%3A%5B%5D%2C%22fields%22%3A%5B%22salName%22%2C%22thum%22%2C%22cusName%22%2C%22cust.nm_eng%22%2C%22prdCode%22%2C%22idxName%22%2C%22fenLeiName%22%2C%22category%22%2C%22teamname%22%2C%22colour%22%2C%22size%22%2C%22mainUnit%22%2C%22noTransUpSaleBenBi%22%2C%22haveTransUpSaleBenBi%22%2C%22noTransUpSaleWaiBi%22%2C%22haveTransUpSaleWaiBi%22%2C%22financestartsellcount%22%2C%22financelittleorderprice%22%2C%22confirmtimestr%22%2C%22confirmman%22%2C%22sampRequ%22%2C%22sampMake%22%2C%22sampSend%22%5D%7D
      */
+/*     * isCanSee6Column=yes,
+            * 表示该用户可以导出下面6个字段,否则不导出
+     *
+             *
+    startsellcount  采购起订量
+    littleorderprice 采购小单费
+    modelcost  采购模具费
+    miniOrderAmt 采购起订金额
+    采购含运费    haveTransUpBuyBenBi
+    采购不含运费  noTransUpBuyBenBi
 
+
+     设置所有人除三个人之外都不能导出6个指定字段
+     Insert into model_users_spc(users_uuid,ctrl_id,spc_id,rem,model_uuid)
+    select uuid,'exportExcelCanSee','F','信息导出6个字段不显示','10'
+    from users where user_name not in('013','014','hanpenghu')
+
+
+    select * from model_users_spc where rem ='信息导出6个字段不显示'
+
+    */
     @RequestMapping(value = "dyExportExcelAllNoPic")//注意,下面这个param这玩意会自动解码decode
-    public String 打样产品导出所有不带图片(@Param("param") String param) throws Exception {
+    public String 打样产品导出所有不带图片(@Param("param") String param,@Param("isCanSee6Column") String isCanSee6Column) throws Exception {
         try {
             jarPath = p.springBootJarPath();
             //String ss="\"ids\":[\"0000e1a2-ec00-4b06-94da-db80628473eb\",\"00013fb7-ba16-4ad2-9ca6-7257c660f9a3\"],\"fields\":[\"salName\",\"thum\",\"prdCode\",\"mainUnit\",\"haveTransUpSaleBenBi\",\"haveTransUpSaleWaiBi\",\"noTransUpSaleBenBi\",\"noTransUpSaleWaiBi\"]}{";
@@ -83,8 +104,13 @@ public class DyExportAllNoPicResponseUrl {
             if (p.notEmpty(前端穿过来要显示的fields)) {
                 this.a干掉excel中不需要的字段(list导出头信息,前端穿过来要显示的fields);
             }
-
-
+            try {
+                log.info("前端传过来的关于6个字段是否可见的标识符是:{}",isCanSee6Column);
+                //如果不是yes就干掉要显示的6个字段
+                if(可以看到6个字段.equals(isCanSee6Column)){
+                    this.add6Column(list导出头信息);
+                }
+            } catch (Exception e) {log.info(e.getMessage(),e);}
             log.info("《《{}《《《《从数据库拿到所有daoChus对象开始》》》》》》》》》",p.dtoStr(new Date(),p.d16));
             List<DaoChu> daoChus= cnst.a001TongYongMapper.getDaoChusOfAllNoPic();
             log.info("《《《{}《《《从数据库拿到所有daoChus对象结束》》》》》》》》》",p.dtoStr(new Date(),p.d16));
@@ -122,7 +148,14 @@ public class DyExportAllNoPicResponseUrl {
 
 
 
-
+    private  void add6Column(List<String> list导出头信息) {
+        list导出头信息.add(Cnst.modelcostExportExcel);
+        list导出头信息.add(Cnst.startsellcountExportExcel);
+        list导出头信息.add(Cnst.littleorderpriceExportExcel);
+        list导出头信息.add(Cnst.miniOrderAmtExportExcel);
+        list导出头信息.add(Cnst.haveTransUpBuyBenBiExportExcel);
+        list导出头信息.add(Cnst.noTransUpBuyBenBiExportExcel);
+    }
 
 
 
