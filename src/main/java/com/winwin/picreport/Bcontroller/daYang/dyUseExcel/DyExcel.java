@@ -60,9 +60,11 @@ public class DyExcel {
             cnst.dyExcelBf.f(excel, request, msgs);
             //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:44
             cnst.genFenLeiNo.f();
+            cnst.genFenLeiNo.doIdxNo();
         } catch (Exception e) {
             //弥补分类编号在prdt_samp 和prdt里面不产生的过错2018_8_31   weekday(5)   21:03:47
             cnst.genFenLeiNo.f();
+            cnst.genFenLeiNo.doIdxNo();
             return exceptionReturn(msgs, e);
         }
         return rightReturn(msgs);

@@ -723,7 +723,20 @@ private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass())
             sheet1.setColumnWidth(a行计数器, width);
             row.setHeightInPoints(height);*/
 
-        ImageIO.write(bufferImg, "jpg", byteArrayOut);
+            String houZhui="png";
+            if(p.notEmpty(thum)&&thum.contains(".")){
+                houZhui=houZhui.substring(houZhui.lastIndexOf(".")+1);
+            }
+
+        try {
+//                log.info("$$$$$$$$$$$$$      houZhui={}     ￥￥￥￥￥￥￥￥￥￥￥",houZhui);
+            ImageIO.write(bufferImg, houZhui, byteArrayOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+            houZhui="png";
+            ImageIO.write(bufferImg, houZhui, byteArrayOut);
+            log.error(e.getMessage(),e);
+        }
         //创建一个图片
         HSSFPatriarch patriarch = sheet1.createDrawingPatriarch();
         //制造图片的位置参数

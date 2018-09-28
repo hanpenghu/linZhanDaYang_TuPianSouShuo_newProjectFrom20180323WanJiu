@@ -3665,6 +3665,76 @@ public class PrdtSampExample {
             addCriterion("update_date not between", value1, value2, "updateDate");
             return (Criteria) this;
         }
+
+        public Criteria andRemIsNull() {
+            addCriterion("rem is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemIsNotNull() {
+            addCriterion("rem is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemEqualTo(String value) {
+            addCriterion("rem =", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemNotEqualTo(String value) {
+            addCriterion("rem <>", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemGreaterThan(String value) {
+            addCriterion("rem >", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemGreaterThanOrEqualTo(String value) {
+            addCriterion("rem >=", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemLessThan(String value) {
+            addCriterion("rem <", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemLessThanOrEqualTo(String value) {
+            addCriterion("rem <=", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemLike(String value) {
+            addCriterion("rem like", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemNotLike(String value) {
+            addCriterion("rem not like", value, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemIn(List<String> values) {
+            addCriterion("rem in", values, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemNotIn(List<String> values) {
+            addCriterion("rem not in", values, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemBetween(String value1, String value2) {
+            addCriterion("rem between", value1, value2, "rem");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemNotBetween(String value1, String value2) {
+            addCriterion("rem not between", value1, value2, "rem");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

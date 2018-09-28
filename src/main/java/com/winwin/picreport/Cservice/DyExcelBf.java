@@ -84,6 +84,8 @@ public class DyExcelBf {
                 continue;
             }
             if(null!=pp){
+                p.p("&&&&&&&cusName="+pp.getCusName()+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                this.cusNoSet(pp);
                 prdtSamps将要入数据库.add(pp);
             }
         }
@@ -220,6 +222,7 @@ public class DyExcelBf {
 
     private void f封装插入数据库的集合和保存图片(List<ExcelTxtTemplate> list该行文本集,List<ExcelPicTemplate> list该行图片集,String uuid,PrdtSamp pp,List<String> msgs,int 行计数器,List<String> list异常后要删除的图片路径) throws IOException {
         for(ExcelTxtTemplate ee:list该行文本集){
+
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),图片)){
                 try {
                     String thum=this.savePic(list该行图片集,uuid,list异常后要删除的图片路径);
@@ -298,6 +301,63 @@ public class DyExcelBf {
             if(p.dy(ee.getTxtColumnNameOfTableHead().trim(),主单位)){
                 pp.setMainUnit(ee.getTxt());
             }
+
+        }
+    }
+
+    private void cusNoSet(PrdtSamp pp) {
+        try {
+            if(p.notEmpty(pp.getCusNo())){
+                p.p("---PrdCode="+pp.getPrdCode()+"-----da yang dao ru excel ,yi jing you cusNo-bu bi dao cust zhao-------");
+                return;
+            }
+            if(p.empty(pp.getCusName())){
+                p.p("---PrdCode="+pp.getPrdCode()+"-----da yang dao ru excel ,cusName shi kong de ,wu fa zhao dao dui ying de cusNo-------");
+               this.remSet(pp,"客户名称cusName是空的,无法找到cusNo放入Prdt_samp");
+                return;
+            }
+            CustExample custExample=new CustExample();
+            custExample.createCriteria().andNameEqualTo(pp.getCusName());
+            List<Cust> custs = cnst.custMapper.selectByExample(custExample);
+            if(p.empty(custs)){
+                p.p("---PrdCode="+pp.getPrdCode()+"-----da yang dao ru excel ,cusName shi kong de ,cust biao zhong mei you kehu mingcheng  {"+pp.getCusName()+"} dui ying de cusNo-------");
+                this.remSet(pp,"cust表中没有客户名《"+pp.getCusName()+"》对应的客户编号cusNo");
+            }else{
+                p.p("---PrdCode="+pp.getPrdCode()+"-----da yang dao ru excel ,cusName shi kong de ,zhao dao kehu bianhao="+custs.get(0).getCusNo()+"-------");
+                pp.setCusNo(custs.get(0).getCusNo());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage(),e);
+        }
+    }
+
+    private org.slf4j.Logger log= org.slf4j.LoggerFactory.getLogger(this.getClass());
+
+    private void remSet(PrdtSamp pp, String remMsg) {
+        try {
+            if(p.empty(remMsg)){return;}
+            p.p("$$$$$$   0   $$$$$$$$$$ id="+pp.getId()+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            String rem= cnst.a001TongYongMapper.selectPrdtSampRem(pp.getId());
+            p.p("$$$$$$   1   $$$$$$$$$$rem="+rem+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            List<String> list=new ArrayList<>();
+            if(p.notEmpty(rem)){
+                list = JSON.parseArray(rem, String.class);
+                p.p("$$$$$$   2   $$$$$$$$$$list="+list+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            }
+            list.add(remMsg);
+            p.p("$$$$$$   3  $$$$$$$$$$list="+list+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            if(p.notEmpty(list)){
+                rem=JSON.toJSONString(list);
+                p.p("$$$$$$   4   $$$$$$$$$$ rem="+rem+"$$$   id="+pp.getId()+"   $$$$$$$$$$$$$$$$$$$$$$$$$$");
+    //            int  i=cnst.a001TongYongMapper.updatePrdtSampRem(pp.getId(),rem);
+                pp.setRem(rem);
+    //            p.p("$$$$$$   5  $$$$$$$$$$ i="+i+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            }
+            p.p("$$$$$$   6   $$$$$$$$$$ rem="+rem+"$$$$$$$$list="+list+"$$$$$$$$$$$$$$$$$$$$$");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
     }
 

@@ -432,6 +432,9 @@ public interface A001TongYongMapper {
     @Select({"select top 1 idx_no  from indx where name=#{fenLeiName}"})
     String getFenLeiNoUseFenLeiName(@Param("fenLeiName") String fenLeiName);
 
+    @Select({"select top 1 idx_no  from indx where name=#{s}"})
+    String getIdxNoUseIdxName(@Param("s") String idxName);
+
 
     @Update({"update prdt_samp set fen_lei_no=#{fenLeiNo} where id=#{id}"})
     int setFenLeiNo2PrdtSamp(@Param("id") String id,@Param("fenLeiNo") String fenLeiNo);
@@ -439,12 +442,28 @@ public interface A001TongYongMapper {
     @Update({"update prdt set idx1=#{fenLeiNo} where prd_no=#{prdNo}"})
     int updateIdx1(@Param("prdNo") String prdNo, @Param("fenLeiNo") String fenLeiNo);
 
-    @Select({"select count(*) from up_def where prd_no=#{prdNo} and price_id=#{salPriceId} and cur_id=#{curId} and bil_type=#{bilType} and s_dd<=#{osDd} and #{up}<up and #{qty}>=qty"})
+
+    //该sql移至xml中
+//    @Select({"select count(*) from up_def where prd_no=#{prdNo} and price_id=#{salPriceId} and cur_id=#{curId} and bil_type=#{bilType} and s_dd<=#{osDd} and #{up}<up and #{qty}>=qty"})
     int countPriceOfSmallThenUpdef(@Param("osDd") String osDd, @Param("prdNo")String prdNo, @Param("salPriceId")String salPriceId, @Param("up")BigDecimal up,@Param("curId") String curId,@Param("bilType") String bilType,@Param("qty") String qty);
 
 //    @Select({"select * from prdt_samp where insertdate >='2018-08-31' and prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) and fen_lei_name is not null and prd_no is not null and prd_code is not null"})
-    @Select({"select fen_lei_name as fenLeiName,fen_Lei_No as fenLeiNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where (insertdate >='2018-08-31' or update_date>='2018-08-31') and (prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) or isnull(fen_lei_no,'')='' ) and fen_lei_name is not null and prd_no is not null and prd_code is not null"})
+    @Select({"select fen_lei_name as fenLeiName,fen_Lei_No as fenLeiNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where (insertdate >='2018-08-31' or update_date>='2018-08-31') and (prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) or isnull(fen_lei_no,'')='' ) and isnull(fen_lei_name,'') !='' and isnull(prd_no,'') !='' and isnull(prd_code,'') !='' "})
     List<PrdtSamp> getAllNoFenLeiNo();
+
+    @Select({"select idx_name as idxName,idx_no as idxNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where isnull(idx_no,'')='' and isnull(idx_name,'')!='' and (insertdate >='2018-08-31' or update_date>='2018-08-31') "})
+    List<PrdtSamp> getAllNoIdxNo();
+
+
+
+    /**
+     *下面2个专门用于定时任务
+     * */
+    @Select({"select fen_lei_name as fenLeiName,fen_Lei_No as fenLeiNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where (insertdate >='2018-06-28' or update_date>='2018-06-28') and (prd_no in  (  select prd_no from prdt where isnull(idx1,'')=''    ) or isnull(fen_lei_no,'')='' ) and isnull(fen_lei_name,'') !='' and isnull(prd_no,'') !='' and isnull(prd_code,'') !='' "})
+    List<PrdtSamp> getAllNoFenLeiNo1();
+
+    @Select({"select idx_name as idxName,idx_no as idxNo,id as id,prd_Code as prdCode,prd_No as prdNo from prdt_samp where isnull(idx_no,'')='' and isnull(idx_name,'')!='' and (insertdate >='2018-06-28' or update_date>='2018-06-28') "})
+    List<PrdtSamp> getAllNoIdxNo1();
 
 
 //    @Update({"update prdt_samp set stopusedate=null where id=#{id}"})
@@ -484,8 +503,9 @@ public interface A001TongYongMapper {
     List<String> allShangJiFenLeiName(@Param("fenLeiName") String fenLeiName);
 
 
+    @Select({"select rem from prdt_samp where id=#{id}"})
+    String selectPrdtSampRem(@Param("id") String id);
 
-
-
-
+//    @Update({"update prdt_samp set rem= #{rem} where id=#{id}"})
+    int updatePrdtSampRem(@Param("id")String id,@Param("rem") String rem);
 }

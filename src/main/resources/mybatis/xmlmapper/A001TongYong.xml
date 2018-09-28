@@ -41,92 +41,92 @@
     <!--<sql id="productProofWithManyCondition">-->
 
 
-        <!--(-->
+    <!--(-->
 
-        <!--insertDate-->
-        <!--BETWEEN-->
-        <!--<choose>-->
-            <!--<when test="insertdateStr != null and insertdateStr != ''">-->
-                <!--#{insertdateStr}-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--'1970-01-01'-->
-            <!--</otherwise>-->
-        <!--</choose>-->
-        <!--AND-->
-        <!--<choose>-->
-            <!--<when test="insertdateStrEnd != null and insertdateStrEnd != ''">-->
-                <!--#{insertdateStrEnd}-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--'9999-01-01'-->
-            <!--</otherwise>-->
-        <!--</choose>-->
-        <!--)-->
+    <!--insertDate-->
+    <!--BETWEEN-->
+    <!--<choose>-->
+    <!--<when test="insertdateStr != null and insertdateStr != ''">-->
+    <!--#{insertdateStr}-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--'1970-01-01'-->
+    <!--</otherwise>-->
+    <!--</choose>-->
+    <!--AND-->
+    <!--<choose>-->
+    <!--<when test="insertdateStrEnd != null and insertdateStrEnd != ''">-->
+    <!--#{insertdateStrEnd}-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--'9999-01-01'-->
+    <!--</otherwise>-->
+    <!--</choose>-->
+    <!--)-->
 
-        <!--AND-->
-        <!--&#45;&#45; 产品名称,大范围-->
-        <!--isnull(idx_Name,'') LIKE-->
-        <!--<choose>-->
-            <!--<when test="idxName != null and idxName != ''">-->
-                <!--('%' + (#{idxName}) + '%')-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--isnull(idx_Name,'')-->
-            <!--</otherwise>-->
-        <!--</choose>-->
-        <!--AND-->
-        <!-- -&#45;&#45;  产品分类 小范围-->
-        <!--isnull(fen_lei_name,'') LIKE-->
-        <!--<choose>-->
-            <!--<when test=" fenLeiName != null and fenLeiName != '' ">-->
-                <!--('%'+( #{fenLeiName})+ '%')-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--isnull(fen_lei_name,'')-->
-            <!--</otherwise>-->
-        <!--</choose>-->
-        <!--AND-->
-        <!--&#45;&#45;产品编码-->
-        <!--isnull(prd_Code,'') LIKE-->
-        <!--<choose>-->
-            <!--<when test=" prdCode != null and prdCode != '' ">-->
-                <!--('%'+( #{prdCode}) +'%')-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--isnull(prd_Code,'')-->
-            <!--</otherwise>-->
-        <!--</choose>-->
+    <!--AND-->
+    <!--&#45;&#45; 产品名称,大范围-->
+    <!--isnull(idx_Name,'') LIKE-->
+    <!--<choose>-->
+    <!--<when test="idxName != null and idxName != ''">-->
+    <!--('%' + (#{idxName}) + '%')-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--isnull(idx_Name,'')-->
+    <!--</otherwise>-->
+    <!--</choose>-->
+    <!--AND-->
+    <!-- -&#45;&#45;  产品分类 小范围-->
+    <!--isnull(fen_lei_name,'') LIKE-->
+    <!--<choose>-->
+    <!--<when test=" fenLeiName != null and fenLeiName != '' ">-->
+    <!--('%'+( #{fenLeiName})+ '%')-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--isnull(fen_lei_name,'')-->
+    <!--</otherwise>-->
+    <!--</choose>-->
+    <!--AND-->
+    <!--&#45;&#45;产品编码-->
+    <!--isnull(prd_Code,'') LIKE-->
+    <!--<choose>-->
+    <!--<when test=" prdCode != null and prdCode != '' ">-->
+    <!--('%'+( #{prdCode}) +'%')-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--isnull(prd_Code,'')-->
+    <!--</otherwise>-->
+    <!--</choose>-->
 
-        <!--AND-->
-        <!--&#45;&#45;产品负责人,模糊查询-->
-        <!--isnull(sal_name,'') LIKE-->
-        <!--<choose>-->
-            <!--<when test="salName != null and salName != '' ">-->
-                <!--('%' +( #{salName}) + '%')-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--isnull(sal_name,'')-->
-            <!--</otherwise>-->
-        <!--</choose>-->
-        <!--AND-->
-        <!--&#45;&#45;是否已经打样确认，1是确认 0是未确认 ""确认+未确认-->
-        <!--isnull(isConfirm,9)=-->
-        <!--<choose>-->
-            <!--<when test=" isconfirm != null">-->
-                <!--#{isconfirm}-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--isnull(isConfirm,9)-->
-            <!--</otherwise>-->
-        <!--</choose>-->
+    <!--AND-->
+    <!--&#45;&#45;产品负责人,模糊查询-->
+    <!--isnull(sal_name,'') LIKE-->
+    <!--<choose>-->
+    <!--<when test="salName != null and salName != '' ">-->
+    <!--('%' +( #{salName}) + '%')-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--isnull(sal_name,'')-->
+    <!--</otherwise>-->
+    <!--</choose>-->
+    <!--AND-->
+    <!--&#45;&#45;是否已经打样确认，1是确认 0是未确认 ""确认+未确认-->
+    <!--isnull(isConfirm,9)=-->
+    <!--<choose>-->
+    <!--<when test=" isconfirm != null">-->
+    <!--#{isconfirm}-->
+    <!--</when>-->
+    <!--<otherwise>-->
+    <!--isnull(isConfirm,9)-->
+    <!--</otherwise>-->
+    <!--</choose>-->
 
-        <!--<if test="confirmtimestr != null and confirmtimestr != ''">-->
-            <!--<![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>-->
-        <!--</if>-->
-        <!--<if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">-->
-            <!--<![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>-->
-        <!--</if>-->
+    <!--<if test="confirmtimestr != null and confirmtimestr != ''">-->
+    <!--<![CDATA[ AND confirmTimeStr >=  #{confirmtimestr}  ]]>-->
+    <!--</if>-->
+    <!--<if test="confirmtimestrEnd != null and confirmtimestrEnd != ''">-->
+    <!--<![CDATA[ AND confirmTimeStr <=  #{confirmtimestrEnd}  ]]>-->
+    <!--</if>-->
     <!--</sql>-->
 
     <sql id="productProofWithManyCondition">
@@ -138,19 +138,19 @@
             <![CDATA[  AND  insertDate <= #{insertdateStrEnd}  ]]>
         </if>
         <if test=" idxName != null and idxName != '' ">
-             AND  isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+            AND isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%') -- 大范围
         </if>
         <if test=" fenLeiName != null and fenLeiName != '' ">
-            AND  isnull(fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  --  小范围
+            AND isnull(fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%') -- 小范围
         </if>
         <if test=" prdCode != null and prdCode != '' ">
-            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+            AND isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
         </if>
         <if test=" salName != null and salName != '' ">
-            AND  isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
+            AND isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND isnull(isConfirm,'') = #{isconfirm} -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -167,16 +167,7 @@
         </if>
 
 
-
-
     </sql>
-
-
-
-
-
-
-
 
 
     <!--登录验证用的  得到修改跟人信息接口 -->
@@ -244,18 +235,18 @@
         WHERE
         id NOT IN
         (
-            select top
-                (
-                    (#{meiYeXianShiShu})*((#{dangQianYe})-1)
-                )id from PRDT_SAMP
-            WHERE
-            <!-- 产品打样列表多条件查询的条件-->
-            <include refid="productProofWithManyCondition"/>
-            ORDER BY insertdate DESC
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )id from PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        ORDER BY insertdate DESC
         )
-            AND
-            <!-- 产品打样列表多条件查询的条件-->
-            <include refid="productProofWithManyCondition"/>
+        AND
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
         ORDER BY insertdate DESC
     </select>
 
@@ -270,42 +261,39 @@
         WHERE
         id NOT IN
         (
-            select top
-            (
-                 (#{meiYeXianShiShu})*((#{dangQianYe})-1)
-             )id from PRDT_SAMP
-            WHERE
-            <!-- 产品打样列表多条件查询的条件-->
-            <include refid="productProofWithManyCondition"/>
-            <if test=" prdCode != null and prdCode != '' ">
-                AND (
-                        isnull(prd_Code,'') =  #{prdCode}
-                        OR
-                        isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
-                        OR
-                        isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
-                )
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )id from PRDT_SAMP
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="productProofWithManyCondition"/>
+        <if test=" prdCode != null and prdCode != '' ">
+            AND (
+            isnull(prd_Code,'') = #{prdCode}
+            OR
+            isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            OR
+            isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
+            )
 
-            </if>
-            ORDER BY insertdate DESC
+        </if>
+        ORDER BY insertdate DESC
         )
         AND
         <!-- 产品打样列表多条件查询的条件-->
         <include refid="productProofWithManyCondition"/>
         <if test=" prdCode != null and prdCode != '' ">
             AND (
-                    isnull(prd_Code,'') =  #{prdCode}
-                    OR
-                    isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
-                    OR
-                    isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
+            isnull(prd_Code,'') = #{prdCode}
+            OR
+            isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
+            OR
+            isnull(prd_Code,'') LIKE ('%'+ #{prdCode} )
             )
         </if>
         ORDER BY insertdate DESC
     </select>
-
-
-
 
 
     <!--林展多条件查询接口 -->
@@ -319,8 +307,6 @@
     </select>
 
 
-
-
     <!--林展多条件查询接口 -->
 
     <select id="getCountOfDuoTiaoJianChaXunZongJiLuShuaSpecific" resultType="java.lang.Integer">
@@ -331,7 +317,7 @@
         <include refid="productProofWithManyCondition"/>
         <if test=" prdCode != null and prdCode != '' ">
             AND (
-            isnull(prd_Code,'') =  #{prdCode}
+            isnull(prd_Code,'') = #{prdCode}
             OR
             isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'[0-9]%')
             OR
@@ -342,10 +328,11 @@
     </select>
 
 
-<!-- =================================================================================================================== -->
+    <!-- =================================================================================================================== -->
 
     <!-- 产品打样列表多条件查询导出excel-->
-    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcel" resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
+    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcel"
+            resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
         SELECT
         TOP
         (#{meiYeXianShiShu})
@@ -356,15 +343,15 @@
         WHERE
         p.id NOT IN
         (
-                  select top
-                (
-                  (#{meiYeXianShiShu})*((#{dangQianYe})-1)
-                )p1.id from PRDT_SAMP p1
-                <include refid="leftJoinOfExportExcel1"/>
-                WHERE
-                <!-- 产品打样列表多条件查询的条件-->
-                 <include refid="exportExcelManyCondition1"/>
-                 ORDER BY p1.insertdate DESC
+        select top
+        (
+        (#{meiYeXianShiShu})*((#{dangQianYe})-1)
+        )p1.id from PRDT_SAMP p1
+        <include refid="leftJoinOfExportExcel1"/>
+        WHERE
+        <!-- 产品打样列表多条件查询的条件-->
+        <include refid="exportExcelManyCondition1"/>
+        ORDER BY p1.insertdate DESC
         )
         AND
         <!-- 产品打样列表多条件查询的条件-->
@@ -373,11 +360,9 @@
     </select>
 
 
-
-
-
     <!-- 产品打样列表多条件查询导出excel-->
-    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode" resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
+    <select id="chanPinBianMaJianDangTiaoJianChaXunExportExcelPrdCode"
+            resultType="com.winwin.picreport.Edto.PrdtSampExcleExportManyCondition">
         SELECT
         TOP
         (#{meiYeXianShiShu})
@@ -405,10 +390,6 @@
     </select>
 
 
-
-
-
-
     <sql id="leftJoinOfExportExcel">
         left join up_def u1 on p.prd_no=u1.prd_no and u1.price_id='1' and u1.cur_id='RMB' and u1.bil_type='1' -- 1是无运费
         left join up_def u2 on p.prd_no=u2.prd_no and u2.price_id='1' and u2.cur_id='RMB' and u2.bil_type='2' and u2.olefield=u1.olefield
@@ -426,7 +407,7 @@
         left join up_def u66 on p1.prd_no=u66.prd_no and u66.price_id='2' and u66.cur_id='RMB' and u66.bil_type='' and u66.prm_no=u11.prm_no -- 有运费
     </sql>
     <sql id="exportExcelManyCondition">
-           p.id=p.id -- AND p.stopusedate is null
+        p.id=p.id -- AND p.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
             <![CDATA[  AND  p.insertDate >= #{insertdateStr}  ]]>
         </if>
@@ -434,25 +415,25 @@
             <![CDATA[  AND  p.insertDate <= #{insertdateStrEnd}  ]]>
         </if>
         <if test=" idxName != null and idxName != '' ">
-            AND  isnull(p.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+            AND isnull(p.idx_Name,'') LIKE ('%' + (#{idxName}) + '%') -- 大范围
         </if>
         <!--<if test=" fenLeiName != null and fenLeiName != '' ">-->
-            <!--AND  isnull(p.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
+        <!--AND  isnull(p.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
         <!--</if>-->
         <if test=" fenLeiNames !=null and fenLeiNames.size()>0 ">
-            and p.fen_lei_name  in
+            and p.fen_lei_name in
             <foreach item="item" index="index" collection="fenLeiNames" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
         <if test=" prdCode != null and prdCode != '' ">
-            AND  isnull(p.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+            AND isnull(p.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
         </if>
         <if test=" salName != null and salName != '' ">
-            AND  isnull(p.sal_name,'') LIKE ('%'+( #{salName}) +'%')
+            AND isnull(p.sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(p.isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND isnull(p.isConfirm,'') = #{isconfirm} -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,p.confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -469,10 +450,6 @@
     </sql>
 
 
-
-
-
-
     <sql id="exportExcelManyCondition1">
         p1.id=p1.id -- AND p1.stopusedate is null
         <if test=" insertdateStr != null and insertdateStr != '' ">
@@ -482,25 +459,25 @@
             <![CDATA[  AND  p1.insertDate <= #{insertdateStrEnd}  ]]>
         </if>
         <if test=" idxName != null and idxName != '' ">
-            AND  isnull(p1.idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+            AND isnull(p1.idx_Name,'') LIKE ('%' + (#{idxName}) + '%') -- 大范围
         </if>
         <!--<if test=" fenLeiName != null and fenLeiName != '' ">-->
-            <!--AND  isnull(p1.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
+        <!--AND  isnull(p1.fen_lei_name,'') LIKE ('%'+( #{fenLeiName})+ '%')  &#45;&#45;  小范围-->
         <!--</if>-->
         <if test=" fenLeiNames !=null and fenLeiNames.size()>0 ">
-            and p1.fen_lei_name  IN
+            and p1.fen_lei_name IN
             <foreach item="item" index="index" collection="fenLeiNames" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
         <if test=" prdCode != null and prdCode != '' ">
-            AND  isnull(p1.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+            AND isnull(p1.prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
         </if>
         <if test=" salName != null and salName != '' ">
-            AND  isnull(p1.sal_name,'') LIKE ('%'+( #{salName}) +'%')
+            AND isnull(p1.sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(p1.isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND isnull(p1.isConfirm,'') = #{isconfirm} -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,p1.confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -829,7 +806,7 @@
             AND a.cur_id = #{CurId} ---此时是本币
         </if>
         <if test="CurId != null and CurId == ''">
-            AND a.cur_id != 'RMB'  --  此时是外币
+            AND a.cur_id != 'RMB' -- 此时是外币
         </if>
         AND
         a.bil_type=#{bilType}
@@ -895,9 +872,6 @@
     </select>
 
 
-
-
-
     <!-- 用于先得到id 然后分批得到 该批的id对应的数据-->
     <select id="getDaoChus" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
         select
@@ -906,7 +880,7 @@
         isnull(i2.name,'') as idxName,
         isnull(a.idx_no,'') as idxNo,
         isnull(a.fen_lei_no,'') as fenLeiNo,
-        isnull(i1.name,'') as  fenLeiName,
+        isnull(i1.name,'') as fenLeiName,
         isnull(i1.rem,'') as fenLeiNameE,
         isnull(i2.rem,'') as idxNameE,
         isnull(a.mark_name,'') as markName,
@@ -918,8 +892,8 @@
         isnull(a.cus_no,'') as cusNo,
         isnull(a.cus_name,'') as cusName,
         isnull(a.isfenjie,'') as isfenjie,
-        isnull(convert(varchar(36),a.samp_make,120),'') as  sampMake,
-        isnull(convert(varchar(36),a.samp_send,120),'')  as  sampSend,
+        isnull(convert(varchar(36),a.samp_make,120),'') as sampMake,
+        isnull(convert(varchar(36),a.samp_send,120),'') as sampSend,
         isnull(a.samp_requ,'') as sampRequ,
         isnull(a.samp_desc,'') as sampDesc,
         isnull(a.thum,'') as thum,
@@ -946,16 +920,16 @@
         isnull(a.prd_No,'') as prdNo,
         isnull(a.salemandesc,'')salemandesc,
         isnull(convert(varchar(36),a.stopusedate,120),'')as stopusedate,
-        isnull(a.cus_No_Give,'') as   cusNoGive,
+        isnull(a.cus_No_Give,'') as cusNoGive,
         isnull(a.cus_Name_Give,'') as cusNameGive,
         isnull(a.user_Name,'') as userName,
-        isnull(a.tenant_Id,'') as  tenantId,
+        isnull(a.tenant_Id,'') as tenantId,
         isnull(isnull(u.hj_no,isnull(u1.hj_no,isnull(u2.hj_no,isnull(u3.hj_no,'')))),'') as mainUnit ,
 
 
-        isnull(CONVERT(varchar(36),a.mini_Order_Amt),'') as  miniOrderAmt, -- 采购起订金额
-        isnull(CONVERT (VARCHAR (36),u4.up),'') as  haveTransBuyBenBi,
-        isnull(CONVERT (VARCHAR (36),u5.up),'') as  noTransBuyBenBi,
+        isnull(CONVERT(varchar(36),a.mini_Order_Amt),'') as miniOrderAmt, -- 采购起订金额
+        isnull(CONVERT (VARCHAR (36),u4.up),'') as haveTransBuyBenBi,
+        isnull(CONVERT (VARCHAR (36),u5.up),'') as noTransBuyBenBi,
 
         -- //含运费本币销售价格
         isnull(convert(varchar(100),u1.up),'') as haveTransUpSaleBenBi,
@@ -965,27 +939,32 @@
         isnull(convert(varchar(100),u.up),'') as noTransUpSaleBenBi,
         -- //无运费单价销售WaiBi
         isnull(convert(varchar(100),u2.up),'') as noTransUpSaleWaiBi,
-        isnull(x.nm_eng,'') as  nmEng
+        isnull(x.nm_eng,'') as nmEng
         FROM prdt_samp a
-        LEFT JOIN UP_DEF u  ON   a.prd_no=u.prd_no and u.bil_type='1' and u.cur_id='RMB' and u.price_id='1'
-        LEFT JOIN UP_DEF u1  ON   a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and u1.olefield=u.olefield
-        LEFT JOIN UP_DEF u2  ON   a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and u2.olefield=u.olefield
-        LEFT JOIN UP_DEF u3  ON   a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and u3.olefield=u.olefield
+        LEFT JOIN UP_DEF u ON a.prd_no=u.prd_no and u.bil_type='1' and u.cur_id='RMB' and u.price_id='1'
+        LEFT JOIN UP_DEF u1 ON a.prd_no=u1.prd_no and u1.bil_type='2' and u1.cur_id='RMB' and u1.price_id='1' and
+        u1.olefield=u.olefield
+        LEFT JOIN UP_DEF u2 ON a.prd_no=u2.prd_no and u2.bil_type='1' and u2.cur_id='USD' and u2.price_id='1' and
+        u2.olefield=u.olefield
+        LEFT JOIN UP_DEF u3 ON a.prd_no=u3.prd_no and u3.bil_type='2' and u3.cur_id='USD' and u3.price_id='1' and
+        u3.olefield=u.olefield
         -- 采购有运费
-        LEFT JOIN UP_DEF u4  ON   a.prd_no=u4.prd_no and u4.bil_type='' and u4.cur_id='RMB' and u4.price_id='2' and u4.prm_no=u.prm_no
+        LEFT JOIN UP_DEF u4 ON a.prd_no=u4.prd_no and u4.bil_type='' and u4.cur_id='RMB' and u4.price_id='2' and
+        u4.prm_no=u.prm_no
         -- 采购无运费
-        LEFT JOIN UP_DEF u5  ON   a.prd_no=u5.prd_no and u5.bil_type='1' and u5.cur_id='RMB' and u5.price_id='2' and u5.prm_no=u.prm_no
-        LEFT JOIN CUST x    ON    x.cus_no=a.cus_no
-        LEFT JOIN INDX i1    ON   i1.idx_no=a.fen_lei_no
-        LEFT JOIN INDX i2    ON   i2.idx_no=a.idx_no
+        LEFT JOIN UP_DEF u5 ON a.prd_no=u5.prd_no and u5.bil_type='1' and u5.cur_id='RMB' and u5.price_id='2' and
+        u5.prm_no=u.prm_no
+        LEFT JOIN CUST x ON x.cus_no=a.cus_no
+        LEFT JOIN INDX i1 ON i1.idx_no=a.fen_lei_no
+        LEFT JOIN INDX i2 ON i2.idx_no=a.idx_no
         where '1' = '1' -- a.stopusedate is null
         <if test=" ids != null and ids.size()>0 ">
-            and    a.id in
+            and a.id in
             <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
-            order by u.s_dd desc
+        order by u.s_dd desc
     </select>
 
 
@@ -1076,17 +1055,6 @@
     </select>
 
 
-
-
-
-
-
-
-
-
-
-
-
     <select id="getPrdtSamp002" resultType="com.winwin.picreport.Bcontroller.daYang.DaYangExportExcel.DaoChu">
         select
         top 1
@@ -1149,10 +1117,7 @@
     </select>
 
 
-
-
-
-<!--      ==========================================================================                -->
+    <!--      ==========================================================================                -->
     <sql id="productProofWithManyConditionExcel090">
         id=id
         <if test=" insertdateStr != null and insertdateStr != '' ">
@@ -1162,19 +1127,19 @@
             <![CDATA[  AND  insertDate <= #{insertdateStrEnd}  ]]>
         </if>
         <if test=" idxName != null and idxName != '' ">
-            AND  isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%')   -- 大范围
+            AND isnull(idx_Name,'') LIKE ('%' + (#{idxName}) + '%') -- 大范围
         </if>
         <if test=" fenLeiName != null and fenLeiName != '' ">
-            AND  isnull(fen_lei_name,'') = #{fenLeiName}   --  小范围
+            AND isnull(fen_lei_name,'') = #{fenLeiName} -- 小范围
         </if>
         <if test=" prdCode != null and prdCode != '' ">
-            AND  isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
+            AND isnull(prd_Code,'') LIKE ('%'+( #{prdCode}) +'%')
         </if>
         <if test=" salName != null and salName != '' ">
-            AND  isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
+            AND isnull(sal_name,'') LIKE ('%'+( #{salName}) +'%')
         </if>
         <if test=" isconfirm != null and isconfirm != '' ">
-            AND  isnull(isConfirm,'') =  #{isconfirm}   -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
+            AND isnull(isConfirm,'') = #{isconfirm} -- 是否已经打样确认，1是确认 0是未确认 ""确认+未确认
         </if>
         <if test="confirmtimestr != null and confirmtimestr != ''">
             <![CDATA[ AND convert(datetime,confirmtimestr) >=  #{confirmtimestr}  ]]>
@@ -1192,32 +1157,32 @@
 
     </sql>
     <select id="getIdUseConfirmTime" resultType="java.lang.String">
-         SELECT
+        SELECT
         -- top 500
-        id FROM prdt_samp  --  限制最多导出500行
-          <where>
-              <include refid="productProofWithManyConditionExcel090"/>
-          </where>
+        id FROM prdt_samp -- 限制最多导出500行
+        <where>
+            <include refid="productProofWithManyConditionExcel090"/>
+        </where>
 
     </select>
 
 
-<!--      ==========================================================================                -->
+    <!--      ==========================================================================                -->
     <select id="selectTop80OlefiledAndNoIn" resultType="java.lang.String">
         select a.olefield from
         (
-           select top 80 olefield from
-           up_def where
-           prd_no=#{prdNo}
-           and price_id=#{priceId}
-           and olefield like #{olefield}
-            <if test=" dingJiaGuanLiansNotIn !=null and dingJiaGuanLiansNotIn.size()>0 ">
-                and olefield not in
-                <foreach item="item" index="index" collection="dingJiaGuanLiansNotIn" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-           order by s_dd DESC
+        select top 80 olefield from
+        up_def where
+        prd_no=#{prdNo}
+        and price_id=#{priceId}
+        and olefield like #{olefield}
+        <if test=" dingJiaGuanLiansNotIn !=null and dingJiaGuanLiansNotIn.size()>0 ">
+            and olefield not in
+            <foreach item="item" index="index" collection="dingJiaGuanLiansNotIn" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by s_dd DESC
         ) a
         group by a.olefield
     </select>
@@ -1226,9 +1191,9 @@
     <update id="updateUpdef">
         update up_def
         <set>
-           <if test=" remFrontAfter !=null and remFrontAfter!='' and remFrontAfter != 'null' ">
-               rem =#{remFrontAfter},
-           </if>
+            <if test=" remFrontAfter !=null and remFrontAfter!='' and remFrontAfter != 'null' ">
+                rem =#{remFrontAfter},
+            </if>
             <if test=" remFrontAfter == null or remFrontAfter == '' or remFrontAfter == 'null' ">
                 rem =rem,
             </if>
@@ -1245,7 +1210,7 @@
             </if>
 
         </set>
-           where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')
+        where #{dingJiaZhuJian}=isnull(oleField,'')+isnull(bil_Type,'')+isnull(cur_id,'')+isnull(prd_no,'')
     </update>
 
 
@@ -1281,39 +1246,77 @@
         select name as fenLeiName from cet1
     </select>
 
-<select id="isFenLeiNameNotUse" resultType="java.lang.Integer">
-    select count(*) from indx where (stop_dd is not null or stop_dd>'1971-01-01') and name  in
-    <foreach collection="allShangJi" index="index" item="name" open="(" separator="," close=")">
-        #{name}
-    </foreach>
-</select>
-
-
-
+    <select id="isFenLeiNameNotUse" resultType="java.lang.Integer">
+        select count(*) from indx where (stop_dd is not null or stop_dd>'1971-01-01') and name in
+        <foreach collection="allShangJi" index="index" item="name" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </select>
 
 
     <update id="testMybatisUpdate">
-  UPDATE Prdt_samp
-  <set>
-      id=id,
+        UPDATE Prdt_samp
+        <set>
+            id=id,
 
-      <!--miniOrderAmt是bigdecimal -->
-      <if  test= "     miniOrderAmt !=null  and  miniOrderAmt == -1 ">
-          mini_order_amt=null,
-      </if>
+            <!--miniOrderAmt是bigdecimal -->
+            <if test="     miniOrderAmt !=null  and  miniOrderAmt == -1 ">
+                mini_order_amt=null,
+            </if>
 
-      <if  test= "     stopusedate !=null  and  stopusedate == stopusedateBiJiao ">
-          stopusedate=null,
-      </if>
-  </set>
-    where id='0000436d-0797-4e7b-9d8d-3ff0a30ea5c0'
-</update>
-
-
+            <if test="     stopusedate !=null  and  stopusedate == stopusedateBiJiao ">
+                stopusedate=null,
+            </if>
+        </set>
+        where id='0000436d-0797-4e7b-9d8d-3ff0a30ea5c0'
+    </update>
 
 
 
 
+
+
+
+
+
+
+
+ <!--   select u.qty,u.up,u.cur_id,u.bil_type,u.s_dd,* from up_def u
+    where u.prd_no='15449866' and
+    u.price_id='1' and u.cur_id='USD' and u.bil_type='1'
+    and u.s_dd<='2018-9-25' and 0.0299<u.up and 11100>=
+    (
+    select top 1 u1.qty from up_def u1 where u1.prd_no='15449866' and
+    u1.price_id='1' and u1.cur_id='USD' and u1.bil_type='1'
+    and u1.s_dd<='2018-9-25' order by u1.qty desc
+    )-->
+    <select id="countPriceOfSmallThenUpdef" resultType="java.lang.Integer">
+        select count(*) from up_def u
+        where u.prd_no = #{prdNo} and
+        u.price_id = #{salPriceId} and
+         u.cur_id = #{curId} and
+          u.bil_type = #{bilType}
+        and
+        <![CDATA[
+             u.s_dd<= #{osDd}   and #{up}  <    u.up and #{qty} >=
+         ]]>
+        (
+            select top 1 u1.qty from up_def u1 where
+            u1.prd_no=#{prdNo} and u1.price_id=#{salPriceId}
+             and u1.cur_id=#{curId} and u1.bil_type=#{bilType}
+            and
+            <![CDATA[
+                    u1.s_dd<= #{osDd} order by u1.qty desc
+             ]]>
+        )
+    </select>
+
+
+
+
+    <update id="updatePrdtSampRem">
+        update prdt_samp set rem= #{rem} where id = #{id}
+    </update>
 
 
 

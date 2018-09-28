@@ -70,7 +70,8 @@ public class InfoEdit_ManyAttach {
         this.prdtTabIdx1Update(prdtSampOb);
         cnst.genFenLeiNo.upDateTimeOfPrdtSamp(id);
         //根据prdt_samp的id来更新fenLeiNo(prdt_samp和prdt)中的 2018_9_4   weekday(2)   14:00:58
-        cnst.genFenLeiNo.g(id);
+        cnst.genFenLeiNo.g(id);//生成分类编标
+        cnst.genFenLeiNo.gIdxNo(id);//生成产品编号idxNo
     }
 
     //把商品表prdt里的idx1分类也更新了

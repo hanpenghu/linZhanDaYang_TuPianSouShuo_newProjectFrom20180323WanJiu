@@ -55,7 +55,6 @@
     <result column="Mini_Order_Amt" jdbcType="NUMERIC" property="miniOrderAmt" />
     <result column="fi_Mini_Order_Amt" jdbcType="NUMERIC" property="fiMiniOrderAmt" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="rem" jdbcType="VARCHAR" property="rem" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -123,7 +122,7 @@
     estimatePrice, littleOrderPrice, financeLittleOrderPrice, businessDesc, financeDesc, 
     saleManDesc, buyerdesc, stopUseDate, cus_no_give, cus_name_give, fen_lei_no, fen_lei_name, 
     user_name, tenant_id, main_unit, is_check_out, check_out_opinion, Mini_Order_Amt, 
-    fi_Mini_Order_Amt, update_date, rem
+    fi_Mini_Order_Amt, update_date
   </sql>
   <select id="selectByExample" parameterType="com.winwin.picreport.Edto.PrdtSampExample" resultMap="BaseResultMap">
     select
@@ -173,8 +172,7 @@
       cus_name_give, fen_lei_no, fen_lei_name, 
       user_name, tenant_id, main_unit, 
       is_check_out, check_out_opinion, Mini_Order_Amt, 
-      fi_Mini_Order_Amt, update_date, rem
-      )
+      fi_Mini_Order_Amt, update_date)
     values (#{id,jdbcType=VARCHAR}, #{prdCode,jdbcType=VARCHAR}, #{idxName,jdbcType=VARCHAR}, 
       #{idxNo,jdbcType=VARCHAR}, #{markName,jdbcType=VARCHAR}, #{markNo,jdbcType=VARCHAR}, 
       #{colour,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{salName,jdbcType=VARCHAR}, 
@@ -192,8 +190,7 @@
       #{cusNameGive,jdbcType=VARCHAR}, #{fenLeiNo,jdbcType=VARCHAR}, #{fenLeiName,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, #{mainUnit,jdbcType=VARCHAR}, 
       #{isCheckOut,jdbcType=VARCHAR}, #{checkOutOpinion,jdbcType=VARCHAR}, #{miniOrderAmt,jdbcType=NUMERIC}, 
-      #{fiMiniOrderAmt,jdbcType=NUMERIC}, #{updateDate,jdbcType=TIMESTAMP}, #{rem,jdbcType=VARCHAR}
-      )
+      #{fiMiniOrderAmt,jdbcType=NUMERIC}, #{updateDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     insert into PRDT_SAMP
@@ -357,9 +354,6 @@
       <if test="updateDate != null">
         update_date,
       </if>
-      <if test="rem != null">
-        rem,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -520,9 +514,6 @@
       </if>
       <if test="updateDate != null">
         #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rem != null">
-        #{rem,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -694,11 +685,8 @@
       <if test="record.updateDate != null">
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.rem != null">
-        rem = #{record.rem,jdbcType=VARCHAR},
-      </if>
-      <if test="record.rem == null">
-        rem = rem,
+      <if test="record.updateDate == null">
+        update_date = update_date,
       </if>
     </set>
     <if test="_parameter != null">
@@ -759,8 +747,7 @@
       check_out_opinion = #{record.checkOutOpinion,jdbcType=VARCHAR},
       Mini_Order_Amt = #{record.miniOrderAmt,jdbcType=NUMERIC},
       fi_Mini_Order_Amt = #{record.fiMiniOrderAmt,jdbcType=NUMERIC},
-      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
-      rem = #{record.rem,jdbcType=VARCHAR}
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -768,6 +755,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.winwin.picreport.Edto.PrdtSamp">
     update PRDT_SAMP
     <set>
+
       <if test="prdCode != null">
         prd_code = #{prdCode,jdbcType=VARCHAR},
       </if>
@@ -924,11 +912,8 @@
       <if test="updateDate != null">
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="rem != null">
-        rem = #{rem,jdbcType=VARCHAR},
-      </if>
-      <if test="rem == null">
-        rem = rem,
+      <if test="updateDate == null">
+        update_date = update_date,
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -986,8 +971,7 @@
       check_out_opinion = #{checkOutOpinion,jdbcType=VARCHAR},
       Mini_Order_Amt = #{miniOrderAmt,jdbcType=NUMERIC},
       fi_Mini_Order_Amt = #{fiMiniOrderAmt,jdbcType=NUMERIC},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      rem = #{rem,jdbcType=VARCHAR}
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -3,7 +3,7 @@ package com.winwin.picreport.Edto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class PrdtSamp {
+public class PrdtSamp备份 {
     protected String id;//一条录入记录的唯一标识符号
     protected String prdCode;//产品编码
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,10 +129,6 @@ public class PrdtSamp {
 
     //该条数据更新时间
     protected Date updateDate;
-
-    protected String rem;
-
-
 
     public String getId() {
         return id;
@@ -556,14 +552,5 @@ public class PrdtSamp {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-
-    public String getRem() {
-        return rem;
-    }
-
-    public void setRem(String rem) {
-        this.rem = rem == null ? null : rem.trim();
     }
 }
